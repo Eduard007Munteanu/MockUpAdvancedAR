@@ -1,0 +1,19 @@
+Issues:
+a) MainBuilding constantly changing size because I'm changing the prefab size (incorrect)                                           (x)
+b) Spawned mobs should NEVER change y-axis after spawning                                                                           (x)
+c) spawned object doesn't precisely go at the target object. (optional for now)                                                  (optional for now)
+
+
+
+TODO:
+a) Fix issues                                                                                                                       (All excluding the optional one)
+b) Create materials to be randomly placed on the plane => Cannot build on those tiles!                                              (x)
+c) Materials glow or make the material/plane more distinct. 
+b) Mobs and other buidlings relation interchangeability
+d) Mineral collecter
+e) Enemy mobs appearing and prioritizing buildings, but also attack mobs
+
+
+
+Plan!
+TODO a-d + Issues to be solved until Monday
