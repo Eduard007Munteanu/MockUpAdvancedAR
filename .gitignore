@@ -3,3 +3,11 @@
 /MockUpAdvancedAPKAR.apk
 /MockUpAdvancedAR_BurstDebugInformation_DoNotShip
 /Temp
+/
+Assembly-CSharp.csproj
+Assets/Resources/InputActions.asset
+Assets/Resources/InputActions.asset.meta
+Assets/XR/Settings/OpenXR Package Settings.asset
+ProjectSettings/ShaderGraphSettings.asset
+ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
+UserSettings/Layouts/default-2022.dwlt
