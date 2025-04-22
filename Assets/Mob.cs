@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Oculus.Interaction;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Mob : MonoBehaviour
@@ -15,6 +17,12 @@ public class Mob : MonoBehaviour
 
     private bool isMoving = false;
 
+    //VERY VERY STUPID
+
+    private MaterialElement targetMaterial;
+
+    private bool goingToMaterial = false;
+
 
     void Start()
     {
@@ -27,10 +35,33 @@ public class Mob : MonoBehaviour
         if(isMoving){
             moveMobTo();
         }
+        else{
+            if(targetMaterial != null){
+                if(goingToMaterial){
+                    target = targetMaterial.transform.position;
+                    Vector3 p = target;
+                    p.y = transform.position.y;
+                    target= p;  
+                    moveMobTo();
+                }
+                else if(!goingToMaterial){
+                    target = buildingAssignedTo.transform.position;
+                    Vector3 p = target;
+                    p.y = transform.position.y;
+                    target= p;  
+                    moveMobTo();
+                }
+            }
+        }
+        
+
+
     }
 
     public void assignedToBuilding(Building building){
         buildingAssignedTo = building;
+        Debug.Log("Assigned to building with class: " + building.GetBuidlingClass()); // <== Add this
+        AssignBuildingTask(building.GetBuidlingClass());
         building.addAssignedMob(this.gameObject);
     }
 
@@ -43,6 +74,7 @@ public class Mob : MonoBehaviour
         Vector3 mobPosition = transform.position;
         if(Vector3.Distance(mobPosition, target) < 0.1f){
             isMoving = false;
+            goingToMaterial = !goingToMaterial;
             return;
         }
         Vector3 direction = target - mobPosition;
@@ -66,10 +98,84 @@ public class Mob : MonoBehaviour
 
 
         bool buildingCheck = colliderObject.GetComponent<Building>() == null;
+        Debug.Log("BuildingCheck is " + buildingCheck); //Test
         if(buildingCheck){ 
             return;
         }
         removeAssignedBuilding();
+        assignedToBuilding(colliderObject.GetComponent<Building>());
 
+    }
+
+    public void AssignBuildingTask(string buildingClass){
+
+        Debug.Log($"Assigning task for {buildingClass}");
+
+        if(buildingClass == "Farming_house"){  //Farming task 
+            Debug.Log("Farming house task");
+            targetMaterial = FindingClosestMaterial("Gold");
+            if(targetMaterial != null){
+                Vector3 p = targetMaterial.transform.position;
+                p.y = transform.position.y;
+                targetMaterial.transform.position = p;    
+            }
+            Debug.Log("Target material: " + targetMaterial); //Test
+        }
+        else if(buildingClass == "Military_house"){ //Military task
+            Debug.Log("Military house task");
+            targetMaterial = FindingClosestMaterial("Tree");
+            if(targetMaterial != null){
+                Vector3 p = targetMaterial.transform.position;
+                p.y = transform.position.y;
+                targetMaterial.transform.position = p;    
+            }
+            Debug.Log("Target material: " + targetMaterial); //Test
+        } 
+        else if(buildingClass == "Sleep_house"){  //Sleep task
+            Debug.Log("Sleep house task");
+            targetMaterial = FindingClosestMaterial("Stone");
+            if(targetMaterial != null){
+                Vector3 p = targetMaterial.transform.position;
+                p.y = transform.position.y;
+                targetMaterial.transform.position = p;    
+            }
+            Debug.Log("Target material: " + targetMaterial); //Test
+        }
+    }
+
+
+
+    public MaterialElement FindingClosestMaterial(string materialClass){
+        // MaterialElement[] allMaterials = FindObjectsOfType<MaterialElement>();
+        // MaterialElement[] filteredMaterial = null; 
+        // for(int i= 0; i < allMaterials.Length; i++){
+        //     if(allMaterials[i].GetMaterialName() == materialClass){
+        //         filteredMaterial.Append(allMaterials[i]);
+        //     }
+        // }
+
+        // MaterialElement closest = null;
+        // float minDistance = Mathf.Infinity;
+        // Vector3 currentPos = transform.position;
+
+        // foreach (MaterialElement mat in filteredMaterial)
+        // {
+        //     float dist = Vector3.Distance(currentPos, mat.transform.position);
+        //     if (dist < minDistance)
+        //     {
+        //         minDistance = dist;
+        //         closest = mat;
+        //     }
+        // }
+        // return closest;
+        var filtered = FindObjectsOfType<MaterialElement>()
+                    .Where(m => m.GetMaterialName() == materialClass)
+                    .ToArray();
+
+        Debug.Log($"Found {filtered.Length} '{materialClass}' materials");
+
+        return filtered
+            .OrderBy(m => Vector3.Distance(transform.position, m.transform.position))
+            .FirstOrDefault();
     }
 }

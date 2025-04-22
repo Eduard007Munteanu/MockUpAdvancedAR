@@ -149,13 +149,13 @@ public class TileChecker : MonoBehaviour
             }
 
             Building building = hit.collider.GetComponent<Building>();
-            if (building != null)
+            if (building != null && selectedMob == null)
             {
                 float pinchStrength = rightHand.GetFingerPinchStrength(OVRHand.HandFinger.Index);
                 bool isPinchingNow = pinchStrength > 0.8f;
                 if (isPinchingNow && !wasPinching)
                 {
-                    if(building.GetBuildingClass() != null && building.GetBuildingClass() != "MainBuilding"){
+                    if(building.GetBuildingClass() != null && building.GetBuildingClass() != "MainBuilding"){    // Here regarding having the mob following the building. 
                         if(currentMenu == null){
                             currentMenu = Instantiate(buildCanvasPrefab, palmTransform.position, palmTransform.rotation);
                             currentMenu.transform.SetParent(palmTransform, worldPositionStays: true);
@@ -385,6 +385,21 @@ public class TileChecker : MonoBehaviour
                     selectedMob = null;
                 }   
                 
+            }
+
+
+            //This part is incomplete. 
+            if(selectedMob != null && mob == null && building != null){
+                float pinchStrength = rightHand.GetFingerPinchStrength(OVRHand.HandFinger.Index);
+                bool isPinchingNow = pinchStrength > 0.8f;
+                if (isPinchingNow /*&& !wasPinching*/){
+                    Debug.Log("Pinch at the building");
+                    Debug.Log("Building transform position: " + building.transform.position);
+                    Debug.Log("Building gameobject" + building.gameObject);
+                    Debug.Log("Building class: " + building.GetBuildingClass());
+                    selectedMob.startMoving(building.transform.position, building.gameObject);  //at the center of the building, not quite correct. 
+                    selectedMob = null;
+                }   
             }
 
 

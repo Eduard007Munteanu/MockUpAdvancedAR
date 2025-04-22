@@ -103,5 +103,22 @@ public class Building : MonoBehaviour
 
         return new Vector3[] { topLeft /*bottomRight from board perspective  */, topRight /*bottomLeft from board perspective */, /*topLeft from board perspective */ bottomRight, /*topRight from board perspective */ bottomLeft };
     }
+
+
+    public string GetBuidlingClass(){
+        return building_class;
+    }
+
+
+    //Different types of buildings, interface + inheritance should have been used.
+
+
+    public void giveTaskToMob(GameObject mob){
+        
+        
+    }
+
+
+
 }
 

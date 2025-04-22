@@ -53,7 +53,7 @@ public class MaterialElement : MonoBehaviour
     }
 
 
-    string GetMaterialName(){
+    public string GetMaterialName(){
         
 
         if (color.Equals(Color.yellow))

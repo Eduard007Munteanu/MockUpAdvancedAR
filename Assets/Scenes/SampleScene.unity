@@ -11196,13 +11196,13 @@ MonoBehaviour:
   cardTypes:
   - prefab: {fileID: 6223652420767542604, guid: eee080c1e7f2ae146bc6761a4af1a69e, type: 3}
     count: 10
-    typeName: '"Sleep_house"'
+    typeName: Sleep_house
   - prefab: {fileID: 5581141674045944884, guid: 7de439df209651e49ac3004351619d6b, type: 3}
     count: 10
-    typeName: '"Military_house"'
+    typeName: Military_house
   - prefab: {fileID: 8084809435784299562, guid: 7d4aed3470215b842b085e248eb164d3, type: 3}
     count: 10
-    typeName: '"Farming_house"'
+    typeName: Farming_house
   numberOfCardsToDraw: 5
   leftHandSkeleton: {fileID: 1892893141}
   leftHandTransform: {fileID: 1892893136}
