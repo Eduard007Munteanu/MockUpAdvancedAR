@@ -23,6 +23,8 @@ public class TileChecker : MonoBehaviour
 
     private GameObject currentMenu;
 
+    private GameObject mainMenu;
+
     private Transform palmTransform;
 
     [SerializeField] private GameObject buildCanvasPrefab;
@@ -211,11 +213,11 @@ public class TileChecker : MonoBehaviour
                         }    
                     } 
                     else if(building.GetBuildingClass() == "MainBuilding") {
-                        if(currentMenu == null){
-                            currentMenu = Instantiate(mainBuildCanvasPrefab, palmTransform.position, palmTransform.rotation);
-                            currentMenu.transform.SetParent(palmTransform, worldPositionStays: true);
+                        if(mainMenu == null){
+                            mainMenu = Instantiate(mainBuildCanvasPrefab, palmTransform.position, palmTransform.rotation);
+                            mainMenu.transform.SetParent(palmTransform, worldPositionStays: true);
 
-                            MainBuildingCanvas contentManager = currentMenu.GetComponent<MainBuildingCanvas>();
+                            MainBuildingCanvas contentManager = mainMenu.GetComponent<MainBuildingCanvas>();
 
 
                             // Debug.Log("Content manager: " + contentManager);
@@ -239,14 +241,14 @@ public class TileChecker : MonoBehaviour
                             // }
                             
 
-                            Canvas canvas = currentMenu.GetComponent<Canvas>();
+                            Canvas canvas = mainMenu.GetComponent<Canvas>();
                             if (canvas != null)
                             {
                                 canvas.worldCamera = Camera.main; 
                             }
 
 
-                            var statsTransform = currentMenu.transform.Find("Layout_Stats");
+                            var statsTransform = mainMenu.transform.Find("Layout_Stats");
                             Debug.Log(statsTransform ? $"Found Layout_Stats: {statsTransform.name}" : "Layout_Stats not found!");
 
 
@@ -287,7 +289,7 @@ public class TileChecker : MonoBehaviour
 
 
                             //var buttonTransform = currentMenu.transform.Find("Button (Spawn Mobs)");
-                            var buttonTransform = currentMenu.transform.Find("Modifications/Button (Spawn Mobs)"); // Adjusted path to find the button
+                            var buttonTransform = mainMenu.transform.Find("Modifications/Button (Spawn Mobs)"); // Adjusted path to find the button
 
                             if (buttonTransform == null)
                             {
@@ -328,10 +330,15 @@ public class TileChecker : MonoBehaviour
 
                         }
                         else{
-                            Destroy(currentMenu);
-                            currentMenu = null;
-                            spawnListenerAdded = false;
-                            spawnButton = null;
+                            //mainMenu.SetActive(!mainMenu.activeSelf);
+                            
+                            //Destroy(currentMenu);
+                            //currentMenu = null;
+
+                            var cv = mainMenu.GetComponent<Canvas>();
+                            cv.enabled = !cv.enabled;
+                            // spawnListenerAdded = false;
+                            // spawnButton = null;
                         }
                     }
 
