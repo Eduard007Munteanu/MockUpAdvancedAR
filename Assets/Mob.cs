@@ -28,6 +28,8 @@ public class Mob : MonoBehaviour
 
     public CanvasContentManager canvasContentManager;
 
+    private bool incrementRequestByOne = false;
+
     
 
 
@@ -84,7 +86,8 @@ public class Mob : MonoBehaviour
             goingToMaterial = !goingToMaterial;
             if(targetMaterialObject != null){
                 string materialName = targetMaterialObject.GetComponent<MaterialElement>().GetMaterialName();
-                canvasContentManager.UpdateScore(1, materialName);
+                // canvasContentManager.UpdateScore(1, materialName);
+                IncrementbyOneRequest();
                 targetMaterialObject = null;
             }
             return;
@@ -196,5 +199,22 @@ public class Mob : MonoBehaviour
         return filtered
             .OrderBy(m => Vector3.Distance(transform.position, m.transform.position))
             .FirstOrDefault();
+    }
+
+    public void IncrementbyOneRequest(){
+        incrementRequestByOne = true;
+    }
+
+    public bool getIncrementRequestByOne(){
+        return incrementRequestByOne;
+    }
+
+    public void changeIncrementRequestByOne(){
+         incrementRequestByOne = !incrementRequestByOne;
+    }
+
+
+    public GameObject TargetMaterialObjectFinder(){
+        return targetMaterialObject;
     }
 }

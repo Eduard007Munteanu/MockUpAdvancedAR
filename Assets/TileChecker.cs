@@ -219,13 +219,20 @@ public class TileChecker : MonoBehaviour
 
                             if (contentManager != null)
                             {
-                                // Assign it to all mobs in the scene
-                                foreach (var iteratemob in FindObjectsOfType<Mob>())
-                                {
-                                    iteratemob.canvasContentManager = contentManager;
-                                }
+                                // // Assign it to all mobs in the scene
+                                // foreach (var iteratemob in FindObjectsOfType<Mob>())
+                                // {
+                                //     iteratemob.canvasContentManager = contentManager;
+                                // }
 
-                                Debug.Log("Assigned CanvasContentManager to all mobs.");
+                                // Debug.Log("Assigned CanvasContentManager to all mobs.");
+                                foreach (var mobs in FindObjectsOfType<Mob>())
+                                {
+                                    bool check = mobs.getIncrementRequestByOne();
+                                    if(check){
+                                        contentManager.UpdateScore(1, mobs.TargetMaterialObjectFinder().GetComponent<MaterialElement>().GetMaterialName());
+                                    }
+                                }
                             }
                             else
                             {
