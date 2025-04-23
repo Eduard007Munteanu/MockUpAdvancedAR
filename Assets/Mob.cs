@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,12 @@ public class Mob : MonoBehaviour
     private MaterialElement targetMaterial;
 
     private bool goingToMaterial = false;
+
+    private GameObject targetMaterialObject;
+
+    public CanvasContentManager canvasContentManager;
+
+    
 
 
     void Start()
@@ -75,6 +82,11 @@ public class Mob : MonoBehaviour
         if(Vector3.Distance(mobPosition, target) < 0.1f){
             isMoving = false;
             goingToMaterial = !goingToMaterial;
+            if(targetMaterialObject != null){
+                string materialName = targetMaterialObject.GetComponent<MaterialElement>().GetMaterialName();
+                canvasContentManager.UpdateScore(1, materialName);
+                targetMaterialObject = null;
+            }
             return;
         }
         Vector3 direction = target - mobPosition;
@@ -95,6 +107,13 @@ public class Mob : MonoBehaviour
 
         Debug.Log("Target position vector value: " + target); //Test
         Debug.Log("Mob position vector value: " + transform.position); //Test
+
+
+        bool materialCheck = colliderObject.GetComponent<MaterialElement>() != null;
+
+        if(materialCheck){
+            targetMaterialObject = colliderObject; 
+        }
 
 
         bool buildingCheck = colliderObject.GetComponent<Building>() == null;

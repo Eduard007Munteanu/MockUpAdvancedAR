@@ -215,6 +215,22 @@ public class TileChecker : MonoBehaviour
                             currentMenu = Instantiate(mainBuildCanvasPrefab, palmTransform.position, palmTransform.rotation);
                             currentMenu.transform.SetParent(palmTransform, worldPositionStays: true);
 
+                            CanvasContentManager contentManager = currentMenu.GetComponent<CanvasContentManager>();
+
+                            if (contentManager != null)
+                            {
+                                // Assign it to all mobs in the scene
+                                foreach (var iteratemob in FindObjectsOfType<Mob>())
+                                {
+                                    iteratemob.canvasContentManager = contentManager;
+                                }
+
+                                Debug.Log("Assigned CanvasContentManager to all mobs.");
+                            }
+                            else
+                            {
+                                Debug.LogError("CanvasContentManager not found on the canvas prefab!");
+                            }
                             
 
                             Canvas canvas = currentMenu.GetComponent<Canvas>();
