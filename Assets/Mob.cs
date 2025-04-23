@@ -1,220 +1,155 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using Oculus.Interaction;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Mob : MonoBehaviour
 {
-    // Start is called before the first frame update
-
-    private Building buildingAssignedTo;
-
-    private float speedFactor = 0.008f;
+    private Building       buildingAssignedTo;
+    private MaterialElement targetMaterial;
+    private GameObject      targetMaterialObject;
 
     private Vector3 target;
+    private bool    isMoving        = false;
+    private bool    goingToMaterial = false;
 
-    private bool isMoving = false;
+    // Delivery flag & cached name
+    private bool   incrementRequestByOne = false;
+    private string lastPickedMaterialName;
 
-    //VERY VERY STUPID
+    [SerializeField] private float speedFactor = 0.008f;
 
-    private MaterialElement targetMaterial;
-
-    private bool goingToMaterial = false;
-
-    private GameObject targetMaterialObject;
-
-    public CanvasContentManager canvasContentManager;
-
-    private bool incrementRequestByOne = false;
-
-    
-
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if(isMoving){
-            moveMobTo();
-        }
-        else{
-            if(targetMaterial != null){
-                if(goingToMaterial){
-                    target = targetMaterial.transform.position;
-                    Vector3 p = target;
-                    p.y = transform.position.y;
-                    target= p;  
-                    moveMobTo();
-                }
-                else if(!goingToMaterial){
-                    target = buildingAssignedTo.transform.position;
-                    Vector3 p = target;
-                    p.y = transform.position.y;
-                    target= p;  
-                    moveMobTo();
-                }
-            }
-        }
-        
-
-
+        if (isMoving)
+            MoveMobTo();
     }
 
-    public void assignedToBuilding(Building building){
+   
+    public void AssignedToBuilding(Building building)
+    {
+        // Remove from old building (if any) then add to new
+        if (buildingAssignedTo != null)
+            buildingAssignedTo.removeAssignedMob(gameObject);
+
         buildingAssignedTo = building;
-        Debug.Log("Assigned to building with class: " + building.GetBuidlingClass()); // <== Add this
-        AssignBuildingTask(building.GetBuidlingClass());
-        building.addAssignedMob(this.gameObject);
+        buildingAssignedTo.addAssignedMob(gameObject);
+
+        // Decide which resource to fetch next
+        AssignBuildingTask(building.GetBuildingClass());
     }
 
-    public void removeAssignedBuilding(){
-        buildingAssignedTo.removeAssignedMob(this.gameObject);
-        buildingAssignedTo = null;
-    }
-
-    public void moveMobTo(){
-        Vector3 mobPosition = transform.position;
-        if(Vector3.Distance(mobPosition, target) < 0.1f){
-            isMoving = false;
-            goingToMaterial = !goingToMaterial;
-            if(targetMaterialObject != null){
-                string materialName = targetMaterialObject.GetComponent<MaterialElement>().GetMaterialName();
-                // canvasContentManager.UpdateScore(1, materialName);
-                IncrementbyOneRequest();
-                targetMaterialObject = null;
-            }
-            return;
+    public void RemoveAssignedBuilding()
+    {
+        if (buildingAssignedTo != null)
+        {
+            buildingAssignedTo.removeAssignedMob(gameObject);
+            buildingAssignedTo = null;
         }
-        Vector3 direction = target - mobPosition;
-        direction.Normalize();
-        //transform.rotation = Quaternion.LookRotation(direction);  To look at the correct direction when moving, but not for now, since we only have cubes
-        Vector3 newPosition = mobPosition + direction * speedFactor;
-        transform.position = newPosition;
-        
     }
 
-    public void startMoving(Vector3 targetTo, GameObject colliderObject){
+
+    public void StartMoving(Vector3 destination, GameObject colliderObj)
+    {
         isMoving = true;
-        Vector3 same_y_target = new Vector3(targetTo.x, transform.position.y, targetTo.z);
-        target = same_y_target; 
+        target    = new Vector3(destination.x, transform.position.y, destination.z);
 
-
-        //Debug only part:
-
-        Debug.Log("Target position vector value: " + target); //Test
-        Debug.Log("Mob position vector value: " + transform.position); //Test
-
-
-        bool materialCheck = colliderObject.GetComponent<MaterialElement>() != null;
-
-        if(materialCheck){
-            targetMaterialObject = colliderObject; 
-        }
-
-
-        bool buildingCheck = colliderObject.GetComponent<Building>() == null;
-        Debug.Log("BuildingCheck is " + buildingCheck); //Test
-        if(buildingCheck){ 
+        // If it’s a MaterialElement, head there
+        var mat = colliderObj.GetComponent<MaterialElement>();
+        if (mat != null)
+        {
+            targetMaterial       = mat;
+            targetMaterialObject = colliderObj;
+            goingToMaterial      = true;
             return;
         }
-        removeAssignedBuilding();
-        assignedToBuilding(colliderObject.GetComponent<Building>());
 
-    }
-
-    public void AssignBuildingTask(string buildingClass){
-
-        Debug.Log($"Assigning task for {buildingClass}");
-
-        if(buildingClass == "Farming_house"){  //Farming task 
-            Debug.Log("Farming house task");
-            targetMaterial = FindingClosestMaterial("Gold");
-            if(targetMaterial != null){
-                Vector3 p = targetMaterial.transform.position;
-                p.y = transform.position.y;
-                targetMaterial.transform.position = p;    
-            }
-            Debug.Log("Target material: " + targetMaterial); //Test
-        }
-        else if(buildingClass == "Military_house"){ //Military task
-            Debug.Log("Military house task");
-            targetMaterial = FindingClosestMaterial("Tree");
-            if(targetMaterial != null){
-                Vector3 p = targetMaterial.transform.position;
-                p.y = transform.position.y;
-                targetMaterial.transform.position = p;    
-            }
-            Debug.Log("Target material: " + targetMaterial); //Test
-        } 
-        else if(buildingClass == "Sleep_house"){  //Sleep task
-            Debug.Log("Sleep house task");
-            targetMaterial = FindingClosestMaterial("Stone");
-            if(targetMaterial != null){
-                Vector3 p = targetMaterial.transform.position;
-                p.y = transform.position.y;
-                targetMaterial.transform.position = p;    
-            }
-            Debug.Log("Target material: " + targetMaterial); //Test
+        // Otherwise, if it’s a Building, assign yourself and prep the next resource
+        var bld = colliderObj.GetComponent<Building>();
+        if (bld != null)
+        {
+            AssignedToBuilding(bld);
+            goingToMaterial = false;
         }
     }
 
+    private void MoveMobTo()
+    {
+        // Arrived?
+        if (Vector3.Distance(transform.position, target) < 0.1f)
+        {
+            isMoving = false;
 
+            // If we were bringing a material back, register delivery
+            if (goingToMaterial && targetMaterialObject != null)
+            {
+                Debug.Log("We moved close to the material");
+                lastPickedMaterialName  = targetMaterialObject
+                    .GetComponent<MaterialElement>()
+                    .GetMaterialName();
+                incrementRequestByOne   = true;
+                targetMaterialObject    = null;
+                targetMaterial          = null;
+            }
 
-    public MaterialElement FindingClosestMaterial(string materialClass){
-        // MaterialElement[] allMaterials = FindObjectsOfType<MaterialElement>();
-        // MaterialElement[] filteredMaterial = null; 
-        // for(int i= 0; i < allMaterials.Length; i++){
-        //     if(allMaterials[i].GetMaterialName() == materialClass){
-        //         filteredMaterial.Append(allMaterials[i]);
-        //     }
-        // }
+            // Flip journey direction
+            goingToMaterial = !goingToMaterial;
 
-        // MaterialElement closest = null;
-        // float minDistance = Mathf.Infinity;
-        // Vector3 currentPos = transform.position;
+            // Automatically start the next leg
+            if (goingToMaterial)
+            {
+                // Building → material
+                AssignBuildingTask(buildingAssignedTo.GetBuildingClass());
+                if (targetMaterial != null)
+                    StartMoving(targetMaterial.transform.position, targetMaterial.gameObject);
+            }
+            else
+            {
+                // Material → building
+                if (buildingAssignedTo != null)
+                    StartMoving(buildingAssignedTo.transform.position,
+                                buildingAssignedTo.gameObject);
+            }
 
-        // foreach (MaterialElement mat in filteredMaterial)
-        // {
-        //     float dist = Vector3.Distance(currentPos, mat.transform.position);
-        //     if (dist < minDistance)
-        //     {
-        //         minDistance = dist;
-        //         closest = mat;
-        //     }
-        // }
-        // return closest;
-        var filtered = FindObjectsOfType<MaterialElement>()
-                    .Where(m => m.GetMaterialName() == materialClass)
-                    .ToArray();
+            return;
+        }
 
-        Debug.Log($"Found {filtered.Length} '{materialClass}' materials");
-
-        return filtered
-            .OrderBy(m => Vector3.Distance(transform.position, m.transform.position))
-            .FirstOrDefault();
+        // Still en route
+        Vector3 dir = (target - transform.position).normalized;
+        transform.position += dir * speedFactor;
     }
 
-    public void IncrementbyOneRequest(){
-        incrementRequestByOne = true;
+    private void AssignBuildingTask(string buildingClass)
+    {
+        // Choose the right resource by building type
+        string matName = buildingClass switch
+        {
+            "Farming_house"  => "Gold",
+            "Military_house" => "Tree",
+            "Sleep_house"    => "Stone",
+            _                => null
+        };
+
+        if (matName != null)
+        {
+            targetMaterial = FindObjectsOfType<MaterialElement>()
+                .Where(m => m.GetMaterialName() == matName)
+                .OrderBy(m => Vector3.Distance(transform.position, m.transform.position))
+                .FirstOrDefault();
+        }
     }
 
-    public bool getIncrementRequestByOne(){
-        return incrementRequestByOne;
-    }
 
-    public void changeIncrementRequestByOne(){
-         incrementRequestByOne = !incrementRequestByOne;
-    }
+    public bool TryConsumeDelivery(out string materialType)
+    {
+        if (incrementRequestByOne)
+        {
+            Debug.Log($"TryConsumeDelivery() returning true for {name}, type={lastPickedMaterialName}");
+            materialType          = lastPickedMaterialName;
+            incrementRequestByOne = false;
+            return true;
+        }
 
-
-    public GameObject TargetMaterialObjectFinder(){
-        return targetMaterialObject;
+        materialType = null;
+        return false;
     }
 }
+

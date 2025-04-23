@@ -215,29 +215,28 @@ public class TileChecker : MonoBehaviour
                             currentMenu = Instantiate(mainBuildCanvasPrefab, palmTransform.position, palmTransform.rotation);
                             currentMenu.transform.SetParent(palmTransform, worldPositionStays: true);
 
-                            CanvasContentManager contentManager = currentMenu.GetComponent<CanvasContentManager>();
+                            MainBuildingCanvas contentManager = currentMenu.GetComponent<MainBuildingCanvas>();
 
-                            if (contentManager != null)
-                            {
-                                // // Assign it to all mobs in the scene
-                                // foreach (var iteratemob in FindObjectsOfType<Mob>())
-                                // {
-                                //     iteratemob.canvasContentManager = contentManager;
-                                // }
 
-                                // Debug.Log("Assigned CanvasContentManager to all mobs.");
-                                foreach (var mobs in FindObjectsOfType<Mob>())
-                                {
-                                    bool check = mobs.getIncrementRequestByOne();
-                                    if(check){
-                                        contentManager.UpdateScore(1, mobs.TargetMaterialObjectFinder().GetComponent<MaterialElement>().GetMaterialName());
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                Debug.LogError("CanvasContentManager not found on the canvas prefab!");
-                            }
+                            // Debug.Log("Content manager: " + contentManager);
+                            // if (contentManager != null)
+                            // {
+                                
+                            //     foreach (var mobs in FindObjectsOfType<Mob>())
+                            //     {
+                            //         Debug.Log("Mob: " + mobs);
+                            //         bool check = mobs.getIncrementRequestByOne();
+                            //         Debug.Log("Check: " + check);
+                            //         if(check){
+                            //             Debug.Log("Increment request by one!");
+                            //             contentManager.UpdateScore(1, mobs.TargetMaterialObjectFinder().GetComponent<MaterialElement>().GetMaterialName());
+                            //         }
+                            //     }
+                            // }
+                            // else
+                            // {
+                            //     Debug.LogError("CanvasContentManager not found on the canvas prefab!");
+                            // }
                             
 
                             Canvas canvas = currentMenu.GetComponent<Canvas>();
@@ -404,7 +403,7 @@ public class TileChecker : MonoBehaviour
                     if(!hit.collider.GameObject()){
                         Debug.LogError("Hit.collider for mob target movement is null!");
                     }
-                    selectedMob.startMoving(hit.point, hit.collider.GameObject());
+                    selectedMob.StartMoving(hit.point, hit.collider.GameObject());
                     selectedMob = null;
                 }   
                 
@@ -420,7 +419,7 @@ public class TileChecker : MonoBehaviour
                     Debug.Log("Building transform position: " + building.transform.position);
                     Debug.Log("Building gameobject" + building.gameObject);
                     Debug.Log("Building class: " + building.GetBuildingClass());
-                    selectedMob.startMoving(building.transform.position, building.gameObject);  //at the center of the building, not quite correct. 
+                    selectedMob.StartMoving(building.transform.position, building.gameObject);  //at the center of the building, not quite correct. 
                     selectedMob = null;
                 }   
             }

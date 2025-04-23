@@ -69,13 +69,14 @@
     <Compile Include="Assets\Mob_Manager.cs" />
     <Compile Include="Assets\MaterialManager.cs" />
     <Compile Include="Assets\TileChecker.cs" />
+    <Compile Include="Assets\MainBuildingCanvas.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\DestructibleObject.cs" />
     <Compile Include="Assets\GridOverlay.cs" />
     <Compile Include="Assets\Card.cs" />
     <Compile Include="Assets\TileObject.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Explosion.cs" />
+    <Compile Include="Assets\SimpleCanvasBuild.cs" />
     <Compile Include="Assets\CardDeck.cs" />
-    <Compile Include="Assets\CanvasContentManager.cs" />
     <Compile Include="Assets\MaterialElement.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Despawn.cs" />
     <Compile Include="Assets\Mob.cs" />

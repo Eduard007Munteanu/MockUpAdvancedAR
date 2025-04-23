@@ -80,7 +80,7 @@ public  class Mob_Manager : MonoBehaviour
             Debug.Log("Mob created successfully!");
         }
 
-        mob.GetComponent<Mob>().assignedToBuilding(fromBuildingSpawned);
+        mob.GetComponent<Mob>().AssignedToBuilding(fromBuildingSpawned);
     }
 
     //Later on, we will look into the mob deletion action. 
