@@ -85,29 +85,55 @@ public class Mob : MonoBehaviour
                 lastPickedMaterialName  = targetMaterialObject
                     .GetComponent<MaterialElement>()
                     .GetMaterialName();
-                incrementRequestByOne   = true;
+                //incrementRequestByOne   = true;
                 targetMaterialObject    = null;
                 targetMaterial          = null;
+                goingToMaterial = false;
+
+                StartMoving(
+                  buildingAssignedTo.transform.position,
+                  buildingAssignedTo.gameObject
+                );
             }
-
-            // Flip journey direction
-            goingToMaterial = !goingToMaterial;
-
-            // Automatically start the next leg
-            if (goingToMaterial)
+            else if (!goingToMaterial && buildingAssignedTo != null)
             {
-                // Building → material
+                // === 2) Returned home: now increment once ===
+                incrementRequestByOne = true;
+
+                // prepare next outbound trip:
+                goingToMaterial = true;
                 AssignBuildingTask(buildingAssignedTo.GetBuildingClass());
                 if (targetMaterial != null)
-                    StartMoving(targetMaterial.transform.position, targetMaterial.gameObject);
+                {
+                    StartMoving(
+                      targetMaterial.transform.position,
+                      targetMaterial.gameObject
+                    );
+                }
             }
-            else
-            {
-                // Material → building
-                if (buildingAssignedTo != null)
-                    StartMoving(buildingAssignedTo.transform.position,
-                                buildingAssignedTo.gameObject);
-            }
+
+            
+
+            // Flip journey direction
+            //goingToMaterial = !goingToMaterial;
+
+            
+
+            // Automatically start the next leg
+            // if (goingToMaterial)
+            // {
+            //     // Building → material
+            //     AssignBuildingTask(buildingAssignedTo.GetBuildingClass());
+            //     if (targetMaterial != null)
+            //         StartMoving(targetMaterial.transform.position, targetMaterial.gameObject);
+            // }
+            // else
+            // {
+            //     // Material → building
+            //     if (buildingAssignedTo != null)
+            //         StartMoving(buildingAssignedTo.transform.position,
+            //                     buildingAssignedTo.gameObject);
+            // }
 
             return;
         }
