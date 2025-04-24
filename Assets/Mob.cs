@@ -69,15 +69,33 @@ public class Mob : MonoBehaviour
             AssignedToBuilding(bld);
             goingToMaterial = false;
         }
+
+
+        var tile = colliderObj.CompareTag("Tile");
+        if(tile){
+            targetMaterial = null;
+            targetMaterialObject = null;
+            goingToMaterial = false;
+            RemoveAssignedBuilding();
+            return;
+        }
     }
 
     private void MoveMobTo()
     {
+
+
+
+        // if(!goingToMaterial && buildingAssignedTo == null && targetMaterial == null){
+        //     isMoving = false; 
+        // }
+
         // Arrived?
         if (Vector3.Distance(transform.position, target) < 0.1f)
         {
             isMoving = false;
 
+            
             // If we were bringing a material back, register delivery
             if (goingToMaterial && targetMaterialObject != null)
             {
@@ -110,31 +128,7 @@ public class Mob : MonoBehaviour
                       targetMaterial.gameObject
                     );
                 }
-            }
-
-            
-
-            // Flip journey direction
-            //goingToMaterial = !goingToMaterial;
-
-            
-
-            // Automatically start the next leg
-            // if (goingToMaterial)
-            // {
-            //     // Building → material
-            //     AssignBuildingTask(buildingAssignedTo.GetBuildingClass());
-            //     if (targetMaterial != null)
-            //         StartMoving(targetMaterial.transform.position, targetMaterial.gameObject);
-            // }
-            // else
-            // {
-            //     // Material → building
-            //     if (buildingAssignedTo != null)
-            //         StartMoving(buildingAssignedTo.transform.position,
-            //                     buildingAssignedTo.gameObject);
-            // }
-
+            } 
             return;
         }
 

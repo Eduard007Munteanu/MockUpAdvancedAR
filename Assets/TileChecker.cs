@@ -323,11 +323,6 @@ public class TileChecker : MonoBehaviour
 
                                 }
                             }
-
-
-
-
-
                         }
                         else{
                             //mainMenu.SetActive(!mainMenu.activeSelf);
