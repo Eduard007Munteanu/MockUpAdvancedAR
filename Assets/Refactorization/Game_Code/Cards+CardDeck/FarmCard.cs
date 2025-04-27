@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FarmCard : MonoBehaviour, BuildCard
+public class FarmCard : BuildCard
 {
 
     // Start is called before the first frame update

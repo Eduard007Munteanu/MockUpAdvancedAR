@@ -4,6 +4,35 @@ using UnityEngine;
 
 public class MilitaryBuild : MonoBehaviour, Build
 {
+    public void Init(string name, Tile tile)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public string GetBuildingClass()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public Tile GetTile()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetTile(Tile tile)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public Panel GetPanel()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public GameObject GetPanelPrefab()
+    {
+        throw new System.NotImplementedException();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -23,10 +52,7 @@ public class MilitaryBuild : MonoBehaviour, Build
         throw new System.NotImplementedException();
     }
 
-    public void GetBuildingClass()
-    {
-        throw new System.NotImplementedException();
-    }
+   
 
     public void GetID()
     {
@@ -47,12 +73,8 @@ public class MilitaryBuild : MonoBehaviour, Build
     {
         throw new System.NotImplementedException();
     }
-
-    public void GetTile()
-    {
-        throw new System.NotImplementedException();
-    }
-
+    
+    
     public void RemoveAssignedMob()
     {
         throw new System.NotImplementedException();

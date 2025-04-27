@@ -6,6 +6,10 @@ public class MainBuild : MonoBehaviour, Build
 {
 
 
+
+    [SerializeField] private GameObject PanelPrefab;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +21,8 @@ public class MainBuild : MonoBehaviour, Build
     {
         
     }
+
+
 
 
     public void AddAssignedMob()
@@ -59,5 +65,33 @@ public class MainBuild : MonoBehaviour, Build
         throw new System.NotImplementedException();
     }
 
-    
+    public void Init(string BuildingClassName, Tile tile)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    Tile Build.GetTile()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetTile(Tile tile)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public Panel GetPanel()
+    {
+        return PanelPrefab.GetComponent<Panel>();
+    }
+
+    public GameObject GetPanelPrefab()
+    {
+        return PanelPrefab;
+    }
+
+    string Build.GetBuildingClass()
+    {
+        throw new System.NotImplementedException();
+    }
 }

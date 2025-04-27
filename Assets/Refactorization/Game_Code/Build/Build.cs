@@ -1,25 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public interface Build
 {
+
+
+    void Init(string BuildingClassName, Tile tile);
    
     void AddAssignedMob();
 
     void RemoveAssignedMob();
 
 
-    void GetBuildingClass();
+    string GetBuildingClass();
 
 
     void GetID();
 
-     void GetTile();
+    Tile GetTile();
 
-     int GetMobCount();
+    void SetTile(Tile tile);
 
-     List<Mobs> GetMobs(); 
+    int GetMobCount();
+
+    List<Mobs> GetMobs(); 
 
     Mobs GetSpecificMob(int index); 
+
+    Panel GetPanel();
+
+    GameObject GetPanelPrefab();
 }

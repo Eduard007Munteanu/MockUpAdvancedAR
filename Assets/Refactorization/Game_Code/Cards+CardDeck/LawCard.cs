@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface LawCard
+public class LawCard
 {
-    void SendToPanelManager(PanelDatabase panelDatabase);
+    void SendToPanelManager(PanelDatabase panelDatabase){
+        
+    }
 }

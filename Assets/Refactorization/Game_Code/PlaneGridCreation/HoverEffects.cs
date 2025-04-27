@@ -1,18 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HoverEffects : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject effectObject; // Assign VFX, outline, glow, etc.
+
+    public void EnableEffect()
     {
-        
+        if (effectObject != null)
+            effectObject.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DisableEffect()
     {
-        
+        if (effectObject != null)
+            effectObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        if (effectObject != null)
+            effectObject.SetActive(false); // start hidden
     }
 }

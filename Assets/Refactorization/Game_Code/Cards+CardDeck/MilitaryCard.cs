@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MilitaryCard : MonoBehaviour, BuildCard
+public class MilitaryCard : BuildCard
 {
 
     // Start is called before the first frame update

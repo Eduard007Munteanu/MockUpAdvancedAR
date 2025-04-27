@@ -1,0 +1,211 @@
+using System.Collections;
+using System.Collections.Generic;
+
+using Unity.VisualScripting;
+using UnityEditor.EditorTools;
+using UnityEngine;
+
+public class TheRayCaster : MonoBehaviour
+{
+    // Start is called before the first frame update
+
+    private Transform palmTransform;
+
+    [SerializeField] private GameObject leftHand;
+
+    [SerializeField] private OVRHand rightHand; //Maybe just GameObject, then specific OVRHand?
+
+    [SerializeField] private DefaultTile tilePrefab; //Maybe abstract class instead of interface?
+
+    [SerializeField] private CardsInHand cardsInhand;
+
+    
+
+    [SerializeField] private GameObject buiildPrefab; //Well, what kind of building? Interface based? 
+
+    [SerializeField] private PanelManager panelManager;
+
+    private GameObject lastHitTile;
+
+    private Mobs selectedMob;
+
+
+
+    void Start()
+    {
+        GetPalmPosition();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        InitiateRaycast();
+
+    }
+
+    void GetPalmPosition(){
+
+        OVRSkeleton leftHandSkeleton = leftHand.GetComponent<OVRSkeleton>();
+
+        foreach (var bone in leftHandSkeleton.Bones)
+        {
+            if (bone.Id.ToString().Contains("Palm"))
+            {
+                palmTransform = bone.Transform;
+                break;
+            }
+        }  
+    }
+
+
+
+    void InitiateRaycast(){
+
+        float rightHandPinchStrength = rightHand.GetFingerPinchStrength(OVRHand.HandFinger.Index);
+
+
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+        
+        
+
+
+        if(Physics.Raycast(ray, out hit, 100f)){
+            GameObject hitObj = hit.collider.gameObject;
+
+
+            Cards card = hit.collider.GetComponent<Cards>();
+            Build building = hit.collider.GetComponent<Build>();
+            Mobs mobs = hit.collider.GetComponent<Mobs>();
+            Tile tile = hit.collider.GetComponent<Tile>();
+
+
+
+
+            if(tile != null){
+                GlowEffectTrigger(hitObj);
+                if(cardsInhand.GetCardsInHand().Count == 1){
+                    if(rightHandPinchStrength > 0.8f){
+                        if(tile != null){
+                            SpawnBuildingOnTile(tile, cardsInhand.GetCardsInHand()[0],  buiildPrefab);
+                        }
+                    }
+
+                }
+            }
+
+            else if(card != null && cardsInhand.IsCardInHand(card)){
+                if(rightHandPinchStrength > 0.8f){
+                    cardsInhand.RemoveAllCardsExpect(card);
+                }
+            }
+
+            else if(building != null){
+                if(rightHandPinchStrength > 0.8f){
+                    panelManager.SpawnPanelOnLeftHand(building);
+                }
+            }
+
+            else if(mobs != null){
+                if(rightHandPinchStrength > 0.8f){
+                    selectedMob = mobs;
+                    selectedMob.ReactOnClick();
+                }
+            }
+
+            else if(selectedMob != null && mobs == null){
+                if(rightHandPinchStrength > 0.8f){
+                    if(tile != null){
+                        Vector3 tilePosition = ((MonoBehaviour)tile).gameObject.transform.position;  //Monobehavior probably guaranteed. Need to check
+                        Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(tile, selectedMob), tilePosition.z);
+                        selectedMob.InitMove(targetPosition, hitObj);
+                    }
+                    else if(building != null){
+                        Vector3 buildingPosition = ((MonoBehaviour)building).gameObject.transform.position;  //Monobehavior probably guaranteed. Need to check
+                        Vector3 targetPosition = new Vector3(buildingPosition.x, vectorYHeightGivenTile(tile, selectedMob), buildingPosition.z);
+                        selectedMob.InitMove(targetPosition, hitObj);
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+    void GlowEffectTrigger(GameObject hitObj){
+        if(hitObj != lastHitTile){
+            GlowEffectReset();
+
+            Renderer rend = hitObj.GetComponent<Renderer>();
+            if (rend != null)
+            {
+                HoverEffect hoverEffect = hitObj.GetComponent<HoverEffect>();
+                if (hoverEffect != null)
+                {
+                    hoverEffect.EnableEffect();
+                }
+            }
+
+            lastHitTile = hitObj; 
+        }
+    }
+
+    void GlowEffectReset(){
+        if (lastHitTile != null)
+        {
+            Renderer rend = lastHitTile.GetComponent<Renderer>();
+            if (rend != null)
+            {
+                HoverEffect hoverEffect = lastHitTile.GetComponent<HoverEffect>();
+                if (hoverEffect != null)
+                {
+                    hoverEffect.DisableEffect();
+                }
+
+            }
+            lastHitTile = null;
+        }
+    }
+
+    private Vector3 SpawnPosition(Tile tile, GameObject objectToBeSpawned){
+        Vector3 tilePosition = ((MonoBehaviour)tile).gameObject.transform.position;   //Attach to GameObject, then allright. 
+        float tileHeight = tile.GetTileHeight();
+        float objectToBeSpawnedHeight = objectToBeSpawned.GetComponent<Renderer>().bounds.size.y;
+
+        Vector3 spawnPosition = tilePosition + Vector3.up * ((tileHeight + (objectToBeSpawnedHeight / 2f))  / 1f);
+
+        return spawnPosition;
+    }
+
+    public void SpawnBuildingOnTile(Tile tile, Cards card, GameObject buildingPrefab){
+        Vector3 spawnPosition = SpawnPosition(tile, buildingPrefab);
+        GameObject building = Instantiate(buildingPrefab, spawnPosition, Quaternion.identity);
+        
+
+        string buildingClassName = card.GetCardClass(); 
+
+        building.GetComponent<Build>().Init(buildingClassName, tile); //Maybe more, who knows
+    }
+
+     float vectorYHeightGivenTile(Tile tile, Mobs mob){
+        Vector3 tilePosition = ((MonoBehaviour)tile).gameObject.transform.position;
+
+        float tileHeight = tile.GetTileHeight();
+        float mobHeight = mob.GetMobHeight();
+
+        float height = tilePosition.y + ((tileHeight + (mobHeight / 2f))  / 1f);
+        return height;
+     }
+
+     
+
+    
+
+
+
+
+
+
+
+}

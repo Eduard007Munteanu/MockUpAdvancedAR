@@ -83,6 +83,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Build\Build.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Tile\DefaultTile.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Stone.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Panel\PanelManager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\DefaultMob.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\SleepCard.cs" />
     <Compile Include="Assets\Card.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\CardsInHand.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\Card.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\FarmBuild.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Tile\TheRayCaster.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\MainBuildingPanel.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\BuildManager.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Explosion.cs" />
@@ -100,7 +102,6 @@
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\ItemManager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\MainBuild.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\Mobs.cs" />
-    <Compile Include="Assets\Refactorization\Game_Code\GameManager\GameManager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\PlaneGridCreation\HoverEffects.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Tree.cs" />
     <Compile Include="Assets\CardDeck.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\PlaneGridCreation\GridOverlays.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\BuildUpgradeCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\MobManager.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Helper_Code\ItemBuilding.cs" />
     <Compile Include="Assets\Building.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -22,5 +22,8 @@ public class DefaultTile : MonoBehaviour, Tile
         throw new System.NotImplementedException();
     }
 
-    
+    public float GetTileHeight()
+    {
+        throw new System.NotImplementedException();
+    }
 }
