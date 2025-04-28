@@ -9,7 +9,7 @@ public class GridOverlay : MonoBehaviour
 
     private List<GameObject> tiles = new List<GameObject>();
 
-    [SerializeField] private GameObject materialManager;
+    [SerializeField] private GameObject itemManager;
 
     void Start()
     {
@@ -66,14 +66,15 @@ public class GridOverlay : MonoBehaviour
             }
         }
 
-        materialManager.GetComponent<MaterialManager>().SetTileRenderedOnRunTime(); 
+        // materialManager.GetComponent<MaterialManager>().SetTileRenderedOnRunTime(); 
+        itemManager.GetComponent<ItemManager>().TilesRendered();
 
 
     }
 
-    public Vector3[] GetTileCorners(GameObject tile)
+    public Vector3[] GetTileCorners(Tile tile)
     {
-        Transform tileTransform = tile.transform;
+        Transform tileTransform = ((MonoBehaviour)tile).transform;
 
         Vector3 center = tileTransform.position;
         Vector3 right = tileTransform.right * 0.5f * tileTransform.localScale.x * 10f;
@@ -90,5 +91,32 @@ public class GridOverlay : MonoBehaviour
     public List<GameObject> GetTiles()
     {
         return tiles;
+    }
+
+    public (int rows, int columns) GetRowAndColumnsOfPlatform(){
+        return (rows, columns);
+    }
+
+    public Tile FindTileWithCoordinates(int x, int z){
+        foreach (GameObject tile in tiles){
+            if(tile.name == $"Tile_{x}_{z}"){
+                return tile.GetComponent<Tile>();
+            }
+        }
+        Debug.LogError("No such tile found!");
+        return null;
+    }
+
+
+    public int GetTilesCount(){
+        return tiles.Count;
+    }
+
+
+
+    public Tile GetRandomTile(){
+        int randomIndex = Random.Range(0, GetTilesCount());
+        Tile randomTile = GetTiles()[randomIndex].GetComponent<Tile>();
+        return randomTile;
     }
 }

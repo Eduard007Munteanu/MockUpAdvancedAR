@@ -5,6 +5,9 @@ using UnityEngine;
 public class Gold : MonoBehaviour, Item
 {
 
+
+    private string itemClass = "Gold";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,9 +20,12 @@ public class Gold : MonoBehaviour, Item
         
     }
 
+
+   
+
     public string GetItemClass()
     {
-        throw new System.NotImplementedException();
+        return itemClass;
     }
 
     

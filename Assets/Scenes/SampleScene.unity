@@ -1144,7 +1144,6 @@ GameObject:
   - component: {fileID: 88159986}
   - component: {fileID: 88159985}
   - component: {fileID: 88159987}
-  - component: {fileID: 88159988}
   m_Layer: 0
   m_Name: CenterEyeAnchor
   m_TagString: MainCamera
@@ -1271,28 +1270,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!114 &88159988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88159983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca63e945416c8bc46bd6ba250e840a6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultMat: {fileID: 2100000, guid: 2b0f877ff73c16b4caad198b306c9357, type: 2}
-  hoverMat: {fileID: 2100000, guid: 2ae051fef5184a0468090e879c694ddc, type: 2}
-  rightHand: {fileID: 1440242550}
-  buildingPrefab: {fileID: 6417213904768520430, guid: c931f8318b06c7049ac747dc50feb714, type: 3}
-  buildingManager: {fileID: 653287506}
-  buildCanvasPrefab: {fileID: 171907769774305355, guid: 7d721f582a7a77c4dbb88e71fa497f5d, type: 3}
-  mainBuildCanvasPrefab: {fileID: 3972064620206592590, guid: e92d6c1f42dc0124bb11bb05ccddf767, type: 3}
-  leftHandSkeleton: {fileID: 1892893141}
-  mob: {fileID: 6403070120381211012, guid: 2dc162c6c5519394395257fcd4999810, type: 3}
-  mobManagerPrefab: {fileID: 1694954458}
 --- !u!1 &102432854
 GameObject:
   m_ObjectHideFlags: 0

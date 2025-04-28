@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Stone : MonoBehaviour, Item
 {
+
+    private string itemClass = "Stone";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +22,7 @@ public class Stone : MonoBehaviour, Item
     
     public string GetItemClass()
     {
-        throw new System.NotImplementedException();
+        return itemClass;
     }
 
     

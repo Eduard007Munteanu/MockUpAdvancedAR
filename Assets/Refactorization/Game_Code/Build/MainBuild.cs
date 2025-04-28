@@ -1,13 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Meta.XR.MRUtilityKit.SceneDecorator;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class MainBuild : MonoBehaviour, Build
+public class MainBuild : DefaultBuild//, Build
 {
 
 
+    [SerializeField] private GridOverlay gridOverlay;
+
 
     [SerializeField] private GameObject PanelPrefab;
+
+    private Tile tile;
+
+    private int Id;
+
+    private string building_class;
+
 
 
     // Start is called before the first frame update
@@ -22,76 +34,34 @@ public class MainBuild : MonoBehaviour, Build
         
     }
 
+    public override void Init(int Id, string building_class, Tile tile = null){
+        this.Id = Id;
+        this.building_class = building_class;
 
-
-
-    public void AddAssignedMob()
-    {
-        throw new System.NotImplementedException();
     }
 
-    public void GetBuildingClass()
-    {
-        throw new System.NotImplementedException();
+    public override Vector3 SpawnBuilding(){
+        tile = TileFindCalculation();
+        float tileHeight = tile.GetTileHeight();
+        float buildingHeight = GetComponent<Renderer>().bounds.size.y;
+        Vector3 tilePosition = ((MonoBehaviour)tile).transform.position;  //Given tile is a object
+
+
+
+        Vector3 spawnPosition = tilePosition + Vector3.up * ((tileHeight + (buildingHeight / 2f))  / 1f);
+        return spawnPosition;
     }
 
-    public void GetID()
-    {
-        throw new System.NotImplementedException();
+    public Tile TileFindCalculation(){
+        (int x, int z) = gridOverlay.GetRowAndColumnsOfPlatform();
+        (int, int) buildingSpawnPosition = (z-1, Mathf.FloorToInt(x/2));
+        Tile tile = gridOverlay.FindTileWithCoordinates(buildingSpawnPosition.Item1, buildingSpawnPosition.Item2);
+        return tile;
+
+
     }
 
-    public int GetMobCount()
-    {
-        throw new System.NotImplementedException();
-    }
+    
 
-    public List<Mobs> GetMobs()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public Mobs GetSpecificMob(int index)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void GetTile()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void RemoveAssignedMob()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void Init(string BuildingClassName, Tile tile)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    Tile Build.GetTile()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void SetTile(Tile tile)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public Panel GetPanel()
-    {
-        return PanelPrefab.GetComponent<Panel>();
-    }
-
-    public GameObject GetPanelPrefab()
-    {
-        return PanelPrefab;
-    }
-
-    string Build.GetBuildingClass()
-    {
-        throw new System.NotImplementedException();
-    }
+    
 }

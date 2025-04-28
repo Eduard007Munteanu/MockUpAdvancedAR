@@ -5,6 +5,8 @@ using UnityEngine;
 public class Tree : MonoBehaviour, Item
 {
 
+    private string itemClass = "Stone";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +21,7 @@ public class Tree : MonoBehaviour, Item
 
     public string GetItemClass()
     {
-        throw new System.NotImplementedException();
+        return itemClass;
     }
 
     
