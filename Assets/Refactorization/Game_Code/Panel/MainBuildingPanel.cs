@@ -9,6 +9,7 @@ public class MainBuildingPanel : DefaultPanel, Panel
     protected override void Start()
     {
         base.Start();
+        ItemDatabase.Instance.OnCollectedItemsUpdated += UpdatePanel;
         
     }
 

@@ -11,6 +11,11 @@ public class ItemDatabase: MonoBehaviour{
     private Dictionary<string, int> collectedItemsCount;
 
 
+
+    //Event trigger => we warn others that the OnCollectedItemsCountDataPacker() method should be called given update made. 
+    public event System.Action<DataPacket> OnCollectedItemsUpdated;
+
+
     void Awake()
     {
         if (Instance == null)  
@@ -31,6 +36,9 @@ public class ItemDatabase: MonoBehaviour{
         } else if(collectedItemsCount.ContainsKey(itemClass)){
             collectedItemsCount[itemClass] += increaseBy;
         }
+
+
+        OnCollectedItemsUpdated?.Invoke(GetCollectedItemsCountDataPacket());
     }
 
     public DataPacket GetCollectedItemsCountDataPacket(){
