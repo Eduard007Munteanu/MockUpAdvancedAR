@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LawCard
 {
-    void SendToPanelManager(PanelDatabase panelDatabase){
+    void SendToPanelManage(){
         
     }
 }

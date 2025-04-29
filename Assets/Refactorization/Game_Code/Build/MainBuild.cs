@@ -14,6 +14,8 @@ public class MainBuild : DefaultBuild//, Build
 
     [SerializeField] private GameObject PanelPrefab;
 
+    [SerializeField] private DefaultMob mobPrefab;
+
     private Tile tile;
 
     private int Id;
@@ -58,6 +60,62 @@ public class MainBuild : DefaultBuild//, Build
         Tile tile = gridOverlay.FindTileWithCoordinates(buildingSpawnPosition.Item1, buildingSpawnPosition.Item2);
         return tile;
 
+
+    }
+
+    public override void CreateMob(){
+        Vector3[] tileCorners = gridOverlay.GetTileCorners(tile);
+        float tileHeight = tile.GetTileHeight();
+
+        Vector3 topLeft = tileCorners[0];
+        Vector3 topRight = tileCorners[1];
+        Vector3 bottomRight = tileCorners[2];
+        Vector3 bottomLeft = tileCorners[3];
+
+
+        Debug.Log("TopLeft value is: " + topLeft); //Test
+        Debug.Log("TopRight value is: " + topRight); //Test
+        Debug.Log("BottomRight value is: " + bottomRight); //Test
+        Debug.Log("BottomLeft value is: " + bottomLeft); //Test
+
+        Vector3 buildingPosition = transform.position;
+        float spaceBetweenMobs = Vector3.Distance(topLeft, topRight) / 5; //This is the space between the mobs.
+
+
+        Vector3 spawnPosition = Vector3.zero;
+        float buildingHeight = GetComponent<Renderer>().bounds.size.y;
+        float mobHeight = mobPrefab.gameObject.GetComponent<Renderer>().bounds.size.y;
+
+
+        Vector3 threshold = new Vector3(buildingPosition.x, buildingPosition.y, buildingPosition.z + 0.2f); //This is the threshold for the mob to spawn.
+
+        GameObject lastAssignedMob = GetLastAssignedMob().gameObject; //Get the last mob spawned in the building.
+        if(lastAssignedMob != null){
+            spawnPosition = lastAssignedMob.transform.position - Vector3.right * spaceBetweenMobs;
+            if(Vector3.Distance(bottomRight, bottomLeft) < Vector3.Distance(bottomRight, spawnPosition)){
+                spawnPosition = lastAssignedMob.transform.position - Vector3.forward * spaceBetweenMobs;
+                spawnPosition.x = bottomRight.x;
+                if(Vector3.Distance(buildingPosition, spawnPosition) < Vector3.Distance(buildingPosition, threshold)){
+                    return;
+                } 
+            } 
+        } else {
+            spawnPosition = bottomRight; //+ Vector3.up * ((tileHeight + (buildingHeight / 2f))  / 1f);  //Potentially correct
+            spawnPosition.y = bottomRight.y + (tileHeight + (mobHeight / 2));
+        }
+
+        
+        
+        Vector3 finalSpawnPos = new Vector3(spawnPosition.x, spawnPosition.y, spawnPosition.z);    
+
+
+        GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
+
+        if(mob != null){
+            Debug.Log("Mob created successfully!");
+        }
+
+        mob.GetComponent<DefaultMob>().AssignToBuilding(this);
 
     }
 

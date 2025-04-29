@@ -5,6 +5,10 @@ using UnityEngine;
 public class MobManager : MonoBehaviour
 {
     // Start is called before the first frame update
+
+
+    [SerializeField] private DefaultMob mob;
+
     void Start()
     {
         

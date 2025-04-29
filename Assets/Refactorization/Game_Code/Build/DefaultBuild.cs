@@ -9,7 +9,7 @@ public class DefaultBuild : MonoBehaviour
 
     [SerializeField] private GameObject PanelPrefab;
 
-    private List<Mobs> assignedMobs = new List<Mobs>();
+    private List<DefaultMob> assignedMobs = new List<DefaultMob>();
 
     private int id;
 
@@ -40,13 +40,13 @@ public class DefaultBuild : MonoBehaviour
 
 
 
-    public void AddAssignedMob(Mobs mob)
+    public void AddAssignedMob(DefaultMob mob)
     {
         assignedMobs.Add(mob);
     }
 
 
-    public void RemoveAssignedMob(Mobs mob)
+    public void RemoveAssignedMob(DefaultMob mob)
     {
         assignedMobs.Remove(mob);
     }
@@ -63,12 +63,12 @@ public class DefaultBuild : MonoBehaviour
         return assignedMobs.Count;
     }
 
-    public List<Mobs> GetMobs()
+    public List<DefaultMob> GetMobs()
     {
         return assignedMobs;
     }
 
-    public Mobs GetSpecificMob(int index)
+    public DefaultMob GetSpecificMob(int index)
     {
         if (assignedMobs.Count > 0)
         {
@@ -81,7 +81,7 @@ public class DefaultBuild : MonoBehaviour
         }
     }
 
-    public Mobs GetLastAssignedMob(){
+    public DefaultMob GetLastAssignedMob(){
         if(assignedMobs.Count > 0){
             return assignedMobs[assignedMobs.Count - 1];
         }else{
@@ -116,6 +116,12 @@ public class DefaultBuild : MonoBehaviour
     public virtual Vector3 SpawnBuilding(){
         return ((MonoBehaviour)tile).transform.position;
     }
+
+    public virtual void CreateMob(){
+
+    }
+
+    
 
 
 

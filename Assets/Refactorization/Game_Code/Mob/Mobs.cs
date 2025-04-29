@@ -12,7 +12,7 @@ public interface Mobs
 
     Item FindClosestItem(string itemName); //Can be further optimized by keeping track of a stack from closest to furthest item
 
-    void CollectItem(PanelDatabase panelDatabase);
+    void CollectItem();
 
     void ReactOnClick();
 

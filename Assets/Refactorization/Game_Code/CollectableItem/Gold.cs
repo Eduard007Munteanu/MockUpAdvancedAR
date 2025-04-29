@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gold : MonoBehaviour, Item
+public class Gold : DefaultItem, Item
 {
 
 
@@ -23,7 +23,7 @@ public class Gold : MonoBehaviour, Item
 
    
 
-    public string GetItemClass()
+    public override string GetItemClass()
     {
         return itemClass;
     }

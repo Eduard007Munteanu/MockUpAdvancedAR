@@ -67,10 +67,12 @@
     <Compile Include="Assets\BuildingManager.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Spawner.cs" />
     <Compile Include="Assets\Mob_Manager.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\ItemDatabase.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\MilitaryCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\SleepBuild.cs" />
-    <Compile Include="Assets\Refactorization\Game_Code\Panel\PanelDatabase.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\DataPacket.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\NormalBuildingPanel.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\MobDatabase.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\BuildCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Gold.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\LawCard.cs" />
@@ -102,9 +104,11 @@
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\ItemManager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\MainBuild.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\Mobs.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Panel\DefaultPanel.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\PlaneGridCreation\HoverEffects.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Tree.cs" />
     <Compile Include="Assets\CardDeck.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\BuildingDatabase.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\FarmCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\DefaultBuild.cs" />
     <Compile Include="Assets\MaterialElement.cs" />

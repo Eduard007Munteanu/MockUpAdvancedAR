@@ -4,25 +4,27 @@ using System.Linq;
 using Meta.XR.MRUtilityKit.SceneDecorator;
 using UnityEngine;
 
-public class DefaultMob : MonoBehaviour, Mobs
+public class DefaultMob : MonoBehaviour// ,Mobs
 {
 
     private bool isMoving = false;
 
-    private Build buidlingAssignedTo;
+    private DefaultBuild buidlingAssignedTo;
 
     [SerializeField] private float speedFactor = 0.008f;
 
     private ItemBuilding itemBuilding;
 
-    private Item closestItem; 
+    private DefaultItem closestItem; 
 
 
     private Vector3 toDestination;
 
     private GameObject toColliderObj;
 
-    private bool buildingOrTile;
+    private bool buildingOrTile;  //Not flexible!
+
+    private bool didICollectFromItem;
 
 
     // Start is called before the first frame update
@@ -44,13 +46,13 @@ public class DefaultMob : MonoBehaviour, Mobs
 
     }
 
-    public Build GetBuildingAssignedTo()
+    public DefaultBuild GetBuildingAssignedTo()
     {
         return buidlingAssignedTo;
     }
     
     
-    public void AssignToBuilding(Build building)
+    public void AssignToBuilding(DefaultBuild building)
     {
         buidlingAssignedTo = building;
     }
@@ -60,14 +62,14 @@ public class DefaultMob : MonoBehaviour, Mobs
         buidlingAssignedTo = null;
     }
 
-    public void CollectItem(PanelDatabase panelDatabase)
-    {
-        throw new System.NotImplementedException();
-    }
+    // public void CollectItem(PanelDatabase panelDatabase)
+    // {
+    //     throw new System.NotImplementedException();
+    // }
 
-    public Item FindClosestItem(string itemName)
+    public DefaultItem FindClosestItem(string itemName)
     {
-        Item targetItem = FindObjectsOfType<MonoBehaviour>().OfType<Item>()
+        DefaultItem targetItem = FindObjectsOfType<MonoBehaviour>().OfType<DefaultItem>()
                 .Where(m => m.GetItemClass() == itemName)
                 .OrderBy(m => Vector3.Distance(transform.position, ((MonoBehaviour)m).gameObject.transform.position))
                 .FirstOrDefault();
@@ -122,8 +124,12 @@ public class DefaultMob : MonoBehaviour, Mobs
                     isMoving = false;
                     return;
                 }
-                toColliderObj = ((MonoBehaviour)closestItem).gameObject;
-                toDestination = ((MonoBehaviour)closestItem).transform.position;
+                toColliderObj = closestItem.gameObject;
+                toDestination = closestItem.transform.position;
+                if(didICollectFromItem){
+                    ItemDatabase.Instance.UpdateCollectedItemsCount(closestItem, 1); //Hardcoded the value you get by collecting a material
+                    didICollectFromItem = false;
+                }
             }
         }
 
@@ -132,8 +138,9 @@ public class DefaultMob : MonoBehaviour, Mobs
             transform.position += dir * speedFactor;
 
             if(Vector3.Distance(transform.position, toDestination) < 0.1f){
-                toColliderObj = ((MonoBehaviour)buidlingAssignedTo).gameObject;
-                toDestination = ((MonoBehaviour)buidlingAssignedTo).transform.position;
+                toColliderObj = buidlingAssignedTo.gameObject;
+                toDestination = buidlingAssignedTo.transform.position;
+                didICollectFromItem = true;
             }
         }
     }

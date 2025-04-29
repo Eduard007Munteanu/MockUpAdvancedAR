@@ -15,6 +15,10 @@ public class DefaultItem : MonoBehaviour
     }
 
 
+    public virtual string GetItemClass(){
+        return "Undefined";
+    }
+
 
 
 

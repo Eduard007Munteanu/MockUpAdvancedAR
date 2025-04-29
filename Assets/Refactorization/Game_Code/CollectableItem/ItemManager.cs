@@ -24,6 +24,10 @@ public class ItemManager : MonoBehaviour
 
     private Dictionary<Tile, List<DefaultItem>> itemsData = new Dictionary<Tile, List<DefaultItem>>(); 
 
+    [SerializeField ] private int mineralPlacesToSpawn =  5;
+    [SerializeField] private int numberOfMaterialsPerTile = 5;
+
+
     
 
     // Start is called before the first frame update
@@ -35,7 +39,13 @@ public class ItemManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(tilesRendered){
+            for(int i=0; i < mineralPlacesToSpawn; i++){
+                CreateItemsForTile(numberOfMaterialsPerTile); 
+                
+            }   
+            tilesRendered = false;     
+        }
     }
 
     public void CreateItemsForTile(int numberOfItems){
@@ -121,4 +131,10 @@ public class ItemManager : MonoBehaviour
     public void TilesRendered(){
         tilesRendered = true;
     }
+
+
+
+
+
+    
 }

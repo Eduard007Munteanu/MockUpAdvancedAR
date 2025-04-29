@@ -38,7 +38,7 @@ public class PanelManager : MonoBehaviour
                 return;
             }
             else //If the panel is not active, activate it. 
-            {
+            {                
                 ActivatePanel(panels[BuildingClassName].Item1);
                 return;
             }
