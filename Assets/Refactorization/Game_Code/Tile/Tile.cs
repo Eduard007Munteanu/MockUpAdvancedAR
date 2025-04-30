@@ -5,7 +5,7 @@ using UnityEngine;
 public interface Tile
 {
     
-    public (int x_coordinate, int y_coordinate) GetTileCoordinates();
+    public (float, float) GetTileCoordinates();
 
     public float GetTileHeight();
 

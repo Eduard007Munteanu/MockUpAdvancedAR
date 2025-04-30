@@ -1,15 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildCard : DefaultCard
-{
-
-    private string cardClass = "BuildCard";
+public class DefaultCard : MonoBehaviour, Cards{
+    private string cardClass = "DefaultCard";
 
     private CardsDeck cardDeck;
 
     private bool isCardGrabbable = false;
+
+    [SerializeField] private Dictionary<DefaultItem, int> defineCost;  
 
 
     void Start(){
@@ -37,14 +36,14 @@ public class BuildCard : DefaultCard
 
 
 
-    public int GetCardID()
-    {
-        throw new System.NotImplementedException();
-    }
+    // public int GetCardID()   Probably not needed. 
+    // {
+        
+    // }
 
-    public Dictionary<Item, int> GetCost()
+    public Dictionary<DefaultItem, int> GetCost()
     {
-        throw new System.NotImplementedException();
+        return defineCost;
     }
 
     public void SendToCardInHands()
@@ -60,11 +59,4 @@ public class BuildCard : DefaultCard
 
             }
     }
-
-    void SendToSpecificTile(Tile tile){
-        
-    }
-
-    
-
 }

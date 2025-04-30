@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 
 
-public class DefaultItem : MonoBehaviour
+public class DefaultItem : MonoBehaviour, Item
 {
 
     private int Id;

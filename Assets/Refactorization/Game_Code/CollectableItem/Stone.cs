@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stone : MonoBehaviour, Item
+public class Stone : DefaultItem
 {
 
     private string itemClass = "Stone";

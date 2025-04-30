@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class DefaultTile : MonoBehaviour, Tile
@@ -17,13 +18,15 @@ public class DefaultTile : MonoBehaviour, Tile
     }
 
     
-    public (int x_coordinate, int y_coordinate) GetTileCoordinates()
+    public (float , float ) GetTileCoordinates()
     {
-        throw new System.NotImplementedException();
+        float x_coordinate = gameObject.GetComponent<Renderer>().bounds.size.x;
+        float y_coordinate = gameObject.GetComponent<Renderer>().bounds.size.y;
+        return (x_coordinate, y_coordinate);
     }
 
     public float GetTileHeight()
     {
-        throw new System.NotImplementedException();
+        return gameObject.GetComponent<Renderer>().bounds.size.y;
     }
 }

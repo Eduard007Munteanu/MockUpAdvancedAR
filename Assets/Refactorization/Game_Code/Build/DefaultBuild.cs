@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Newtonsoft.Json.Schema;
 
-public class DefaultBuild : MonoBehaviour
+public class DefaultBuild : MonoBehaviour, Build
 {
 
     [SerializeField] private GameObject PanelPrefab;
@@ -15,7 +15,7 @@ public class DefaultBuild : MonoBehaviour
 
     private string building_class;
 
-    private Tile tile;
+    private DefaultTile tile;
 
 
     // Start is called before the first frame update
@@ -30,7 +30,7 @@ public class DefaultBuild : MonoBehaviour
         
     }
 
-    public virtual void Init(int Id, string building_class, Tile tile)
+    public virtual void Init(int Id, string building_class, DefaultTile tile)
     {   
         this.id = Id;
         this.building_class = building_class;
@@ -114,7 +114,7 @@ public class DefaultBuild : MonoBehaviour
 
 
     public virtual Vector3 SpawnBuilding(){
-        return ((MonoBehaviour)tile).transform.position;
+        return tile.transform.position;
     }
 
     public virtual void CreateMob(){

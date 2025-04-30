@@ -7,29 +7,29 @@ public interface Build
 {
 
 
-    void Init(string BuildingClassName, Tile tile);
+    // void Init(string BuildingClassName, Tile tile);
    
-    void AddAssignedMob();
+    // void AddAssignedMob();
 
-    void RemoveAssignedMob();
-
-
-    string GetBuildingClass();
+    // void RemoveAssignedMob();
 
 
-    void GetID();
+    // string GetBuildingClass();
 
-    Tile GetTile();
 
-    void SetTile(Tile tile);
+    // void GetID();
 
-    int GetMobCount();
+    // Tile GetTile();
 
-    List<Mobs> GetMobs(); 
+    // void SetTile(Tile tile);
 
-    Mobs GetSpecificMob(int index); 
+    // int GetMobCount();
 
-    Panel GetPanel();
+    // List<Mobs> GetMobs(); 
 
-    GameObject GetPanelPrefab();
+    // Mobs GetSpecificMob(int index); 
+
+    // Panel GetPanel();
+
+    // GameObject GetPanelPrefab();
 }

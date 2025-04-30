@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SleepBuild : MonoBehaviour, Build
+public class SleepBuild : DefaultBuild
 {
     public void Init(string name, Tile tile)
     {

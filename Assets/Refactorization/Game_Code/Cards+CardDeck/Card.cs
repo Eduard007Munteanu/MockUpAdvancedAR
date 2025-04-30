@@ -6,15 +6,15 @@ using UnityEngine;
 public interface Cards 
 {
 
-    Dictionary<Item, int> GetCost();
+    // Dictionary<Item, int> GetCost();
 
-    int GetCardID();
+    // int GetCardID();
 
-    string GetCardClass();
+    // string GetCardClass();
 
-    void SendToCardInHands();
+    // void SendToCardInHands();
 
-    void Init(bool cardGrabbable, CardsDeck uniqueCardDeck);
+    // void Init(bool cardGrabbable, CardsDeck uniqueCardDeck);
 
 
 }

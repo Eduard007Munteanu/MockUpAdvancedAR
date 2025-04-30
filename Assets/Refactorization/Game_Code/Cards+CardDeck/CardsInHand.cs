@@ -12,7 +12,7 @@ public class CardsInHand : MonoBehaviour
 
 
 
-    private List<Cards> cardsInHand = new List<Cards>();
+    private List<DefaultCard> cardsInHand = new List<DefaultCard>();
 
     [SerializeField] private GameObject leftHand; 
 
@@ -46,25 +46,25 @@ public class CardsInHand : MonoBehaviour
         LayoutCardsOnPalm();
     }
 
-    public bool IsCardInHand(Cards card)
+    public bool IsCardInHand(DefaultCard card)
     {   
         return cardsInHand.Contains(card);
     }
 
-    public void AddCardToHand(Cards card)
+    public void AddCardToHand(DefaultCard card)
     {
         cardsInHand.Add(card);
         
     }
 
-    public void RemoveCardFromHand(Cards card)
+    public void RemoveCardFromHand(DefaultCard card)
     {
         cardsInHand.Remove(card);
-        Destroy(((MonoBehaviour)card).gameObject);  //Probably Monobehavior guaranteed
+        Destroy(card.gameObject);  //Probably Monobehavior guaranteed
         
     }
 
-    public void RemoveAllCardsExpect(Cards card){
+    public void RemoveAllCardsExpect(DefaultCard card){
         for (int i = cardsInHand.Count - 1; i >= 0; i--)
         {
             if (cardsInHand[i] != card)
@@ -82,7 +82,7 @@ public class CardsInHand : MonoBehaviour
         }
     }
 
-    public List<Cards> GetCardsInHand()
+    public List<DefaultCard> GetCardsInHand()
     {
         return cardsInHand;
     }
@@ -105,14 +105,14 @@ public class CardsInHand : MonoBehaviour
         {
             var card = cardsInHand[i];
             
-            ((MonoBehaviour)card).transform.SetParent(palmTransform, false); //Probably Monobehavior guaranteed
+            card.transform.SetParent(palmTransform, false); //Probably Monobehavior guaranteed
 
             
             float x = startX + i * cardSpacing;
-            ((MonoBehaviour)card).transform.localPosition = new Vector3(x, 0f, 0f); //Probably Monobehavior guaranteed
+            card.transform.localPosition = new Vector3(x, 0f, 0f); //Probably Monobehavior guaranteed
 
             
-            ((MonoBehaviour)card).transform.localRotation = Quaternion.identity; //Probably Monobehavior guaranteed
+            card.transform.localRotation = Quaternion.identity; //Probably Monobehavior guaranteed
         }
     }
 

@@ -5,7 +5,7 @@ using Meta.XR.MRUtilityKit.SceneDecorator;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MainBuild : DefaultBuild//, Build
+public class MainBuild : DefaultBuild
 {
 
 

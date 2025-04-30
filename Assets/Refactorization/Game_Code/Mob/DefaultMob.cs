@@ -109,7 +109,7 @@ public class DefaultMob : MonoBehaviour// ,Mobs
     
 
     public void LoopMove(){
-        Build building = toColliderObj.GetComponent<Build>();
+        DefaultBuild building = toColliderObj.GetComponent<DefaultBuild>();
         Item item = toColliderObj.GetComponent<Item>();
 
         if(building != null){

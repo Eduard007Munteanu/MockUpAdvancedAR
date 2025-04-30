@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FarmBuild : MonoBehaviour, Build
+public class FarmBuild : DefaultBuild
 {
     public void Init(string name, Tile tile)
     {

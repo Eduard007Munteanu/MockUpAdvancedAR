@@ -27,7 +27,7 @@ public class TheRayCaster : MonoBehaviour
 
     private GameObject lastHitTile;
 
-    private Mobs selectedMob;
+    private DefaultMob selectedMob;
 
 
 
@@ -74,10 +74,10 @@ public class TheRayCaster : MonoBehaviour
             GameObject hitObj = hit.collider.gameObject;
 
 
-            Cards card = hit.collider.GetComponent<Cards>();
-            Build building = hit.collider.GetComponent<Build>();
-            Mobs mobs = hit.collider.GetComponent<Mobs>();
-            Tile tile = hit.collider.GetComponent<Tile>();
+            DefaultCard card = hit.collider.GetComponent<DefaultCard>();
+            DefaultBuild building = hit.collider.GetComponent<DefaultBuild>();
+            DefaultMob mobs = hit.collider.GetComponent<DefaultMob>();
+            DefaultTile tile = hit.collider.GetComponent<DefaultTile>();
 
 
 
@@ -178,18 +178,18 @@ public class TheRayCaster : MonoBehaviour
         return spawnPosition;
     }
 
-    public void SpawnBuildingOnTile(Tile tile, Cards card, GameObject buildingPrefab){
+    public void SpawnBuildingOnTile(DefaultTile tile, DefaultCard card, GameObject buildingPrefab){
         Vector3 spawnPosition = SpawnPosition(tile, buildingPrefab);
         GameObject building = Instantiate(buildingPrefab, spawnPosition, Quaternion.identity);
         
 
         string buildingClassName = card.GetCardClass(); 
 
-        building.GetComponent<Build>().Init(buildingClassName, tile); //Maybe more, who knows
+        building.GetComponent<DefaultBuild>().Init(0, buildingClassName, tile); //Maybe more, who knows
     }
 
-     float vectorYHeightGivenTile(Tile tile, Mobs mob){
-        Vector3 tilePosition = ((MonoBehaviour)tile).gameObject.transform.position;
+     float vectorYHeightGivenTile(DefaultTile tile, DefaultMob mob){
+        Vector3 tilePosition = tile.gameObject.transform.position;
 
         float tileHeight = tile.GetTileHeight();
         float mobHeight = mob.GetMobHeight();

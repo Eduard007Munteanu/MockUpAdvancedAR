@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tree : MonoBehaviour, Item
+public class Tree : DefaultItem
 {
 
     private string itemClass = "Stone";

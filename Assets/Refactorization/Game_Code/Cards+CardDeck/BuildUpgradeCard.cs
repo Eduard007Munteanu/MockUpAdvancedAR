@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface BuildUpgradeCard
+public class BuildUpgradeCard : DefaultCard
 {
     
-    void SendToSpecificBuildingClass(string buildingClass);
+    public void SendToSpecificBuildingClass(string buildingClass){
+        
+    }
 }

@@ -78,7 +78,7 @@ public class CardsDeck : MonoBehaviour
                                     Quaternion.identity, 
                                     transform);
             Debug.Log("Card drawn from the deck!");
-            Cards card = spawnedCard.GetComponent<Cards>();
+            DefaultCard card = spawnedCard.GetComponent<DefaultCard>();
             if (card == null)
             {
                 Debug.LogError("Card component not found on the spawned card prefab.");

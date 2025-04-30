@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DefaultPanel: MonoBehaviour{
+public class DefaultPanel: MonoBehaviour, Panel{
 
     [SerializeField] private GameObject leftHand;
 

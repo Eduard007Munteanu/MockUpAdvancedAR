@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MilitaryBuild : MonoBehaviour, Build
+public class MilitaryBuild : DefaultBuild
 {
     public void Init(string name, Tile tile)
     {
