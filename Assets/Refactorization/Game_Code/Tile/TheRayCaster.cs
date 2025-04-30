@@ -9,19 +9,21 @@ public class TheRayCaster : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    private Transform palmTransform;
+    // private Transform palmTransform;
 
-    [SerializeField] private GameObject leftHand;
+    // [SerializeField] private GameObject leftHand;
 
     [SerializeField] private OVRHand rightHand; //Maybe just GameObject, then specific OVRHand?
 
-    [SerializeField] private DefaultTile tilePrefab; //Maybe abstract class instead of interface?
+    // [SerializeField] private DefaultTile tilePrefab; //Maybe abstract class instead of interface?
 
     [SerializeField] private CardsInHand cardsInhand;
 
     
 
-    [SerializeField] private GameObject buiildPrefab; //Well, what kind of building? Interface based? 
+    //[SerializeField] private GameObject buildPrefab; //Well, what kind of building? Interface based? 
+
+    
 
     [SerializeField] private PanelManager panelManager;
 
@@ -33,7 +35,7 @@ public class TheRayCaster : MonoBehaviour
 
     void Start()
     {
-        GetPalmPosition();
+        // GetPalmPosition();
     }
 
     // Update is called once per frame
@@ -43,19 +45,19 @@ public class TheRayCaster : MonoBehaviour
 
     }
 
-    void GetPalmPosition(){
+    // void GetPalmPosition(){
 
-        OVRSkeleton leftHandSkeleton = leftHand.GetComponent<OVRSkeleton>();
+    //     OVRSkeleton leftHandSkeleton = leftHand.GetComponent<OVRSkeleton>();
 
-        foreach (var bone in leftHandSkeleton.Bones)
-        {
-            if (bone.Id.ToString().Contains("Palm"))
-            {
-                palmTransform = bone.Transform;
-                break;
-            }
-        }  
-    }
+    //     foreach (var bone in leftHandSkeleton.Bones)
+    //     {
+    //         if (bone.Id.ToString().Contains("Palm"))
+    //         {
+    //             palmTransform = bone.Transform;
+    //             break;
+    //         }
+    //     }  
+    // }
 
 
 
@@ -87,7 +89,7 @@ public class TheRayCaster : MonoBehaviour
                 if(cardsInhand.GetCardsInHand().Count == 1){
                     if(rightHandPinchStrength > 0.8f){
                         if(tile != null){
-                            SpawnBuildingOnTile(tile, cardsInhand.GetCardsInHand()[0],  buiildPrefab);
+                            BuildManager.Instance.TrySpawnBuilding(tile, cardsInhand.GetCardsInHand()[0]);
                         }
                     }
 
@@ -116,12 +118,12 @@ public class TheRayCaster : MonoBehaviour
             else if(selectedMob != null && mobs == null){
                 if(rightHandPinchStrength > 0.8f){
                     if(tile != null){
-                        Vector3 tilePosition = ((MonoBehaviour)tile).gameObject.transform.position;  //Monobehavior probably guaranteed. Need to check
+                        Vector3 tilePosition = tile.gameObject.transform.position;  //Monobehavior probably guaranteed. Need to check
                         Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(tile, selectedMob), tilePosition.z);
                         selectedMob.InitMove(targetPosition, hitObj);
                     }
                     else if(building != null){
-                        Vector3 buildingPosition = ((MonoBehaviour)building).gameObject.transform.position;  //Monobehavior probably guaranteed. Need to check
+                        Vector3 buildingPosition = building.gameObject.transform.position;  //Monobehavior probably guaranteed. Need to check
                         Vector3 targetPosition = new Vector3(buildingPosition.x, vectorYHeightGivenTile(tile, selectedMob), buildingPosition.z);
                         selectedMob.InitMove(targetPosition, hitObj);
                     }
@@ -168,25 +170,7 @@ public class TheRayCaster : MonoBehaviour
         }
     }
 
-    private Vector3 SpawnPosition(Tile tile, GameObject objectToBeSpawned){
-        Vector3 tilePosition = ((MonoBehaviour)tile).gameObject.transform.position;   //Attach to GameObject, then allright. 
-        float tileHeight = tile.GetTileHeight();
-        float objectToBeSpawnedHeight = objectToBeSpawned.GetComponent<Renderer>().bounds.size.y;
-
-        Vector3 spawnPosition = tilePosition + Vector3.up * ((tileHeight + (objectToBeSpawnedHeight / 2f))  / 1f);
-
-        return spawnPosition;
-    }
-
-    public void SpawnBuildingOnTile(DefaultTile tile, DefaultCard card, GameObject buildingPrefab){
-        Vector3 spawnPosition = SpawnPosition(tile, buildingPrefab);
-        GameObject building = Instantiate(buildingPrefab, spawnPosition, Quaternion.identity);
-        
-
-        string buildingClassName = card.GetCardClass(); 
-
-        building.GetComponent<DefaultBuild>().Init(0, buildingClassName, tile); //Maybe more, who knows
-    }
+    
 
      float vectorYHeightGivenTile(DefaultTile tile, DefaultMob mob){
         Vector3 tilePosition = tile.gameObject.transform.position;

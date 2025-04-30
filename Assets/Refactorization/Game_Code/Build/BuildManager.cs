@@ -2,14 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildManager : MonoBehaviour
+public class BuildManager : MonoBehaviour  //One instance only
 {
+
+    public static BuildManager Instance {get; private set;}
 
     [SerializeField] private GameObject  mainBuildingPrefab;
 
+    [SerializeField] private List<DefaultBuild> defaultBuildOptions;
+
     private MainBuild mainBuildInstance;
 
-    private Dictionary<string, List<Build>> buildingDictionary;
+    private Dictionary<string, List<DefaultBuild>> buildingDictionary;
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this) {
+            Debug.LogWarning("More than one BuildManager detected. Destroying duplicate.");
+            Destroy(gameObject);
+        } else {
+            Instance = this;
+        }
+    }
 
 
     // Start is called before the first frame update
@@ -25,19 +39,19 @@ public class BuildManager : MonoBehaviour
     }
 
 
-    void AddBuildingDictionary(Build building)
+    void AddBuildingDictionary(DefaultBuild building)
     {
         string key = building.GetBuildingClass();
 
         if (!buildingDictionary.ContainsKey(key))
         {
-            buildingDictionary[key] = new List<Build>();
+            buildingDictionary[key] = new List<DefaultBuild>();
         }
         
         buildingDictionary[key].Add(building);
     }
 
-    void RemoveBuildingDictionary(Build building)
+    void RemoveBuildingDictionary(DefaultBuild building)
     {
         string key = building.GetBuildingClass();
 
@@ -76,5 +90,41 @@ public class BuildManager : MonoBehaviour
         mainBuildInstance.Init(1, "MainBuild");
 
         
+    }
+
+    private Vector3 SpawnPosition(DefaultTile tile, GameObject objectToBeSpawned){
+        Vector3 tilePosition = tile.gameObject.transform.position;   //Attach to GameObject, then allright. 
+        float tileHeight = tile.GetTileHeight();
+        float objectToBeSpawnedHeight = objectToBeSpawned.GetComponent<Renderer>().bounds.size.y;
+
+        Vector3 spawnPosition = tilePosition + Vector3.up * ((tileHeight + (objectToBeSpawnedHeight / 2f))  / 1f);
+
+        return spawnPosition;
+    }
+
+    private void SpawnBuildingOnTile(DefaultTile tile, BuildCard card){
+        string cardName = card.GetCardClass();
+        DefaultBuild actualBuild = null;
+        foreach(DefaultBuild defaultBuildOption in defaultBuildOptions){
+            string defaultBuildOptionName = defaultBuildOption.GetBuildingClass();
+            if(defaultBuildOptionName == cardName){ 
+                actualBuild = defaultBuildOption;
+            }
+        }
+        Vector3 spawnPosition = SpawnPosition(tile, actualBuild.gameObject );
+        GameObject building = Instantiate(actualBuild.gameObject, spawnPosition, Quaternion.identity);
+        
+
+        string buildingClassName = card.GetCardClass(); 
+
+        building.GetComponent<DefaultBuild>().Init(0, buildingClassName, tile); //Maybe more, who knows
+    }
+
+    public void TrySpawnBuilding(DefaultTile tile, DefaultCard card) {
+        if (card is BuildCard buildCard) {
+            SpawnBuildingOnTile(tile, buildCard);
+        } else {
+            Debug.Log("Card is not a build card, ignoring.");
+        }
     }
 }

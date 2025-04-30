@@ -90,7 +90,7 @@ public class CardsDeck : MonoBehaviour
 
 
     // This should be called when a player grabs the card
-    public void OnCardGrabDistanceReached(Cards cardInHand)
+    public void OnCardGrabDistanceReached(DefaultCard cardInHand)
     {
 
 
@@ -111,7 +111,7 @@ public class CardsDeck : MonoBehaviour
                                     transform.position + Vector3.up * 0.01f, 
                                     Quaternion.identity, 
                                     transform);
-                cardsInHand.AddCardToHand(spawnedCard.GetComponent<Cards>());
+                cardsInHand.AddCardToHand(spawnedCard.GetComponent<DefaultCard>());
 
 
 

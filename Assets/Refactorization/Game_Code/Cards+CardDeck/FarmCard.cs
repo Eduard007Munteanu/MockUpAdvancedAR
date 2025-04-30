@@ -16,10 +16,10 @@ public class FarmCard : BuildCard
     {
         
     }
-    public string GetCardClass()
-    {
-        throw new System.NotImplementedException();
-    }
+    // public string GetCardClass()
+    // {
+    //     throw new System.NotImplementedException();
+    // }
 
     public int GetCardID()
     {

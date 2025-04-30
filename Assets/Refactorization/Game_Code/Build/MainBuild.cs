@@ -36,7 +36,7 @@ public class MainBuild : DefaultBuild
         
     }
 
-    public override void Init(int Id, string building_class, Tile tile = null){
+    public override void Init(int Id, string building_class, DefaultTile tile = null){
         this.Id = Id;
         this.building_class = building_class;
 

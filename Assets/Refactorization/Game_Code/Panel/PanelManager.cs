@@ -24,7 +24,7 @@ public class PanelManager : MonoBehaviour
         
     }
 
-    public void SpawnPanelOnLeftHand(Build panelFromBuilding)
+    public void SpawnPanelOnLeftHand(DefaultBuild panelFromBuilding)
     {
 
 
