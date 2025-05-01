@@ -6,9 +6,9 @@ using UnityEngine;
 public class MainBuildingPanel : DefaultPanel
 {
     // Start is called before the first frame update
-    protected override void Start()
+    void Start()
     {
-        base.Start();
+        
         ItemDatabase.Instance.OnCollectedItemsUpdated += UpdatePanel;
         
     }
