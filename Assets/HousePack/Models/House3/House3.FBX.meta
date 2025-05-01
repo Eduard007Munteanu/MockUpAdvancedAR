@@ -27,12 +27,62 @@ ModelImporter:
   - first:
       95: 9500000
     second: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: map1
+    second: {fileID: 2100000, guid: 167ba5bc20398f54683948c46246abc1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: map10
+    second: {fileID: 2100000, guid: 167ba5bc20398f54683948c46246abc1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: map2
+    second: {fileID: 2100000, guid: 167ba5bc20398f54683948c46246abc1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: map3
+    second: {fileID: 2100000, guid: 167ba5bc20398f54683948c46246abc1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: map4
+    second: {fileID: 2100000, guid: 167ba5bc20398f54683948c46246abc1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: map5
+    second: {fileID: 2100000, guid: 167ba5bc20398f54683948c46246abc1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: map6
+    second: {fileID: 2100000, guid: 167ba5bc20398f54683948c46246abc1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: map7
+    second: {fileID: 2100000, guid: 167ba5bc20398f54683948c46246abc1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: map8
+    second: {fileID: 2100000, guid: 167ba5bc20398f54683948c46246abc1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: map9
+    second: {fileID: 2100000, guid: 167ba5bc20398f54683948c46246abc1, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

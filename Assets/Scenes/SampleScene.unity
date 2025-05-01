@@ -1284,8 +1284,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rightHand: {fileID: 1440242550}
-  cardsInhand: {fileID: 1870715818}
-  panelManager: {fileID: 1092835988}
 --- !u!1 &102432854
 GameObject:
   m_ObjectHideFlags: 0
