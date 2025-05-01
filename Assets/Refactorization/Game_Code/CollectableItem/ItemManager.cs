@@ -7,6 +7,9 @@ public class ItemManager : MonoBehaviour
 {
 
 
+    public static ItemManager Instance {get; private set;}
+
+
     private bool tilesRendered = false;
 
     [SerializeField] private GridOverlay gridOverlay;
@@ -29,6 +32,17 @@ public class ItemManager : MonoBehaviour
 
 
     
+
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this) {
+            Debug.LogWarning("More than one BuildManager detected. Destroying duplicate.");
+            Destroy(gameObject);
+        } else {
+            Instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()

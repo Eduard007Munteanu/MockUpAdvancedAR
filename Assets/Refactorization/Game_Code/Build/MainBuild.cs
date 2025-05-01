@@ -54,7 +54,7 @@ public class MainBuild : DefaultBuild
         return spawnPosition;
     }
 
-    public Tile TileFindCalculation(){
+    private Tile TileFindCalculation(){
         (int x, int z) = gridOverlay.GetRowAndColumnsOfPlatform();
         (int, int) buildingSpawnPosition = (z-1, Mathf.FloorToInt(x/2));
         Tile tile = gridOverlay.FindTileWithCoordinates(buildingSpawnPosition.Item1, buildingSpawnPosition.Item2);

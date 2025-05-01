@@ -5,11 +5,26 @@ using UnityEngine;
 public class PanelManager : MonoBehaviour
 {
 
+    public static PanelManager Instance {get; private set;}
+
     private Transform palmTransform;
 
     [SerializeField] private GameObject leftHand;
 
     Dictionary<string, (GameObject, bool)> panels = new Dictionary<string, (GameObject, bool)>(); //List of panels that are spawned.
+
+
+
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this) {
+            Debug.LogWarning("More than one BuildManager detected. Destroying duplicate.");
+            Destroy(gameObject);
+        } else {
+            Instance = this;
+        }
+    }
 
 
     // Start is called before the first frame update

@@ -7,23 +7,9 @@ using UnityEngine;
 
 public class TheRayCaster : MonoBehaviour
 {
-    // Start is called before the first frame update
-
-    // private Transform palmTransform;
-
-    // [SerializeField] private GameObject leftHand;
-
+    
     [SerializeField] private OVRHand rightHand; //Maybe just GameObject, then specific OVRHand?
 
-    // [SerializeField] private DefaultTile tilePrefab; //Maybe abstract class instead of interface?
-
-    [SerializeField] private CardsInHand cardsInhand;
-
-    
-
-    //[SerializeField] private GameObject buildPrefab; //Well, what kind of building? Interface based? 
-
-    
 
     [SerializeField] private PanelManager panelManager;
 
@@ -35,7 +21,7 @@ public class TheRayCaster : MonoBehaviour
 
     void Start()
     {
-        // GetPalmPosition();
+        
     }
 
     // Update is called once per frame
@@ -45,19 +31,7 @@ public class TheRayCaster : MonoBehaviour
 
     }
 
-    // void GetPalmPosition(){
-
-    //     OVRSkeleton leftHandSkeleton = leftHand.GetComponent<OVRSkeleton>();
-
-    //     foreach (var bone in leftHandSkeleton.Bones)
-    //     {
-    //         if (bone.Id.ToString().Contains("Palm"))
-    //         {
-    //             palmTransform = bone.Transform;
-    //             break;
-    //         }
-    //     }  
-    // }
+    
 
 
 
@@ -86,19 +60,19 @@ public class TheRayCaster : MonoBehaviour
 
             if(tile != null){
                 GlowEffectTrigger(hitObj);
-                if(cardsInhand.GetCardsInHand().Count == 1){
+                if(CardsInHand.Instance.GetCardsInHand().Count == 1){
                     if(rightHandPinchStrength > 0.8f){
                         if(tile != null){
-                            BuildManager.Instance.TrySpawnBuilding(tile, cardsInhand.GetCardsInHand()[0]);
+                            BuildManager.Instance.TrySpawnBuilding(tile, CardsInHand.Instance.GetCardsInHand()[0]);
                         }
                     }
 
                 }
             }
 
-            else if(card != null && cardsInhand.IsCardInHand(card)){
+            else if(card != null && CardsInHand.Instance.IsCardInHand(card)){
                 if(rightHandPinchStrength > 0.8f){
-                    cardsInhand.RemoveAllCardsExpect(card);
+                    CardsInHand.Instance.RemoveAllCardsExpect(card);
                 }
             }
 
@@ -118,12 +92,12 @@ public class TheRayCaster : MonoBehaviour
             else if(selectedMob != null && mobs == null){
                 if(rightHandPinchStrength > 0.8f){
                     if(tile != null){
-                        Vector3 tilePosition = tile.gameObject.transform.position;  //Monobehavior probably guaranteed. Need to check
+                        Vector3 tilePosition = tile.gameObject.transform.position;  
                         Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(tile, selectedMob), tilePosition.z);
                         selectedMob.InitMove(targetPosition, hitObj);
                     }
                     else if(building != null){
-                        Vector3 buildingPosition = building.gameObject.transform.position;  //Monobehavior probably guaranteed. Need to check
+                        Vector3 buildingPosition = building.gameObject.transform.position;  
                         Vector3 targetPosition = new Vector3(buildingPosition.x, vectorYHeightGivenTile(tile, selectedMob), buildingPosition.z);
                         selectedMob.InitMove(targetPosition, hitObj);
                     }

@@ -72,6 +72,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Build\SleepBuild.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\DataPacket.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\NormalBuildingPanel.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\CardsDeck.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\MobDatabase.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\BuildCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Gold.cs" />
@@ -116,7 +117,6 @@
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Despawn.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Item.cs" />
     <Compile Include="Assets\Mob.cs" />
-    <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\CardDeck.cs" />
     <Compile Include="Assets\HoverEffect.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\PlaneGridCreation\GridOverlays.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\BuildUpgradeCard.cs" />

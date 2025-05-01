@@ -4,21 +4,21 @@ using UnityEngine;
 
 public interface Mobs 
 {
-    void AssignToBuilding(Build building);
+    // void AssignToBuilding(Build building);
 
-    void RemoveFromBuilding();
+    // void RemoveFromBuilding();
 
-    //void MoveTo(Vector3 destination, GameObject colliderObj);
+    // //void MoveTo(Vector3 destination, GameObject colliderObj);
 
-    Item FindClosestItem(string itemName); //Can be further optimized by keeping track of a stack from closest to furthest item
+    // Item FindClosestItem(string itemName); //Can be further optimized by keeping track of a stack from closest to furthest item
 
-    void CollectItem();
+    // void CollectItem();
 
-    void ReactOnClick();
+    // void ReactOnClick();
 
-    float GetMobHeight();
+    // float GetMobHeight();
 
-    void InitMove(Vector3 destination, GameObject colliderObj);
+    // void InitMove(Vector3 destination, GameObject colliderObj);
 
 
 

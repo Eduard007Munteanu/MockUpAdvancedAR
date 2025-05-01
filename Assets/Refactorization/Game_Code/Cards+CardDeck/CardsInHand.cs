@@ -7,6 +7,8 @@ using UnityEngine;
 public class CardsInHand : MonoBehaviour
 {
 
+    public static CardsInHand Instance {get; private set;}
+
 
     //TODO>  Consider if Destroy or set unactive the cards, regarding performace. Destroying is performance heavy. 
 
@@ -20,7 +22,19 @@ public class CardsInHand : MonoBehaviour
 
     [SerializeField] private float cardSpacing = 0.01f;
 
-    
+
+
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this) {
+            Debug.LogWarning("More than one BuildManager detected. Destroying duplicate.");
+            Destroy(gameObject);
+        } else {
+            Instance = this;
+        }
+    }
+
 
     // Start is called before the first frame update
     void Start()

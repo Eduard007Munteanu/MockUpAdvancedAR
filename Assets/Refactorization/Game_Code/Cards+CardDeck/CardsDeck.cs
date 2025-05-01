@@ -16,6 +16,10 @@ public class CardsType
 
 public class CardsDeck : MonoBehaviour
 {
+
+    public static CardsDeck Instance {get; private set;}
+
+
     public List<CardType> cardTypes;
     private Queue<(GameObject, string)> cardQueue;
 
@@ -27,11 +31,19 @@ public class CardsDeck : MonoBehaviour
 
     [SerializeField] float grabDistance;
 
-    
 
 
+    void Awake()
+    {
+        if (Instance != null && Instance != this) {
+            Debug.LogWarning("More than one BuildManager detected. Destroying duplicate.");
+            Destroy(gameObject);
+        } else {
+            Instance = this;
+        }
+    }
 
-    
+
     void Start()
     {
 

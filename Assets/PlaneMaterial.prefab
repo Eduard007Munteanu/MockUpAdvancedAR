@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 4106918482921141565}
   - component: {fileID: 4964449975415668061}
   - component: {fileID: 1456122927102132257}
-  - component: {fileID: 5641939217679699927}
+  - component: {fileID: 1040889827483255809}
   m_Layer: 0
   m_Name: PlaneMaterial
   m_TagString: Tile
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectObject: {fileID: 2230329505799387979}
---- !u!114 &5641939217679699927
+--- !u!114 &1040889827483255809
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,6 +215,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6741967199189696747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1b21665cf501954c914ae6c74c4e4d1, type: 3}
+  m_Script: {fileID: 11500000, guid: 325270dd49770cf4d9fceef016df5802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour  //One instance only
@@ -66,6 +67,18 @@ public class BuildManager : MonoBehaviour  //One instance only
         }
     }
 
+    
+    int GetBuildingCount(DefaultBuild building){
+        string key = building.GetBuildingClass();
+        int count = 0;
+
+        if(buildingDictionary.ContainsKey(key)){
+            count = buildingDictionary[key].Count;
+        }
+
+        return count;
+    }
+
 
 
 
@@ -88,6 +101,7 @@ public class BuildManager : MonoBehaviour  //One instance only
         buildingObj.transform.position = spawnPos;
 
         mainBuildInstance.Init(1, "MainBuild");
+        AddBuildingDictionary(mainBuildInstance);
 
         
     }
@@ -117,7 +131,11 @@ public class BuildManager : MonoBehaviour  //One instance only
 
         string buildingClassName = card.GetCardClass(); 
 
-        building.GetComponent<DefaultBuild>().Init(0, buildingClassName, tile); //Maybe more, who knows
+
+
+        AddBuildingDictionary(building.GetComponent<DefaultBuild>());
+        int buildingCount = GetBuildingCount(building.GetComponent<DefaultBuild>());
+        building.GetComponent<DefaultBuild>().Init(buildingCount, buildingClassName, tile); //Maybe more, who knows
     }
 
     public void TrySpawnBuilding(DefaultTile tile, DefaultCard card) {
