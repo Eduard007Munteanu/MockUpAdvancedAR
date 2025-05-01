@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DefaultCard : MonoBehaviour, Cards{
-    private string cardClass = "DefaultCard";
+    protected virtual string CardClass => "DefaultCard";
 
     private CardsDeck cardDeck;
 
@@ -30,7 +30,7 @@ public class DefaultCard : MonoBehaviour, Cards{
 
     public string GetCardClass()
     {
-        return cardClass;
+        return CardClass;
     }
 
 
@@ -48,6 +48,7 @@ public class DefaultCard : MonoBehaviour, Cards{
 
     public void SendToCardInHands()
     {
+        if(!isCardGrabbable || cardDeck == null) return;
         float grabDistance = cardDeck.getGrabDistance();
         float dist = Vector3.Distance(transform.position, cardDeck.gameObject.transform.position);
             if (dist > grabDistance)

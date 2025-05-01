@@ -14,16 +14,9 @@ public class ItemManager : MonoBehaviour
 
     [SerializeField] private GridOverlay gridOverlay;
 
-    // [SerializeField] private Gold goldItem;
-
-    // [SerializeField] private Stone stoneItem;
-
-    // [SerializeField] private Tree treeItem;
-
 
     [SerializeField] private DefaultItem[] itemsPrefabTypes; 
-
-    //[SerializeField] private DefaultItem defaultItem;
+    
 
     private Dictionary<Tile, List<DefaultItem>> itemsData = new Dictionary<Tile, List<DefaultItem>>(); 
 

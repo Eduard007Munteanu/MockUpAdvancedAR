@@ -12,9 +12,9 @@ public class BuildManager : MonoBehaviour  //One instance only
 
     [SerializeField] private List<DefaultBuild> defaultBuildOptions;
 
-    private MainBuild mainBuildInstance;
+    
 
-    private Dictionary<string, List<DefaultBuild>> buildingDictionary;
+    private Dictionary<string, List<DefaultBuild>> buildingDictionary = new Dictionary<string, List<DefaultBuild>>();
 
     void Awake()
     {
@@ -86,7 +86,7 @@ public class BuildManager : MonoBehaviour  //One instance only
 
     void SpawnMainBuilding(){
         GameObject buildingObj = Instantiate(mainBuildingPrefab);
-        mainBuildInstance = buildingObj.GetComponent<MainBuild>();
+        MainBuild mainBuildInstance = buildingObj.GetComponent<MainBuild>();
 
         if (mainBuildInstance == null)
         {
@@ -100,8 +100,12 @@ public class BuildManager : MonoBehaviour  //One instance only
         
         buildingObj.transform.position = spawnPos;
 
-        mainBuildInstance.Init(1, "MainBuild");
+
         AddBuildingDictionary(mainBuildInstance);
+        string className = "Main";
+        int id = 1;
+        mainBuildInstance.Init(id, className);
+        
 
         
     }

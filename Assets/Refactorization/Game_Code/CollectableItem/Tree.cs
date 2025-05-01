@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tree : DefaultItem
 {
 
-    private string itemClass = "Stone";
+    protected override string ItemClass => "TreeItem"; 
 
     // Start is called before the first frame update
     void Start()
@@ -19,9 +19,9 @@ public class Tree : DefaultItem
         
     }
 
-    public string GetItemClass()
+    public override string GetItemClass()
     {
-        return itemClass;
+        return ItemClass;
     }
 
     

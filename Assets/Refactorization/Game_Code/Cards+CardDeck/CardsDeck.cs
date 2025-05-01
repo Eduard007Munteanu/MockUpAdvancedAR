@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Oculus.Interaction.Input;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
@@ -27,7 +28,7 @@ public class CardsDeck : MonoBehaviour
 
 
 
-    private CardsInHand cardsInHand = null;
+    private CardsInHand cardsInHand; 
 
     [SerializeField] float grabDistance;
 
@@ -46,9 +47,7 @@ public class CardsDeck : MonoBehaviour
 
     void Start()
     {
-
-       
-
+        cardsInHand = CardsInHand.Instance;
         ShuffleDeck();
         DrawNextCard();
     }

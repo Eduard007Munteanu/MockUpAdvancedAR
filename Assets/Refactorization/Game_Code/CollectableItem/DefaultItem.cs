@@ -8,6 +8,8 @@ public class DefaultItem : MonoBehaviour, Item
 
     private int Id;
 
+    protected virtual string ItemClass => "DefaultItem"; 
+
 
 
     public void Init(int Id){   
@@ -16,7 +18,7 @@ public class DefaultItem : MonoBehaviour, Item
 
 
     public virtual string GetItemClass(){
-        return "Undefined";
+        return ItemClass;
     }
 
 

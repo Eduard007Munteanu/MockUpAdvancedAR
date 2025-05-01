@@ -11,7 +11,7 @@ public class TheRayCaster : MonoBehaviour
     [SerializeField] private OVRHand rightHand; //Maybe just GameObject, then specific OVRHand?
 
 
-    [SerializeField] private PanelManager panelManager;
+    
 
     private GameObject lastHitTile;
 
@@ -78,7 +78,7 @@ public class TheRayCaster : MonoBehaviour
 
             else if(building != null){
                 if(rightHandPinchStrength > 0.8f){
-                    panelManager.SpawnPanelOnLeftHand(building);
+                    PanelManager.Instance.SpawnPanelOnLeftHand(building);
                 }
             }
 

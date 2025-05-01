@@ -99,7 +99,7 @@ public class DefaultBuild : MonoBehaviour, Build
 
     public Panel GetPanel()
     {
-        return PanelPrefab.GetComponent<Panel>();
+        return PanelPrefab.GetComponent<DefaultPanel>();
     }
 
     public GameObject GetPanelPrefab()

@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class LawCard : DefaultCard
 {
-    void SendToPanelManage(){
+
+    protected override string CardClass => "LawCard";
+
+
+    // void SendToPanelManage(){
         
-    }
+    // }
 }

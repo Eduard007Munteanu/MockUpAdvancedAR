@@ -5,7 +5,7 @@ using UnityEngine;
 public class Stone : DefaultItem
 {
 
-    private string itemClass = "Stone";
+    protected override string ItemClass => "StoneItem"; 
 
     // Start is called before the first frame update
     void Start()
@@ -20,9 +20,9 @@ public class Stone : DefaultItem
     }
 
     
-    public string GetItemClass()
+    public override string GetItemClass()
     {
-        return itemClass;
+        return ItemClass;
     }
 
     

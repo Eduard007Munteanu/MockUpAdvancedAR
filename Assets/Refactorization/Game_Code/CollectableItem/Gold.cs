@@ -6,7 +6,7 @@ public class Gold : DefaultItem
 {
 
 
-    private string itemClass = "Gold";
+    protected override string ItemClass => "GoldItem"; 
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,7 @@ public class Gold : DefaultItem
 
     public override string GetItemClass()
     {
-        return itemClass;
+        return ItemClass;
     }
 
     

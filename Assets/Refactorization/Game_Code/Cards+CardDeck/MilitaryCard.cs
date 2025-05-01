@@ -5,43 +5,6 @@ using UnityEngine;
 public class MilitaryCard : BuildCard
 {
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    
-    public string GetCardClass()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public int GetCardID()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public Dictionary<Item, int> GetCost()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void SendToCardInHands()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void SendToSpecificTile(Tile tile)
-    {
-        throw new System.NotImplementedException();
-    }
-
+  protected override string CardClass => "MilitaryCard";
     
 }
