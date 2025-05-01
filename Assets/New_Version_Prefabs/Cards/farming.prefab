@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3075803443354398302}
   - component: {fileID: 2266801297616091848}
   - component: {fileID: 812971779823121210}
-  - component: {fileID: -6290803963812196600}
+  - component: {fileID: 668178365099821870}
   m_Layer: 0
   m_Name: farming
   m_TagString: Untagged
@@ -200,7 +200,7 @@ MonoBehaviour:
   _movementProvider: {fileID: 0}
   _handAligment: 1
   _handGrabPoses: []
---- !u!114 &-6290803963812196600
+--- !u!114 &668178365099821870
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,7 +209,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8084809435784299562}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f097b0a22c93c7c4ea045e9d02f52b35, type: 3}
+  m_Script: {fileID: 11500000, guid: 71452d3157eb84a4081d56e162e0b3c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grabDistance: 0.2

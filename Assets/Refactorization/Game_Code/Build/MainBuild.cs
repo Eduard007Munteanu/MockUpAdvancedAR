@@ -9,10 +9,10 @@ public class MainBuild : DefaultBuild
 {
 
 
-    [SerializeField] private GridOverlay gridOverlay;
+     private GridOverlay gridOverlay;
 
 
-    [SerializeField] private GameObject PanelPrefab;
+    
 
     [SerializeField] private DefaultMob mobPrefab;
 
@@ -20,14 +20,14 @@ public class MainBuild : DefaultBuild
 
     private int Id;
 
-    private string building_class;
+    private string building_class_main;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gridOverlay = GridOverlay.Instance;
     }
 
     // Update is called once per frame
@@ -36,9 +36,9 @@ public class MainBuild : DefaultBuild
         
     }
 
-    public override void Init(int Id, string building_class, DefaultTile tile = null){
+    public override void Init(int Id, string main_class, DefaultTile tile = null){
         this.Id = Id;
-        this.building_class = building_class;
+        this.building_class_main = main_class;
 
     }
 

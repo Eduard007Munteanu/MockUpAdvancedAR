@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -9144901573829905152}
   - component: {fileID: 9094775427604497992}
   - component: {fileID: 1563067166578272827}
-  - component: {fileID: 6312631071474063764}
+  - component: {fileID: 8325137844158410155}
   m_Layer: 0
   m_Name: sleepHouse
   m_TagString: Untagged
@@ -200,7 +200,7 @@ MonoBehaviour:
   _movementProvider: {fileID: 0}
   _handAligment: 1
   _handGrabPoses: []
---- !u!114 &6312631071474063764
+--- !u!114 &8325137844158410155
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,8 +209,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6223652420767542604}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f097b0a22c93c7c4ea045e9d02f52b35, type: 3}
+  m_Script: {fileID: 11500000, guid: 0615c6472eb12bb4485130d06720beff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grabDistance: 0.25
-  leftHandTransform: {fileID: 0}

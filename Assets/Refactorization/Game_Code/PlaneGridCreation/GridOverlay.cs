@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class GridOverlay : MonoBehaviour
 {
+
+    public static GridOverlay Instance {get; private set;}
+
+
     public GameObject tilePrefab;
     public int rows = 2;
     public int columns = 2;
@@ -10,6 +14,17 @@ public class GridOverlay : MonoBehaviour
     private List<GameObject> tiles = new List<GameObject>();
 
     [SerializeField] private GameObject itemManager;
+
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this) {
+            Debug.LogWarning("More than one BuildManager detected. Destroying duplicate.");
+            Destroy(gameObject);
+        } else {
+            Instance = this;
+        }
+    }
 
     void Start()
     {
