@@ -30,7 +30,7 @@ public class DefaultBuild : MonoBehaviour, Build
         
     }
 
-    public virtual void Init(int Id, string building_class, DefaultTile tile)
+    public virtual void Init(int Id, string building_class, DefaultTile tile =null)
     {   
         this.id = Id;
         this.building_class = building_class;

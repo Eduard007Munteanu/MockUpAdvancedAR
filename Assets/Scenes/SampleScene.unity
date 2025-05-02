@@ -1400,8 +1400,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 6741967199189696747, guid: 3929d8185c27a9943a100a92cb12a9f9, type: 3}
-  rows: 2
-  columns: 2
+  rows: 7
+  columns: 7
   itemManager: {fileID: 1092835987}
 --- !u!1 &111864129
 GameObject:
@@ -11137,15 +11137,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardTypes:
-  - prefab: {fileID: 0}
-    count: 0
-    typeName: 
-  - prefab: {fileID: 0}
-    count: 0
-    typeName: 
-  - prefab: {fileID: 0}
-    count: 0
-    typeName: 
+  - prefab: {fileID: 8084809435784299562, guid: 7d4aed3470215b842b085e248eb164d3, type: 3}
+    count: 10
+    typeName: farm
+  - prefab: {fileID: 5581141674045944884, guid: 7de439df209651e49ac3004351619d6b, type: 3}
+    count: 10
+    typeName: military
+  - prefab: {fileID: 6223652420767542604, guid: eee080c1e7f2ae146bc6761a4af1a69e, type: 3}
+    count: 10
+    typeName: sleep
   numberOfCardsToDraw: 5
   grabDistance: 2
 --- !u!1 &1030756671
@@ -12114,8 +12114,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc158a19d4f0c640bad327809aacdac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridOverlay: {fileID: 0}
-  itemsPrefabTypes: []
+  gridOverlay: {fileID: 107418404}
+  itemsPrefabTypes:
+  - {fileID: 26106160839137917, guid: 130437ff75e8fd940937a4cb2e2e196e, type: 3}
+  - {fileID: 1906971717574370499, guid: 8db1c2257b33b62419b876278612e137, type: 3}
+  - {fileID: -4457457327482701860, guid: 98640ba432b299c4b8b714be61f768a5, type: 3}
   mineralPlacesToSpawn: 5
   numberOfMaterialsPerTile: 5
 --- !u!114 &1092835991
@@ -12130,8 +12133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151a4a6eb5df76041a1c9de537ce9920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainBuildingPrefab: {fileID: 0}
-  defaultBuildOptions: []
+  mainBuildingPrefab: {fileID: 607526807279342321, guid: 1049fadb42a05ab4fb08706cbce1bf39, type: 3}
+  defaultBuildOptions:
+  - {fileID: 5710573484966340210, guid: db2da13708176704e80328eb8009e446, type: 3}
+  - {fileID: 7905284800524459574, guid: f7d3f1c353260b6478ee58a7313d8062, type: 3}
+  - {fileID: 4404441414330214680, guid: ed7b29bf3d779c44d8edc291d4e95287, type: 3}
 --- !u!4 &1092835992
 Transform:
   m_ObjectHideFlags: 0

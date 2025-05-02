@@ -18,16 +18,15 @@ public class MainBuild : DefaultBuild
 
     private Tile tile;
 
-    private int Id;
-
-    private string building_class_main;
+    
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        gridOverlay = GridOverlay.Instance;
+        
+        //Debug.Log("GridOverlay is ", gridOverlay);
     }
 
     // Update is called once per frame
@@ -37,8 +36,10 @@ public class MainBuild : DefaultBuild
     }
 
     public override void Init(int Id, string main_class, DefaultTile tile = null){
-        this.Id = Id;
-        this.building_class_main = main_class;
+        // this.Id = Id;
+        // this.building_class_main = main_class;
+        base.Init(Id, main_class, tile);
+        gridOverlay = GridOverlay.Instance;
 
     }
 
@@ -57,7 +58,7 @@ public class MainBuild : DefaultBuild
     private Tile TileFindCalculation(){
         (int x, int z) = gridOverlay.GetRowAndColumnsOfPlatform();
         (int, int) buildingSpawnPosition = (z-1, Mathf.FloorToInt(x/2));
-        Tile tile = gridOverlay.FindTileWithCoordinates(buildingSpawnPosition.Item1, buildingSpawnPosition.Item2);
+        Tile tile = gridOverlay.FindTileWithCoordinates(buildingSpawnPosition.Item2, buildingSpawnPosition.Item1);
         return tile;
 
 

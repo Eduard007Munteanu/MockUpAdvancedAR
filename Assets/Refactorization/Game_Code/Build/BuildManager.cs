@@ -94,6 +94,13 @@ public class BuildManager : MonoBehaviour  //One instance only
             return;
         }
 
+
+        
+        string className = "Main";
+        int id = 1;
+        mainBuildInstance.Init(id, className); //Here I will add the gridOverlay
+        AddBuildingDictionary(mainBuildInstance);
+
         
         Vector3 spawnPos = mainBuildInstance.SpawnBuilding();
 
@@ -101,10 +108,7 @@ public class BuildManager : MonoBehaviour  //One instance only
         buildingObj.transform.position = spawnPos;
 
 
-        AddBuildingDictionary(mainBuildInstance);
-        string className = "Main";
-        int id = 1;
-        mainBuildInstance.Init(id, className);
+        
         
 
         
@@ -137,9 +141,10 @@ public class BuildManager : MonoBehaviour  //One instance only
 
 
 
-        AddBuildingDictionary(building.GetComponent<DefaultBuild>());
+        
         int buildingCount = GetBuildingCount(building.GetComponent<DefaultBuild>());
         building.GetComponent<DefaultBuild>().Init(buildingCount, buildingClassName, tile); //Maybe more, who knows
+        AddBuildingDictionary(building.GetComponent<DefaultBuild>());
     }
 
     public void TrySpawnBuilding(DefaultTile tile, DefaultCard card) {

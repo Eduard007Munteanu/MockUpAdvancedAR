@@ -108,7 +108,7 @@ public class GridOverlay : MonoBehaviour
         return tiles;
     }
 
-    public (int rows, int columns) GetRowAndColumnsOfPlatform(){
+    public (int, int ) GetRowAndColumnsOfPlatform(){
         return (rows, columns);
     }
 

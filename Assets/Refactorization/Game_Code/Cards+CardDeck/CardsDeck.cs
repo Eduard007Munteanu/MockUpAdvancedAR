@@ -112,7 +112,7 @@ public class CardsDeck : MonoBehaviour
 
         cardsInHand.AddCardToHand(cardInHand);
 
-        int extraCards = numberOfCardsToDraw - 1;
+        int extraCards = Mathf.Min(cardQueue.Count, numberOfCardsToDraw - 1);
         for (int i = 1; i <= extraCards; i++)
         {
             if (cardQueue.Count > 0)
