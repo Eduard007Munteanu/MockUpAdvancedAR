@@ -93,7 +93,7 @@ public class TheRayCaster : MonoBehaviour
                 if(rightHandPinchStrength > 0.8f){
                     if(tile != null){
                         Vector3 tilePosition = tile.gameObject.transform.position;  
-                        Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(tile, selectedMob), tilePosition.z);
+                        Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(tile, selectedMob), tilePosition.z);  //Pivot point in empty object parent of tile instead of vectorYHeightGivenTile
                         selectedMob.InitMove(targetPosition, hitObj);
                     }
                     else if(building != null){

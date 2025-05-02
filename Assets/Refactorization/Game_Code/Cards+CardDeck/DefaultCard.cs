@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultCard : MonoBehaviour, Cards{
+public abstract class DefaultCard : MonoBehaviour, Cards{
     protected virtual string CardClass => "DefaultCard";
 
     private CardsDeck cardDeck;
 
     private bool isCardGrabbable = false;
+    private bool isAlreadyGrabbed = false; 
 
     [SerializeField] private Dictionary<DefaultItem, int> defineCost;  
 
@@ -48,14 +49,14 @@ public class DefaultCard : MonoBehaviour, Cards{
 
     public void SendToCardInHands()
     {
-        if(!isCardGrabbable || cardDeck == null) return;
+        if(!isCardGrabbable || cardDeck == null || isAlreadyGrabbed) return;
         float grabDistance = cardDeck.getGrabDistance();
         float dist = Vector3.Distance(transform.position, cardDeck.gameObject.transform.position);
             if (dist > grabDistance)
             {
                 
                 Debug.Log("Card taken from the deck!");
-
+                isAlreadyGrabbed = true;
                 cardDeck?.OnCardGrabDistanceReached(this);
 
             }

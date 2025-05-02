@@ -4,7 +4,7 @@ using System.Linq;
 using Meta.XR.MRUtilityKit.SceneDecorator;
 using UnityEngine;
 
-public class DefaultMob : MonoBehaviour, Mobs
+public abstract class DefaultMob : MonoBehaviour, Mobs
 {
 
     private bool isMoving = false;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Newtonsoft.Json.Schema;
 
-public class DefaultBuild : MonoBehaviour, Build
+public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract to begin with  => In case error appears
 {
 
     [SerializeField] private GameObject PanelPrefab;

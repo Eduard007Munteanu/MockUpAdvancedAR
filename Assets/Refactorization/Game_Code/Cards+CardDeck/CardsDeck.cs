@@ -21,7 +21,7 @@ public class CardsDeck : MonoBehaviour
     public static CardsDeck Instance {get; private set;}
 
 
-    public List<CardType> cardTypes;
+    public List<CardsType> cardTypes;
     private Queue<(GameObject, string)> cardQueue;
 
     public int numberOfCardsToDraw = 5;
@@ -56,7 +56,7 @@ public class CardsDeck : MonoBehaviour
     {
         List<(GameObject, string)> deck = new List<(GameObject, string)>();
 
-        foreach (CardType cardType in cardTypes)
+        foreach (CardsType cardType in cardTypes)
         {
             for (int i = 0; i < cardType.count; i++)
             {
@@ -74,6 +74,13 @@ public class CardsDeck : MonoBehaviour
         }
 
         cardQueue = new Queue<(GameObject, string)>(deck);
+
+        //Testing code
+        foreach (var (prefab, typeName) in cardQueue)
+        {
+            Debug.Log($"Card Type: {typeName}, Prefab Name: {prefab.name}");
+        }
+        //Testing code
     }
 
 
@@ -105,7 +112,8 @@ public class CardsDeck : MonoBehaviour
     {
 
 
-        cardsInHand.RemoveAllCards();
+        //cardsInHand.RemoveAllCards();  //Will be added back, but remove from now
+        cardsInHand.RemoveAllCardsExpect(cardInHand);
 
         Debug.Log("OnCardGrabDistanceReached is called");
 
@@ -120,8 +128,19 @@ public class CardsDeck : MonoBehaviour
                 (GameObject prefab, string typeName) nextCard = cardQueue.Dequeue();
                 GameObject spawnedCard = Instantiate(nextCard.Item1, 
                                     transform.position + Vector3.up * 0.01f, 
-                                    Quaternion.identity, 
-                                    transform);
+                                    Quaternion.identity 
+                                    );//, transform);
+
+
+                Debug.Log("card added given card in deck was taken");
+                DefaultCard card = spawnedCard.GetComponent<DefaultCard>();
+
+                if(card == null){
+                    Debug.LogError("Card from the OnCardGrabedDistanceReached is empty");
+                    return;
+                }
+
+                card.Init(false, this);
                 cardsInHand.AddCardToHand(spawnedCard.GetComponent<DefaultCard>());
 
 

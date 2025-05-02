@@ -57,7 +57,7 @@ public class CardsInHand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        LayoutCardsOnPalm();
+        //LayoutCardsOnPalm();
     }
 
     public bool IsCardInHand(DefaultCard card)
@@ -68,6 +68,10 @@ public class CardsInHand : MonoBehaviour
     public void AddCardToHand(DefaultCard card)
     {
         cardsInHand.Add(card);
+
+        Debug.Log("This was called, adding card with prefab name " + card.gameObject.name);
+
+        card.transform.SetParent(palmTransform, false);
         
     }
 
@@ -75,6 +79,8 @@ public class CardsInHand : MonoBehaviour
     {
         cardsInHand.Remove(card);
         Destroy(card.gameObject);  //Probably Monobehavior guaranteed
+
+        
         
     }
 
@@ -119,7 +125,7 @@ public class CardsInHand : MonoBehaviour
         {
             var card = cardsInHand[i];
             
-            card.transform.SetParent(palmTransform, false); //Probably Monobehavior guaranteed
+            //card.transform.SetParent(palmTransform, false); //Probably Monobehavior guaranteed
 
             
             float x = startX + i * cardSpacing;
