@@ -9,7 +9,14 @@ public class MainBuildingPanel : DefaultPanel
     void Start()
     {
         
-        ItemDatabase.Instance.OnCollectedItemsUpdated += UpdatePanel;
+        if (ItemDatabase.Instance != null)   //POTENTIAL ERRORS? WHO KNOWS. EASTER EGG
+        {
+            ItemDatabase.Instance.OnCollectedItemsUpdated += UpdatePanel;
+        }
+        else
+        {
+            Debug.LogWarning("ItemDatabase instance was not ready during panel Init.");
+        }
         
     }
 
@@ -19,13 +26,13 @@ public class MainBuildingPanel : DefaultPanel
         
     }
 
-    public void Init(DefaultBuild building){
+    public override void Init(DefaultBuild building){
         Canvas canvas = GetComponent<Canvas>();
         if(canvas != null){
             canvas.worldCamera = Camera.main;
         }
 
-        var statsTransform = transform.Find("Layout Stats");
+        var statsTransform = transform.Find("Layout_Stats");
         
         var classTransform = statsTransform.Find("Text (Building Class Placeholder)");
         var idTransform    = statsTransform.Find("Text (Building ID Placeholder)");
@@ -33,15 +40,19 @@ public class MainBuildingPanel : DefaultPanel
         TextMeshProUGUI buildingClassText = classTransform?.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI buildingIdText    = idTransform?.GetComponent<TextMeshProUGUI>();
 
+        
 
-        buildingClassText.text = building.GetBuildingClass();
+        buildingClassText.text = AdditionalText(buildingClassText.text, building.GetBuildingClass() );
+        buildingIdText.text = AdditionalText(buildingIdText.text, building.GetID().ToString());
 
-        buildingIdText.text = building.GetID().ToString();
+
 
 
     }
 
     
+
+
 
     public override void UpdatePanel(DataPacket dataPacketFromBuildingManager){     
         int stoneScore = dataPacketFromBuildingManager.Get<int>("StoneScore");
@@ -57,5 +68,11 @@ public class MainBuildingPanel : DefaultPanel
         if (stoneText != null) stoneText.text = stoneScore.ToString();
         if (woodText != null) woodText.text = woodScore.ToString();
         if (goldText != null) goldText.text = goldScore.ToString();
+    }
+
+
+
+    private string AdditionalText(string currentText, string additionaLText){
+        return currentText += " " + additionaLText;
     }
 }

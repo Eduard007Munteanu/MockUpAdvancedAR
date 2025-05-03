@@ -11,6 +11,10 @@ public class DefaultPanel: MonoBehaviour, Panel{
         gameObject.SetActive(false);
     }
 
+    public virtual void Init(DefaultBuild building){
+
+    }
+
     public virtual void UpdatePanel(DataPacket dataPacketFromBuildingManager)
     {
        

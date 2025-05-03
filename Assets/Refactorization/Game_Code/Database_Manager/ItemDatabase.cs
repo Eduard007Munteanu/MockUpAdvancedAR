@@ -8,7 +8,7 @@ public class ItemDatabase: MonoBehaviour{
 
     // private List<DefaultItem> items; At some point be concerned regarding items on ground
 
-    private Dictionary<string, int> collectedItemsCount;
+    private Dictionary<string, int> collectedItemsCount = new Dictionary<string, int>();
 
 
 

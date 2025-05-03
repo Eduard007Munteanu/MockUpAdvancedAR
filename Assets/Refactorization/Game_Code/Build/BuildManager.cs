@@ -140,12 +140,16 @@ public class BuildManager : MonoBehaviour  //One instance only
         GameObject building = Instantiate(actualBuild.gameObject, spawnPosition, Quaternion.identity);
         
 
-        string buildingClassName = card.GetCardClass(); 
+        
 
 
 
         
         int buildingCount = GetBuildingCount(building.GetComponent<DefaultBuild>());
+
+        Debug.Log("BuildingCount is  " + buildingCount + " for building " + building.name);
+
+
         building.GetComponent<DefaultBuild>().Init(buildingCount, tile); //Maybe more, who knows
         AddBuildingDictionary(building.GetComponent<DefaultBuild>());
     }

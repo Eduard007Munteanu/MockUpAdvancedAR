@@ -96,7 +96,7 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
 
     
 
-    public Panel GetPanel()
+    public DefaultPanel GetPanel()
     {
         return PanelPrefab.GetComponent<DefaultPanel>();
     }

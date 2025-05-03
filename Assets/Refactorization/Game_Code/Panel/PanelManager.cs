@@ -39,7 +39,7 @@ public class PanelManager : MonoBehaviour
         
     }
 
-    public void SpawnPanelOnLeftHand(DefaultBuild panelFromBuilding)
+    public void SpawnPanelOnLeftHand(DefaultBuild panelFromBuilding)   //Well, if multiple buildings of same class are added => They share same panel, incorrect!
     {
 
 
@@ -76,7 +76,7 @@ public class PanelManager : MonoBehaviour
         panel.transform.localPosition = Vector3.zero; 
         panel.transform.localRotation = Quaternion.identity;
 
-
+        InitializePanel(panel, panelFromBuilding);
         panels.Add(BuildingClassName, (panel, true)); 
     }
 
@@ -108,4 +108,13 @@ public class PanelManager : MonoBehaviour
             }
         }  
     }
+
+
+    private void InitializePanel(GameObject panel, DefaultBuild building)
+{
+    if (panel.TryGetComponent(out DefaultPanel defaultPanel))
+    {
+        defaultPanel.Init(building);
+    }
+}
 }
