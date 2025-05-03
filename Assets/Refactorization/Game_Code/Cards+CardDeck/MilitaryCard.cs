@@ -5,6 +5,6 @@ using UnityEngine;
 public class MilitaryCard : BuildCard
 {
 
-  protected override string CardClass => "MilitaryCard";
+  protected override string CardClass => "military";
     
 }

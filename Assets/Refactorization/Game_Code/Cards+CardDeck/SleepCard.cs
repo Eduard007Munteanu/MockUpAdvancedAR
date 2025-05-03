@@ -5,7 +5,7 @@ using UnityEngine;
 public class SleepCard : BuildCard
 {
 
-    protected override string CardClass => "SleepCard";
+    protected override string CardClass => "sleep";
 
     
 }

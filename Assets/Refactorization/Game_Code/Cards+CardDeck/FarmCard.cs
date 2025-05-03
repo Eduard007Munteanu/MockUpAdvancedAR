@@ -5,5 +5,5 @@ using UnityEngine;
 public class FarmCard : BuildCard
 {
 
-   protected override string CardClass => "FarmCard";
+   protected override string CardClass => "farming";
 }

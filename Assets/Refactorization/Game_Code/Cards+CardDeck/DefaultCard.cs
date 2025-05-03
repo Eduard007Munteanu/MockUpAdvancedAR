@@ -57,7 +57,15 @@ public abstract class DefaultCard : MonoBehaviour, Cards{
                 
                 Debug.Log("Card taken from the deck!");
                 isAlreadyGrabbed = true;
+
+
+
+                
+
+
                 cardDeck?.OnCardGrabDistanceReached(this);
+
+                
 
             }
     }

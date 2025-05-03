@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1563067166578272827}
   - component: {fileID: 8325137844158410155}
   m_Layer: 0
-  m_Name: sleepHouse
+  m_Name: sleep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

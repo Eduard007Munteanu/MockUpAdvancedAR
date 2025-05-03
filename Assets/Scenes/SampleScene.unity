@@ -11139,7 +11139,7 @@ MonoBehaviour:
   cardTypes:
   - prefab: {fileID: 8084809435784299562, guid: 7d4aed3470215b842b085e248eb164d3, type: 3}
     count: 10
-    typeName: farm
+    typeName: farming
   - prefab: {fileID: 5581141674045944884, guid: 7de439df209651e49ac3004351619d6b, type: 3}
     count: 10
     typeName: military
@@ -20976,7 +20976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: {fileID: 1892893135}
-  cardSpacing: 0.5
+  cardSpacing: 0.9
 --- !u!4 &1870715819
 Transform:
   m_ObjectHideFlags: 0
@@ -20987,7 +20987,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.22024542, y: 1.027269, z: -1.1496491}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.08, y: 0.01, z: 0.18}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

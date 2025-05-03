@@ -102,6 +102,8 @@ public class CardsDeck : MonoBehaviour
                 Debug.LogError("Card component not found on the spawned card prefab.");
                 return;
             } 
+
+            
             card.Init(true, this);
         }
     }
@@ -112,13 +114,36 @@ public class CardsDeck : MonoBehaviour
     {
 
 
-        cardsInHand.RemoveAllCardsExpect(cardInHand);  
+        //cardsInHand.RemoveAllCardsExpect(cardInHand);  
+        //cardsInHand.RemoveAllCards();
         
 
         Debug.Log("OnCardGrabDistanceReached is called");
 
+        string originalType = cardInHand.GetCardClass(); // or typeName if you store it
+        
+        GameObject prefabToUse = FindPrefabByTypeName(originalType);
 
-        cardsInHand.AddCardToHand(cardInHand);
+        if (prefabToUse == null)
+        {
+            Debug.LogError("No prefab found matching the grabbed card's type.");
+            return;
+        }
+
+        // Destroy the original card being held
+        Destroy(cardInHand.gameObject);
+
+        // Spawn a replica
+        GameObject newCardGO = Instantiate(prefabToUse);
+        DefaultCard newCard = newCardGO.GetComponent<DefaultCard>();
+        if (newCard == null)
+        {
+            Debug.LogError("Newly spawned card has no DefaultCard component.");
+            return;
+        }
+
+        newCard.Init(false, this);  // Not grabbable anymore
+        cardsInHand.AddCardToHand(newCard);
 
         int extraCards = Mathf.Min(cardQueue.Count, numberOfCardsToDraw - 1);
 
@@ -133,8 +158,7 @@ public class CardsDeck : MonoBehaviour
                 (GameObject prefab, string typeName) nextCard = cardQueue.Dequeue();
                 GameObject spawnedCard = Instantiate(nextCard.Item1, 
                                     transform.position + Vector3.up * 0.01f, 
-                                    Quaternion.identity); 
-                                    //, transform);
+                                    Quaternion.identity);
 
 
                 Debug.Log("card added given card in deck was taken");
@@ -156,7 +180,7 @@ public class CardsDeck : MonoBehaviour
         Debug.Log("Cards in hand: " + cardsInHand.GetCardsInHandCount());
         Debug.Log("Cards left in deck after drawing: " + cardQueue.Count);
         
-        
+        cardsInHand.LayoutCardsOnPalm();        
 
         DrawNextCard();
         
@@ -165,5 +189,17 @@ public class CardsDeck : MonoBehaviour
 
     public float getGrabDistance(){
         return grabDistance;
+    }
+
+
+
+    private GameObject FindPrefabByTypeName(string typeName)
+    {
+        foreach (CardsType ct in cardTypes)
+        {
+            if (ct.typeName == typeName)
+                return ct.prefab;
+        }
+        return null;
     }
 }
