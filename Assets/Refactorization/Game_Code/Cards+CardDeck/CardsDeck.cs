@@ -112,8 +112,8 @@ public class CardsDeck : MonoBehaviour
     {
 
 
-        //cardsInHand.RemoveAllCards();  //Will be added back, but remove from now
-        cardsInHand.RemoveAllCardsExpect(cardInHand);
+        cardsInHand.RemoveAllCardsExpect(cardInHand);  
+        
 
         Debug.Log("OnCardGrabDistanceReached is called");
 
@@ -121,15 +121,20 @@ public class CardsDeck : MonoBehaviour
         cardsInHand.AddCardToHand(cardInHand);
 
         int extraCards = Mathf.Min(cardQueue.Count, numberOfCardsToDraw - 1);
+
+        Debug.Log("CardQueue.count is " + cardQueue.Count);
+        Debug.Log("ExtraCards is " +  extraCards);
         for (int i = 1; i <= extraCards; i++)
         {
+            Debug.Log("Calling for loop!");
             if (cardQueue.Count > 0)
             {
+                Debug.Log("Cardqueue.Count bigger than 0");
                 (GameObject prefab, string typeName) nextCard = cardQueue.Dequeue();
                 GameObject spawnedCard = Instantiate(nextCard.Item1, 
                                     transform.position + Vector3.up * 0.01f, 
-                                    Quaternion.identity 
-                                    );//, transform);
+                                    Quaternion.identity); 
+                                    //, transform);
 
 
                 Debug.Log("card added given card in deck was taken");
@@ -143,7 +148,7 @@ public class CardsDeck : MonoBehaviour
                 card.Init(false, this);
                 cardsInHand.AddCardToHand(spawnedCard.GetComponent<DefaultCard>());
 
-
+                
 
             }
         }

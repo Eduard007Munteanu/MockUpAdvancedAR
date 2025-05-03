@@ -22,7 +22,14 @@ public class CardsInHand : MonoBehaviour
 
     [SerializeField] private float cardSpacing = 0.01f;
 
+    
 
+
+
+
+    public Transform GetPalmTransform(){
+        return palmTransform;
+    }
 
 
     void Awake()
@@ -71,7 +78,10 @@ public class CardsInHand : MonoBehaviour
 
         Debug.Log("This was called, adding card with prefab name " + card.gameObject.name);
 
-        card.transform.SetParent(palmTransform, false);
+        //card.transform.SetParent(palmTransform, false);
+        PreserveWorldScale(card.transform, palmTransform);
+
+        LayoutCardsOnPalm();
         
     }
 
@@ -79,6 +89,7 @@ public class CardsInHand : MonoBehaviour
     {
         cardsInHand.Remove(card);
         Destroy(card.gameObject);  //Probably Monobehavior guaranteed
+        LayoutCardsOnPalm();
 
         
         
@@ -125,16 +136,33 @@ public class CardsInHand : MonoBehaviour
         {
             var card = cardsInHand[i];
             
-            //card.transform.SetParent(palmTransform, false); //Probably Monobehavior guaranteed
-
             
             float x = startX + i * cardSpacing;
             card.transform.localPosition = new Vector3(x, 0f, 0f); //Probably Monobehavior guaranteed
 
             
             card.transform.localRotation = Quaternion.identity; //Probably Monobehavior guaranteed
+
+            
         }
     }
+
+
+
+    public void PreserveWorldScale(Transform child, Transform newParent)
+    {
+        Vector3 originalWorldScale = child.lossyScale;
+
+        child.SetParent(newParent, true); // maintain world position/rotation
+
+        Vector3 parentWorldScale = newParent.lossyScale;
+        child.localScale = new Vector3(
+            originalWorldScale.x / parentWorldScale.x,
+            originalWorldScale.y / parentWorldScale.y,
+            originalWorldScale.z / parentWorldScale.z
+        );
+    }
+
 
     
 }

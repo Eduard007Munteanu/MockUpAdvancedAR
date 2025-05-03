@@ -96,8 +96,8 @@ GameObject:
   - component: {fileID: 3001573099022744019}
   - component: {fileID: 4106918482921141565}
   - component: {fileID: 4964449975415668061}
-  - component: {fileID: 1456122927102132257}
   - component: {fileID: 1040889827483255809}
+  - component: {fileID: 7096979560015731727}
   m_Layer: 0
   m_Name: PlaneMaterial
   m_TagString: Tile
@@ -193,19 +193,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1456122927102132257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6741967199189696747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8df62a4ea97997b4bb5a751b9be0919d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effectObject: {fileID: 2230329505799387979}
 --- !u!114 &1040889827483255809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,3 +205,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 325270dd49770cf4d9fceef016df5802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7096979560015731727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6741967199189696747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a4929edbc41a54ba16a2f2566dad6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectObject: {fileID: 2230329505799387979}

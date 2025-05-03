@@ -11147,7 +11147,7 @@ MonoBehaviour:
     count: 10
     typeName: sleep
   numberOfCardsToDraw: 5
-  grabDistance: 0.3
+  grabDistance: 0.1
 --- !u!1 &1030756671
 GameObject:
   m_ObjectHideFlags: 0
@@ -20976,7 +20976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: {fileID: 1892893135}
-  cardSpacing: 0.3
+  cardSpacing: 0.5
 --- !u!4 &1870715819
 Transform:
   m_ObjectHideFlags: 0

@@ -116,7 +116,7 @@ public class TheRayCaster : MonoBehaviour
             Renderer rend = hitObj.GetComponent<Renderer>();
             if (rend != null)
             {
-                HoverEffect hoverEffect = hitObj.GetComponent<HoverEffect>();
+                HoverEffects hoverEffect = hitObj.GetComponent<HoverEffects>();
                 if (hoverEffect != null)
                 {
                     hoverEffect.EnableEffect();
@@ -133,7 +133,7 @@ public class TheRayCaster : MonoBehaviour
             Renderer rend = lastHitTile.GetComponent<Renderer>();
             if (rend != null)
             {
-                HoverEffect hoverEffect = lastHitTile.GetComponent<HoverEffect>();
+                HoverEffects hoverEffect = lastHitTile.GetComponent<HoverEffects>();
                 if (hoverEffect != null)
                 {
                     hoverEffect.DisableEffect();
