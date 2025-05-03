@@ -16,6 +16,8 @@ public class MainBuild : DefaultBuild
 
     [SerializeField] private DefaultMob mobPrefab;
 
+    protected override string Building_class => "Main";
+
     private Tile tile;
 
     
@@ -35,10 +37,10 @@ public class MainBuild : DefaultBuild
         
     }
 
-    public override void Init(int Id, string main_class, DefaultTile tile = null){
+    public override void Init(int Id, DefaultTile tile = null){
         // this.Id = Id;
         // this.building_class_main = main_class;
-        base.Init(Id, main_class, tile);
+        base.Init(Id, tile);
         gridOverlay = GridOverlay.Instance;
 
     }

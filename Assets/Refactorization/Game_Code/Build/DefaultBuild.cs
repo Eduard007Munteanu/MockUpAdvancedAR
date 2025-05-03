@@ -13,7 +13,7 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
 
     private int id;
 
-    private string building_class;
+    protected virtual string Building_class => "Default";
 
     private DefaultTile tile;
 
@@ -30,10 +30,9 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
         
     }
 
-    public virtual void Init(int Id, string building_class, DefaultTile tile =null)
+    public virtual void Init(int Id,  DefaultTile tile =null)
     {   
         this.id = Id;
-        this.building_class = building_class;
         this.tile = tile;
     }
 
@@ -109,7 +108,7 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
 
     public string GetBuildingClass()
     {
-        return building_class;
+        return Building_class;
     }
 
 

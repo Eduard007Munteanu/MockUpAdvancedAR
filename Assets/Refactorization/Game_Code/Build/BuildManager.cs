@@ -96,9 +96,8 @@ public class BuildManager : MonoBehaviour  //One instance only
 
 
         
-        string className = "Main";
         int id = 1;
-        mainBuildInstance.Init(id, className); //Here I will add the gridOverlay
+        mainBuildInstance.Init(id); //Here I will add the gridOverlay
         AddBuildingDictionary(mainBuildInstance);
 
         
@@ -126,13 +125,17 @@ public class BuildManager : MonoBehaviour  //One instance only
 
     private void SpawnBuildingOnTile(DefaultTile tile, BuildCard card){
         string cardName = card.GetCardClass();
+        Debug.Log("cardName from SpawnBuildingOnTile is " + cardName);
         DefaultBuild actualBuild = null;
         foreach(DefaultBuild defaultBuildOption in defaultBuildOptions){
             string defaultBuildOptionName = defaultBuildOption.GetBuildingClass();
+            Debug.Log("defaultBuildOptionname from SpawnBuildingOnTile is " + defaultBuildOptionName);
             if(defaultBuildOptionName == cardName){ 
+                Debug.Log("Actualbuild was found. It's type: " + defaultBuildOption.name);
                 actualBuild = defaultBuildOption;
             }
         }
+        Debug.Log("ActualBuild is " + actualBuild.name);
         Vector3 spawnPosition = SpawnPosition(tile, actualBuild.gameObject );
         GameObject building = Instantiate(actualBuild.gameObject, spawnPosition, Quaternion.identity);
         
@@ -143,7 +146,7 @@ public class BuildManager : MonoBehaviour  //One instance only
 
         
         int buildingCount = GetBuildingCount(building.GetComponent<DefaultBuild>());
-        building.GetComponent<DefaultBuild>().Init(buildingCount, buildingClassName, tile); //Maybe more, who knows
+        building.GetComponent<DefaultBuild>().Init(buildingCount, tile); //Maybe more, who knows
         AddBuildingDictionary(building.GetComponent<DefaultBuild>());
     }
 

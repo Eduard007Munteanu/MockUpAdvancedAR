@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MilitaryBuild : DefaultBuild
 {
+
+    protected override string Building_class => "military";
    
    // Start is called before the first frame update
     void Start()
