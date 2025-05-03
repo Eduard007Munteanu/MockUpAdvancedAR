@@ -18,6 +18,9 @@ public class TheRayCaster : MonoBehaviour
     private DefaultMob selectedMob;
 
 
+    private bool wasPinching = false; 
+
+
 
     void Start()
     {
@@ -55,6 +58,8 @@ public class TheRayCaster : MonoBehaviour
             DefaultMob mobs = hit.collider.GetComponent<DefaultMob>();
             DefaultTile tile = hit.collider.GetComponent<DefaultTile>();
 
+            
+
 
 
 
@@ -64,6 +69,7 @@ public class TheRayCaster : MonoBehaviour
                     if(rightHandPinchStrength > 0.8f){
                         if(tile != null){
                             BuildManager.Instance.TrySpawnBuilding(tile, CardsInHand.Instance.GetCardsInHand()[0]);
+                            CardsInHand.Instance.RemoveAllCards();
                         }
                     }
 
@@ -76,11 +82,14 @@ public class TheRayCaster : MonoBehaviour
                 }
             }
 
-            else if(building != null){
-                if(rightHandPinchStrength > 0.8f){
+            else if(building != null){    //Only spawn once per pinch modification. 
+                
+                if(rightHandPinchStrength > 0.8f && !wasPinching){
                     PanelManager.Instance.SpawnPanelOnLeftHand(building);
                 }
+                 
             }
+            
 
             else if(mobs != null){
                 if(rightHandPinchStrength > 0.8f){
@@ -104,6 +113,7 @@ public class TheRayCaster : MonoBehaviour
                 }
             }
         }
+        wasPinching = rightHandPinchStrength > 0.8f;
     }
 
 

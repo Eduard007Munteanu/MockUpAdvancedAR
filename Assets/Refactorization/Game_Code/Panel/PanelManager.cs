@@ -50,11 +50,17 @@ public class PanelManager : MonoBehaviour
             if (panels[BuildingClassName].Item2 == true) //If the panel is already active, deactivate it. 
             {
                 DeactivatePanel(panels[BuildingClassName].Item1);
+                var panelData = panels[BuildingClassName];
+                panelData.Item2 = false;
+                panels[BuildingClassName] = panelData;
                 return;
             }
             else //If the panel is not active, activate it. 
             {                
                 ActivatePanel(panels[BuildingClassName].Item1);
+                var panelData = panels[BuildingClassName];
+                panelData.Item2 = true;
+                panels[BuildingClassName] = panelData;
                 return;
             }
         }
@@ -64,7 +70,7 @@ public class PanelManager : MonoBehaviour
         Vector3 spawnPosition = palmTransform.position + palmTransform.forward * 0.1f; 
 
         GameObject panel = Instantiate(panelFromBuilding.GetPanelPrefab(), spawnPosition, Quaternion.identity, leftHand.transform);
-        panel.SetActive(false);    //Have panel to begin with, but innactive. 
+        panel.SetActive(true);    //Have panel to begin with, but innactive. 
  
 
         panel.transform.localPosition = Vector3.zero; 
