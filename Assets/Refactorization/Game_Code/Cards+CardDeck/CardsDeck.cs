@@ -113,38 +113,8 @@ public class CardsDeck : MonoBehaviour
     public void OnCardGrabDistanceReached(DefaultCard cardInHand)
     {
 
-
-        //cardsInHand.RemoveAllCardsExpect(cardInHand);  
-        //cardsInHand.RemoveAllCards();
+        NotTheMostOptimalInitOfDeckCard(cardInHand);
         
-
-        Debug.Log("OnCardGrabDistanceReached is called");
-
-        string originalType = cardInHand.GetCardClass(); // or typeName if you store it
-        
-        GameObject prefabToUse = FindPrefabByTypeName(originalType);
-
-        if (prefabToUse == null)
-        {
-            Debug.LogError("No prefab found matching the grabbed card's type.");
-            return;
-        }
-
-        // Destroy the original card being held
-        Destroy(cardInHand.gameObject);
-
-        // Spawn a replica
-        GameObject newCardGO = Instantiate(prefabToUse);
-        DefaultCard newCard = newCardGO.GetComponent<DefaultCard>();
-        if (newCard == null)
-        {
-            Debug.LogError("Newly spawned card has no DefaultCard component.");
-            return;
-        }
-
-        newCard.Init(false, this);  // Not grabbable anymore
-        cardsInHand.AddCardToHand(newCard);
-
         int extraCards = Mathf.Min(cardQueue.Count, numberOfCardsToDraw - 1);
 
         Debug.Log("CardQueue.count is " + cardQueue.Count);
@@ -201,5 +171,34 @@ public class CardsDeck : MonoBehaviour
                 return ct.prefab;
         }
         return null;
+    }
+
+    private void NotTheMostOptimalInitOfDeckCard(DefaultCard cardInHand){
+        Debug.Log("OnCardGrabDistanceReached is called");
+
+        string originalType = cardInHand.GetCardClass(); 
+        
+        GameObject prefabToUse = FindPrefabByTypeName(originalType);
+
+        if (prefabToUse == null)
+        {
+            Debug.LogError("No prefab found matching the grabbed card's type.");
+            return;
+        }
+
+       
+        Destroy(cardInHand.gameObject);
+
+        
+        GameObject newCardGO = Instantiate(prefabToUse);
+        DefaultCard newCard = newCardGO.GetComponent<DefaultCard>();
+        if (newCard == null)
+        {
+            Debug.LogError("Newly spawned card has no DefaultCard component.");
+            return;
+        }
+
+        newCard.Init(false, this); 
+        cardsInHand.AddCardToHand(newCard);
     }
 }

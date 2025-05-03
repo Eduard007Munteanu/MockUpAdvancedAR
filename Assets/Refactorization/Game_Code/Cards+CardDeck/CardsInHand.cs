@@ -56,6 +56,7 @@ public class CardsInHand : MonoBehaviour
             {
                 palmTransform = bone.Transform;
                 Debug.Log("Found the left hand palm bone!");
+                transform.SetParent(palmTransform, false);
                 break;
             }
         }
