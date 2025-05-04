@@ -72,24 +72,43 @@ public class MainBuildingPanel : DefaultPanel
 
 
     public override void UpdatePanel(DataPacket dataPacketFromBuildingManager){     
-        int stoneScore = dataPacketFromBuildingManager.Get<int>("StoneScore");
-        int woodScore = dataPacketFromBuildingManager.Get<int>("WoodScore");
-        int goldScore = dataPacketFromBuildingManager.Get<int>("GoldScore");
+        //int stoneScore = dataPacketFromBuildingManager.Get<int>("StoneItemScore");
+        //int woodScore = dataPacketFromBuildingManager.Get<int>("TreeItemScore");
+        //int goldScore = dataPacketFromBuildingManager.Get<int>("GoldItemScore");
 
-        var statsTransform = transform.Find("Layout Stats");
+        int stoneScore = TryGetAlikeMethod(dataPacketFromBuildingManager, "StoneItemScore");
+        int woodScore = TryGetAlikeMethod(dataPacketFromBuildingManager, "TreeItemScore");
+        int goldScore = TryGetAlikeMethod(dataPacketFromBuildingManager, "GoldItemScore");
+
+
+        var statsTransform = transform.Find("Layout_Stats");
 
         var stoneText = statsTransform.Find("Text (Stone)")?.GetComponent<TextMeshProUGUI>();
         var woodText = statsTransform.Find("Text (Wood)" )?.GetComponent<TextMeshProUGUI>();
         var goldText = statsTransform.Find("Text (Gold)" )?.GetComponent<TextMeshProUGUI>();
 
-        if (stoneText != null) stoneText.text = stoneScore.ToString();
-        if (woodText != null) woodText.text = woodScore.ToString();
-        if (goldText != null) goldText.text = goldScore.ToString();
+
+        string initGoldScoreText = "Gold: ";
+        string initWoodScoreText = "Wood: ";
+        string initStoneScoreText = "Stone: ";
+
+        if (stoneText != null && stoneScore != -1) stoneText.text = initStoneScoreText +  stoneScore.ToString();
+        if (woodText != null && woodScore != -1) woodText.text = initWoodScoreText + woodScore.ToString();
+        if (goldText != null && goldScore != -1) goldText.text = initGoldScoreText + goldScore.ToString();
     }
 
 
 
     private string AdditionalText(string currentText, string additionaLText){
         return currentText += " " + additionaLText;
+    }
+
+
+    private int TryGetAlikeMethod(DataPacket packet, string key){
+        if(packet.TryGet<int>(key, out int stone)){
+            return stone;
+        } else{
+            return -1;
+        }
     }
 }

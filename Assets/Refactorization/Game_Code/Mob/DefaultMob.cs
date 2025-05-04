@@ -131,6 +131,20 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
                 toColliderObj = closestItem.gameObject;
                 toDestination = closestItem.transform.position;
                 if(didICollectFromItem){
+
+                    //Null checking debug code:
+
+                    if (ItemDatabase.Instance == null)
+                    {
+                        Debug.LogError("ItemDatabase.Instance is null! Make sure it's initialized in the scene.");   //Yeah, it's null.....
+                    }
+                    else{
+                        Debug.Log("ItemDatabase not null, different problem!");
+                    }
+
+
+                    //Null checking debug code:
+
                     ItemDatabase.Instance.UpdateCollectedItemsCount(closestItem, 1); //Hardcoded the value you get by collecting a material
                     didICollectFromItem = false;
                 }

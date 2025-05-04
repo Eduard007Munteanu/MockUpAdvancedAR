@@ -4,7 +4,7 @@ using UnityEditor.Rendering;
 using Unity.VisualScripting;
 
 public class ItemDatabase: MonoBehaviour{
-    public static ItemDatabase Instance;
+    public static ItemDatabase Instance {get; private set;}
 
     // private List<DefaultItem> items; At some point be concerned regarding items on ground
 
@@ -18,6 +18,8 @@ public class ItemDatabase: MonoBehaviour{
 
     void Awake()
     {
+        Debug.Log("ItemDatabase Awake called!");
+
         if (Instance == null)  
         {
             Instance = this; 
@@ -48,6 +50,16 @@ public class ItemDatabase: MonoBehaviour{
         {
             packet.Add(kvp.Key + "Score", kvp.Value);
         }
+
+        // Test, I want to check the packet:
+        string packetContents = "Packet Contents: { ";
+        foreach (var item in packet.GetType().GetField("data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(packet) as Dictionary<string, object>)
+        {
+            packetContents += $"[{item.Key}: {item.Value}], ";
+        }
+        packetContents += "}";
+        Debug.Log(packetContents);
+        // Test, I want to check the packet:
 
         return packet;
     }
