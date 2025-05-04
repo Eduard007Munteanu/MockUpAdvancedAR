@@ -18,7 +18,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private DefaultItem[] itemsPrefabTypes; 
     
 
-    private Dictionary<Tile, List<DefaultItem>> itemsData = new Dictionary<Tile, List<DefaultItem>>(); 
+    private Dictionary<DefaultTile, List<DefaultItem>> itemsData = new Dictionary<DefaultTile, List<DefaultItem>>(); 
 
     [SerializeField ] private int mineralPlacesToSpawn =  5;
     [SerializeField] private int numberOfMaterialsPerTile = 5;
@@ -61,7 +61,7 @@ public class ItemManager : MonoBehaviour
         DefaultItem specificItemPrefab = itemsPrefabTypes[Random.Range(0, itemsPrefabTypes.Length)];
 
 
-        Tile randomTile = gridOverlay.GetRandomTile();
+        DefaultTile randomTile = gridOverlay.GetRandomTile();
         while (itemsData.ContainsKey(randomTile))
         {
             randomTile = gridOverlay.GetRandomTile();
@@ -96,10 +96,10 @@ public class ItemManager : MonoBehaviour
     }
 
 
-     private float ProjectHeights(Tile randomTile, DefaultItem itemPrefab){
+     private float ProjectHeights(DefaultTile randomTile, DefaultItem itemPrefab){
         float tileHeight = randomTile.GetTileHeight();
         float itemHeight = itemPrefab.GetComponent<Renderer>().bounds.size.y;
-        float fixedHeight = ((MonoBehaviour)randomTile).transform.position.y + ((tileHeight + (itemHeight / 2f)) / 1f);
+        float fixedHeight = randomTile.transform.position.y + ((tileHeight + (itemHeight / 2f)) / 1f);
 
         return fixedHeight;
      }

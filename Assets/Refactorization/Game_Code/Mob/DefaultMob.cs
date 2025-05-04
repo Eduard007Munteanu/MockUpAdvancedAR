@@ -13,7 +13,7 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
 
     [SerializeField] private float speedFactor = 0.008f;
 
-    private ItemBuilding itemBuilding;
+    
 
     private DefaultItem closestItem; 
 
@@ -120,7 +120,7 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
             transform.position += dir * speedFactor;
 
             if(Vector3.Distance(transform.position, toDestination) < 0.1f){
-                string closestItemName = itemBuilding.GetItemName(building.GetBuildingClass());
+                string closestItemName = ItemBuilding.Instance.GetItemName(building.GetBuildingClass());
                 closestItem = FindClosestItem(closestItemName);
                 if (closestItem == null)
                 {
@@ -162,6 +162,6 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
 
     public float GetMobHeight()
     {
-        throw new System.NotImplementedException();
+        return gameObject.GetComponent<Renderer>().bounds.size.y;
     }
 }

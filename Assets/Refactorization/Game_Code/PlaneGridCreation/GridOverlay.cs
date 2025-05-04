@@ -87,9 +87,9 @@ public class GridOverlay : MonoBehaviour
 
     }
 
-    public Vector3[] GetTileCorners(Tile tile)
+    public Vector3[] GetTileCorners(DefaultTile tile)
     {
-        Transform tileTransform = ((MonoBehaviour)tile).transform;
+        Transform tileTransform = tile.transform;
 
         Vector3 center = tileTransform.position;
         Vector3 right = tileTransform.right * 0.5f * tileTransform.localScale.x * 10f;
@@ -112,10 +112,10 @@ public class GridOverlay : MonoBehaviour
         return (rows, columns);
     }
 
-    public Tile FindTileWithCoordinates(int x, int z){
+    public DefaultTile FindTileWithCoordinates(int x, int z){
         foreach (GameObject tile in tiles){
             if(tile.name == $"Tile_{x}_{z}"){
-                return tile.GetComponent<Tile>();
+                return tile.GetComponent<DefaultTile>();
             }
         }
         Debug.LogError("No such tile found!");
@@ -129,9 +129,9 @@ public class GridOverlay : MonoBehaviour
 
 
 
-    public Tile GetRandomTile(){
+    public DefaultTile GetRandomTile(){
         int randomIndex = Random.Range(0, GetTilesCount());
-        Tile randomTile = GetTiles()[randomIndex].GetComponent<Tile>();
+        DefaultTile randomTile = GetTiles()[randomIndex].GetComponent<DefaultTile>();
         return randomTile;
     }
 }

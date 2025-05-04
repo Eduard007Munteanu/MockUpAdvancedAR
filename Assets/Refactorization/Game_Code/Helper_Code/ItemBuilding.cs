@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class ItemBuilding: MonoBehaviour{
 
+
+    public static ItemBuilding Instance {get; private set;}
+
     private Dictionary<string, string> itemBuildingDictionary = new Dictionary<string, string>();
 
     void Start(){
@@ -10,10 +13,21 @@ public class ItemBuilding: MonoBehaviour{
     }
 
 
+    void Awake()
+    {
+        if (Instance != null && Instance != this) {
+            Debug.LogWarning("More than one BuildManager detected. Destroying duplicate.");
+            Destroy(gameObject);
+        } else {
+            Instance = this;
+        }
+    }
+
+
     void InitializeItemBuilding(){
-        itemBuildingDictionary.Add("Farming_house", "Gold");
-        itemBuildingDictionary.Add("Military_house", "Tree");
-        itemBuildingDictionary.Add("Sleep_house", "Stone");
+        itemBuildingDictionary.Add("farming", "GoldItem");
+        itemBuildingDictionary.Add("military", "TreeItem");
+        itemBuildingDictionary.Add("sleep", "StoneItem");
         
     }
 

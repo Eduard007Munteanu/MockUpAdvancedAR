@@ -89,7 +89,7 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
     }
 
 
-    public Tile GetTile()
+    public DefaultTile GetTile()
     {
         return tile;
     }

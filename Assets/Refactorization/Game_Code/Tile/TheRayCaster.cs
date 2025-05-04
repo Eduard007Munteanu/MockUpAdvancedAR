@@ -60,12 +60,36 @@ public class TheRayCaster : MonoBehaviour
 
             MobSpawnButton mobButton = hit.collider.GetComponent<MobSpawnButton>();
 
+
+            Debug.Log("SelectedMob is " + (selectedMob?.name ?? "null") + " And mob is " + (mobs?.name ?? "null"));
+
+
             
 
 
 
+            if(selectedMob != null && mobs == null){
+                Debug.Log("Allright!");
+                if(rightHandPinchStrength > 0.8f){
+                    Debug.Log("Even better than allright!");
+                    if(tile != null){
+                        Debug.Log("We selected the selectedMob to the tile");
+                        Vector3 tilePosition = tile.gameObject.transform.position;  
+                        Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(tile, selectedMob), tilePosition.z);  //Pivot point in empty object parent of tile instead of vectorYHeightGivenTile
+                        selectedMob.InitMove(targetPosition, hitObj);
+                        selectedMob = null;
+                    }
+                    else if(building != null){
+                        Debug.Log("We selected the selectedMob to the building of type " + building.name);
+                        Vector3 buildingPosition = building.gameObject.transform.position;  
+                        Vector3 targetPosition = new Vector3(buildingPosition.x, vectorYHeightGivenTile(GridOverlay.Instance.GetTiles()[0].GetComponent<DefaultTile>(), selectedMob), buildingPosition.z);
+                        selectedMob.InitMove(targetPosition, hitObj);
+                        selectedMob = null;
+                    }
+                }
+            }
 
-            if(tile != null){
+            else if(tile != null){
                 GlowEffectTrigger(hitObj);
                 if(CardsInHand.Instance.GetCardsInHand().Count == 1){
                     if(rightHandPinchStrength > 0.8f){
@@ -100,24 +124,12 @@ public class TheRayCaster : MonoBehaviour
             else if(mobs != null){
                 if(rightHandPinchStrength > 0.8f){
                     selectedMob = mobs;
+                    Debug.Log("We look and pinched at a mob, nice :) . selectedMob = mobs  , more concrete selectedMob = " + selectedMob.name);
                     selectedMob.ReactOnClick();
                 }
             }
 
-            else if(selectedMob != null && mobs == null){
-                if(rightHandPinchStrength > 0.8f){
-                    if(tile != null){
-                        Vector3 tilePosition = tile.gameObject.transform.position;  
-                        Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(tile, selectedMob), tilePosition.z);  //Pivot point in empty object parent of tile instead of vectorYHeightGivenTile
-                        selectedMob.InitMove(targetPosition, hitObj);
-                    }
-                    else if(building != null){
-                        Vector3 buildingPosition = building.gameObject.transform.position;  
-                        Vector3 targetPosition = new Vector3(buildingPosition.x, vectorYHeightGivenTile(tile, selectedMob), buildingPosition.z);
-                        selectedMob.InitMove(targetPosition, hitObj);
-                    }
-                }
-            }
+            
         }
         wasPinching = rightHandPinchStrength > 0.8f;
     }

@@ -18,7 +18,7 @@ public class MainBuild : DefaultBuild
 
     protected override string Building_class => "Main";
 
-    private Tile tile;
+    private DefaultTile tiles;
 
     
 
@@ -46,10 +46,10 @@ public class MainBuild : DefaultBuild
     }
 
     public override Vector3 SpawnBuilding(){
-        tile = TileFindCalculation();
-        float tileHeight = tile.GetTileHeight();
+        tiles = TileFindCalculation();
+        float tileHeight = tiles.GetTileHeight();
         float buildingHeight = GetComponent<Renderer>().bounds.size.y;
-        Vector3 tilePosition = ((MonoBehaviour)tile).transform.position;  //Given tile is a object
+        Vector3 tilePosition = tiles.transform.position;  //Given tile is a object
 
 
 
@@ -57,18 +57,18 @@ public class MainBuild : DefaultBuild
         return spawnPosition;
     }
 
-    private Tile TileFindCalculation(){
+    private DefaultTile TileFindCalculation(){
         (int x, int z) = gridOverlay.GetRowAndColumnsOfPlatform();
         (int, int) buildingSpawnPosition = (z-1, Mathf.FloorToInt(x/2));
-        Tile tile = gridOverlay.FindTileWithCoordinates(buildingSpawnPosition.Item2, buildingSpawnPosition.Item1);
+        DefaultTile tile = gridOverlay.FindTileWithCoordinates(buildingSpawnPosition.Item2, buildingSpawnPosition.Item1);
         return tile;
 
 
     }
 
     public override void CreateMob(){
-        Vector3[] tileCorners = gridOverlay.GetTileCorners(tile);
-        float tileHeight = tile.GetTileHeight();
+        Vector3[] tileCorners = gridOverlay.GetTileCorners(tiles);
+        float tileHeight = tiles.GetTileHeight();
 
         Vector3 topLeft = tileCorners[0];
         Vector3 topRight = tileCorners[1];

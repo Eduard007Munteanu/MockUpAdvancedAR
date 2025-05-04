@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
-public class DefaultTile : MonoBehaviour, Tile
+public class DefaultTile : MonoBehaviour//, Tile
 {
     // Start is called before the first frame update
     void Start()
