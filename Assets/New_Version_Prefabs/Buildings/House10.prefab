@@ -114,5 +114,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PanelPrefab: {fileID: 3972064620206592590, guid: e92d6c1f42dc0124bb11bb05ccddf767, type: 3}
-  gridOverlay: {fileID: 0}
-  mobPrefab: {fileID: 4516937727782279442, guid: e662c9ce4704dbc4fbb196b3b6930401, type: 3}
+  mobPrefab: {fileID: -9190329944086079849, guid: e662c9ce4704dbc4fbb196b3b6930401, type: 3}

@@ -4,7 +4,7 @@ using System.Linq;
 using Meta.XR.MRUtilityKit.SceneDecorator;
 using UnityEngine;
 
-public abstract class DefaultMob : MonoBehaviour, Mobs
+public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no other mob class for now
 {
 
     private bool isMoving = false;
@@ -55,11 +55,14 @@ public abstract class DefaultMob : MonoBehaviour, Mobs
     public void AssignToBuilding(DefaultBuild building)
     {
         buidlingAssignedTo = building;
+        buidlingAssignedTo.AddAssignedMob(this);
     }
 
     public void RemoveFromBuilding()
     {
         buidlingAssignedTo = null;
+        buidlingAssignedTo.RemoveAssignedMob(this);
+        
     }
 
     // public void CollectItem(PanelDatabase panelDatabase)

@@ -89,6 +89,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Mob\DefaultMob.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\SleepCard.cs" />
     <Compile Include="Assets\Card.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Panel\MobSpawnButton.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\UpgradePanel.cs" />
     <Compile Include="Assets\TileObject.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\CardsInHand.cs" />

@@ -974,7 +974,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &7670891107155513434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1369,6 +1369,7 @@ GameObject:
   - component: {fileID: 6180099835289942919}
   - component: {fileID: 2295640020297909636}
   - component: {fileID: 8867286687767865731}
+  - component: {fileID: 8652593957978660808}
   m_Layer: 5
   m_Name: Button (Spawn Mobs)
   m_TagString: Untagged
@@ -1546,6 +1547,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8652593957978660808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5391228230481191254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e9cdeb4ced00024f91c555893667aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5727705579843419455
 GameObject:
   m_ObjectHideFlags: 0

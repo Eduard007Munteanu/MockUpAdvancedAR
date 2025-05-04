@@ -49,10 +49,23 @@ public class MainBuildingPanel : DefaultPanel
         buildingClassText.text = AdditionalText(initClassText, building.GetBuildingClass() );
         buildingIdText.text = AdditionalText(initIdText, building.GetID().ToString());
 
+        // ---- Link the spawn mob button ----
+        var modsTransform = transform.Find("Modifications");
+        var spawnButtonTransform = modsTransform?.Find("Button (Spawn Mobs)");
 
-
+        if (spawnButtonTransform != null && building is MainBuild mainBuild)
+        {
+            var mobSpawnButton = spawnButtonTransform.GetComponent<MobSpawnButton>();
+            if (mobSpawnButton != null)
+            {
+                mobSpawnButton.LinkBuilding(mainBuild);
+            }
+        }
 
     }
+
+
+
 
     
 

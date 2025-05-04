@@ -58,6 +58,8 @@ public class TheRayCaster : MonoBehaviour
             DefaultMob mobs = hit.collider.GetComponent<DefaultMob>();
             DefaultTile tile = hit.collider.GetComponent<DefaultTile>();
 
+            MobSpawnButton mobButton = hit.collider.GetComponent<MobSpawnButton>();
+
             
 
 
@@ -88,6 +90,10 @@ public class TheRayCaster : MonoBehaviour
                     PanelManager.Instance.SpawnPanelOnLeftHand(building);
                 }
                  
+            }
+
+            else if(mobButton != null && rightHandPinchStrength > 0.8f && !wasPinching){
+                mobButton.TriggerMobSpawn();
             }
             
 

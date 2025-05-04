@@ -92,8 +92,13 @@ public class MainBuild : DefaultBuild
 
         Vector3 threshold = new Vector3(buildingPosition.x, buildingPosition.y, buildingPosition.z + 0.2f); //This is the threshold for the mob to spawn.
 
-        GameObject lastAssignedMob = GetLastAssignedMob().gameObject; //Get the last mob spawned in the building.
-        if(lastAssignedMob != null){
+        DefaultMob lastAssignedMobComponent = GetLastAssignedMob(); //Get the last mob spawned in the building.
+
+
+        if(lastAssignedMobComponent != null){   
+
+            GameObject lastAssignedMob = lastAssignedMobComponent.gameObject;
+
             spawnPosition = lastAssignedMob.transform.position - Vector3.right * spaceBetweenMobs;
             if(Vector3.Distance(bottomRight, bottomLeft) < Vector3.Distance(bottomRight, spawnPosition)){
                 spawnPosition = lastAssignedMob.transform.position - Vector3.forward * spaceBetweenMobs;
