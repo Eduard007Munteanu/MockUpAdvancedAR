@@ -60,8 +60,9 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
 
     public void RemoveFromBuilding()
     {
-        buidlingAssignedTo = null;
         buidlingAssignedTo.RemoveAssignedMob(this);
+        buidlingAssignedTo = null;
+        
         
     }
 
