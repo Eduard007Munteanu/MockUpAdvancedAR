@@ -61,6 +61,11 @@ public class PanelManager : MonoBehaviour
                 var panelData = panels[BuildingClassName];
                 panelData.Item2 = true;
                 panels[BuildingClassName] = panelData;
+
+
+
+                InitializePanel(panels[BuildingClassName].Item1, panelFromBuilding);
+
                 return;
             }
         }

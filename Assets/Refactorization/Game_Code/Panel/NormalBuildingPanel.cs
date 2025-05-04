@@ -22,9 +22,11 @@ public class NormalBuildingPanel : DefaultPanel
         TextMeshProUGUI buildingIdText    = idTransform?.GetComponent<TextMeshProUGUI>();
 
         
+        string initClassText = "Building Type:";
+        string initIdText = "Building ID:";
 
-        buildingClassText.text = AdditionalText(buildingClassText.text, building.GetBuildingClass() );
-        buildingIdText.text = AdditionalText(buildingIdText.text, building.GetID().ToString());
+        buildingClassText.text = AdditionalText(initClassText, building.GetBuildingClass() );
+        buildingIdText.text = AdditionalText(initIdText, building.GetID().ToString());
 
 
 
