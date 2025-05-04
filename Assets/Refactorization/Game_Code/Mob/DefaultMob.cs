@@ -87,17 +87,21 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
         toColliderObj = colliderObj;
         isMoving = true;
 
-        Build building = toColliderObj.GetComponent<Build>();
-        Tile tile = toColliderObj.GetComponent<Tile>();
-
-
-        if(building != null){
+        if (colliderObj.TryGetComponent<Build>(out _))
+        {
             buildingOrTile = true;
         }
-        else if(tile != null){
+        else if (colliderObj.TryGetComponent<Tile>(out _))
+        {
             buildingOrTile = false;
         }
-        
+        else
+        {
+            // Fallback: treat as generic movement
+            buildingOrTile = false;
+        }
+
+
     }
 
     public void Move(){
