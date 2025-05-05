@@ -68,7 +68,7 @@ public class TheRayCaster : MonoBehaviour
 
 
 
-            if(selectedMob != null && mobs == null){
+            if(selectedMob != null && mobs == null && !wasPinching ){
                 Debug.Log("Allright!");
                 if(rightHandPinchStrength > 0.8f){
                     Debug.Log("Even better than allright!");
@@ -91,7 +91,7 @@ public class TheRayCaster : MonoBehaviour
                 }
             }
 
-            else if(tile != null){
+            else if(tile != null && !wasPinching ){
                 GlowEffectTrigger(hitObj);
                 if(CardsInHand.Instance.GetCardsInHand().Count == 1){
                     if(rightHandPinchStrength > 0.8f){
@@ -104,13 +104,13 @@ public class TheRayCaster : MonoBehaviour
                 }
             }
 
-            else if(card != null && CardsInHand.Instance.IsCardInHand(card)){
+            else if(card != null && CardsInHand.Instance.IsCardInHand(card) && !wasPinching ){
                 if(rightHandPinchStrength > 0.8f){
                     CardsInHand.Instance.RemoveAllCardsExpect(card);
                 }
             }
 
-            else if(building != null){    //Only spawn once per pinch modification. 
+            else if(building != null && !wasPinching){    //Only spawn once per pinch modification. 
                 
                 if(rightHandPinchStrength > 0.8f && !wasPinching){
                     PanelManager.Instance.SpawnPanelOnLeftHand(building);
@@ -123,7 +123,7 @@ public class TheRayCaster : MonoBehaviour
             }
             
 
-            else if(mobs != null){
+            else if(mobs != null && !wasPinching){
                 if(rightHandPinchStrength > 0.8f){
                     selectedMob = mobs;
                     Debug.Log("We look and pinched at a mob, nice :) . selectedMob = mobs  , more concrete selectedMob = " + selectedMob.name);

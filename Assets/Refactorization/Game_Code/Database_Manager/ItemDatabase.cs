@@ -51,15 +51,15 @@ public class ItemDatabase: MonoBehaviour{
             packet.Add(kvp.Key + "Score", kvp.Value);
         }
 
-        // Test, I want to check the packet:
-        string packetContents = "Packet Contents: { ";
-        foreach (var item in packet.GetType().GetField("data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(packet) as Dictionary<string, object>)
-        {
-            packetContents += $"[{item.Key}: {item.Value}], ";
-        }
-        packetContents += "}";
-        Debug.Log(packetContents);
-        // Test, I want to check the packet:
+    // // Test, I want to check the packet:
+    // string packetContents = "Packet Contents: { ";
+    // foreach (var item in packet.GetType().GetField("data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(packet) as Dictionary<string, object>)
+    // {
+    //     packetContents += $"[{item.Key}: {item.Value}], ";
+    // }
+    // packetContents += "}";
+    // Debug.Log(packetContents);
+    // // Test, I want to check the packet:
 
         return packet;
     }
