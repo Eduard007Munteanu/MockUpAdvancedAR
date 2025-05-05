@@ -80,6 +80,19 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
         }
     }
 
+    public DefaultMob GetSpecificActualMob(DefaultMob mob){
+        int index = assignedMobs.IndexOf(mob);
+        if (index >= 0)
+        {
+            return assignedMobs[index];
+        }
+        else
+        {
+            Debug.LogError("Mob not found in the list");
+            return null;
+        }
+    }
+
     public DefaultMob GetLastAssignedMob(){
         if(assignedMobs.Count > 0){
             return assignedMobs[assignedMobs.Count - 1];

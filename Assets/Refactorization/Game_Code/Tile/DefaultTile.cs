@@ -47,20 +47,48 @@ public class DefaultTile : MonoBehaviour//, Tile
     }
 
 
-    public void ArrangeMobs(DefaultMob mob){
+    public bool ArrangeMobs(DefaultMob mob)
+    {
         Vector3[] tileCorners = GridOverlay.Instance.GetTileCorners(this);
         Vector3 topLeft = tileCorners[0];
         Vector3 topRight = tileCorners[1];
         Vector3 bottomRight = tileCorners[2];
         Vector3 bottomLeft = tileCorners[3];
 
-        //float mobHeight = mob.GetComponent<Renderer>().bounds.size.y;
+        int maxCols = 5;
 
-        if(GetLastMob() == null){
-            mob.transform.position = new Vector3(topLeft.x, mob.transform.position.y, topLeft.z);
-            mobs.Add(mob);
+        
+        Vector3 xDir = (topRight - topLeft).normalized;
+        Vector3 zDir = (bottomLeft - topLeft).normalized;
+
+        float tileWidth = Vector3.Distance(topLeft, topRight);
+        float tileHeight = Vector3.Distance(topLeft, bottomLeft);
+        float colSpacing = tileWidth / maxCols;
+
+        int mobIndex = mobs.Count;
+        int col = mobIndex % maxCols;
+        int row = mobIndex / maxCols;
+
+        float rowHeight = tileHeight / 3f;   //Let's have some empty space as well. 
+
+        
+        if (row * colSpacing > rowHeight)
+        {
+            Debug.LogWarning("No more vertical space to place mobs!");
+            return false;
         }
+
+        Vector3 spawnPos = topLeft + (xDir * colSpacing * col) + (zDir * colSpacing * row);
+        spawnPos.y = mob.transform.position.y; 
+
+        mob.transform.position = spawnPos;
+        mobs.Add(mob);
+        return true;
     }
+
+
+
+    
 
 
     public List<DefaultMob> getListOfMobs(){
