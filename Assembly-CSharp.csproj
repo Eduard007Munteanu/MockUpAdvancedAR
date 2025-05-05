@@ -64,9 +64,7 @@
     <Analyzer Include="E:\UnityEditor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BuildingManager.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Spawner.cs" />
-    <Compile Include="Assets\Mob_Manager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\ItemDatabase.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\MilitaryCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\SleepBuild.cs" />
@@ -77,9 +75,6 @@
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\BuildCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Gold.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\LawCard.cs" />
-    <Compile Include="Assets\MaterialManager.cs" />
-    <Compile Include="Assets\TileChecker.cs" />
-    <Compile Include="Assets\MainBuildingCanvas.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\DestructibleObject.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Tile\Tile.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\Build.cs" />
@@ -88,10 +83,8 @@
     <Compile Include="Assets\Refactorization\Game_Code\Panel\PanelManager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\DefaultMob.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\SleepCard.cs" />
-    <Compile Include="Assets\Card.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\MobSpawnButton.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\UpgradePanel.cs" />
-    <Compile Include="Assets\TileObject.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\CardsInHand.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\Card.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\FarmBuild.cs" />
@@ -101,9 +94,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Build\BuildManager.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Explosion.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\MilitaryBuild.cs" />
-    <Compile Include="Assets\GridOverlayu.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\Panel.cs" />
-    <Compile Include="Assets\SimpleCanvasBuild.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\PlaneGridCreation\GridOverlay.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\ItemManager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\MainBuild.cs" />
@@ -111,20 +102,15 @@
     <Compile Include="Assets\Refactorization\Game_Code\Panel\DefaultPanel.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\PlaneGridCreation\HoverEffects.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Tree.cs" />
-    <Compile Include="Assets\CardDeck.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\BuildingDatabase.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\FarmCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\DefaultBuild.cs" />
-    <Compile Include="Assets\MaterialElement.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Despawn.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Item.cs" />
-    <Compile Include="Assets\Mob.cs" />
-    <Compile Include="Assets\HoverEffect.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\BuildUpgradeCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\MobManager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\DefaultItem.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Helper_Code\ItemBuilding.cs" />
-    <Compile Include="Assets\Building.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

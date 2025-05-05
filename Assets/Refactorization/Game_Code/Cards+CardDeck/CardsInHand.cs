@@ -22,6 +22,8 @@ public class CardsInHand : MonoBehaviour
 
     [SerializeField] private float cardSpacing = 0.9f;
 
+    [SerializeField] private float heightOfCardsFromPalm = 0.3f;
+
     
 
 
@@ -47,25 +49,21 @@ public class CardsInHand : MonoBehaviour
     void Start()
     {
 
-        OVRSkeleton leftHandSkeleton = leftHand.GetComponent<OVRSkeleton>();
-
-
-        foreach (var bone in leftHandSkeleton.Bones)
-        {
-            if (bone.Id.ToString().Contains("Palm")) 
-            {
-                palmTransform = bone.Transform;
-                Debug.Log("Found the left hand palm bone!");
-                transform.SetParent(palmTransform, false);
-                break;
-            }
-        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //LayoutCardsOnPalm();
+        if (leftHand != null)
+        {
+            transform.position = leftHand.transform.position + new Vector3(0f, heightOfCardsFromPalm, 0f);
+            // transform.rotation = Quaternion.identity; // lock orientation
+
+            Quaternion handRotation = leftHand.transform.rotation;
+            Vector3 euler = handRotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(0f, euler.y, 0f);
+        }
     }
 
     public bool IsCardInHand(DefaultCard card)
