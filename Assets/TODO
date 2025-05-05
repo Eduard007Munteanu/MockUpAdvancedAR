@@ -1,19 +1,133 @@
-Issues:
-a) MainBuilding constantly changing size because I'm changing the prefab size (incorrect)                                           (x)
-b) Spawned mobs should NEVER change y-axis after spawning                                                                           (x)
-c) spawned object doesn't precisely go at the target object. (optional for now)                                                  (optional for now)
-
 
 
 TODO:
-a) Fix issues                                                                                                                       (All excluding the optional one)
-b) Create materials to be randomly placed on the plane => Cannot build on those tiles!                                              (x)
-c) Materials glow or make the material/plane more distinct.                                                                         (not now)
-b) Mobs and other buidlings relation interchangeability                                                                             
-d) Mineral collecter
-e) Enemy mobs appearing and prioritizing buildings, but also attack mobs
 
 
+
+- Game goal => Collect as much art as possible => more achievements
+
+
+Buildings:
+-) Buildings to be constructed => Military, Universal Farming - Warehouse (Based on closest general material), School builiding, Relaxing building (consumes material, increases hapiness), Food building 
+
+
+- Military building =>  Assign
+- School building =>
+
+
+
+Materials:
+- They are => Gold ( => Good for Law + Art generation), Art, Food (brings more happiness to the population), Wood (if collected at a high level => Affect the nature> bring down happiness > Good for Building production, Upgrade Cards) 
+- Limited amount, decrease animation => DO NOT DESTROY, HIDE!
+
+
+
+Global variables => no local, only loco 
+
+-variables: 
+ - All Materials
+ - Agreement/Stability => ( countSimilarity(poliical axis variables constraints, current axis variables constraints) / all variables) => influence production (highest weight)
+- might or battle power per pop => increases per militant pop given more assigned to military building 
+- Happiness => Increases if agreement high(threshold) (weights the most), increases if food high (second ), increases from the relaxing building.  (third)
+            => Decrease => agreemnt + food low + amount of people being killed in fights and type of mob
+            => influence => All productions + might + birth rate
+- Art experience accumulation + art multiplier based on mobs assigned to MainBuild. Can be increaesd by learning at schools.  => XP calculation = multiplier * number of mobs assigned to mainBuild 
+- Birth rate => Increase change to spawn mob 
+- Work power => increase if high number of persons work, but drastically decrease if no material available and many work. (Though about more, Ask Gemini)
+- Population Count => Decrease food per total population => tick time on food decreasal (depends on population count) 
+- Building count => Agreement increase/decrease 
+
+
+
+
+
+- Laws are multipliers on top of the allready existing variables 
+
+- Upgrade card => Ups mob capacity for each building + multiplier on the specific building type of material collector 
+
+art generation
+
+Neutral => Distribute:
+
+
+
+
+-) Faces and models of the people  
+- (Optional) => Regarding amount of happiness (0 - 1 value) => faces change 
+-) Text bubble + audio sync from the people behind  
+-) Upgrade the tiles visually.
+-) (Optional) => Upgrade the panels texture wise.
+
+
+-) Modify the Mob class to be more flexible => Military, 
+-) Mob selection not via gaze + pinch => But touch (tapping)
+-) No rotation for the card on hand
+-) Enemy mobs appearing  => Mob goes forward + tile check per each tile encountered => If end reached, move towards mainbuild by difference in tile (x,y coordinate) 
+-) Mobs spawn by themselves, calculated by fertility rate => interconnected with the happiness factor
+-) Mobs assigned to the mainbuilding are generating art (When spawned, mob allready assigned to be art slave => mainbuilding)
+-) Assign mobs to school in order to upgrade the productivity rate of the art 
+-) Level up by collecting art => level bar reach max => spawn painting on the wall that reflects the current situation regarding the stats => boost (negative/positive)
+-) Random mob spawned + low probability (10%)  selection to be killed given below happiness threshold (Checked every seconds)
+-) If mob assigned to tile => Remove Current Building Assignment + assign to military building 
+
+
+-) Lights effects + Paintings boost given Agreement.   (LATER regarding painting boost)
+
+-) Given battle between mobs and enemy mobs IN A SPECIFIC TILE => result = might power your mobs - might power enemy mobs => if negative, all of your mobs die + from enemy mobs die  mobs that accumulate result power + The other way around => prioritize killing the weaker ones
+
+
+
+
+-) Because of the demo => Show the desire. 
+
+
+
+
+
+Eduard:
+
+-) Mob selection not via gaze + pinch => But touch (tapping)
+-) No rotation for the card on hand
+-) Enemy mobs appearing  => Mob goes forward + tile check per each tile encountered => If end reached, move towards mainbuild by difference in tile (x,y coordinate) 
+-) AR => Identify Flat surface => Creating table + painting placeholder
+-) 
+
+
+
+
+
+
+Peter:
+
+Materials:
+- They are => Gold ( => Good for Law + Art generation), Art, Food (brings more happiness to the population), Wood (if collected at a high level => Affect the nature> bring down happiness > Good for Building production, Upgrade Cards) 
+- Limited amount, decrease animation => DO NOT DESTROY, HIDE!
+
+
+
+Global variables => no local, only loco 
+
+-variables: 
+ - All Materials
+ - Agreement/Stability => ( countSimilarity(poliical axis variables constraints, current axis variables constraints) / all variables) => influence production (highest weight)
+- might or battle power per pop => increases per militant pop given more assigned to military building 
+- Happiness => Increases if agreement high(threshold) (weights the most), increases if food high (second ), increases from the relaxing building.  (third)
+            => Decrease => agreemnt + food low + amount of people being killed in fights and type of mob
+            => influence => All productions + might + birth rate
+- Art experience accumulation + art multiplier based on mobs assigned to MainBuild. Can be increaesd by learning at schools.  => XP calculation = multiplier * number of mobs assigned to mainBuild 
+- Birth rate => Increase change to spawn mob
+- Work power => increase if high number of persons work, but drastically decrease if no material available and many work. (Though about more, Ask Gemini)
+- Population Count => Decrease food per total population => tick time on food decreasal (depends on population count) 
+- Building count => Agreement increase/decrease 
+
+
+
+
+
+Enok:
+
+
+Tasks regarding People behind you: 
 
 
 

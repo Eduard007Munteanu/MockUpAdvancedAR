@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Data.Common;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 
 public abstract class DefaultItem : MonoBehaviour, Item
@@ -20,9 +21,4 @@ public abstract class DefaultItem : MonoBehaviour, Item
     public virtual string GetItemClass(){
         return ItemClass;
     }
-
-
-
-
-
 }
