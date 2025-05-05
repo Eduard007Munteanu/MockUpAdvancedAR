@@ -75,6 +75,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\BuildCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Gold.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\LawCard.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Mob\EnemyMob.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\DestructibleObject.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Tile\Tile.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\Build.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Build\DefaultBuild.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Despawn.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Item.cs" />
+    <Compile Include="Assets\Resources\Resource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\BuildUpgradeCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\MobManager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\DefaultItem.cs" />

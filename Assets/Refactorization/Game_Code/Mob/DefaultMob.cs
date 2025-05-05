@@ -91,8 +91,9 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
         {
             buildingOrTile = true;
         }
-        else if (colliderObj.TryGetComponent<Tile>(out _))
+        else if (colliderObj.TryGetComponent<DefaultTile>(out _))
         {
+            Debug.Log("Reached here, ma dude!");
             buildingOrTile = false;
         }
         else
@@ -108,13 +109,27 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
         Vector3 dir = (toDestination - transform.position).normalized;
         transform.position += dir * speedFactor;
 
+        
+
+
         if(Vector3.Distance(transform.position, toDestination) < 0.1f){
+            Debug.Log("Reached the closest point on tile to my DefaultMob object");
             isMoving = false;
             transform.position = toDestination;
+            toColliderObj.GetComponent<DefaultTile>().ArrangeMobs(this);
+            // I want to set the mob in a  specific order regarding the tile, involving taking into account possible other mobs from the same tile. 
         }
     }
 
+
+
+
+
+
+
     
+
+
 
     public void LoopMove(){
         DefaultBuild building = toColliderObj.GetComponent<DefaultBuild>();
