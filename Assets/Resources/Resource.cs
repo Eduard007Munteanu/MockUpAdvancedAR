@@ -1,0 +1,199 @@
+// --- Resource.cs ---
+using UnityEngine;
+using System;
+using System.Collections.Generic; // Required for Action delegate
+
+// Hi Eduard
+// This is a base class for all resources in the game.
+
+// produces production per cycle and will manage thresholds too have to figure that one out
+
+// You can interact with the resources the following ways:
+// - AddAmount(float delta, applymods): Adds a specified amount to the resource.
+// Like when materials are produced or consumed. For collecting materials like golditem 
+// use applymods = true this way added amount will be boosted by production factors
+// - AddProductionModifier(float flatDelta, float mod1Delta, float mod2Delta): Modifies the production factors of the resource.
+// - AddProductionConstant(float constDelta): added directly to amount every cycle
+// - Tick(): Call this every tick to update the resource. It will check if it's time to produce more resources.
+
+public enum ResourceType
+    {
+        Population,
+        Arts, Food, Gold,
+        Civil, Societal, Economy,
+        Civil_Desire, Societal_Desire, Economy_Desire, 
+        Happiness,
+        Might, Threat, TollRatio, 
+        DrawAmount, DrawsLeft, // ??
+        WorkPower,
+
+        // Add other resources/stats as needed
+    }
+
+// Abstract base class for all game resources/stats.
+// Defines common structure and behavior for tracking amounts and calculating production.
+public abstract class Resource
+{
+
+    // State: Basic properties of the resource
+    public ResourceType Type { get; private set; }
+    public float CurrentAmount { get; private set; }
+    public float MinimumAmount { get; private set; } // Configurable, often 0
+    public float MaximumAmount { get; private set; } // Configurable storage limit/cap
+
+    // Production calculation: overall_production_per_cycle = (flat * mod1 * mod2) + const
+    // Protected allows derived classes potential access if complex logic requires it, otherwise could be private.
+    protected float flat;
+    protected float mod1;
+    protected float mod2;
+    protected float constant;
+    protected Dictionary<int, float> thresholds; // TODO: List of thresholds for this resource
+
+    // Cached production rate per cycle. Recalculated when factors change.
+    private float productionPerCycle;
+
+    // Production Timing
+    private int productionCycleTicks; // ticks between production attempts
+    private int ticksUntilNextCycle;  // counter for the current cycle
+
+    // Events for notification
+    public event Action<ResourceType, float> OnAmountChanged; // Parameter is the new CurrentAmount
+    public event Action<ResourceType, float> OnProductionChanged; // Parameter is the new productionPerCycle
+    public event Action<ResourceType, int> OnThresholdCrossed;
+
+    // Constructor: Initializes the resource. Called by concrete implementations.
+    protected Resource(
+        ResourceType type, 
+        float initialAmount, 
+        float minAmount, 
+        float maxAmount, 
+        int cycleTicks,
+        Dictionary<int, float> thresholds = null, // Optional thresholds for this resource
+        float initialFlat = 0f, 
+        float initialMod1 = 1f, 
+        float initialMod2 = 1f, 
+        float initialConst = 0f
+        )
+    {
+        Type = type;
+        MinimumAmount = minAmount;
+        MaximumAmount = maxAmount;
+        CurrentAmount = Mathf.Clamp(initialAmount, MinimumAmount, MaximumAmount); // Ensure initial amount is within bounds
+
+        flat = initialFlat;
+        mod1 = initialMod1;
+        mod2 = initialMod2;
+        constant = initialConst;
+
+        productionCycleTicks = cycleTicks;
+        ticksUntilNextCycle = productionCycleTicks; // Start ready for the first cycle or wait full cycle? Let's wait.
+
+        RecalculateProduction(); // Calculate initial production rate
+    }
+
+    // Modifies CurrentAmount by delta, clamps between MinimumAmount and MaximumAmount.
+    // Triggers onAmountChange() for derived class logic and OnAmountChanged event.
+    public virtual void AddAmount(float delta, bool applyMods = false)
+    {
+        float previousAmount = CurrentAmount;
+        delta = applyMods ? delta * productionPerCycle : delta; // Apply production rate if requested
+        CurrentAmount = Mathf.Clamp(CurrentAmount + delta, MinimumAmount, MaximumAmount);
+
+        // Only trigger if the amount actually changed
+        if (CurrentAmount!= previousAmount)
+        {
+            // Check if any thresholds have been crossed
+            for (int i = 0; i < thresholds.Count; i++)
+            {
+                if (previousAmount < thresholds[i] && CurrentAmount >= thresholds[i])
+                {
+                    OnThresholdCrossed?.Invoke(Type, i); // Notify listeners of the threshold crossed
+                    onThresholdCrossed(); // Call abstract method for derived class logic
+                }
+            }
+            onAmountChange(); // Call abstract method for derived class logic (thresholds etc.)
+            OnAmountChanged?.Invoke(Type, CurrentAmount); // Invoke event for external listeners (UI etc.)
+            // TODO: Not fure to notify them here or in the subclasses
+        }
+    }
+
+    // Modifies the multiplicative production factors (flat, mod1, mod2).
+    // Recalculates the cached production rate and triggers change notifications.
+    public virtual void AddProductionModifier(float flatDelta = 0f, float mod1Delta = 0f, float mod2Delta = 0f)
+    {
+        flat += flatDelta;
+        mod1 += mod1Delta;
+        mod2 += mod2Delta;
+        // Ensure modifiers don't go below zero if that's intended design? Assume they can for now.
+
+        RecalculateProduction();
+    }
+
+    // Modifies the additive constant production factor.
+    // Recalculates the cached production rate and triggers change notifications.
+    public virtual void AddProductionConstant(float constDelta)
+    {
+        constant += constDelta;
+        
+        RecalculateProduction();
+    }
+
+    // Recalculates the cached production value based on current factors.
+    // Called internally when factors change.
+    private void RecalculateProduction()
+    {
+        // Core production formula
+        productionPerCycle = (flat * mod1 * mod2) + constant;
+        // Potentially clamp productionPerCycle if needed (e.g., minimum production rate)
+        onProductionChange(); // Call abstract method for derived class logic
+        OnProductionChanged?.Invoke(Type, productionPerCycle); // Invoke event
+    }
+
+    // When the timer reaches zero, it triggers the Produce() method and resets.
+    public virtual void Tick()
+    {
+        ticksUntilNextCycle--;
+        if (ticksUntilNextCycle <= 0)
+        {
+            Produce();
+            ticksUntilNextCycle = productionCycleTicks; // Reset timer
+        }
+    }
+
+    // Applies the cached production amount to the CurrentAmount.
+    // This is the point where the resource quantity actually changes due to regular production.
+    // Can be overridden if production logic is more complex (e.g., requires Kingdom state).
+    protected virtual void Produce()
+    {
+        if (productionPerCycle != 0)
+        {
+            AddAmount(productionPerCycle);
+        }
+    }
+
+    // Abstract method: Called by AddAmount after CurrentAmount changes.
+    // Concrete classes MUST implement this to handle resource-specific logic,
+    // such as checking thresholds, triggering game events, or modifying other resources via Kingdom.
+    protected abstract void onAmountChange();
+
+    // Abstract method: Called after production factors (flat, mod1, mod2, constant) change.
+    // Concrete classes MUST implement this if actions are needed when the *rate* changes
+    // (e.g., updating UI elements displaying the production rate).
+    protected abstract void onProductionChange();
+    // called on the derived class when the threshold is crossed
+    protected abstract void onThresholdCrossed();
+
+    // --- Public Getters ---
+    public float GetCurrentAmount() => CurrentAmount;
+    public float GetMaximumAmount() => MaximumAmount;
+    public float GetMinimumAmount() => MinimumAmount;
+    public float GetProductionRate() => productionPerCycle; // Returns the cached rate per cycle
+    public int GetTicksPerCycle() => productionCycleTicks;
+    public int GetTicksUntilNextCycle() => ticksUntilNextCycle;
+
+    // Provide getters for factors if needed for display or complex logic
+    public float GetFlatFactor() => flat;
+    public float GetMod1Factor() => mod1;
+    public float GetMod2Factor() => mod2;
+    public float GetConstantFactor() => constant;
+}
