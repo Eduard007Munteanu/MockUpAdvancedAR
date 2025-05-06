@@ -1,24 +1,22 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 
-// individual battle power
-
-public class MightResource : Resource
+public class PopulationResource : Resource
 {
-    public MightResource(
-        float initialAmount = 1f,
-        float minAmount = 0f,
-        float maxAmount = 1000f,
-        int cycleTicks = 1
-        ) : base(ResourceType.Arts, initialAmount, minAmount, maxAmount, cycleTicks)
-    {
 
+    public PopulationResource(
+        float initialAmount = 10f, // Population might start small
+        float minAmount = 0f,
+        float maxAmount = 1000f, // Population can grow large
+        int cycleTicks = 1
+        ) : base(ResourceType.Population, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
+    {
+        // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
     }
 
     protected override void onAmountChange(float delta)
     {
-
+        
     }
 
     protected override void onProductionChange(float delta)

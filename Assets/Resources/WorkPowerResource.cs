@@ -1,27 +1,22 @@
-// --- FoodResource.cs ---
 using System.Collections.Generic;
 using UnityEngine;
 
-// Concrete implementation for the 'Food' resource.
-public class FoodResource : Resource
+public class WorkPowerResource : Resource
 {
 
-    public FoodResource(
-        float initialAmount = 100f,
+    public WorkPowerResource(
+        float initialAmount = 1f,
         float minAmount = 0f,
         float maxAmount = 1000f,
         int cycleTicks = 1
-        ) : base(ResourceType.Arts, initialAmount, minAmount, maxAmount, cycleTicks)
+        ) : base(ResourceType.WorkPower, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
     {
-        // add thresholds here, follow FoodThresholds order, keep list in ascending order
-        // thresholds = new Thresholds(new List<float> {
-        //     0f
-        // }, initialAmount);
+        // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
     }
 
     protected override void onAmountChange(float delta)
     {
-
+        
     }
 
     protected override void onProductionChange(float delta)
@@ -31,7 +26,7 @@ public class FoodResource : Resource
 
     protected override void onThresholdCrossed(int i, ThresholdCross dir)
     {
-        // starving handled in reachedmin
+
     }
 
     protected override void onReachedMax(float excess) {
