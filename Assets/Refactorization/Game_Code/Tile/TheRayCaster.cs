@@ -77,7 +77,11 @@ public class TheRayCaster : MonoBehaviour
                         Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(tile, selectedMob), tilePosition.z);  //Pivot point in empty object parent of tile instead of vectorYHeightGivenTile
                         //selectedMob.RemoveFromBuilding();
                         // selectedMob.AssignToBuilding(); // Here we will have the military building assignment. 
-                        selectedMob.InitMove(targetPosition, hitObj);
+
+                        bool canTheMobBeAdded = tile.CanMobBeArrangedChecker(selectedMob);
+                        if(canTheMobBeAdded){
+                            selectedMob.InitMove(targetPosition, hitObj);
+                        }
                         selectedMob = null;
                     }
                     else if(building != null){

@@ -24,9 +24,6 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
 
 
 
-    private Vector3 previousLocation;
-
-    private GameObject previousColliderObj;
 
 
 
@@ -97,17 +94,6 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
 
     public void InitMove(Vector3 destination, GameObject colliderObj)
     {
-
-
-        // I don't like this one that much, tbh. GetBuildingAssignedTo() ???? What if a tile instead w3as the last object? 
-        previousLocation = transform.position;
-        if(GetBuildingAssignedTo() == null){
-            previousColliderObj = null;
-        } else{
-            previousColliderObj = GetBuildingAssignedTo().gameObject;   //Maybe, a little tricky here....
-        }
-        
-
         RemoveFromBuilding();
 
         toDestination = destination;
@@ -143,10 +129,8 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
             Debug.Log("Reached the closest point on tile to my DefaultMob object");
             isMoving = false;
             // transform.position = toDestination;
-            bool value = toColliderObj.GetComponent<DefaultTile>().ArrangeMobs(this);
-            if(!value){
-                InitMove(previousLocation, previousColliderObj);
-            }
+            toColliderObj.GetComponent<DefaultTile>().ArrangeMobs(this);
+            
             // I want to set the mob in a  specific order regarding the tile, involving taking into account possible other mobs from the same tile. 
         }
     }

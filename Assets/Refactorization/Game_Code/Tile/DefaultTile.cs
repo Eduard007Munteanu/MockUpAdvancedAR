@@ -47,7 +47,7 @@ public class DefaultTile : MonoBehaviour//, Tile
     }
 
 
-    public bool ArrangeMobs(DefaultMob mob)
+    public void ArrangeMobs(DefaultMob mob)
     {
         Vector3[] tileCorners = GridOverlay.Instance.GetTileCorners(this);
         Vector3 topLeft = tileCorners[0];
@@ -75,7 +75,6 @@ public class DefaultTile : MonoBehaviour//, Tile
         if (row * colSpacing > rowHeight)
         {
             Debug.LogWarning("No more vertical space to place mobs!");
-            return false;
         }
 
         Vector3 spawnPos = topLeft + (xDir * colSpacing * col) + (zDir * colSpacing * row);
@@ -83,6 +82,38 @@ public class DefaultTile : MonoBehaviour//, Tile
 
         mob.transform.position = spawnPos;
         mobs.Add(mob);
+    }
+
+
+    public bool CanMobBeArrangedChecker(DefaultMob mob){                               //Duplication.... To be fixed.
+        Vector3[] tileCorners = GridOverlay.Instance.GetTileCorners(this);
+        Vector3 topLeft = tileCorners[0];
+        Vector3 topRight = tileCorners[1];
+        Vector3 bottomRight = tileCorners[2];
+        Vector3 bottomLeft = tileCorners[3];
+
+        int maxCols = 5;
+
+        
+        Vector3 xDir = (topRight - topLeft).normalized;
+        Vector3 zDir = (bottomLeft - topLeft).normalized;
+
+        float tileWidth = Vector3.Distance(topLeft, topRight);
+        float tileHeight = Vector3.Distance(topLeft, bottomLeft);
+        float colSpacing = tileWidth / maxCols;
+
+        int mobIndex = mobs.Count;
+        int col = mobIndex % maxCols;
+        int row = mobIndex / maxCols;
+
+        float rowHeight = tileHeight / 3f;   //Let's have some empty space as well. 
+
+
+        if (row * colSpacing > rowHeight)
+        {
+            Debug.LogWarning("No more vertical space to place mobs!");
+            return false;
+        }
         return true;
     }
 
