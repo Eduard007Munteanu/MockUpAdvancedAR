@@ -86,7 +86,7 @@ public class DefaultTile : MonoBehaviour//, Tile
     }
 
 
-    public bool CanMobBeArrangedChecker(DefaultMob mob){                               //Duplication.... To be fixed.
+    public virtual bool CanMobBeArrangedChecker(DefaultMob mob){                               //Duplication.... To be fixed.
         Vector3[] tileCorners = GridOverlay.Instance.GetTileCorners(this);
         Vector3 topLeft = tileCorners[0];
         Vector3 topRight = tileCorners[1];

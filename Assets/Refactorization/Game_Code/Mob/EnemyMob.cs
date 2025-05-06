@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyMob{
+public class EnemyMob : MonoBehaviour{
     
 
 }
