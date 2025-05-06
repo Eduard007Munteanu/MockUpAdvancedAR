@@ -11,3 +11,5 @@ Assets/XR/Settings/OpenXR Package Settings.asset
 ProjectSettings/ShaderGraphSettings.asset
 ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
 UserSettings/Layouts/default-2022.dwlt
+Assets/Oculus/OculusProjectConfig.asset
+Assets/XR/Settings/OpenXR Package Settings.asset
