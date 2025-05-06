@@ -128,13 +128,13 @@ public abstract class Resource
             // TODO: Not sure to notify them here or in the subclasses
         }
 
-        if (noClampAmount > MaximumAmount) // Check if we exceeded the max amount
+        if (noClampAmount >= MaximumAmount) // Check if we exceeded the max amount
         {
             float excess = noClampAmount - MaximumAmount; // Calculate excess amount
             onReachedMax(excess); // Call abstract method for derived class logic (e.g., level up)
             OnReachedMax?.Invoke(Type, excess); // Invoke event for external listeners (UI etc.)
         }
-        else if (noClampAmount < MinimumAmount) // Check if we fell below the min amount
+        else if (noClampAmount <= MinimumAmount) // Check if we fell below the min amount
         {
             float deficit = MinimumAmount - noClampAmount; // Calculate deficit amount
             onReachedMin(deficit); // Call abstract method for derived class logic (e.g., level down)
