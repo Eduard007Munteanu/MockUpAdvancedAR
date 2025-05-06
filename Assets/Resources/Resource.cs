@@ -39,9 +39,9 @@ public abstract class Resource
 
     // State: Basic properties of the resource
     public ResourceType Type { get; private set; }
-    public float CurrentAmount { get; private set; }
-    public float MinimumAmount { get; private set; } // Configurable, often 0
-    public float MaximumAmount { get; private set; } // Configurable storage limit/cap
+    public float CurrentAmount { get; protected set; }
+    public float MinimumAmount { get; protected set; } // Configurable, often 0
+    public float MaximumAmount { get; protected set; } // Configurable storage limit/cap
 
     // Production calculation: overall_production_per_cycle = (flat * mod1 * mod2) + const
     // Protected allows derived classes potential access if complex logic requires it, otherwise could be private.
@@ -63,7 +63,9 @@ public abstract class Resource
     // Events for notification
     public event Action<ResourceType, float> OnAmountChanged; // Parameter is the new CurrentAmount
     public event Action<ResourceType, float> OnProductionChanged; // Parameter is the new productionPerCycle
-    public event Action<ResourceType, int> OnThresholdCrossed;
+    public event Action<ResourceType, int> OnThresholdCrossed; // Parameter is the index of the threshold crossed
+    public event Action<ResourceType, float> OnReachedMax; // Parameter is the excess amount
+    public event Action<ResourceType, float> OnReachedMin; // Parameter is the deficit amount
 
     // Constructor: Initializes the resource. Called by concrete implementations.
     protected Resource(
@@ -103,7 +105,8 @@ public abstract class Resource
     {
         float previousAmount = CurrentAmount;
         delta = applyMods ? delta * productionPerCycle : delta; // Apply production rate if requested
-        CurrentAmount = Mathf.Clamp(CurrentAmount + delta, MinimumAmount, MaximumAmount);
+        float noClampAmount = CurrentAmount + delta; // Calculate new amount without clamping
+        CurrentAmount = Mathf.Clamp(noClampAmount, MinimumAmount, MaximumAmount);
 
         // Only trigger if the amount actually changed
         if (CurrentAmount != previousAmount)
@@ -123,6 +126,19 @@ public abstract class Resource
             onAmountChange(delta); // Call abstract method for derived class logic (thresholds etc.)
             OnAmountChanged?.Invoke(Type, CurrentAmount); // Invoke event for external listeners (UI etc.)
             // TODO: Not sure to notify them here or in the subclasses
+        }
+
+        if (noClampAmount > MaximumAmount) // Check if we exceeded the max amount
+        {
+            float excess = noClampAmount - MaximumAmount; // Calculate excess amount
+            onReachedMax(excess); // Call abstract method for derived class logic (e.g., level up)
+            OnReachedMax?.Invoke(Type, excess); // Invoke event for external listeners (UI etc.)
+        }
+        else if (noClampAmount < MinimumAmount) // Check if we fell below the min amount
+        {
+            float deficit = MinimumAmount - noClampAmount; // Calculate deficit amount
+            onReachedMin(deficit); // Call abstract method for derived class logic (e.g., level down)
+            OnReachedMin?.Invoke(Type, deficit); // Invoke event for external listeners (UI etc.)
         }
     }
 
