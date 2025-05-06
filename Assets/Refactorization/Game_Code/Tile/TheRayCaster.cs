@@ -75,7 +75,14 @@ public class TheRayCaster : MonoBehaviour
                         Debug.Log("We selected the selectedMob to the tile");
                         Vector3 tilePosition = tile.gameObject.transform.position;  
                         Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(tile, selectedMob), tilePosition.z);  //Pivot point in empty object parent of tile instead of vectorYHeightGivenTile
-                        selectedMob.InitMove(targetPosition, hitObj);
+                        //selectedMob.RemoveFromBuilding();
+                        // selectedMob.AssignToBuilding(); // Here we will have the military building assignment. 
+
+                        bool canTheMobBeAdded = tile.CanMobBeArrangedChecker(selectedMob);
+                        if(canTheMobBeAdded){
+                            selectedMob.SetBehaviorBasedOnBuilding(null);
+                            selectedMob.InitMove(targetPosition, hitObj);
+                        }
                         selectedMob = null;
                     }
                     else if(building != null){
@@ -84,13 +91,14 @@ public class TheRayCaster : MonoBehaviour
                         Vector3 targetPosition = new Vector3(buildingPosition.x, vectorYHeightGivenTile(GridOverlay.Instance.GetTiles()[0].GetComponent<DefaultTile>(), selectedMob), buildingPosition.z);
                         selectedMob.RemoveFromBuilding();
                         selectedMob.AssignToBuilding(building);
+                        selectedMob.SetBehaviorBasedOnBuilding(building);
                         selectedMob.InitMove(targetPosition, hitObj);
                         selectedMob = null;
                     }
                 }
             }
 
-            else if(tile != null && !wasPinching ){
+            if(tile != null && !wasPinching ){
                 GlowEffectTrigger(hitObj);
                 if(CardsInHand.Instance.GetCardsInHand().Count == 1){
                     if(rightHandPinchStrength > 0.8f){
@@ -103,13 +111,13 @@ public class TheRayCaster : MonoBehaviour
                 }
             }
 
-            else if(card != null && CardsInHand.Instance.IsCardInHand(card) && !wasPinching ){
+            if(card != null && CardsInHand.Instance.IsCardInHand(card) && !wasPinching ){
                 if(rightHandPinchStrength > 0.8f){
                     CardsInHand.Instance.RemoveAllCardsExpect(card);
                 }
             }
 
-            else if(building != null && !wasPinching){    //Only spawn once per pinch modification. 
+            if(building != null && !wasPinching){    //Only spawn once per pinch modification. 
                 
                 if(rightHandPinchStrength > 0.8f && !wasPinching){
                     PanelManager.Instance.SpawnPanelOnLeftHand(building);
@@ -117,12 +125,12 @@ public class TheRayCaster : MonoBehaviour
                  
             }
 
-            else if(mobButton != null && rightHandPinchStrength > 0.8f && !wasPinching){
+            if(mobButton != null && rightHandPinchStrength > 0.8f && !wasPinching){
                 mobButton.TriggerMobSpawn();
             }
             
 
-            else if(mobs != null && !wasPinching){
+            if(mobs != null && !wasPinching){
                 if(rightHandPinchStrength > 0.8f){
                     selectedMob = mobs;
                     Debug.Log("We look and pinched at a mob, nice :) . selectedMob = mobs  , more concrete selectedMob = " + selectedMob.name);

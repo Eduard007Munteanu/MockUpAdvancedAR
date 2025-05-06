@@ -21047,6 +21047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: {fileID: 1892893135}
   cardSpacing: 0.9
+  heightOfCardsFromPalm: 0.2
 --- !u!4 &1870715819
 Transform:
   m_ObjectHideFlags: 0
