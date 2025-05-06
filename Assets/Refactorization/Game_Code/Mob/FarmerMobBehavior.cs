@@ -35,7 +35,7 @@ public class FarmerMobBehavior : IMobBehavior
 
     public void InitMove(Vector3 destination, GameObject colliderObj)
     {
-        mob.RemoveFromBuilding();
+        //mob.RemoveFromBuilding();
 
         mob.toDestination = destination;
         mob.toColliderObj = colliderObj;
