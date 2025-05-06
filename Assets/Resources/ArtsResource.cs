@@ -6,11 +6,10 @@ using UnityEngine;
 // Concrete implementation for the 'Arts' resource.
 public class ArtsResource : Resource
 {
-    // private enum ThresholdTypes {
-    //     Level1,
-    //     Level2,
-    //     Level3,
-    // }
+    private int artsLevel = 0; // level of arts, used for checking thresholds
+    private float artsLevelScaling = 1.2f;
+
+    public event Action<int> OnLevelUp; // Parameter is the deficit amount
     
     // Constructor: Sets up the Arts resource with specific initial values.
     public ArtsResource(
@@ -24,7 +23,7 @@ public class ArtsResource : Resource
     }
     protected override void onAmountChange(float delta)
     {
-        // TODO: check art thresholds for level up
+
     }
 
     protected override void onProductionChange(float delta)
@@ -40,6 +39,12 @@ public class ArtsResource : Resource
     protected override void onReachedMax(float excess) {
         // set amount to 0
         // up the max value
+        CurrentAmount = excess;
+        MaximumAmount *= artsLevelScaling;
+        artsLevel++;
+        // onReachedMax already invoked with excess
+        // still invoke with current level through an other action
+        OnLevelUp?.Invoke(artsLevel);
     }
     protected override void onReachedMin(float deficit) {
 
