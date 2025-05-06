@@ -66,6 +66,8 @@
   <ItemGroup>
     <Compile Include="Assets\Resources\ArtsResource.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Spawner.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Mob\JustGoBehavior.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Mob\FarmerMobBehavior.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\ItemDatabase.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\MilitaryCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\SleepBuild.cs" />
@@ -111,6 +113,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Item.cs" />
     <Compile Include="Assets\Resources\Resource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\BuildUpgradeCard.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Mob\IMobBehavior.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\MobManager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\DefaultItem.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Helper_Code\ItemBuilding.cs" />

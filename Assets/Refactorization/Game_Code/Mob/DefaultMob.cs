@@ -2,34 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Meta.XR.MRUtilityKit.SceneDecorator;
+using UnityEditor.Rendering.BuiltIn.ShaderGraph;
 using UnityEngine;
 
 public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no other mob class for now
 {
 
-    private bool isMoving = false;
+    public bool isMoving = false;  // I don't want now to add get + set methods
 
-    private DefaultBuild buidlingAssignedTo;
+    public DefaultBuild buidlingAssignedTo; // I don't want now to add get + set methods
 
-    [SerializeField] private float speedFactor = 0.008f;
+    [SerializeField] public float speedFactor = 0.008f; // I don't want now to add get + set methods 
 
     
 
-    private DefaultItem closestItem; 
+    public  Vector3 toDestination; // I don't want now to add get + set methods
 
+    public  GameObject toColliderObj; // I don't want now to add get + set methods
 
-    private Vector3 toDestination;
+    private IMobBehavior currentBehavior;
 
-    private GameObject toColliderObj;
-
-
-
-
-
-
-    private bool buildingOrTile;  //Not flexible!
-
-    private bool didICollectFromItem;
 
 
     // Start is called before the first frame update
@@ -41,15 +33,27 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
     // Update is called once per frame
     void Update()
     {
-       SwitchAction();
+       currentBehavior?.ActionLoop();
+    }
+
+    public void SetMobBehavior(IMobBehavior newBehavior){
+        currentBehavior = newBehavior;
+        currentBehavior.Init(this);
     }
 
 
-    public void ReactOnClick()
+    public void InitMove(Vector3 destination, GameObject colliderObj)
     {
-        isMoving = false;
-
+        currentBehavior?.InitMove(destination, colliderObj);
     }
+
+
+    public void ReactOnClick(){
+        //currentBehavior.OnClick();
+        isMoving = false;
+    }
+
+
 
     public DefaultBuild GetBuildingAssignedTo()
     {
@@ -77,139 +81,46 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
     }
 
 
-    // public void CollectItem(PanelDatabase panelDatabase)
-    // {
-    //     throw new System.NotImplementedException();
-    // }
-
-    public DefaultItem FindClosestItem(string itemName)
-    {
-        DefaultItem targetItem = FindObjectsOfType<MonoBehaviour>().OfType<DefaultItem>()
-                .Where(m => m.GetItemClass() == itemName)
-                .OrderBy(m => Vector3.Distance(transform.position, ((MonoBehaviour)m).gameObject.transform.position))
-                .FirstOrDefault();
-
-        return targetItem;
-    }
-
-    public void InitMove(Vector3 destination, GameObject colliderObj)
-    {
-        RemoveFromBuilding();
-
-        toDestination = destination;
-        toColliderObj = colliderObj;
-        isMoving = true;
-
-        if (colliderObj.TryGetComponent<Build>(out _))
-        {
-            buildingOrTile = true;
-        }
-        else if (colliderObj.TryGetComponent<DefaultTile>(out _))
-        {
-            Debug.Log("Reached here, ma dude!");
-            buildingOrTile = false;
-        }
-        else
-        {
-            // Fallback: treat as generic movement
-            buildingOrTile = false;
-        }
-
-
-    }
-
-    public void Move(){
-        Vector3 dir = (toDestination - transform.position).normalized;
-        transform.position += dir * speedFactor;
-
-        
-
-
-        if(Vector3.Distance(transform.position, toDestination) < 0.1f){
-            Debug.Log("Reached the closest point on tile to my DefaultMob object");
-            isMoving = false;
-            // transform.position = toDestination;
-            toColliderObj.GetComponent<DefaultTile>().ArrangeMobs(this);
-            
-            // I want to set the mob in a  specific order regarding the tile, involving taking into account possible other mobs from the same tile. 
-        }
-    }
-
-
-
-
-
-
-
-    
-
-
-
-    public void LoopMove(){
-        DefaultBuild building = toColliderObj.GetComponent<DefaultBuild>();
-        Item item = toColliderObj.GetComponent<Item>();
-
-        if(building != null){
-            Vector3 dir = (toDestination - transform.position).normalized;
-            transform.position += dir * speedFactor;
-
-            if(Vector3.Distance(transform.position, toDestination) < 0.1f){
-                string closestItemName = ItemBuilding.Instance.GetItemName(building.GetBuildingClass());
-                closestItem = FindClosestItem(closestItemName);
-                if (closestItem == null)
-                {
-                    isMoving = false;
-                    return;
-                }
-                toColliderObj = closestItem.gameObject;
-                toDestination = closestItem.transform.position;
-                if(didICollectFromItem){
-
-                    //Null checking debug code:
-
-                    if (ItemDatabase.Instance == null)
-                    {
-                        Debug.LogError("ItemDatabase.Instance is null! Make sure it's initialized in the scene.");   //Yeah, it's null.....
-                    }
-                    else{
-                        Debug.Log("ItemDatabase not null, different problem!");
-                    }
-
-
-                    //Null checking debug code:
-
-                    ItemDatabase.Instance.UpdateCollectedItemsCount(closestItem, 1); //Hardcoded the value you get by collecting a material
-                    didICollectFromItem = false;
-                }
-            }
-        }
-
-        else if(item != null){
-            Vector3 dir = (toDestination - transform.position).normalized;
-            transform.position += dir * speedFactor;
-
-            if(Vector3.Distance(transform.position, toDestination) < 0.1f){
-                toColliderObj = buidlingAssignedTo.gameObject;
-                toDestination = buidlingAssignedTo.transform.position;
-                didICollectFromItem = true;
-            }
-        }
-    }
-
-    public void SwitchAction(){
-        if(isMoving){
-            if(buildingOrTile){
-                LoopMove();
-            }
-            else if(!buildingOrTile){
-                Move();
-            }
-        }
-        
-    }
 
     public float GetMobHeight()
     {
         return gameObject.GetComponent<Renderer>().bounds.size.y;
     }
+
+
+
+
+    public void SetBehaviorBasedOnBuilding(DefaultBuild building)   //Need a factory code for this, otherwise a little annoying.
+{                                                                   //Will factory be implemented? Likely not!
+    string type = null;
+    if(building != null){
+        type = building.GetBuildingClass();
+    } 
+    
+    
+
+    switch (type)
+    {
+        case "farming":
+            SetMobBehavior(new FarmerMobBehavior());
+            break;
+
+        case "military":
+            SetMobBehavior(new FarmerMobBehavior());
+            break;
+
+        case "sleep":
+            SetMobBehavior(new FarmerMobBehavior());
+            break;
+
+        case null:
+            SetMobBehavior(new JustGoBehavior());
+            break;
+
+        default:
+            Debug.LogWarning("Unknown building type: " + type);
+            break;
+    }
+}
+
 }

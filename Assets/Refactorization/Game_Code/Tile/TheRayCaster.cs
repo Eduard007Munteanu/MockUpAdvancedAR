@@ -80,6 +80,7 @@ public class TheRayCaster : MonoBehaviour
 
                         bool canTheMobBeAdded = tile.CanMobBeArrangedChecker(selectedMob);
                         if(canTheMobBeAdded){
+                            selectedMob.SetBehaviorBasedOnBuilding(null);
                             selectedMob.InitMove(targetPosition, hitObj);
                         }
                         selectedMob = null;
@@ -90,6 +91,7 @@ public class TheRayCaster : MonoBehaviour
                         Vector3 targetPosition = new Vector3(buildingPosition.x, vectorYHeightGivenTile(GridOverlay.Instance.GetTiles()[0].GetComponent<DefaultTile>(), selectedMob), buildingPosition.z);
                         selectedMob.RemoveFromBuilding();
                         selectedMob.AssignToBuilding(building);
+                        selectedMob.SetBehaviorBasedOnBuilding(building);
                         selectedMob.InitMove(targetPosition, hitObj);
                         selectedMob = null;
                     }
