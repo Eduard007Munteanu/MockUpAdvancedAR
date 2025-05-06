@@ -94,7 +94,7 @@ public class EnemyMob : MonoBehaviour{
 
         if(Vector3.Distance(transform.position, lastTileInMyPath.transform.position) < 0.1f){
             Debug.Log("We reached the end of the boardGame, boys!");
-            transform.position = lastTileInMyPath.transform.position;
+            transform.position = new Vector3(lastTileInMyPath.transform.position.x, transform.position.y, lastTileInMyPath.transform.position.z);
             isMoving = false; 
         }
 
