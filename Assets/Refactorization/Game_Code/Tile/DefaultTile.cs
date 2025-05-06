@@ -132,8 +132,12 @@ public class DefaultTile : MonoBehaviour//, Tile
     
 
 
-    public List<DefaultMob> getListOfMobs(){
+    public List<DefaultMob> GetListOfMobs(){
         return mobs;
+    }
+
+    public int GetAmountOfMobs(){
+        return mobs.Count;
     }
 
     private DefaultMob GetLastMob(){
