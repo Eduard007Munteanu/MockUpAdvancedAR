@@ -123,6 +123,9 @@ public class GridOverlay : MonoBehaviour
 
     public DefaultTile FindTileWithCoordinates(int x, int z){
         foreach (GameObject tile in tiles){
+            if(tile == null){
+                Debug.Log("tile found to be null");
+            }
             if(tile.name == $"Tile_{x}_{z}"){
                 return tile.GetComponent<DefaultTile>();
             }

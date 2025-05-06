@@ -8,7 +8,7 @@ public class EnemyTile : DefaultTile
 
 
     private float spawnTimer = 0f;
-    private float spawnInterval = 5f;
+    private float spawnInterval = 10f;
 
 
     
