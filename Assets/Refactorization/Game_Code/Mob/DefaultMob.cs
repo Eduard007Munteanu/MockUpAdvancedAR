@@ -130,6 +130,11 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
             Debug.LogWarning("Unknown building type: " + type);
             break;
     }
+
+
+    
+
+
 }
 
 }

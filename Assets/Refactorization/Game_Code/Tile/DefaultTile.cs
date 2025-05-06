@@ -4,11 +4,13 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class DefaultTile : MonoBehaviour//, Tile
+public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about the power level of the mobs and the enemy
 {
 
 
     private List<DefaultMob> mobs;
+
+    private List<EnemyMob> enemyMobs;
 
     private DefaultBuild buildingOnTile;
 
@@ -17,6 +19,7 @@ public class DefaultTile : MonoBehaviour//, Tile
     void Start()
     {
         mobs = new List<DefaultMob>();
+        enemyMobs = new List<EnemyMob>();
     }
 
     // Update is called once per frame
@@ -116,6 +119,42 @@ public class DefaultTile : MonoBehaviour//, Tile
             return false;
         }
         return true;
+    }
+
+
+    public void ArrangeEnemyMobs(EnemyMob mob){  //Very similar to ArrangeMobs, maybe refactor that part
+        Vector3[] tileCorners = GridOverlay.Instance.GetTileCorners(this);
+        Vector3 bottomLeft = tileCorners[3];
+        Vector3 bottomRight = tileCorners[2];
+        Vector3 topRight = tileCorners[1];
+        Vector3 topLeft = tileCorners[0];
+
+        int maxCols = 5;
+
+        Vector3 xDir = (bottomRight - bottomLeft).normalized;  // Move right
+        Vector3 zDir = (topLeft - bottomLeft).normalized;      // Move forward (upward visually)
+
+        float tileWidth = Vector3.Distance(bottomLeft, bottomRight);
+        float tileHeight = Vector3.Distance(bottomLeft, topLeft);
+        float colSpacing = tileWidth / maxCols;
+
+        int mobIndex = enemyMobs.Count;
+        int col = mobIndex % maxCols;
+        int row = mobIndex / maxCols;
+
+        float rowHeight = tileHeight / 3f;
+
+        if (row * colSpacing > rowHeight)
+        {
+            Debug.LogWarning("No more vertical space to place mobs!");
+        }
+
+        Vector3 spawnPos = bottomLeft + (xDir * colSpacing * col) + (zDir * colSpacing * row);
+        spawnPos.y = mob.transform.position.y;
+
+        mob.transform.position = spawnPos;
+        mob.currentTile = this;
+        enemyMobs.Add(mob);
     }
 
 

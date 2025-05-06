@@ -49,7 +49,7 @@ public class BuildManager : MonoBehaviour  //One instance only
             buildingDictionary[key] = new List<DefaultBuild>();
         }
         
-        buildingDictionary[key].Add(building);
+        buildingDictionary[key].Add(building);  ///Invoker to be used. 
     }
 
     void RemoveBuildingDictionary(DefaultBuild building)
@@ -62,7 +62,7 @@ public class BuildManager : MonoBehaviour  //One instance only
 
             if (buildingDictionary[key].Count == 0)
             {
-                buildingDictionary.Remove(key); // Clean up empty lists
+                buildingDictionary.Remove(key); ///Invoker to be used. 
             }
         }
     }

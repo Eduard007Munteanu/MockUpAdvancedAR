@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Linq;
 
 
-public class FarmerMobBehavior : IMobBehavior
+public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capacity reached, so nothing happens afterwards default => break  
 {
 
     private bool buildingOrTile;  //Not flexible!

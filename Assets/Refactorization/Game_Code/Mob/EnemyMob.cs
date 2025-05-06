@@ -13,7 +13,7 @@ public class EnemyMob : MonoBehaviour{
 
     private bool checkCurrentTileIfMobs;
 
-    private DefaultTile currentTile;
+    public DefaultTile currentTile;  //Not good, but I don't want to add Get/Set methods
 
     [SerializeField] public float speedFactor = 0.008f;
 
@@ -39,14 +39,6 @@ public class EnemyMob : MonoBehaviour{
 
 
         float currentDistance = float.MaxValue;
-
-
-        
-        if(lastTileInMyPath == null){
-            Debug.Log("Makes no sense!");
-        } else{
-            Debug.Log("Makes sense though!");
-        }
 
         for(int i = 0; i < rowLength; i++){
             DefaultTile tile = GridOverlay.Instance.FindTileWithCoordinates(i, rowLength - 1);
@@ -74,7 +66,6 @@ public class EnemyMob : MonoBehaviour{
 
 
 
-    
 
 
     public void MoveForward(){
@@ -89,17 +80,27 @@ public class EnemyMob : MonoBehaviour{
         if(checkCurrentTileIfMobs){
             Debug.Log("Well, this tile has mobs, bro!");
             isMoving = false;
+            currentTile.ArrangeEnemyMobs(this);
             
         }
 
+        EndBoardReached();
+
+
+        
+    }
+
+
+
+    
+
+
+    private void EndBoardReached(){
         if(Vector3.Distance(transform.position, lastTileInMyPath.transform.position) < 0.1f){
             Debug.Log("We reached the end of the boardGame, boys!");
             transform.position = new Vector3(lastTileInMyPath.transform.position.x, transform.position.y, lastTileInMyPath.transform.position.z);
             isMoving = false; 
         }
-
-
-        
     }
 
 
