@@ -22,19 +22,18 @@ public class ArtsResource : Resource
     {
 
     }
-
-    protected override void onAmountChange()
+    protected override void onAmountChange(float delta)
     {
         // TODO: check art thresholds for level up
     }
 
-    protected override void onProductionChange()
+    protected override void onProductionChange(float delta)
     {
 
     }
 
-    protected override void onThresholdCrossed()
+    protected override void onThresholdCrossed(int i, ThresholdCross dir)
     {
-
+        // handle starving
     }
 }

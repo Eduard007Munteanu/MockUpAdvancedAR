@@ -4,6 +4,9 @@ using UnityEngine;
 // Concrete implementation for the 'Food' resource.
 public class FoodResource : Resource
 {
+    private enum FoodThresholds {
+        Starving = 0,
+    }
     public FoodResource(
         float initialAmount = 100f,
         float minAmount = 9999f, 
@@ -14,17 +17,17 @@ public class FoodResource : Resource
 
     }
 
-    protected override void onAmountChange()
-    {
-        // TODO: check art thresholds for level up
-    }
-
-    protected override void onProductionChange()
+    protected override void onAmountChange(float delta)
     {
 
     }
 
-    protected override void onThresholdCrossed()
+    protected override void onProductionChange(float delta)
+    {
+
+    }
+
+    protected override void onThresholdCrossed(int i, ThresholdCross dir)
     {
         // handle starving
     }
