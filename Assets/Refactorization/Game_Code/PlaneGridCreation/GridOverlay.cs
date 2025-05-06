@@ -8,6 +8,9 @@ public class GridOverlay : MonoBehaviour
 
 
     public GameObject tilePrefab;
+
+    public GameObject enemyTilePrefab;
+
     public int rows = 2;
     public int columns = 2;
 
@@ -71,7 +74,13 @@ public class GridOverlay : MonoBehaviour
                 // Convert the global position into the local position of the grid GameObject
                 Vector3 localSpawnPos = transform.InverseTransformPoint(globalSpawnPos);
 
-                GameObject tile = Instantiate(tilePrefab, transform);
+
+                GameObject tile = null;
+                if(z == 0){
+                    tile = Instantiate(enemyTilePrefab, transform);
+                } else {
+                    tile = Instantiate(tilePrefab, transform);
+                }
                 tile.name = $"Tile_{x}_{z}";
                 tile.transform.localPosition = localSpawnPos;
                 tile.transform.localRotation = Quaternion.identity;

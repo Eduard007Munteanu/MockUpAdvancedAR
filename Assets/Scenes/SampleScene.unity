@@ -1400,6 +1400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 6741967199189696747, guid: 3929d8185c27a9943a100a92cb12a9f9, type: 3}
+  enemyTilePrefab: {fileID: 6741967199189696747, guid: 21e8276643515664b8c6076f4730beff, type: 3}
   rows: 7
   columns: 7
   itemManager: {fileID: 1092835987}

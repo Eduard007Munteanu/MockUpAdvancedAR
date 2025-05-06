@@ -117,6 +117,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Mob\IMobBehavior.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\MobManager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\DefaultItem.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Tile\EnemyTile.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Helper_Code\ItemBuilding.cs" />
   </ItemGroup>
   <ItemGroup>
