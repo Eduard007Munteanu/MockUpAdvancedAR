@@ -5,39 +5,29 @@ using UnityEngine;
 // Access resourceDatabase[ResourceType.Arts] to get the resource object
 // Add amount: resourceDatabase[ResourceType.Arts].AddAmount(10);
 // Add modifier: resourceDatabase[ResourceType.Arts].AddModifier(10, (optional mod1, mod2));
-public class ResourcesDatabase : MonoBehaviour
+public class ResourcDatabase : MonoBehaviour
 {
     // Singleton instance
-    private static ResourcesDatabase instance;
-
-    // Property to access the singleton instance
-    public static ResourcesDatabase Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<ResourcesDatabase>();
-                if (instance == null)
-                {
-                    GameObject obj = new GameObject("ResourcesDatabase");
-                    instance = obj.AddComponent<ResourcesDatabase>();
-                }
-            }
-            return instance;
-        }
-    }
-
-    // Dictionary to hold resources by their type
+    public static ResourcDatabase Instance { get; private set; }
 
     private Dictionary<ResourceType, Resource> resources;
 
-    public ResourcesDatabase()
+    public ResourcDatabase()
     {
         // init resources
         ArtsResource arts = new ArtsResource();
         FoodResource food = new FoodResource();
         MightResource might = new MightResource();
+        PopulationResource population = new PopulationResource();
+        GoldResource gold = new GoldResource();
+        CivilResource civil = new CivilResource();
+        SocietalResource societal = new SocietalResource();
+        EconomyResource economy = new EconomyResource();
+        CivilDesireResource civilDesire = new CivilDesireResource();
+        SocietalDesireResource societalDesire = new SocietalDesireResource();
+        EconomyDesireResource economyDesire = new EconomyDesireResource();
+        HappinessResource happiness = new HappinessResource();
+        WorkPowerResource workPower = new WorkPowerResource();
 
         // use their type defined in their class to add them.
         // add them to the dictionary
@@ -46,6 +36,16 @@ public class ResourcesDatabase : MonoBehaviour
             { arts.Type, arts },
             { food.Type, food },
             { might.Type, might },
+            { population.Type, population },
+            { gold.Type, gold },
+            { civil.Type, civil },
+            { societal.Type, societal },
+            { economy.Type, economy },
+            { civilDesire.Type, civilDesire },
+            { societalDesire.Type, societalDesire },
+            { economyDesire.Type, economyDesire },
+            { happiness.Type, happiness },
+            { workPower.Type, workPower },
         };
     }
 
