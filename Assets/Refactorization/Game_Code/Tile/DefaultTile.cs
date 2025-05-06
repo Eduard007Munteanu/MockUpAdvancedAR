@@ -81,6 +81,7 @@ public class DefaultTile : MonoBehaviour//, Tile
         spawnPos.y = mob.transform.position.y; 
 
         mob.transform.position = spawnPos;
+        mob.currentTile = this;
         mobs.Add(mob);
     }
 
@@ -116,6 +117,15 @@ public class DefaultTile : MonoBehaviour//, Tile
         }
         return true;
     }
+
+
+
+
+    public void RemoveMob(DefaultMob mob){
+        mobs.Remove(mob);
+    }
+
+
 
 
 

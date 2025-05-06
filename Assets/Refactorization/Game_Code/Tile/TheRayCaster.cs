@@ -75,7 +75,7 @@ public class TheRayCaster : MonoBehaviour
                         Debug.Log("We selected the selectedMob to the tile");
                         Vector3 tilePosition = tile.gameObject.transform.position;  
                         Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(tile, selectedMob), tilePosition.z);  //Pivot point in empty object parent of tile instead of vectorYHeightGivenTile
-                        //selectedMob.RemoveFromBuilding();
+                        selectedMob.RemoveFromBuilding();
                         // selectedMob.AssignToBuilding(); // Here we will have the military building assignment. 
 
                         bool canTheMobBeAdded = tile.CanMobBeArrangedChecker(selectedMob);

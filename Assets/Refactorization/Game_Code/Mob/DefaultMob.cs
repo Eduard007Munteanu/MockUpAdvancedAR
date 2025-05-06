@@ -23,6 +23,9 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
     private IMobBehavior currentBehavior;
 
 
+    public DefaultTile currentTile = null;  // I don't want now to add get + set methods
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +47,12 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
 
     public void InitMove(Vector3 destination, GameObject colliderObj)
     {
+
+        if(currentTile != null){
+            currentTile.RemoveMob(this);
+            currentTile = null;
+        }
+
         currentBehavior?.InitMove(destination, colliderObj);
     }
 

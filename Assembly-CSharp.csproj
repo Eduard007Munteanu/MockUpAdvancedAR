@@ -75,6 +75,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Panel\NormalBuildingPanel.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\CardsDeck.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\MobDatabase.cs" />
+    <Compile Include="Assets\Resources\FoodResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\BuildCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Gold.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\LawCard.cs" />
