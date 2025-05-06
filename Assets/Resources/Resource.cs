@@ -1,7 +1,9 @@
 // --- Resource.cs ---
 using UnityEngine;
 using System;
-using System.Collections.Generic; // Required for Action delegate
+using System.Collections.Generic;
+using Unity.PlasticSCM.Editor.WebApi;
+using UnityEngine.InputSystem.Controls; // Required for Action delegate
 
 // Hi Eduard
 // This is a base class for all resources in the game.
@@ -17,18 +19,18 @@ using System.Collections.Generic; // Required for Action delegate
 // - Tick(): Call this every tick to update the resource. It will check if it's time to produce more resources.
 
 public enum ResourceType
-    {
-        Population,
-        Arts, Food, Gold,
-        Civil, Societal, Economy,
-        Civil_Desire, Societal_Desire, Economy_Desire, 
-        Happiness,
-        Might, Threat, TollRatio, 
-        DrawAmount, DrawsLeft, // ??
-        WorkPower,
+{
+    Population,
+    Arts, Food, Gold,
+    Civil, Societal, Economy,
+    Civil_Desire, Societal_Desire, Economy_Desire, 
+    Happiness,
+    Might, Threat, TollRatio, 
+    DrawAmount, DrawsLeft, // ??
+    WorkPower,
 
-        // Add other resources/stats as needed
-    }
+    // Add other resources/stats as needed
+}
 
 // Abstract base class for all game resources/stats.
 // Defines common structure and behavior for tracking amounts and calculating production.
@@ -47,7 +49,9 @@ public abstract class Resource
     protected float mod1;
     protected float mod2;
     protected float constant;
-    protected Dictionary<int, float> thresholds; // TODO: List of thresholds for this resource
+
+    // Thresholds probably other class
+    protected Thresholds thresholds; // TODO: List of thresholds for this resource
 
     // Cached production rate per cycle. Recalculated when factors change.
     private float productionPerCycle;
@@ -68,7 +72,7 @@ public abstract class Resource
         float minAmount, 
         float maxAmount, 
         int cycleTicks,
-        Dictionary<int, float> thresholds = null, // Optional thresholds for this resource
+        List<float> initialThresholds = null, // Optional thresholds for this resource
         float initialFlat = 0f, 
         float initialMod1 = 1f, 
         float initialMod2 = 1f, 
@@ -79,6 +83,8 @@ public abstract class Resource
         MinimumAmount = minAmount;
         MaximumAmount = maxAmount;
         CurrentAmount = Mathf.Clamp(initialAmount, MinimumAmount, MaximumAmount); // Ensure initial amount is within bounds
+
+        thresholds = (initialThresholds == null) ? null : new Thresholds(initialThresholds, CurrentAmount); // Initialize thresholds
 
         flat = initialFlat;
         mod1 = initialMod1;
@@ -100,20 +106,23 @@ public abstract class Resource
         CurrentAmount = Mathf.Clamp(CurrentAmount + delta, MinimumAmount, MaximumAmount);
 
         // Only trigger if the amount actually changed
-        if (CurrentAmount!= previousAmount)
+        if (CurrentAmount != previousAmount)
         {
-            // Check if any thresholds have been crossed
-            for (int i = 0; i < thresholds.Count; i++)
+            if (thresholds != null)
             {
-                if (previousAmount < thresholds[i] && CurrentAmount >= thresholds[i])
+                var threshTuple = thresholds.CheckThresholdCrossed(CurrentAmount);
+                if (threshTuple != null)
                 {
-                    OnThresholdCrossed?.Invoke(Type, i); // Notify listeners of the threshold crossed
-                    onThresholdCrossed(); // Call abstract method for derived class logic
+                    int i = threshTuple.Value.i; // Index of the threshold crossed
+                    ThresholdCross dir = threshTuple.Value.dir; // Direction of crossing (up or down)
+                    onThresholdCrossed(i, dir);
                 }
             }
-            onAmountChange(); // Call abstract method for derived class logic (thresholds etc.)
+
+
+            onAmountChange(delta); // Call abstract method for derived class logic (thresholds etc.)
             OnAmountChanged?.Invoke(Type, CurrentAmount); // Invoke event for external listeners (UI etc.)
-            // TODO: Not fure to notify them here or in the subclasses
+            // TODO: Not sure to notify them here or in the subclasses
         }
     }
 
@@ -143,9 +152,11 @@ public abstract class Resource
     private void RecalculateProduction()
     {
         // Core production formula
+        float prevProduction = productionPerCycle; // Store previous production for comparison
         productionPerCycle = (flat * mod1 * mod2) + constant;
+        float delta = productionPerCycle - prevProduction; // Calculate change in production rate
         // Potentially clamp productionPerCycle if needed (e.g., minimum production rate)
-        onProductionChange(); // Call abstract method for derived class logic
+        onProductionChange(delta); // Call abstract method for derived class logic
         OnProductionChanged?.Invoke(Type, productionPerCycle); // Invoke event
     }
 
@@ -174,14 +185,14 @@ public abstract class Resource
     // Abstract method: Called by AddAmount after CurrentAmount changes.
     // Concrete classes MUST implement this to handle resource-specific logic,
     // such as checking thresholds, triggering game events, or modifying other resources via Kingdom.
-    protected abstract void onAmountChange();
+    protected abstract void onAmountChange(float delta);
 
     // Abstract method: Called after production factors (flat, mod1, mod2, constant) change.
     // Concrete classes MUST implement this if actions are needed when the *rate* changes
     // (e.g., updating UI elements displaying the production rate).
-    protected abstract void onProductionChange();
+    protected abstract void onProductionChange(float delta);
     // called on the derived class when the threshold is crossed
-    protected abstract void onThresholdCrossed();
+    protected abstract void onThresholdCrossed(int i, ThresholdCross direction);
 
     // --- Public Getters ---
     public float GetCurrentAmount() => CurrentAmount;
