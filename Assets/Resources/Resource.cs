@@ -25,8 +25,8 @@ public enum ResourceType
     Civil, Societal, Economy,
     Civil_Desire, Societal_Desire, Economy_Desire, 
     Happiness,
-    Might, Threat, TollRatio, 
-    DrawAmount, DrawsLeft, // ??
+    Might, // Threat, TollRatio, 
+    // DrawAmount, DrawsLeft, // ??
     WorkPower,
 
     // Add other resources/stats as needed
@@ -110,15 +110,15 @@ public abstract class Resource
         {
             if (thresholds != null)
             {
-                var threshTuple = thresholds.CheckThresholdCrossed(CurrentAmount);
-                if (threshTuple != null)
+                var threshDict = thresholds.CheckThresholdsCrossed(CurrentAmount);
+                if (threshDict != null) // if any thresholds crossed
                 {
-                    int i = threshTuple.Value.i; // Index of the threshold crossed
-                    ThresholdCross dir = threshTuple.Value.dir; // Direction of crossing (up or down)
-                    onThresholdCrossed(i, dir);
+                    foreach (var thresh in threshDict)
+                    {
+                        onThresholdCrossed(thresh.Key, thresh.Value);
+                    }
                 }
             }
-
 
             onAmountChange(delta); // Call abstract method for derived class logic (thresholds etc.)
             OnAmountChanged?.Invoke(Type, CurrentAmount); // Invoke event for external listeners (UI etc.)
@@ -163,6 +163,7 @@ public abstract class Resource
     // When the timer reaches zero, it triggers the Produce() method and resets.
     public virtual void Tick()
     {
+        if (productionCycleTicks == 0) return;
         ticksUntilNextCycle--;
         if (ticksUntilNextCycle <= 0)
         {
@@ -192,7 +193,9 @@ public abstract class Resource
     // (e.g., updating UI elements displaying the production rate).
     protected abstract void onProductionChange(float delta);
     // called on the derived class when the threshold is crossed
-    protected abstract void onThresholdCrossed(int i, ThresholdCross direction);
+    protected abstract void onThresholdCrossed(int i, ThresholdCross dir);
+    protected abstract void onReachedMax(float excess);
+    protected abstract void onReachedMin(float deficit);
 
     // --- Public Getters ---
     public float GetCurrentAmount() => CurrentAmount;

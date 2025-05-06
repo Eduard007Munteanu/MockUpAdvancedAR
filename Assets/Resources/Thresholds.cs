@@ -24,7 +24,7 @@ public class Thresholds
         findThresholdIndex(current); // Initialize the last threshold crossed index to -1 (no threshold crossed)
     }
 
-    // Indexer to access the thresholds dictionary
+    // Indexer to access the thresholds list
     public float this[int i]
     {
         get
@@ -32,9 +32,24 @@ public class Thresholds
             return thresholds[i];
         }
     }
-    // TODO: handle multiple thresholds crossed
-    public (int i, ThresholdCross dir)? CheckThresholdCrossed(float current)
+
+    public Dictionary<int, ThresholdCross> CheckThresholdsCrossed(float current)
     {
+        var crossedThresholds = new Dictionary<int, ThresholdCross>();
+        var crossed = CheckThresholdCrossed(current);
+        if (crossed == null) return null;
+
+        // Check if any thresholds are crossed and trigger the event if so
+        while (crossed != null) {
+            crossedThresholds.Add(crossed.Value.i, crossed.Value.dir);
+            crossed = CheckThresholdCrossed(current);
+        }
+        return crossedThresholds;
+    }
+
+    private (int i, ThresholdCross dir)? CheckThresholdCrossed(float current)
+    {
+        // maybe check if current is in range of i thresholds for up and down both
         // crossing from down
         if (lastCrossedDir == ThresholdCross.FromDown && current < thresholds[lastCrossedIndex])
         {

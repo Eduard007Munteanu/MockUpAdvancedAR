@@ -34,6 +34,14 @@ public class ArtsResource : Resource
 
     protected override void onThresholdCrossed(int i, ThresholdCross dir)
     {
-        // handle starving
+        // no functionality. art progression is done through checking against min max
+    }
+
+    protected override void onReachedMax(float excess) {
+        // set amount to 0
+        // up the max value
+    }
+    protected override void onReachedMin(float deficit) {
+
     }
 }
