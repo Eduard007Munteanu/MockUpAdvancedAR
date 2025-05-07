@@ -17,6 +17,8 @@ public class EnemyTile : DefaultTile
 
     private RoundManager roundManager; 
 
+    private bool oneMobOnlyActive = false;
+
 
 
 
@@ -31,6 +33,7 @@ public class EnemyTile : DefaultTile
 
     public void SetCreateMobs(bool value){
         if(canCreateMobs){
+            oneMobOnlyActive = true;
             createMobs = value;
         }
     }
@@ -38,13 +41,18 @@ public class EnemyTile : DefaultTile
 
     void Update()
     {
-        if(createMobs){
-            spawnTimer += Time.deltaTime;
+        // if(createMobs){
+        //     spawnTimer += Time.deltaTime;
 
-            if(spawnTimer >= spawnInterval){
-                SpawnEnemyMobAtSomePointInTime();
-                spawnTimer = 0f;
-            }
+        //     if(spawnTimer >= spawnInterval){
+        //         SpawnEnemyMobAtSomePointInTime();
+
+        //         spawnTimer = 0f;
+        //     }
+        // }
+        if(createMobs && oneMobOnlyActive){
+            SpawnEnemyMobAtSomePointInTime();
+            oneMobOnlyActive = false;
         }
         
     }
@@ -55,14 +63,14 @@ public class EnemyTile : DefaultTile
         float spawnPositionY = transform.position.y + (GetTileHeight() + (mobHeight / 2)); 
         Vector3 spawnedMobPosition = new Vector3(transform.position.x, spawnPositionY  ,transform.position.z);
 
-        float spawnThreshold = randomGenerationFloat();  //Can be modified given other factors from the game!
+        //float spawnThreshold = randomGenerationFloat();  //Can be modified given other factors from the game!
     
 
-        if(spawnThreshold > 0.7){
-            EnemyMob enemyMob = Instantiate(enemyMobPrefab, spawnedMobPosition, Quaternion.identity);
-            enemyMob.HeIsMyCreator(this);
-            Debug.Log("Yeah, we added the enemyMob brothers!");
-        }
+        //if(spawnThreshold > 0.7){
+        EnemyMob enemyMob = Instantiate(enemyMobPrefab, spawnedMobPosition, Quaternion.identity);
+        enemyMob.HeIsMyCreator(this);
+        Debug.Log("Yeah, we added the enemyMob brothers!");
+        //}
 
 
         //Let's, to begin with, can be discussed, spawn given threshold met.

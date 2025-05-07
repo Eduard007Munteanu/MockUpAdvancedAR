@@ -10,7 +10,7 @@ public class RoundManager : MonoBehaviour{
 
     private int numberOfEnemiesToSpawn = 25;  //Hardcoded
 
-    private float timeToActivateRound = 20f; 
+    private float timeToActivateRound = 10f; 
 
     private float timer = 0f; 
 
@@ -73,7 +73,8 @@ public class RoundManager : MonoBehaviour{
             randomTile.SetCreateMobs(true);
 
             numberOfEnemiesToSpawn --;
-            timeToWait = Random.Range(0,20);
+            Debug.Log("NumberOfEnemiesToSpawn" + numberOfEnemiesToSpawn);
+            timeToWait = Random.Range(0,5);
         }
         if(numberOfEnemiesToSpawn == 0){
             timer = 0f;
