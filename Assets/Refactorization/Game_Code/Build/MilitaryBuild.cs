@@ -6,8 +6,10 @@ public class MilitaryBuild : DefaultBuild
 {
 
     protected override string Building_class => "military";
-   
-   // Start is called before the first frame update
+
+    protected override DefaultBuildingEffect BuildingEffect => throw new System.NotImplementedException();
+
+    // Start is called before the first frame update
     void Start()
     {
         
