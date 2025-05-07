@@ -50,7 +50,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     void FightingActivation(){
         Dictionary<string, List<DefaultMob>> defaultMobsSplitted = new Dictionary<string, List<DefaultMob>> {
         { "military", new List<DefaultMob>() },
-        { "others", new List<DefaultMob>() }
+        { "other", new List<DefaultMob>() }
         };
 
         foreach (DefaultMob mob in mobs) {
@@ -61,7 +61,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
             if (type == "military") {
                 defaultMobsSplitted["military"].Add(mob);
             } else {
-                defaultMobsSplitted["others"].Add(mob);
+                defaultMobsSplitted["other"].Add(mob);
             }
         }
 
