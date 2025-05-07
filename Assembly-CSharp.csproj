@@ -114,6 +114,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\PlaneGridCreation\GridOverlay.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\ItemManager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\MainBuild.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Fighting\Fighting.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\Mobs.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\DefaultPanel.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\PlaneGridCreation\HoverEffects.cs" />

@@ -14,19 +14,99 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
     private DefaultBuild buildingOnTile;
 
+    private Fighting fighting;
+
+    private float timer = 0f;
+
+    private float activator = 5f; 
+
+
+    
+
 
     // Start is called before the first frame update
     void Start()
     {
-        // mobs = new List<DefaultMob>();
-        // enemyMobs = new List<EnemyMob>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        timer += Time.deltaTime;
+        if(mobs.Count > 0 && enemyMobs.Count > 0 && timer >= activator){
+            FightingActivation();
+
+        }
     }
+
+
+
+
+
+
+
+
+    void FightingActivation(){
+        Dictionary<string, List<DefaultMob>> defaultMobsSplitted = new Dictionary<string, List<DefaultMob>> {
+        { "military", new List<DefaultMob>() },
+        { "others", new List<DefaultMob>() }
+        };
+
+        foreach (DefaultMob mob in mobs) {
+            var building = mob.GetBuildingAssignedTo();
+            if (building == null) continue;
+
+            string type = building.GetBuildingClass();
+            if (type == "military") {
+                defaultMobsSplitted["military"].Add(mob);
+            } else {
+                defaultMobsSplitted["others"].Add(mob);
+            }
+        }
+
+
+    
+        fighting = new Fighting(enemyMobs, defaultMobsSplitted);
+        (Dictionary<string, List<DefaultMob>> updateMobs, List<EnemyMob> updateEnemyMobs) = fighting.SimulateFighting();
+
+
+
+        // Destroy and remove DefaultMobs that are NOT in updateMobs
+        foreach (var mob in new List<DefaultMob>(mobs)) {
+            bool stillExists = false;
+            foreach (var list in updateMobs.Values) {
+                if (list.Contains(mob)) {
+                    stillExists = true;
+                    break;
+                }
+            }
+            if (!stillExists) {
+                mobs.Remove(mob);
+                Destroy(mob.gameObject);
+            }
+        }
+
+        // Destroy and remove EnemyMobs that are NOT in updateEnemyMobs
+        foreach (var enemy in new List<EnemyMob>(enemyMobs)) {
+            if (!updateEnemyMobs.Contains(enemy)) {
+                enemyMobs.Remove(enemy);
+                Destroy(enemy.gameObject);
+            }
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     void AddBuilding(DefaultBuild building){
         buildingOnTile = building;

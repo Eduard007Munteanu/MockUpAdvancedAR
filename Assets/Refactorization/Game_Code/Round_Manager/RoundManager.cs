@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoundManager : MonoBehaviour{
+public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks for every ressource. 
 
 
     public static RoundManager Instance {get; private set;}
