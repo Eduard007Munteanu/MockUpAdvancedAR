@@ -61,6 +61,8 @@ public abstract class Resource
     private int productionCycleTicks; // ticks between production attempts
     private int ticksUntilNextCycle;  // counter for the current cycle
 
+    private ResourceDatabase resources; // Reference to the database
+
     // Events for notification
     public event Action<ResourceType, float> OnAmountChanged; // Parameter is the new CurrentAmount
     public event Action<ResourceType, float> OnProductionChanged; // Parameter is the new productionPerCycle
@@ -96,6 +98,13 @@ public abstract class Resource
 
         productionCycleTicks = cycleTicks;
         ticksUntilNextCycle = productionCycleTicks; // Start ready for the first cycle or wait full cycle? Let's wait.
+
+        resources = ResourceDatabase.Instance; // Get the singleton instance of the resource database
+        if (resources == null)
+        {
+            Debug.LogError($"ResourcesDatabase is null for {Type}");
+            return;
+        }
 
         RecalculateProduction(); // Calculate initial production rate
     }

@@ -5,14 +5,14 @@ using UnityEngine;
 // Access resourceDatabase[ResourceType.Arts] to get the resource object
 // Add amount: resourceDatabase[ResourceType.Arts].AddAmount(10);
 // Add modifier: resourceDatabase[ResourceType.Arts].AddModifier(10, (optional mod1, mod2));
-public class ResourcDatabase : MonoBehaviour
+public class ResourceDatabase : MonoBehaviour
 {
     // Singleton instance
-    public static ResourcDatabase Instance { get; private set; }
+    public static ResourceDatabase Instance { get; private set; }
 
     private Dictionary<ResourceType, Resource> resources;
 
-    public ResourcDatabase()
+    public ResourceDatabase()
     {
         // init resources
         ArtsResource arts = new ArtsResource();

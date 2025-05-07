@@ -23,7 +23,7 @@ public class AgreementResource : Resource
     {
 
 
-        lastAgreementAmount = amount;
+        lastAgreementAmount = CurrentAmount;
     }
 
     protected override void onProductionChange(float delta)
