@@ -22,9 +22,7 @@ public class AgreementResource : Resource
 
     protected override void onAmountChange(float delta)
     {
-
-
-        lastAgreementAmount = CurrentAmount;
+        // lastAgreementAmount = CurrentAmount;
     }
 
     protected override void onProductionChange(float delta)
@@ -47,45 +45,28 @@ public class AgreementResource : Resource
     protected override void onSpecialAction()
     {
         // calculate differences between the last and current agreement amount
+        float deltaAmount = calculateAgreement() - lastAgreementAmount;
+        lastAgreementAmount = CurrentAmount;
+
+        resources[ResourceType.Happiness].AddAmount(deltaAmount*0.5f);
     }
 
     private float calculateAgreement()
     {
         float civil = resources[ResourceType.Civil].CurrentAmount;
         float economy = resources[ResourceType.Economy].CurrentAmount;
-        float societal = resources[ResourceType.Societal].CurrentAmount;
         float civilDesire = resources[ResourceType.Civil_Desire].CurrentAmount;
         float economyDesire = resources[ResourceType.Economy_Desire].CurrentAmount;
+        float societal = resources[ResourceType.Societal].CurrentAmount;
         // float societalDesire = resources[ResourceType.Societal_Desire].CurrentAmount;
 
         float civilDiff = civil - civilDesire;
         float economyDiff = economy - economyDesire;
 
-        float population = resources[ResourceType.Population].CurrentAmount;
+        // value between 0 and 100f
+        float agreement = 0.5f * civilDiff + 0.5f * economyDiff; // TODO: Update weights
 
-        float foodamount = resources[ResourceType.Food].CurrentAmount;
-        float foodprod = resources[ResourceType.Food].Production;
-        float foodStability = foodamount / foodprod;
-
-        float goldamount = resources[ResourceType.Gold].CurrentAmount;
-        float goldprod = resources[ResourceType.Gold].Production;
-        float goldStability = goldamount / goldprod;
-
-        float woodAmount = resources[ResourceType.Wood].CurrentAmount;
-        float woodProd = resources[ResourceType.Wood].Production;
-        float woodStability = woodAmount / woodProd;
-
-        // economy is the most important until the economy is stable
-        // then civil
-
-        // check if the economy is stable
-        // and then check for absolute values to know how long is left
-        
-
-        // societal changes how much the people are willing to change their minds
-        // thinking: happiness modifier modifier
-
-        return -1;
+        return agreement;
     }
 
     // To handle changes in the political axes 

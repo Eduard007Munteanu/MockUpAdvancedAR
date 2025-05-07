@@ -15,7 +15,7 @@ public class ArtsResource : Resource
     public ArtsResource(
         float initialAmount = 0f, 
         float minAmount = 0f, 
-        float maxAmount = 10000f, 
+        float maxAmount = 100f, 
         int cycleTicks = 1
         ) : base(ResourceType.Arts, initialAmount, minAmount, maxAmount, cycleTicks)
     {
@@ -45,6 +45,9 @@ public class ArtsResource : Resource
         // onReachedMax already invoked with excess
         // still invoke with current level through an other action
         OnLevelUp?.Invoke(artsLevel);
+
+        // add to desire of freedom
+        resources[ResourceType.Civil_Desire].AddAmount(0.5f); // Example: Arts production increases with civil resource amount
     }
     protected override void onReachedMin(float deficit) {
 

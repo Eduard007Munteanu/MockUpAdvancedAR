@@ -9,7 +9,7 @@ public class MightResource : Resource
     public MightResource(
         float initialAmount = 1f,
         float minAmount = 0f,
-        float maxAmount = 1000f,
+        float maxAmount = 10000f,
         int cycleTicks = 1
         ) : base(ResourceType.Might, initialAmount, minAmount, maxAmount, cycleTicks)
     {

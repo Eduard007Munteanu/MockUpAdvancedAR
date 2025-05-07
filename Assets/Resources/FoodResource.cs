@@ -44,11 +44,13 @@ public class FoodResource : Resource
                 {
                     // Handle starving condition, take away from happiness
                     resources[ResourceType.Happiness].AddAmount(-10f);
+                    resources[ResourceType.Economy].AddAmount(8f);
                 }
                 else
                 {
                     // Handle recovery from starving condition, so add back some happiness
                     resources[ResourceType.Happiness].AddAmount(8f);
+                    resources[ResourceType.Economy].AddAmount(-10f);
                 }
                 break;
             default:

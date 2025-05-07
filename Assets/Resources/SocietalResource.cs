@@ -17,6 +17,7 @@ public class SocietalResource : Resource
     protected override void onAmountChange(float delta)
     {
         resources[ResourceType.Agreement].TriggerSpecialAction();
+        resources[ResourceType.Arts].AddProductionModifier(delta * 0.01f); // Example: Arts production increases with civil resource amount
     }
 
     protected override void onProductionChange(float delta)
