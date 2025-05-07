@@ -5,6 +5,11 @@ using UnityEngine;
 // Concrete implementation for the 'Food' resource.
 public class FoodResource : Resource
 {
+    private enum FoodThresholds
+    {
+        Starving,
+        // Add more thresholds as needed
+    }
 
     public FoodResource(
         float initialAmount = 100f,
@@ -14,9 +19,9 @@ public class FoodResource : Resource
         ) : base(ResourceType.Arts, initialAmount, minAmount, maxAmount, cycleTicks)
     {
         // add thresholds here, follow FoodThresholds order, keep list in ascending order
-        // thresholds = new Thresholds(new List<float> {
-        //     0f
-        // }, initialAmount);
+        thresholds = new Thresholds(new List<float> {
+            0.00001f
+        }, initialAmount);
     }
 
     protected override void onAmountChange(float delta)
@@ -32,6 +37,23 @@ public class FoodResource : Resource
     protected override void onThresholdCrossed(int i, ThresholdCross dir)
     {
         // starving handled in reachedmin
+        switch ((FoodThresholds) i ) {
+
+            case FoodThresholds.Starving:
+                if (dir == ThresholdCross.FromUp)
+                {
+                    // Handle starving condition, take away from happiness
+                    resources[ResourceType.Happiness].AddAmount(-10f);
+                }
+                else
+                {
+                    // Handle recovery from starving condition, so add back some happiness
+                    resources[ResourceType.Happiness].AddAmount(8f);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     protected override void onReachedMax(float excess) {

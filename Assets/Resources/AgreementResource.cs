@@ -45,7 +45,27 @@ public class AgreementResource : Resource
 
     protected override void onSpecialAction()
     {
-        
+        // calculate differences between the last and current agreement amount
+    }
+
+    private float calculateAgreement()
+    {
+        float civil = resources[ResourceType.Civil].CurrentAmount;
+        float economy = resources[ResourceType.Economy].CurrentAmount;
+        float societal = resources[ResourceType.Societal].CurrentAmount;
+        float civilDesire = resources[ResourceType.Civil_Desire].CurrentAmount;
+        float economyDesire = resources[ResourceType.Economy_Desire].CurrentAmount;
+        float societalDesire = resources[ResourceType.Societal_Desire].CurrentAmount;
+
+        float civilDiff = civil - civilDesire;
+        float economyDiff = economy - economyDesire;
+        float societalDiff = societal - societalDesire;
+
+        // economy is the most important until the economy is stable
+        // then civil
+        // societal changes how much the people are willing to change their minds
+
+        return -1;
     }
 
     // To handle changes in the political axes 
