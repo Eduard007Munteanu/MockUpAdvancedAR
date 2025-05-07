@@ -4,7 +4,7 @@ using UnityEngine;
 public class EconomyResource : Resource
 {
 
-    public EconomyResource(
+    public EconomyResource( // Equality - Markets
         float initialAmount = 50f,
         float minAmount = 0f,
         float maxAmount = 100f,
@@ -17,6 +17,7 @@ public class EconomyResource : Resource
     protected override void onAmountChange(float delta)
     {
         resources[ResourceType.Agreement].TriggerSpecialAction();
+        
     }
 
     protected override void onProductionChange(float delta)
