@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Access resourceDatabase[ResourceType.Arts] to get the resource object
-// Add amount: resourceDatabase[ResourceType.Arts].AddAmount(10);
-// Add modifier: resourceDatabase[ResourceType.Arts].AddModifier(10, (optional mod1, mod2));
+// Add amount: ResourceDatabase[ResourceType.Arts].AddAmount(10);
+// Add modifier: ResourceDatabase[ResourceType.Arts].AddModifier(10, (optional mod1, mod2));
 public class ResourceDatabase : MonoBehaviour
 {
     // Singleton instance
