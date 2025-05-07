@@ -24,6 +24,7 @@ public enum ResourceType
     Arts, Food, Gold,
     Civil, Societal, Economy,
     Civil_Desire, Societal_Desire, Economy_Desire, 
+    Agreement,
     Happiness,
     Might, // Threat, TollRatio, 
     // DrawAmount, DrawsLeft, // ??
@@ -119,6 +120,7 @@ public abstract class Resource
                     foreach (var thresh in threshDict)
                     {
                         onThresholdCrossed(thresh.Key, thresh.Value);
+                        // OnThresholdCrossed?.Invoke(Type, thresh.Value); // Notify external listeners (UI etc.)
                     }
                 }
             }
