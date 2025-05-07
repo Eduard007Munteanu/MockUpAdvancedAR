@@ -17,9 +17,8 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
 
     private DefaultTile tile;
 
-
     //protected abstract DefaultBuildingEffect BuildingEffect { get; }
-
+    protected virtual List<ResourceEffect> resourceEffects => new List<ResourceEffect>();
 
     // Start is called before the first frame update
     void Start()
@@ -46,7 +45,7 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
     {
         assignedMobs.Add(mob);
         //BuildingEffect.Effect();
-
+        foreach (var effect in resourceEffects) effect.Apply();
     }
 
 
@@ -54,6 +53,7 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
     {
         assignedMobs.Remove(mob);
         //BuildingEffect.NegativeEffect();
+        foreach (var effect in resourceEffects) effect.Cancel();
     }
 
     

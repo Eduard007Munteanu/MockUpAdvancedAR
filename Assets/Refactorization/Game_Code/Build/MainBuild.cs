@@ -7,12 +7,7 @@ using UnityEngine;
 
 public class MainBuild : DefaultBuild
 {
-
-
-     private GridOverlay gridOverlay;
-
-
-    
+    private GridOverlay gridOverlay;
 
     [SerializeField] private DefaultMob mobPrefab;
 
@@ -22,9 +17,10 @@ public class MainBuild : DefaultBuild
 
     private DefaultTile tiles;
 
-    
-
-
+    protected override List<ResourceEffect> resourceEffects => new List<ResourceEffect>
+    {
+        new ResourceEffect(ResourceType.Arts, 0f, 1f, 0f, 0f), // modify art production by one per cycle
+    };
 
     // Start is called before the first frame update
     void Start()
