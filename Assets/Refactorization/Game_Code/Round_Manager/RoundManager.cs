@@ -26,11 +26,20 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
     void Awake()
     {
+
+        
+
+
         if (Instance != null && Instance != this) {
             Debug.LogWarning("More than one BuildManager detected. Destroying duplicate.");
             Destroy(gameObject);
         } else {
             Instance = this;
+        }
+
+
+        while(resources == null){
+            resources = ResourceDatabase.Instance;
         }
     }
 
