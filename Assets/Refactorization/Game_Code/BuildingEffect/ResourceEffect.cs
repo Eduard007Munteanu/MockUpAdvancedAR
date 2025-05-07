@@ -20,12 +20,12 @@ public class ResourceEffect{
         this.mod2 = mod2;
         this.constant = constant;
     }
-    public void Effect() {
+    public void Apply() {
         resources[type].AddAmount(amount);
         resources[type].AddProductionModifier(flat, mod1, mod2);
         resources[type].AddProductionConstant(constant);
     }
-    public void NegativeEffect() {
+    public void Cancel() {
         resources[type].AddAmount(-amount);
         resources[type].AddProductionModifier(-flat, -mod1, -mod2);
         resources[type].AddProductionConstant(-constant);

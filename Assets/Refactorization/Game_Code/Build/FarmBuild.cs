@@ -7,7 +7,7 @@ public class FarmBuild : DefaultBuild
 
     protected override string Building_class => "farming";
 
-    private List<ResourceEffect> resourceEffects = new List<ResourceEffect>
+    protected override List<ResourceEffect> resourceEffects => new List<ResourceEffect>
     {
         // new ResourceEffect(ResourceType.Food, 0f, 0f, 0f, 0f),
     };
