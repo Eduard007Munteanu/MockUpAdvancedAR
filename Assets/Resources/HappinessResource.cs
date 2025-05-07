@@ -16,7 +16,8 @@ public class HappinessResource : Resource
 
     protected override void onAmountChange(float delta)
     {
-        
+        // if happiness modifies resource production then it will create a loop
+        // BUT happiness only modifies production mod so it should be fine
     }
 
     protected override void onProductionChange(float delta)

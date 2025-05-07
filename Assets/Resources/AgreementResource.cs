@@ -2,6 +2,7 @@
 // Remember to add the ResourceType to Resources.cs
 
 using System.Collections.Generic;
+using UnityEditor.Media;
 using UnityEngine;
 
 public class AgreementResource : Resource
@@ -55,15 +56,32 @@ public class AgreementResource : Resource
         float societal = resources[ResourceType.Societal].CurrentAmount;
         float civilDesire = resources[ResourceType.Civil_Desire].CurrentAmount;
         float economyDesire = resources[ResourceType.Economy_Desire].CurrentAmount;
-        float societalDesire = resources[ResourceType.Societal_Desire].CurrentAmount;
+        // float societalDesire = resources[ResourceType.Societal_Desire].CurrentAmount;
 
         float civilDiff = civil - civilDesire;
         float economyDiff = economy - economyDesire;
-        float societalDiff = societal - societalDesire;
+
+        float foodamount = resources[ResourceType.Food].CurrentAmount;
+        float foodprod = resources[ResourceType.Food].Production;
+        float foodStability = foodamount / foodprod;
+
+        float goldamount = resources[ResourceType.Gold].CurrentAmount;
+        float goldprod = resources[ResourceType.Gold].Production;
+        float goldStability = goldamount / goldprod;
+
+        float woodAmount = resources[ResourceType.Wood].CurrentAmount;
+        float woodProd = resources[ResourceType.Wood].Production;
+        float woodStability = woodAmount / woodProd;
 
         // economy is the most important until the economy is stable
         // then civil
+
+        // check if the economy is stable
+        // and then check for absolute values to know how long is left
+
+
         // societal changes how much the people are willing to change their minds
+        // thinking: happiness modifier modifier
 
         return -1;
     }

@@ -23,7 +23,7 @@ using UnityEngine.InputSystem.Controls; // Required for Action delegate
 public enum ResourceType
 {
     Population,
-    Arts, Food, Gold,
+    Arts, Food, Gold, Wood,
     Civil, Societal, Economy,
     Civil_Desire, Societal_Desire, Economy_Desire, 
     Agreement,
@@ -45,6 +45,7 @@ public abstract class Resource
     public float CurrentAmount { get; protected set; }
     public float MinimumAmount { get; protected set; } // Configurable, often 0
     public float MaximumAmount { get; protected set; } // Configurable storage limit/cap
+    public float Production { get; protected set; }
 
     // Production calculation: overall_production_per_cycle = (flat * mod1 * mod2) + const
     // Protected allows derived classes potential access if complex logic requires it, otherwise could be private.
@@ -55,9 +56,6 @@ public abstract class Resource
 
     // Thresholds probably other class
     protected Thresholds thresholds; // TODO: List of thresholds for this resource
-
-    // Cached production rate per cycle. Recalculated when factors change.
-    private float productionPerCycle;
 
     // Production Timing
     private int productionCycleTicks; // ticks between production attempts
@@ -116,7 +114,7 @@ public abstract class Resource
     public virtual void AddAmount(float delta, bool applyMods = false)
     {
         float previousAmount = CurrentAmount;
-        delta = applyMods ? delta * productionPerCycle : delta; // Apply production rate if requested
+        delta = applyMods ? delta * Production : delta; // Apply production rate if requested
         float noClampAmount = CurrentAmount + delta; // Calculate new amount without clamping
         CurrentAmount = Mathf.Clamp(noClampAmount, MinimumAmount, MaximumAmount);
 
@@ -186,12 +184,12 @@ public abstract class Resource
     private void RecalculateProduction()
     {
         // Core production formula
-        float prevProduction = productionPerCycle; // Store previous production for comparison
-        productionPerCycle = (flat * mod1 * mod2) + constant;
-        float delta = productionPerCycle - prevProduction; // Calculate change in production rate
+        float prevProduction = Production; // Store previous production for comparison
+        Production = (flat * mod1 * mod2) + constant;
+        float delta = Production - prevProduction; // Calculate change in production rate
         // Potentially clamp productionPerCycle if needed (e.g., minimum production rate)
         onProductionChange(delta); // Call abstract method for derived class logic
-        OnProductionChanged?.Invoke(Type, productionPerCycle); // Invoke event
+        OnProductionChanged?.Invoke(Type, Production); // Invoke event
     }
 
     // When the timer reaches zero, it triggers the Produce() method and resets.
@@ -211,9 +209,9 @@ public abstract class Resource
     // Can be overridden if production logic is more complex (e.g., requires Kingdom state).
     protected virtual void Produce()
     {
-        if (productionPerCycle != 0)
+        if (Production != 0)
         {
-            AddAmount(productionPerCycle);
+            AddAmount(Production);
         }
     }
 
@@ -232,11 +230,6 @@ public abstract class Resource
     protected abstract void onReachedMin(float deficit);
     protected abstract void onSpecialAction();
 
-    // --- Public Getters ---
-    public float GetCurrentAmount() => CurrentAmount;
-    public float GetMaximumAmount() => MaximumAmount;
-    public float GetMinimumAmount() => MinimumAmount;
-    public float GetProductionRate() => productionPerCycle; // Returns the cached rate per cycle
     public int GetTicksPerCycle() => productionCycleTicks;
     public int GetTicksUntilNextCycle() => ticksUntilNextCycle;
 

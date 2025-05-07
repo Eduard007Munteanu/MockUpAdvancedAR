@@ -42,14 +42,15 @@ public class ResourceDatabase : MonoBehaviour
         // init resources
         ArtsResource arts = new ArtsResource();
         FoodResource food = new FoodResource();
+        GoldResource gold = new GoldResource();
+        WoodResource wood = new WoodResource();
         MightResource might = new MightResource();
         PopulationResource population = new PopulationResource();
-        GoldResource gold = new GoldResource();
         CivilResource civil = new CivilResource();
         SocietalResource societal = new SocietalResource();
         EconomyResource economy = new EconomyResource();
         CivilDesireResource civilDesire = new CivilDesireResource();
-        SocietalDesireResource societalDesire = new SocietalDesireResource();
+        // SocietalDesireResource societalDesire = new SocietalDesireResource();
         EconomyDesireResource economyDesire = new EconomyDesireResource();
         HappinessResource happiness = new HappinessResource();
         WorkPowerResource workPower = new WorkPowerResource();
@@ -62,14 +63,15 @@ public class ResourceDatabase : MonoBehaviour
         {
             { arts.Type, arts },
             { food.Type, food },
+            { gold.Type, gold },
+            { wood.Type, wood },
             { might.Type, might },
             { population.Type, population },
-            { gold.Type, gold },
             { civil.Type, civil },
             { societal.Type, societal },
             { economy.Type, economy },
             { civilDesire.Type, civilDesire },
-            { societalDesire.Type, societalDesire },
+        //    { societalDesire.Type, societalDesire },
             { economyDesire.Type, economyDesire },
             { happiness.Type, happiness },
             { workPower.Type, workPower },
