@@ -9,13 +9,16 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
 
     [SerializeField] private GameObject PanelPrefab;
 
-    private List<DefaultMob> assignedMobs = new List<DefaultMob>();
+    private List<DefaultMob> assignedMobs = new List<DefaultMob>();  //Given mob added in assignedMobs, effect should happen. 
 
     private int id;
 
     protected virtual string Building_class => "Default";
 
     private DefaultTile tile;
+
+
+    protected abstract DefaultBuildingEffect BuildingEffect { get; }
 
 
     // Start is called before the first frame update
@@ -42,12 +45,15 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
     public void AddAssignedMob(DefaultMob mob)
     {
         assignedMobs.Add(mob);
+        BuildingEffect.Effect();
+
     }
 
 
     public void RemoveAssignedMob(DefaultMob mob)
     {
         assignedMobs.Remove(mob);
+        BuildingEffect.NegativeEffect();
     }
 
     

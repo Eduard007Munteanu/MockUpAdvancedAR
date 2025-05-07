@@ -33,10 +33,13 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if(mobs.Count > 0 && enemyMobs.Count > 0 && timer >= activator){
-            FightingActivation();
-
+        if(mobs.Count > 0 && enemyMobs.Count > 0){
+            timer += Time.deltaTime;
+            if(timer >= activator){
+                FightingActivation();
+                timer = 0f;
+            }
+            
         }
     }
 
@@ -48,16 +51,24 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
 
     void FightingActivation(){
+        Debug.Log("FightingActivation here!");
         Dictionary<string, List<DefaultMob>> defaultMobsSplitted = new Dictionary<string, List<DefaultMob>> {
         { "military", new List<DefaultMob>() },
         { "other", new List<DefaultMob>() }
         };
 
+        Debug.Log("FightingActivation size of mobs is " + mobs.Count);
+
         foreach (DefaultMob mob in mobs) {
             var building = mob.GetBuildingAssignedTo();
-            if (building == null) continue;
-
+            //Debug.Log("Building is " + building.name);
+            if (building == null){
+                Debug.Log("FightingActivation building is null");
+                defaultMobsSplitted["other"].Add(mob);
+                continue;
+            }
             string type = building.GetBuildingClass();
+            Debug.Log("FightingActivation Type of the building from FightingActivation is " + type);
             if (type == "military") {
                 defaultMobsSplitted["military"].Add(mob);
             } else {
