@@ -135,6 +135,21 @@ public class GridOverlay : MonoBehaviour
     }
 
 
+    public (int, int)? FindCoordinatesWithTile(DefaultTile tile){
+        if(tile == null){
+            Debug.Log("Tile found to be null");
+            return null;
+        }
+        
+        
+        string[] parts = tile.name.Split('_');
+        if (parts.Length == 3 && int.TryParse(parts[1], out int x) && int.TryParse(parts[2], out int z)) {
+            return (x,z);
+        }
+        return null;
+    }
+
+
     public int GetTilesCount(){
         return tiles.Count;
     }

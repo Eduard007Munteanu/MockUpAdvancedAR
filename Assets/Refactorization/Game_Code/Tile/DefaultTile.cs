@@ -8,9 +8,9 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 {
 
 
-    private List<DefaultMob> mobs;
+    private List<DefaultMob> mobs = new List<DefaultMob>();
 
-    private List<EnemyMob> enemyMobs;
+    private List<EnemyMob> enemyMobs = new List<EnemyMob>();
 
     private DefaultBuild buildingOnTile;
 
@@ -18,8 +18,8 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     // Start is called before the first frame update
     void Start()
     {
-        mobs = new List<DefaultMob>();
-        enemyMobs = new List<EnemyMob>();
+        // mobs = new List<DefaultMob>();
+        // enemyMobs = new List<EnemyMob>();
     }
 
     // Update is called once per frame
@@ -93,21 +93,16 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
         Vector3[] tileCorners = GridOverlay.Instance.GetTileCorners(this);
         Vector3 topLeft = tileCorners[0];
         Vector3 topRight = tileCorners[1];
-        Vector3 bottomRight = tileCorners[2];
         Vector3 bottomLeft = tileCorners[3];
 
         int maxCols = 5;
 
-        
-        Vector3 xDir = (topRight - topLeft).normalized;
-        Vector3 zDir = (bottomLeft - topLeft).normalized;
 
         float tileWidth = Vector3.Distance(topLeft, topRight);
         float tileHeight = Vector3.Distance(topLeft, bottomLeft);
         float colSpacing = tileWidth / maxCols;
 
         int mobIndex = mobs.Count;
-        int col = mobIndex % maxCols;
         int row = mobIndex / maxCols;
 
         float rowHeight = tileHeight / 3f;   //Let's have some empty space as well. 
@@ -157,6 +152,34 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
         enemyMobs.Add(mob);
     }
 
+    public bool CanEnemyMobsBeArranged(EnemyMob mob){  //Very similar to ArrangeMobs, maybe refactor that part
+        Vector3[] tileCorners = GridOverlay.Instance.GetTileCorners(this);
+        Vector3 bottomLeft = tileCorners[3];
+        Vector3 bottomRight = tileCorners[2];
+        Vector3 topLeft = tileCorners[0];
+
+        int maxCols = 5;
+
+        float tileWidth = Vector3.Distance(bottomLeft, bottomRight);
+        float tileHeight = Vector3.Distance(bottomLeft, topLeft);
+        float colSpacing = tileWidth / maxCols;
+
+        int mobIndex = enemyMobs.Count;
+        int row = mobIndex / maxCols;
+
+        float rowHeight = tileHeight / 3f;
+
+        if (row * colSpacing > rowHeight)
+        {
+            Debug.LogWarning("No more vertical space to place mobs!");
+            return false;
+        }
+
+        return true;
+    }
+
+
+
 
 
 
@@ -176,8 +199,15 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     }
 
     public int GetAmountOfMobs(){
+        if (this == null) {
+            Debug.LogError("Tile object is null.");
+        }
+        if (mobs == null) {
+            Debug.LogError("mobs list is null.");
+        }
         return mobs.Count;
     }
+
 
     private DefaultMob GetLastMob(){
         return mobs.Count >= 1 ? mobs[mobs.Count - 1] : null;

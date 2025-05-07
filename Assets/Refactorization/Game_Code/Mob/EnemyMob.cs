@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System;
+using UnityEngine.UIElements;
 
 public class EnemyMob : MonoBehaviour{
 
@@ -13,7 +14,7 @@ public class EnemyMob : MonoBehaviour{
 
     private bool checkCurrentTileIfMobs;
 
-    public DefaultTile currentTile;  //Not good, but I don't want to add Get/Set methods
+    
 
     [SerializeField] public float speedFactor = 0.008f;
 
@@ -25,32 +26,49 @@ public class EnemyMob : MonoBehaviour{
 
     private DefaultTile lastTileInMyPath;
 
+    public DefaultTile currentTile;  //Not good, but I don't want to add Get/Set methods
+
+    private List<DefaultTile> cachMemoryPathTiles;
+
+    private EnemyTile myCreator;
+
 
 
     void Start()
     {
         allTiles = FindObjectsOfType<DefaultTile>(); 
+        cachMemoryPathTiles = new List<DefaultTile>();
         
 
 
       
         int rowLength = GridOverlay.Instance.rows;
+        int columnLength = GridOverlay.Instance.columns;
 
 
 
         float currentDistance = float.MaxValue;
+        int tileRow = -1;
 
         for(int i = 0; i < rowLength; i++){
             DefaultTile tile = GridOverlay.Instance.FindTileWithCoordinates(i, rowLength - 1);
             if(Vector3.Distance(transform.position, tile.transform.position) < currentDistance){
                 currentDistance = Vector3.Distance(transform.position, tile.transform.position);
+                tileRow = i;
                 lastTileInMyPath = tile;
-            }
-            
+            } 
+        }
+
+
+
+        for(int i=0; i < columnLength; i++){
+            DefaultTile tile = GridOverlay.Instance.FindTileWithCoordinates(tileRow, i);
+            cachMemoryPathTiles.Add(tile);
         }
 
 
         Debug.Log("LastTileInMyPath is " + lastTileInMyPath.name);
+        Debug.Log("CachMemoryPathTiles is " + cachMemoryPathTiles);
 
 
         isMoving = true; //Just for now.
@@ -59,40 +77,55 @@ public class EnemyMob : MonoBehaviour{
 
     void Update()
     {
-        if(isMoving){
-            Action();
-        }
+        Action();
     }
 
 
 
+    public void MovementLogic(){
+        if(isMoving){
+            Debug.Log("We are at MovementLogic");
+            MoveForward();
+            UpdateTileState();
+            CheckTileFullAndAction();
+            EndBoardReached();
+        }
+        
+    }
 
 
     public void MoveForward(){
-
-        
-
-        Vector3 dir = new Vector3(0f,0f,1f);
-        transform.position += dir * speedFactor;
-
-
-        UpdateTileState();
-        if(checkCurrentTileIfMobs){
-            Debug.Log("Well, this tile has mobs, bro!");
-            isMoving = false;
-            currentTile.ArrangeEnemyMobs(this);
-            
+        if(isMoving){
+            Debug.Log("From MoveForward, isMoving is true, so we continue going");
+            Vector3 dir = new Vector3(0f,0f,1f);
+            transform.position += dir * speedFactor;   
+        } else {
+            Debug.Log("From MoveForward, isMoving is false, we are stationary for now to check the tiles");
         }
-
-        EndBoardReached();
-
-
-        
     }
 
 
+    public void CheckTileFullAndAction(){
+        isMoving = false;
+        if(checkCurrentTileIfMobs){
+            bool canEnemyBePlaced = currentTile.CanEnemyMobsBeArranged(this); 
+            if(canEnemyBePlaced){
+                currentTile.ArrangeEnemyMobs(this);
+                return;
+            } else{ 
+                TellOurCreatorToNotCreateMoreOfUs();
+                return;
+            }
+        }
+        isMoving = true;
 
-    
+    }
+
+
+    public void TellOurCreatorToNotCreateMoreOfUs(){
+        myCreator.StopCreatingMobs();
+    }
+
 
 
     private void EndBoardReached(){
@@ -105,6 +138,10 @@ public class EnemyMob : MonoBehaviour{
 
 
     private void CheckIfCurrentTileHasDefaultMobs(){
+        if(currentTile == null){
+            Debug.LogError("CurrentTile is null at CheckIfCurrenTileHasDefaultMobs");
+            return;
+        }
         int amountOfDefaultMobs = currentTile.GetAmountOfMobs();
         if(amountOfDefaultMobs != 0){
             checkCurrentTileIfMobs = true;
@@ -153,6 +190,9 @@ public class EnemyMob : MonoBehaviour{
 
     void UpdateTileState() {
         currentTile = FindClosestTouchingTile();
+        if(currentTile == null){
+            Debug.LogError("Closest touching tile is null");
+        }
         if (currentTile != lastTile)
         {
             lastTile = currentTile;
@@ -163,13 +203,14 @@ public class EnemyMob : MonoBehaviour{
 
 
     public void Action(){
-        MoveForward();
+        MovementLogic();
     } 
 
 
 
-
-
+    public void HeIsMyCreator(EnemyTile enemyTile){
+        myCreator = enemyTile;
+    }
 
 }
 
