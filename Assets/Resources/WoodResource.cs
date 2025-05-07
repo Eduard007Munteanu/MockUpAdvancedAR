@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoldResource : Resource
+public class WoodResource : Resource
 {
 
-    public GoldResource(
+    public WoodResource(
         float initialAmount = 100f,
         float minAmount = 0f,
-        float maxAmount = 1000f, // Gold might have a higher max
+        float maxAmount = 1000f, // Wood might have a higher max
         int cycleTicks = 1
-        ) : base(ResourceType.Gold, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
+        ) : base(ResourceType.Wood, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
     }

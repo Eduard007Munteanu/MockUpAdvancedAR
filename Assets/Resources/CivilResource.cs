@@ -16,7 +16,7 @@ public class CivilResource : Resource
 
     protected override void onAmountChange(float delta)
     {
-        
+        resources[ResourceType.Agreement].TriggerSpecialAction();
     }
 
     protected override void onProductionChange(float delta)
@@ -32,7 +32,13 @@ public class CivilResource : Resource
     protected override void onReachedMax(float excess) {
 
     }
+
     protected override void onReachedMin(float deficit) {
 
+    }
+
+    protected override void onSpecialAction()
+    {
+        
     }
 }

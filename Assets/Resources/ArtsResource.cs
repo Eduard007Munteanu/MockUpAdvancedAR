@@ -49,4 +49,9 @@ public class ArtsResource : Resource
     protected override void onReachedMin(float deficit) {
 
     }
+
+    protected override void onSpecialAction()
+    {
+        
+    }
 }
