@@ -138,8 +138,21 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
             if(Vector3.Distance(mob.transform.position, mob.toDestination) < 0.1f){
                 mob.toColliderObj = mob.buidlingAssignedTo.gameObject;
                 mob.toDestination = mob.buidlingAssignedTo.transform.position;
+                // start timer
+                // wait for timer
+                startTimer();
                 didICollectFromItem = true;
+
             }
+        }
+    }
+
+    private void startTimer() {
+        // Start a timer for 1 seconds
+        float timer = 0f;
+        while (timer < 1f)
+        {
+            timer += Time.deltaTime;
         }
     }
 
