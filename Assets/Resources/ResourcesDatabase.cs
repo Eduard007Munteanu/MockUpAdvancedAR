@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Access resourceDatabase[ResourceType.Arts] to get the resource object
-// Add amount: ResourceDatabase[ResourceType.Arts].AddAmount(10);
-// Add modifier: ResourceDatabase[ResourceType.Arts].AddModifier(10, (optional mod1, mod2));
+// Add amount: ResourceDatabase.Instance[ResourceType.Arts].AddAmount(10);
+// Add modifier: ResourceDatabase.Instance[ResourceType.Arts].AddModifier(10, (optional mod1, mod2));
 public class ResourceDatabase : MonoBehaviour
 {
     // Singleton instance
@@ -12,7 +12,32 @@ public class ResourceDatabase : MonoBehaviour
 
     private Dictionary<ResourceType, Resource> resources;
 
-    public ResourceDatabase()
+    // Awake is called when the script instance is being loaded.
+    void Awake()
+    {
+        // Check if an instance already exists
+        if (Instance == null)
+        {
+            // If not, set this instance as the singleton
+            Instance = this;
+
+            // Optionally, make this object persist across scene loads
+            // DontDestroyOnLoad(gameObject); // Uncomment this line if you need the ResourceDatabase to persist
+
+            // Initialize the resources here
+            InitializeResources();
+        }
+        else if (Instance != this)
+        {
+            // If an instance already exists and it's not this one, destroy this one.
+            // This prevents duplicate instances.
+            Debug.LogWarning("Another instance of ResourceDatabase already exists. Destroying this new one.");
+            Destroy(gameObject);
+        }
+    }
+
+    // Moved resource initialization to its own method for clarity
+    private void InitializeResources()
     {
         // init resources
         ArtsResource arts = new ArtsResource();
@@ -28,6 +53,8 @@ public class ResourceDatabase : MonoBehaviour
         EconomyDesireResource economyDesire = new EconomyDesireResource();
         HappinessResource happiness = new HappinessResource();
         WorkPowerResource workPower = new WorkPowerResource();
+        AgreementResource agreement = new AgreementResource();
+
 
         // use their type defined in their class to add them.
         // add them to the dictionary
@@ -46,14 +73,39 @@ public class ResourceDatabase : MonoBehaviour
             { economyDesire.Type, economyDesire },
             { happiness.Type, happiness },
             { workPower.Type, workPower },
+            { agreement.Type, agreement }
         };
+
+        Debug.Log("ResourceDatabase initialized with resources.");
     }
 
     public Resource this[ResourceType type]
     {
         get
         {
-            return resources[type];
+            if (resources == null)
+            {
+                Debug.LogError("ResourceDatabase has not been initialized yet or resources dictionary is null!");
+                return null; // Or throw an exception
+            }
+            if (resources.TryGetValue(type, out Resource resource))
+            {
+                return resource;
+            }
+            else
+            {
+                Debug.LogError($"Resource type {type} not found in ResourceDatabase.");
+                return null; // Or throw an exception
+            }
+        }
+    }
+
+    // It's good practice to clean up the static instance if the GameObject is destroyed
+    void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
         }
     }
 }
