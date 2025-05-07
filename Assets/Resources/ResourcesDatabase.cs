@@ -45,6 +45,7 @@ public class ResourceDatabase : MonoBehaviour
         GoldResource gold = new GoldResource();
         WoodResource wood = new WoodResource();
         MightResource might = new MightResource();
+        EnemyMightResource enemyMight = new EnemyMightResource();
         PopulationResource population = new PopulationResource();
         CivilResource civil = new CivilResource();
         SocietalResource societal = new SocietalResource();
@@ -66,6 +67,7 @@ public class ResourceDatabase : MonoBehaviour
             { gold.Type, gold },
             { wood.Type, wood },
             { might.Type, might },
+            { enemyMight.Type, enemyMight },
             { population.Type, population },
             { civil.Type, civil },
             { societal.Type, societal },
