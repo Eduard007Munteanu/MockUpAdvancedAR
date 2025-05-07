@@ -100,37 +100,39 @@ public class Fighting{
             defaultMobsLength[key] = list.Count;
         }
 
-        if(defaultMobsLength.ContainsKey("other")){
+        if (defaultMobsLength.ContainsKey("other")) {
             int count = defaultMobsLength["other"];
-            for(int i= 0; i < count; i++){
-                if(tempTotalEnemyMightPower > 0){
+            for (int i = count - 1; i >= 0; i--) {
+                if (tempTotalEnemyMightPower > 0) {
                     tempTotalEnemyMightPower -= othersMightPower;
-                    defaultMobs["other"].Remove(defaultMobs["other"][i]);
+                    defaultMobs["other"].RemoveAt(i);
                 }
-            }   
+            }
         }
 
-        if(defaultMobsLength.ContainsKey("military")){
+
+        if (defaultMobsLength.ContainsKey("military")) {
             int count = defaultMobsLength["military"];
-            for(int i = 0; i < count; i++){
-                if(tempTotalEnemyMightPower > 0){
+            for (int i = count - 1; i >= 0; i--) {
+                if (tempTotalEnemyMightPower > 0) {
                     tempTotalEnemyMightPower -= militaryMightPower;
-                    defaultMobs["military"].Remove(defaultMobs["military"][i]);
+                    defaultMobs["military"].RemoveAt(i);
                 }
             }
         }
     }
 
-    void EnemyWonCalculation(){
+    void EnemyWonCalculation() {
         float tempTotalMobMightPower = totalMobMightPower;
-        foreach (var list in defaultMobs.Values){
-            list.Clear();
+
+        foreach (var list in defaultMobs.Values) {
+            list.Clear(); 
         }
-        int enemyMobListLength = enemyMobs.Count;
-        for(int i=0; i < enemyMobListLength; i++){
-            if(tempTotalMobMightPower > 0){
+
+        for (int i = enemyMobs.Count - 1; i >= 0; i--) {
+            if (tempTotalMobMightPower > 0) {
                 tempTotalMobMightPower -= enemyMightPower;
-                enemyMobs.Remove(enemyMobs[i]);
+                enemyMobs.RemoveAt(i);
             }
         }
     }

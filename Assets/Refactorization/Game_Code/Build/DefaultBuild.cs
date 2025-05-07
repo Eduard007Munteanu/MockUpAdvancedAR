@@ -18,7 +18,7 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
     private DefaultTile tile;
 
 
-    protected abstract DefaultBuildingEffect BuildingEffect { get; }
+    //protected abstract DefaultBuildingEffect BuildingEffect { get; }
 
 
     // Start is called before the first frame update
@@ -45,7 +45,7 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
     public void AddAssignedMob(DefaultMob mob)
     {
         assignedMobs.Add(mob);
-        BuildingEffect.Effect();
+        //BuildingEffect.Effect();
 
     }
 
@@ -53,7 +53,7 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
     public void RemoveAssignedMob(DefaultMob mob)
     {
         assignedMobs.Remove(mob);
-        BuildingEffect.NegativeEffect();
+        //BuildingEffect.NegativeEffect();
     }
 
     

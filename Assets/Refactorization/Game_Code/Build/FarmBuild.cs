@@ -12,8 +12,6 @@ public class FarmBuild : DefaultBuild
         // new ResourceEffect(ResourceType.Food, 0f, 0f, 0f, 0f),
     };
 
-    protected override DefaultBuildingEffect BuildingEffect => throw new System.NotImplementedException();
-
     // Start is called before the first frame update
     void Start()
     {
