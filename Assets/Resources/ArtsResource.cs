@@ -23,7 +23,7 @@ public class ArtsResource : Resource
     }
     protected override void onAmountChange(float delta)
     {
-
+        Debug.Log($"ArtsResource: Amount changed by {delta}. Current amount: {CurrentAmount}");
     }
 
     protected override void onProductionChange(float delta)

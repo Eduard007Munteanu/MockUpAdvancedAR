@@ -7,6 +7,7 @@ public class Gold : DefaultItem
 
 
     protected override string ItemClass => "GoldItem"; 
+    public override ResourceType Type => ResourceType.Gold; // TODO: Update ResourceType
 
     // Start is called before the first frame update
     void Start()

@@ -10,7 +10,7 @@ public class ItemDatabase: MonoBehaviour{
 
     private Dictionary<string, int> collectedItemsCount = new Dictionary<string, int>();
 
-
+    private ResourceDatabase resourceDatabase = ResourceDatabase.Instance; // I don't want now to add get + set methods
 
     //Event trigger => we warn others that the OnCollectedItemsCountDataPacker() method should be called given update made. 
     public event System.Action<DataPacket> OnCollectedItemsUpdated;
@@ -32,6 +32,9 @@ public class ItemDatabase: MonoBehaviour{
     }
 
     public void UpdateCollectedItemsCount(DefaultItem item, int increaseBy){
+
+        resourceDatabase[item.Type].AddAmount(increaseBy);
+
         string itemClass = item.GetItemClass();
         if(!collectedItemsCount.ContainsKey(itemClass)){
             collectedItemsCount[itemClass] = increaseBy;

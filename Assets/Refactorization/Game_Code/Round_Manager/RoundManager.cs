@@ -21,6 +21,8 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
     private float timeToWait = 1f;
 
+    private ResourceDatabase resources = ResourceDatabase.Instance;
+
 
     void Awake()
     {
@@ -51,8 +53,10 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
         if(timerIncreaser){
             Debug.Log("We are exactly at UpdateTime");
             UpdateTime();
-        } else{
+        } else{ // new round
             roundNumber += 1;
+            // call resourcedatabase ticks
+            resources.Tick();
             Debug.Log("We are exactly at SpawnMobs");
             SpawnMobs();
         }

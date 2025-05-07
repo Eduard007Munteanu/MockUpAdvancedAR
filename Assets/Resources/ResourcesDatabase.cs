@@ -104,6 +104,15 @@ public class ResourceDatabase : MonoBehaviour
         }
     }
 
+    public void Tick()
+    {
+        // Call the Tick method on each resource
+        foreach (var resource in resources.Values)
+        {
+            resource.Tick();
+        }
+    }
+
     // It's good practice to clean up the static instance if the GameObject is destroyed
     void OnDestroy()
     {

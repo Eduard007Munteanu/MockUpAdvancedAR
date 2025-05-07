@@ -11,7 +11,8 @@ public abstract class DefaultItem : MonoBehaviour, Item
 
     protected virtual string ItemClass => "DefaultItem"; 
 
-
+    // protected abstract ResourceType type = null;
+    public abstract ResourceType Type { get; }
 
     public void Init(int Id){   
         this.Id = Id;
