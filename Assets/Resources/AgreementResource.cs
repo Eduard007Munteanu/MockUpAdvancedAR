@@ -61,6 +61,8 @@ public class AgreementResource : Resource
         float civilDiff = civil - civilDesire;
         float economyDiff = economy - economyDesire;
 
+        float population = resources[ResourceType.Population].CurrentAmount;
+
         float foodamount = resources[ResourceType.Food].CurrentAmount;
         float foodprod = resources[ResourceType.Food].Production;
         float foodStability = foodamount / foodprod;
@@ -78,7 +80,7 @@ public class AgreementResource : Resource
 
         // check if the economy is stable
         // and then check for absolute values to know how long is left
-
+        
 
         // societal changes how much the people are willing to change their minds
         // thinking: happiness modifier modifier

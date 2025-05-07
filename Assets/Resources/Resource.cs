@@ -28,7 +28,7 @@ public enum ResourceType
     Civil_Desire, Societal_Desire, Economy_Desire, 
     Agreement,
     Happiness,
-    Might, // Threat, TollRatio, 
+    Might, EnemyMight,// Threat, TollRatio, 
     // DrawAmount, DrawsLeft, // ??
     WorkPower,
 

@@ -97,6 +97,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Mob\DefaultMob.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\SleepCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Round_Manager\RoundManager.cs" />
+    <Compile Include="Assets\Resources\EnemyMightResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\MobSpawnButton.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\UpgradePanel.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\CardsInHand.cs" />
