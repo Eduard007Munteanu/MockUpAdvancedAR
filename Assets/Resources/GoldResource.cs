@@ -32,7 +32,13 @@ public class GoldResource : Resource
     protected override void onReachedMax(float excess) {
 
     }
+
     protected override void onReachedMin(float deficit) {
 
+    }
+
+    protected override void onSpecialAction()
+    {
+        
     }
 }

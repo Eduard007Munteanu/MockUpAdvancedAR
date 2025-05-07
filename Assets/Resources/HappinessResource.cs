@@ -35,4 +35,9 @@ public class HappinessResource : Resource
     protected override void onReachedMin(float deficit) {
 
     }
+
+    protected override void onSpecialAction()
+    {
+        
+    }
 }
