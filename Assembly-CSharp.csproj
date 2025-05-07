@@ -81,6 +81,7 @@
     <Compile Include="Assets\Resources\FoodResource.cs" />
     <Compile Include="Assets\Resources\CivilDesireResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\BuildCard.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\BuildingEffect\SchoolBuildingEffect.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Gold.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\LawCard.cs" />
     <Compile Include="Assets\Resources\SocietalDesireResource.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Tree.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\BuildingDatabase.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\FarmCard.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\BuildingEffect\DefaultBuildingEffect.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\DefaultBuild.cs" />
     <Compile Include="Assets\Resources\GoldResource.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Despawn.cs" />
@@ -130,6 +132,7 @@
     <Compile Include="Assets\Resources\PopulationResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\BuildUpgradeCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\IMobBehavior.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Build\SchoolBuilding.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\MobManager.cs" />
     <Compile Include="Assets\Resources\WoodResource.cs" />
     <Compile Include="Assets\Resources\Thresholds.cs" />

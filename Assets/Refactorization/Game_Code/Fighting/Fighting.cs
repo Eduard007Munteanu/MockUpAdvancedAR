@@ -138,8 +138,11 @@ public class Fighting{
 
 
     void CalculateTotalMightPower(){
-        totalEnemyMightPower = totalEnemyMightPower += enemyMightPower *= enemyMobs.Count;
-        totalMobMightPower = totalMobMightPower += (othersMightPower *= defaultMobs["other"].Count ) + (militaryMightPower *= defaultMobs["military"].Count);
+        totalEnemyMightPower =  enemyMightPower * enemyMobs.Count;
+        Debug.Log("The nice TotalEnemyMightPower is " + totalEnemyMightPower);
+        totalMobMightPower =  (othersMightPower * defaultMobs["other"].Count ) + (militaryMightPower * defaultMobs["military"].Count);
+        Debug.Log("The nice TotalMobMightPower is " + totalMobMightPower);
+        Debug.Log("The nice defaultMobs['other'] is " + defaultMobs["other"] + " and it's count of " + defaultMobs["other"].Count +  "defaultMobs['military'] is " + defaultMobs["military"] + " and it's count of " + defaultMobs["military"].Count);
     }
 
    
