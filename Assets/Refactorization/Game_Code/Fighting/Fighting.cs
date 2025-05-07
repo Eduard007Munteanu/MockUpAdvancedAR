@@ -81,7 +81,7 @@ public class Fighting{
 
     public void CalculateMobBattleWinner(){
         float result = totalMobMightPower - totalEnemyMightPower;
-        if(result < 0){
+        if(result <= 0){
             EnemyWonCalculation();
         } else if(result > 0){
             MobsWonCalculation();
@@ -92,7 +92,16 @@ public class Fighting{
 
     void MobsWonCalculation(){
         float tempTotalEnemyMightPower = totalEnemyMightPower;
+        
+
+        foreach (var enemy in enemyMobs) {
+            if (enemy != null)
+                GameObject.Destroy(enemy.gameObject);
+        }
         enemyMobs.Clear();
+
+
+        
         Dictionary<string, int> defaultMobsLength = new Dictionary<string, int>();
         foreach(var kvp in defaultMobs){
             string key = kvp.Key;
@@ -105,33 +114,40 @@ public class Fighting{
             for (int i = count - 1; i >= 0; i--) {
                 if (tempTotalEnemyMightPower > 0) {
                     tempTotalEnemyMightPower -= othersMightPower;
+                    GameObject.Destroy(defaultMobs["other"][i].gameObject); // <- destroy first
                     defaultMobs["other"].RemoveAt(i);
                 }
             }
         }
-
 
         if (defaultMobsLength.ContainsKey("military")) {
             int count = defaultMobsLength["military"];
             for (int i = count - 1; i >= 0; i--) {
                 if (tempTotalEnemyMightPower > 0) {
                     tempTotalEnemyMightPower -= militaryMightPower;
+                    GameObject.Destroy(defaultMobs["military"][i].gameObject); // <- destroy first
                     defaultMobs["military"].RemoveAt(i);
                 }
             }
         }
+
+        
     }
 
     void EnemyWonCalculation() {
         float tempTotalMobMightPower = totalMobMightPower;
 
         foreach (var list in defaultMobs.Values) {
-            list.Clear(); 
+            foreach (var mob in list) {
+                if (mob != null) GameObject.Destroy(mob.gameObject);
+            }
+            list.Clear();
         }
 
         for (int i = enemyMobs.Count - 1; i >= 0; i--) {
             if (tempTotalMobMightPower > 0) {
                 tempTotalMobMightPower -= enemyMightPower;
+                if (enemyMobs[i] != null){GameObject.Destroy(enemyMobs[i].gameObject);}
                 enemyMobs.RemoveAt(i);
             }
         }

@@ -82,29 +82,15 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
         (Dictionary<string, List<DefaultMob>> updateMobs, List<EnemyMob> updateEnemyMobs) = fighting.SimulateFighting();
 
 
-
-        // Destroy and remove DefaultMobs that are NOT in updateMobs
-        foreach (var mob in new List<DefaultMob>(mobs)) {
-            bool stillExists = false;
-            foreach (var list in updateMobs.Values) {
-                if (list.Contains(mob)) {
-                    stillExists = true;
-                    break;
-                }
-            }
-            if (!stillExists) {
-                mobs.Remove(mob);
-                Destroy(mob.gameObject);
+        List<DefaultMob> theMobs = new List<DefaultMob>();
+        foreach(var updateMob in updateMobs){
+            foreach(var i in updateMob.Value){
+                theMobs.Add(i);
             }
         }
 
-        // Destroy and remove EnemyMobs that are NOT in updateEnemyMobs
-        foreach (var enemy in new List<EnemyMob>(enemyMobs)) {
-            if (!updateEnemyMobs.Contains(enemy)) {
-                enemyMobs.Remove(enemy);
-                Destroy(enemy.gameObject);
-            }
-        }
+        mobs = theMobs;
+        enemyMobs = updateEnemyMobs;
 
     }
 
