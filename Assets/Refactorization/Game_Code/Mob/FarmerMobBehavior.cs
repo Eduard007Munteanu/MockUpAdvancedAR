@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 
 public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capacity reached, so nothing happens afterwards default => break  
@@ -12,6 +13,8 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
     private DefaultItem closestItem; 
 
     private DefaultMob mob;
+
+    private float counter = 1f;
 
     
 
@@ -97,6 +100,15 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
         Item item = mob.toColliderObj.GetComponent<Item>();
 
         if(building != null){
+
+            if(didICollectFromItem && counter > 0){
+                counter -= Time.deltaTime;
+                return; 
+            } else if(counter <= 0){
+                didICollectFromItem  = false;
+                counter = 5;
+            }
+
             Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
             mob.transform.position += dir * mob.speedFactor;
 
