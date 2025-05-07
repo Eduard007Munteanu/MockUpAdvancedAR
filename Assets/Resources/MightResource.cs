@@ -34,7 +34,13 @@ public class MightResource : Resource
     protected override void onReachedMax(float excess) {
 
     }
+
     protected override void onReachedMin(float deficit) {
 
+    }
+
+    protected override void onSpecialAction()
+    {
+        
     }
 }

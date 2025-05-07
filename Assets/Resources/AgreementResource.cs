@@ -1,22 +1,29 @@
+// --- Hi ---
+// Remember to add the ResourceType to Resources.cs
+
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoldResource : Resource
+public class AgreementResource : Resource
 {
+    private float lastAgreementAmount = 0f;
 
-    public GoldResource(
-        float initialAmount = 100f,
+    public AgreementResource(
+        float initialAmount = 0f,
         float minAmount = 0f,
-        float maxAmount = 1000f, // Gold might have a higher max
+        float maxAmount = 100f,
         int cycleTicks = 1
-        ) : base(ResourceType.Gold, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
+        ) : base(ResourceType.Agreement, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
+        // calculate initial agreement
     }
 
     protected override void onAmountChange(float delta)
     {
-        
+
+
+        lastAgreementAmount = CurrentAmount;
     }
 
     protected override void onProductionChange(float delta)
@@ -32,7 +39,6 @@ public class GoldResource : Resource
     protected override void onReachedMax(float excess) {
 
     }
-
     protected override void onReachedMin(float deficit) {
 
     }
@@ -41,4 +47,7 @@ public class GoldResource : Resource
     {
         
     }
+
+    // To handle changes in the political axes 
+    // Listen to their actions
 }

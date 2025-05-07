@@ -16,7 +16,9 @@ using UnityEngine.InputSystem.Controls; // Required for Action delegate
 // use applymods = true this way added amount will be boosted by production factors
 // - AddProductionModifier(float flatDelta, float mod1Delta, float mod2Delta): Modifies the production factors of the resource.
 // - AddProductionConstant(float constDelta): added directly to amount every cycle
+// - TriggerSpecialAction(): Call this to trigger a special action for the resource. This is a placeholder for any special logic you want to implement.
 // - Tick(): Call this every tick to update the resource. It will check if it's time to produce more resources.
+
 
 public enum ResourceType
 {
@@ -24,6 +26,7 @@ public enum ResourceType
     Arts, Food, Gold,
     Civil, Societal, Economy,
     Civil_Desire, Societal_Desire, Economy_Desire, 
+    Agreement,
     Happiness,
     Might, // Threat, TollRatio, 
     // DrawAmount, DrawsLeft, // ??
@@ -59,6 +62,8 @@ public abstract class Resource
     // Production Timing
     private int productionCycleTicks; // ticks between production attempts
     private int ticksUntilNextCycle;  // counter for the current cycle
+
+    protected ResourceDatabase resources; // Reference to the database
 
     // Events for notification
     public event Action<ResourceType, float> OnAmountChanged; // Parameter is the new CurrentAmount
@@ -96,6 +101,13 @@ public abstract class Resource
         productionCycleTicks = cycleTicks;
         ticksUntilNextCycle = productionCycleTicks; // Start ready for the first cycle or wait full cycle? Let's wait.
 
+        resources = ResourceDatabase.Instance; // Get the singleton instance of the resource database
+        if (resources == null)
+        {
+            Debug.LogError($"ResourcesDatabase is null for {Type}");
+            return;
+        }
+
         RecalculateProduction(); // Calculate initial production rate
     }
 
@@ -119,6 +131,7 @@ public abstract class Resource
                     foreach (var thresh in threshDict)
                     {
                         onThresholdCrossed(thresh.Key, thresh.Value);
+                        // OnThresholdCrossed?.Invoke(Type, thresh.Value); // Notify external listeners (UI etc.)
                     }
                 }
             }
@@ -161,6 +174,11 @@ public abstract class Resource
         constant += constDelta;
         
         RecalculateProduction();
+    }
+
+    public virtual void TriggerSpecialAction()
+    {
+        onSpecialAction(); // Call abstract method for derived class logic (e.g., special events)
     }
 
     // Recalculates the cached production value based on current factors.
@@ -212,6 +230,7 @@ public abstract class Resource
     protected abstract void onThresholdCrossed(int i, ThresholdCross dir);
     protected abstract void onReachedMax(float excess);
     protected abstract void onReachedMin(float deficit);
+    protected abstract void onSpecialAction();
 
     // --- Public Getters ---
     public float GetCurrentAmount() => CurrentAmount;
