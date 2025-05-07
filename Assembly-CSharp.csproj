@@ -127,6 +127,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Build\DefaultBuild.cs" />
     <Compile Include="Assets\Resources\GoldResource.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Despawn.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\BuildingEffect\ResourceEffect.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Item.cs" />
     <Compile Include="Assets\Resources\Resource.cs" />
     <Compile Include="Assets\Resources\PopulationResource.cs" />
