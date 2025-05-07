@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks for every ressource. 
@@ -8,9 +9,11 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
     private List<EnemyTile> enemyTiles;
 
+    private int roundNumber = 1;
+
     private int numberOfEnemiesToSpawn = 25;  //Hardcoded
 
-    private float timeToActivateRound = 5f; 
+    private float timeToActivateRound = 20f; 
 
     private float timer = 0f; 
 
@@ -38,11 +41,18 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
 
 
+    int getRound(){
+        return roundNumber;
+    }
+
+
+
     void Update(){
         if(timerIncreaser){
             Debug.Log("We are exactly at UpdateTime");
             UpdateTime();
         } else{
+            roundNumber += 1;
             Debug.Log("We are exactly at SpawnMobs");
             SpawnMobs();
         }

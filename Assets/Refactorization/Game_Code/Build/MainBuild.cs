@@ -18,7 +18,7 @@ public class MainBuild : DefaultBuild
 
     protected override string Building_class => "Main";
 
-    protected override DefaultBuildingEffect BuildingEffect => throw new NotImplementedException();
+    //protected override DefaultBuildingEffect BuildingEffect => throw new NotImplementedException();
 
     private DefaultTile tiles;
 
