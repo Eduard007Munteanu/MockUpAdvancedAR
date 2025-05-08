@@ -36,6 +36,8 @@ public class EnemyMob : MonoBehaviour{
     private bool hasTarget = false; 
     private Vector3 target;  
 
+    private bool endPointReached = false;
+
 
 
     void Start()
@@ -87,13 +89,13 @@ public class EnemyMob : MonoBehaviour{
 
 
     public void MovementLogic(){
-        if(isMoving && !hasTarget){
+        if(isMoving && !hasTarget && !endPointReached){
             Debug.Log("We are at MovementLogic");
             MoveForward();
             UpdateTileState();
             CheckTileFullAndAction();
             EndBoardReached();
-         } else if (hasTarget && isMoving){
+         } else if (hasTarget && isMoving & !endPointReached){
              MoveToTarget();
              UpdateTileState();
              CheckTileFullAndAction();
@@ -122,6 +124,7 @@ public class EnemyMob : MonoBehaviour{
                 //It's also important to check the tiles while going to the target MainBuild, because there can be mobs / buildings inbetween. 
                 isMoving = false;
                 hasTarget = false;
+                endPointReached = true;
             }
         }
     }
@@ -229,6 +232,13 @@ public class EnemyMob : MonoBehaviour{
 
     }
 
+    private void CheckIfCurrentTileHasBuilding(){
+        if(currentTile.GetBuilding() != null){
+            Debug.Log("We checked if current tile has building, and it had");
+            checkCurrentTileIfMobs = true;
+        }
+    }
+
 
     public DefaultTile FindClosestTouchingTile()
     {
@@ -276,6 +286,7 @@ public class EnemyMob : MonoBehaviour{
         {
             lastTile = currentTile;
             CheckIfCurrentTileHasDefaultMobs();
+            CheckIfCurrentTileHasBuilding();
         }
     }
 

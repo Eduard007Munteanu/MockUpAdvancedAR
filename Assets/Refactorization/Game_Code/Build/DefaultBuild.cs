@@ -18,6 +18,8 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
 
     protected virtual string Building_class => "Default";
 
+    protected virtual float HP { get; set; } = 40;
+
     private DefaultTile tile;
 
     //protected abstract DefaultBuildingEffect BuildingEffect { get; }
@@ -34,6 +36,16 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
     {
         
     }
+
+
+    public float GetHP(){
+        return HP;
+    }
+
+    public void SetHP(float newHP){
+        HP = newHP;
+    }
+
 
     public virtual void Init(int Id,  DefaultTile tile =null)
     {   

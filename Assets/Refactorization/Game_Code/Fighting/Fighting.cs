@@ -15,7 +15,11 @@ public class Fighting{
     private float othersMightPower;
     private float enemyMightPower;
 
-    private float buildingMightPower = 500f; //Hardcoded
+    //private float buildingMightPower = 500f; //Hardcoded
+
+    //private float tempbuildingMightPower = 500f;  //Hardcoded
+
+    private DefaultBuild theBuilding; 
 
 
 
@@ -27,9 +31,10 @@ public class Fighting{
 
 
 
-    public Fighting(List<EnemyMob> currentEnemyMobs, Dictionary<string,List<DefaultMob>> currentDefaultMobs){
+    public Fighting(List<EnemyMob> currentEnemyMobs, Dictionary<string,List<DefaultMob>> currentDefaultMobs, DefaultBuild building){
         enemyMobs = currentEnemyMobs;
         defaultMobs = currentDefaultMobs;
+        theBuilding = building;
 
        
         militaryMightPower = 20f;  //Should be actually received from the general class
@@ -70,12 +75,29 @@ public class Fighting{
 
     
 
-    public (Dictionary<string, List<DefaultMob>>, List<EnemyMob>) SimulateFighting(){
+    public (Dictionary<string, List<DefaultMob>>, List<EnemyMob>, DefaultBuild) SimulateFighting(){
         CalculateTotalMightPower();
         CalculateMobBattleWinner();
 
-        return (defaultMobs, enemyMobs);
+        return (defaultMobs, enemyMobs, theBuilding);
     }
+
+
+
+    private void DealDamageToTheBuilding(){
+        Debug.Log("In DealDamageToBuilding, totalEnemyMightPower is " + totalEnemyMightPower);
+        Debug.Log("In DealDamageToBuilding, totalMobMightPower is " + totalMobMightPower);
+        theBuilding.SetHP(theBuilding.GetHP() - totalEnemyMightPower);
+        Debug.Log("In DealDamageToBuilding, remaining health " + theBuilding.GetHP() );
+        if(theBuilding != null && theBuilding.GetHP() <= 0){
+            Debug.Log("In DealDamageToBuilding, the building should now be removed, being null");
+            GameObject.Destroy(theBuilding.gameObject);
+            theBuilding = null;
+        }
+
+    }
+
+
 
 
 
@@ -83,6 +105,9 @@ public class Fighting{
         float result = totalMobMightPower - totalEnemyMightPower;
         if(result <= 0){
             EnemyWonCalculation();
+            if(theBuilding != null){
+                DealDamageToTheBuilding();
+            }
         } else if(result > 0){
             MobsWonCalculation();
         }

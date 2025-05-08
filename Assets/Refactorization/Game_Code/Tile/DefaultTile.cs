@@ -33,7 +33,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     // Update is called once per frame
     void Update()
     {
-        if(mobs.Count > 0 && enemyMobs.Count > 0){
+        if((mobs.Count > 0 && enemyMobs.Count > 0) || (enemyMobs.Count > 0) && buildingOnTile != null ){
             timer += Time.deltaTime;
             if(timer >= activator){
                 FightingActivation();
@@ -78,8 +78,12 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
 
     
-        fighting = new Fighting(enemyMobs, defaultMobsSplitted);
-        (Dictionary<string, List<DefaultMob>> updateMobs, List<EnemyMob> updateEnemyMobs) = fighting.SimulateFighting();
+        fighting = new Fighting(enemyMobs, defaultMobsSplitted, GetBuilding());
+        (Dictionary<string, List<DefaultMob>> updateMobs, List<EnemyMob> updateEnemyMobs, DefaultBuild theBuilding) = fighting.SimulateFighting();
+
+
+        buildingOnTile = theBuilding;
+
 
 
         List<DefaultMob> theMobs = new List<DefaultMob>();
