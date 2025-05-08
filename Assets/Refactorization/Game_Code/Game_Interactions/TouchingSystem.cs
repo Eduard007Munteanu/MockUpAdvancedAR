@@ -20,30 +20,27 @@ public class TouchingSystem : MonoBehaviour{
     }
 
 
-     private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("OnTriggerEnter, we collide with object : " + other.name);
+     private void OnTriggerEnter(Collider other) {
+        var go = other.gameObject;
+        Debug.Log("Touched: " + go.name);
 
-
-        if(currentlyTouching == null){
-            currentlyTouching = other.gameObject;
-            Checker(currentlyTouching);
+        if (currentlyTouching == null || go != currentlyTouching) {
+            currentlyTouching = go;
+            Checker(go);
         }
-        else if(currentlyTouching  != null){
-            if(other == currentlyTouching){
-                Debug.Log("OnTriggerEnter, we touched the same object multiple times");
-            }
-            else if(other != currentlyTouching){
-                currentlyTouching = other.gameObject;
-                Checker(currentlyTouching);
-            }
+        else {
+            Debug.Log("Same object re-triggered");
         }
-        
-
-
-
-
     }
+
+
+    private void OnTriggerExit(Collider other) {
+    if (other.gameObject == currentlyTouching) {
+        currentlyTouching = null;
+        triggerOnSameElement = false;
+    }
+    }
+
 
 
     public void Checker(GameObject gameObject){
