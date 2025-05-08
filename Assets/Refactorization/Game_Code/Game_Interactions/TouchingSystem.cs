@@ -1,8 +1,14 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TouchingSystem : MonoBehaviour{
 
 
+    private GameObject currentlyTouching; 
+
+    private bool triggerOnSameElement = false; 
+
+    private DefaultMob selectedMob; 
 
     void Start(){
 
@@ -16,8 +22,94 @@ public class TouchingSystem : MonoBehaviour{
 
      private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Touched: " + other.name);
+        Debug.Log("OnTriggerEnter, we collide with object : " + other.name);
+
+
+        if(currentlyTouching == null){
+            currentlyTouching = other.gameObject;
+            Checker(currentlyTouching);
+        }
+        else if(currentlyTouching  != null){
+            if(other == currentlyTouching){
+                Debug.Log("OnTriggerEnter, we touched the same object multiple times");
+            }
+            else if(other != currentlyTouching){
+                currentlyTouching = other.gameObject;
+                Checker(currentlyTouching);
+            }
+        }
+        
+
+
+
+
     }
+
+
+    public void Checker(GameObject gameObject){
+        DefaultMob mob = gameObject.GetComponent<DefaultMob>();
+        DefaultTile tile = gameObject.GetComponent<DefaultTile>();
+        DefaultBuild build = gameObject.GetComponent<DefaultBuild>();
+
+
+
+
+        if(mob != null && selectedMob == null){
+            ActionGivenDefaultMob(mob);
+        } 
+        else if(selectedMob != null && tile != null){
+            ActionMoveMobToTile(tile);
+        }
+        else if(selectedMob != null && build != null){
+            ActionMoveMobToBuilding(build);
+        }
+
+    }
+
+
+    private void ActionGivenDefaultMob(DefaultMob defaultMobTouched){
+        selectedMob = defaultMobTouched;
+    }
+
+
+    public void ActionMoveMobToTile(DefaultTile defaultTileTouched){
+        Debug.Log("OnTriggerEnter in ActionMoveMobToTile");
+        Vector3 tilePosition = defaultTileTouched.gameObject.transform.position;  
+        Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(defaultTileTouched, selectedMob), tilePosition.z);  //Pivot point in empty object parent of tile instead of vectorYHeightGivenTile
+        selectedMob.RemoveFromBuilding();
+        //selectedMob.AssignToBuilding(); // Here we will have the military building assignment. 
+
+        bool canTheMobBeAdded = defaultTileTouched.CanMobBeArrangedChecker(selectedMob);
+        if(canTheMobBeAdded){
+            selectedMob.SetBehaviorBasedOnBuilding(null);
+            selectedMob.InitMove(targetPosition, defaultTileTouched.gameObject);
+        }
+        selectedMob = null;
+    }
+
+
+    public void ActionMoveMobToBuilding(DefaultBuild defaultBuildTouched){
+        Debug.Log("OnTriggerEnter in ActionMoveMobToBuilding");
+        Vector3 buildingPosition = defaultBuildTouched.gameObject.transform.position;  
+        Vector3 targetPosition = new Vector3(buildingPosition.x, vectorYHeightGivenTile(GridOverlay.Instance.GetTiles()[0].GetComponent<DefaultTile>(), selectedMob), buildingPosition.z);
+        selectedMob.RemoveFromBuilding();
+        selectedMob.AssignToBuilding(defaultBuildTouched);
+        selectedMob.SetBehaviorBasedOnBuilding(defaultBuildTouched);
+        selectedMob.InitMove(targetPosition, defaultBuildTouched.gameObject);
+        selectedMob = null;
+    }
+
+
+
+    float vectorYHeightGivenTile(DefaultTile tile, DefaultMob mob){
+        Vector3 tilePosition = tile.gameObject.transform.position;
+
+        float tileHeight = tile.GetTileHeight();
+        float mobHeight = mob.GetMobHeight();
+
+        float height = tilePosition.y + ((tileHeight + (mobHeight / 2f))  / 1f);
+        return height;
+     }
 
 
     
