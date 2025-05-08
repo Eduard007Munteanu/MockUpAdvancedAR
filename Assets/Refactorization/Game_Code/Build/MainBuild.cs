@@ -40,7 +40,13 @@ public class MainBuild : DefaultBuild
         // this.building_class_main = main_class;
         base.Init(Id, tile);
         gridOverlay = GridOverlay.Instance;
+        // debug resourceeffect length
 
+        Debug.Log($"ResourceEffect count: {resourceEffects.Count}");
+        foreach (var effect in resourceEffects)
+        {
+            Debug.Log($"ResourceEffect: {effect.Type} - {effect.Amount} - {effect.Flat} - {effect.Mod1} - {effect.Mod2} - {effect.Constant}");
+        }
     }
 
     public override Vector3 SpawnBuilding(){
@@ -119,17 +125,10 @@ public class MainBuild : DefaultBuild
 
         if(mob != null){
             Debug.Log("Mob created successfully!");
+            
         }
 
         mob.GetComponent<DefaultMob>().AssignToBuilding(this);
 
     }
-
-
-
-    
-
-    
-
-    
 }

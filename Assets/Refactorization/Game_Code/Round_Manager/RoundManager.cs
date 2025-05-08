@@ -21,15 +21,14 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
     private float timeToWait = 1f;
 
+    private float tickTimer = 0f;
+    private float tickTime = 1f;
+
     private ResourceDatabase resources = ResourceDatabase.Instance;
 
 
     void Awake()
     {
-
-        
-
-
         if (Instance != null && Instance != this) {
             Debug.LogWarning("More than one BuildManager detected. Destroying duplicate.");
             Destroy(gameObject);
@@ -39,6 +38,7 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
 
         while(resources == null){
+            Debug.Log("Waiting for ResourceDatabase to be initialized...");
             resources = ResourceDatabase.Instance;
         }
     }
@@ -64,8 +64,6 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
             UpdateTime();
         } else{ // new round
             roundNumber += 1;
-            // call resourcedatabase ticks
-            resources.Tick();
             Debug.Log("We are exactly at SpawnMobs");
             SpawnMobs();
         }
@@ -76,6 +74,13 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
         timer += Time.deltaTime;
         if(timer >= timeToActivateRound){
             SwitchRoundToSpawnState();
+        }
+
+        tickTimer += Time.deltaTime;
+        if(tickTimer >= tickTime){
+            // Call the tick for every resource here
+            resources.Tick();
+            tickTimer = 0f; // Reset the timer after calling the tick
         }
     }
 
