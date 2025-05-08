@@ -11,7 +11,7 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
     private int roundNumber = 1;
 
-    private int numberOfEnemiesToSpawn = 25;  //Hardcoded
+    private int numberOfEnemiesToSpawn = 7;  //Hardcoded
 
     private float timeToActivateRound = 20f; 
 
@@ -115,7 +115,7 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
         if (timerIncreaser) {
         // We just ended a spawn round, reset timer-related stuff
-        numberOfEnemiesToSpawn = 25;
+        numberOfEnemiesToSpawn = 7;
         timeToWait = 1f;
     }
     }

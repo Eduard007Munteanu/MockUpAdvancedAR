@@ -88,7 +88,16 @@ public class EnemyMob : MonoBehaviour{
 
 
 
+    public void SetMoving(bool setToWhat){
+        isMoving = setToWhat;
+    }
+
+
+
     public void MovementLogic(){
+        Debug.Log("At MovementLogic: IsMoving from MovementLogic is " + isMoving);
+        Debug.Log("At MovementLogic: Has target is " + hasTarget);
+        Debug.Log("At MovementLogic: end point reached is " + endPointReached);
         if(isMoving && !hasTarget && !endPointReached){
             Debug.Log("We are at MovementLogic");
             MoveForward();
@@ -236,7 +245,10 @@ public class EnemyMob : MonoBehaviour{
         if(currentTile.GetBuilding() != null){
             Debug.Log("We checked if current tile has building, and it had");
             checkCurrentTileIfMobs = true;
+        } else {
+            checkCurrentTileIfMobs = false;
         }
+        
     }
 
 
@@ -282,11 +294,12 @@ public class EnemyMob : MonoBehaviour{
         if(currentTile == null){
             Debug.LogError("Closest touching tile is null");
         }
+        CheckIfCurrentTileHasBuilding();
         if (currentTile != lastTile)
         {
             lastTile = currentTile;
             CheckIfCurrentTileHasDefaultMobs();
-            CheckIfCurrentTileHasBuilding();
+            
         }
     }
 

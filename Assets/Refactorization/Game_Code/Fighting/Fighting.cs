@@ -27,6 +27,8 @@ public class Fighting{
 
     private float totalMobMightPower = 0;
 
+    private bool isTriggered = false;
+
     
 
 
@@ -41,7 +43,7 @@ public class Fighting{
 
         othersMightPower = militaryMightPower / 5; 
 
-        enemyMightPower = militaryMightPower;
+        enemyMightPower = 5 * militaryMightPower;
     }
 
 
@@ -79,7 +81,27 @@ public class Fighting{
         CalculateTotalMightPower();
         CalculateMobBattleWinner();
 
-        return (defaultMobs, enemyMobs, theBuilding);
+
+        Debug.Log("enemyMob list count is of in SimulateFighting" + enemyMobs.Count);
+
+
+        var survivors = new List<EnemyMob>(enemyMobs);
+        return (defaultMobs, survivors, theBuilding);
+    }
+
+    public void TriggerMoveToAllEnemy(List<EnemyMob> enemyMobs){
+        if(isTriggered){
+            Debug.Log("At TriggerMoveToAllEnemy, we set it to true before loop");
+            for(int i = 0; i < enemyMobs.Count; i++){
+                EnemyMob enemyMob = enemyMobs[i];
+                Debug.Log("At TriggerMoveToAllEnemy, we set it to true after loop");
+                enemyMob.SetMoving(true);
+            }
+        }
+    }
+
+    public void InitTrigger(){
+        isTriggered = true;
     }
 
 
@@ -93,6 +115,10 @@ public class Fighting{
             Debug.Log("In DealDamageToBuilding, the building should now be removed, being null");
             GameObject.Destroy(theBuilding.gameObject);
             theBuilding = null;
+            Debug.Log("Is trigger from DealDamageToTheBuilding has been called");
+            InitTrigger();
+
+            Debug.Log("enemyMob list count is of in DealDamageToTheBuilding " + enemyMobs.Count);
         }
 
     }
@@ -107,6 +133,9 @@ public class Fighting{
             EnemyWonCalculation();
             if(theBuilding != null){
                 DealDamageToTheBuilding();
+            } else {
+                InitTrigger();
+                Debug.Log("Is trigger from CalculateMobBattleWinner has been called");
             }
         } else if(result > 0){
             MobsWonCalculation();
@@ -116,6 +145,7 @@ public class Fighting{
 
 
     void MobsWonCalculation(){
+        Debug.Log("We called in Fighting MobsWonCalculation");
         float tempTotalEnemyMightPower = totalEnemyMightPower;
         
 
@@ -160,7 +190,9 @@ public class Fighting{
     }
 
     void EnemyWonCalculation() {
+        Debug.Log("We called in Fighting EnemyWonCalculation");
         float tempTotalMobMightPower = totalMobMightPower;
+
 
         foreach (var list in defaultMobs.Values) {
             foreach (var mob in list) {
@@ -169,8 +201,11 @@ public class Fighting{
             list.Clear();
         }
 
+        Debug.Log("enemyMob list count is of " + enemyMobs.Count);
+
         for (int i = enemyMobs.Count - 1; i >= 0; i--) {
             if (tempTotalMobMightPower > 0) {
+                Debug.Log("We are actually trying to remove the enemyMob");
                 tempTotalMobMightPower -= enemyMightPower;
                 if (enemyMobs[i] != null){GameObject.Destroy(enemyMobs[i].gameObject);}
                 enemyMobs.RemoveAt(i);

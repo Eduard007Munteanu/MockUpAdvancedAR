@@ -104,6 +104,21 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
         enemyMobs.Clear();
         enemyMobs.AddRange(updateEnemyMobs);
 
+
+        // if(updateEnemyMobs.Count == 0){
+        //     Debug.Log("UpdateEnemyMobs is empty, no enemy");
+        // } 
+
+        // if(enemyMobs.Count == 0){
+        //     Debug.Log("EnemyMobs is empty, no enemy");
+        // }
+
+        Debug.Log("UpdateEnemyMobs count is " + updateEnemyMobs.Count);
+        Debug.Log("enemyMobs count is " + enemyMobs.Count);
+
+
+        fighting.TriggerMoveToAllEnemy(enemyMobs);
+
     }
 
 
