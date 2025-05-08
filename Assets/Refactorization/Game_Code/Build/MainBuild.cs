@@ -17,14 +17,12 @@ public class MainBuild : DefaultBuild
 
     private DefaultTile tiles;
 
+    private ArtsResource artsResource;
 
-
-    //Not working
-
-    // protected override List<ResourceEffect> resourceEffects => new List<ResourceEffect>
-    // {
-    //     new ResourceEffect(ResourceType.Arts, 0f, 1f, 0f, 0f), // modify art production by one per cycle
-    // };
+    protected override List<ResourceEffect> resourceEffects => new List<ResourceEffect>
+    {
+        new ResourceEffect(ResourceType.Arts, 0f, 1f, 0f, 0f), // modify art production by one per cycle
+    };
 
     // Start is called before the first frame update
     void Start()
@@ -45,8 +43,9 @@ public class MainBuild : DefaultBuild
         gridOverlay = GridOverlay.Instance;
         DefaultTile tileToUse = TileFindCalculation();                                  //NOT THAT BEAUTIFULL, BUT SHOULD WORK. 
         base.Init(Id, tileToUse);
-        // debug resourceeffect length
-
+        
+        // subscribe to population changes
+        ((PopulationResource) resources[ResourceType.Population]).OnPopulationChanged += spawnNewBorn;
         Debug.Log($"ResourceEffect count: {resourceEffects.Count}");
         foreach (var effect in resourceEffects)
         {
@@ -59,8 +58,6 @@ public class MainBuild : DefaultBuild
         float tileHeight = tiles.GetTileHeight();
         float buildingHeight = GetComponent<Renderer>().bounds.size.y;
         Vector3 tilePosition = tiles.transform.position;  //Given tile is a object
-
-
 
         Vector3 spawnPosition = tilePosition + Vector3.up * ((tileHeight + (buildingHeight / 2f))  / 1f);
         return spawnPosition;
@@ -134,6 +131,13 @@ public class MainBuild : DefaultBuild
         }
 
         mob.GetComponent<DefaultMob>().AssignToBuilding(this);
+    }
 
+    // Listen to population changes and spawn mobs
+    private void spawnNewBorn(float delta) {
+        for (int i = 0; i < (int)delta; i++)
+        {
+            CreateMob();
+        }
     }
 }

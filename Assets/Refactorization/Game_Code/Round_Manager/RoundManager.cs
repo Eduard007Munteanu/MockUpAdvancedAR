@@ -24,7 +24,7 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
     private float tickTimer = 0f;
     private float tickTime = 1f;
 
-    private ResourceDatabase resources = ResourceDatabase.Instance;
+    private ResourceDatabase resources;
 
 
     void Awake()
@@ -36,8 +36,7 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
             Instance = this;
         }
 
-
-        while(resources == null){
+        while (resources == null){
             Debug.Log("Waiting for ResourceDatabase to be initialized...");
             resources = ResourceDatabase.Instance;
         }
@@ -79,7 +78,7 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
         tickTimer += Time.deltaTime;
         if(tickTimer >= tickTime){
             // Call the tick for every resource here
-            // resources.Tick();                                             //I comented it out. Leads to error.
+            resources.Tick();                                             //I comented it out. Leads to error.
             tickTimer = 0f; // Reset the timer after calling the tick
         }
     }

@@ -72,6 +72,8 @@ public abstract class Resource
     public event Action<ResourceType, float> OnReachedMax; // Parameter is the excess amount
     public event Action<ResourceType, float> OnReachedMin; // Parameter is the deficit amount
 
+    private float initialAmount, initialFlat, initialMod1, initialMod2, initialConst; // Initial values for the resource
+
     // Constructor: Initializes the resource. Called by concrete implementations.
     protected Resource(
         ResourceType type, 
@@ -93,16 +95,23 @@ public abstract class Resource
         ticksUntilNextCycle = productionCycleTicks; // Start ready for the first cycle or wait full cycle? Let's wait.
         thresholds = (initialThresholds == null) ? null : new Thresholds(initialThresholds, CurrentAmount); // Initialize thresholds
 
-        AddAmount(Mathf.Clamp(initialAmount, MinimumAmount, MaximumAmount)); // Ensure initial amount is within bounds
-        AddProductionModifier(initialFlat, initialMod1, initialMod2); // Initialize production factors
-        AddProductionConstant(initialConst); // Initialize production constant
+        this.initialAmount = initialAmount; // Store initial values for later use
+        this.initialFlat = initialFlat;
+        this.initialMod1 = initialMod1;
+        this.initialMod2 = initialMod2;
+        this.initialConst = initialConst;
+    }
 
+    public void PostInitialize() {
         resources = ResourceDatabase.Instance; // Get the singleton instance of the resource database
         if (resources == null)
         {
             Debug.LogError($"ResourcesDatabase is null for {Type}");
             return;
         }
+        AddAmount(Mathf.Clamp(initialAmount, MinimumAmount, MaximumAmount)); // Ensure initial amount is within bounds
+        AddProductionModifier(initialFlat, initialMod1, initialMod2); // Initialize production factors
+        AddProductionConstant(initialConst); // Initialize production constant
 
         RecalculateProduction(); // Calculate initial production rate
     }
@@ -220,7 +229,7 @@ public abstract class Resource
     protected virtual void Produce()
     {
         // THIS IS DIRTY BUT I DO IT FOR ART
-        var prod = randomProduction ? (int) UnityEngine.Random.Range(0, Production) : Production; // Randomize production if needed
+        var prod = randomProduction ? (float) (int) UnityEngine.Random.Range(0, Production) : Production; // Randomize production if needed
         if (Production == 0) return;
         AddAmount(prod);
     }

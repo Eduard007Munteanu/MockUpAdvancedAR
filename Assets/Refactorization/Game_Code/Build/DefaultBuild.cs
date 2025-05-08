@@ -20,13 +20,14 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
 
     private DefaultTile tile;
 
-    //protected abstract DefaultBuildingEffect BuildingEffect { get; }
     protected virtual List<ResourceEffect> resourceEffects => new List<ResourceEffect>();
 
+    protected ResourceDatabase resources; // Singleton instance of ResourceDatabase
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -37,17 +38,18 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
 
     public virtual void Init(int Id,  DefaultTile tile =null)
     {   
+        while (resources == null){
+            Debug.Log("Waiting for ResourceDatabase to be initialized...");
+            resources = ResourceDatabase.Instance;
+        }
+        
         this.id = Id;
         this.tile = tile;
         if(tile != null){
             Debug.Log("For building " + GetBuildingClass() + "tile is " + tile.name );
             this.tile.AddBuilding(this);
         }
-        
     }
-
-
-
 
     public void AddAssignedMob(DefaultMob mob)
     {
@@ -155,9 +157,4 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
     public virtual void CreateMob(){
 
     }
-
-    
-
-
-
 }

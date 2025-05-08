@@ -10,7 +10,7 @@ public class ItemDatabase: MonoBehaviour{
 
     private Dictionary<string, int> collectedItemsCount = new Dictionary<string, int>();
 
-    private ResourceDatabase resourceDatabase = ResourceDatabase.Instance; // I don't want now to add get + set methods
+    private ResourceDatabase resourceDatabase; // I don't want now to add get + set methods
 
     //Event trigger => we warn others that the OnCollectedItemsCountDataPacker() method should be called given update made. 
     public event System.Action<DataPacket> OnCollectedItemsUpdated;
@@ -20,7 +20,7 @@ public class ItemDatabase: MonoBehaviour{
     {
         Debug.Log("ItemDatabase Awake called!");
 
-        if (Instance == null)  
+        if (Instance == null)
         {
             Instance = this; 
             DontDestroyOnLoad(gameObject); 
@@ -28,6 +28,11 @@ public class ItemDatabase: MonoBehaviour{
         else 
         {
             Destroy(gameObject); 
+        }
+
+        while (resourceDatabase == null){
+            Debug.Log("Waiting for ResourceDatabase to be initialized...");
+            resourceDatabase = ResourceDatabase.Instance;
         }
     }
 
