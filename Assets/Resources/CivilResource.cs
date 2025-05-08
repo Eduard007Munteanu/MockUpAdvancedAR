@@ -18,6 +18,7 @@ public class CivilResource : Resource
     {
         resources[ResourceType.Agreement].TriggerSpecialAction();
         resources[ResourceType.Arts].AddProductionModifier(delta * 0.01f); // Example: Arts production increases with civil resource amount
+        resources[ResourceType.Might].AddAmount(-1f);
     }
 
     protected override void onProductionChange(float delta)

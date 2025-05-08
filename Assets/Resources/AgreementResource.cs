@@ -22,7 +22,7 @@ public class AgreementResource : Resource
 
     protected override void onAmountChange(float delta)
     {
-        // lastAgreementAmount = CurrentAmount;
+        resources[ResourceType.Happiness].AddAmount(delta*0.5f);
     }
 
     protected override void onProductionChange(float delta)
@@ -47,8 +47,6 @@ public class AgreementResource : Resource
         // calculate differences between the last and current agreement amount
         float deltaAmount = calculateAgreement() - lastAgreementAmount;
         lastAgreementAmount = CurrentAmount;
-
-        resources[ResourceType.Happiness].AddAmount(deltaAmount*0.5f);
     }
 
     private float calculateAgreement()

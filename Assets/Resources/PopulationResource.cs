@@ -6,7 +6,7 @@ public class PopulationResource : Resource
 {
     public event Action<float> OnPopulationChanged;
     
-    private float birthRateMod = 0.01f;
+    private float birthRateMod = 0.001f;
     private float ration = 1f;
 
     public PopulationResource(
@@ -15,7 +15,7 @@ public class PopulationResource : Resource
         float maxAmount = 1000f, // Population can grow large
         int cycleTicks = 10,
         List<float> initialThresholds = null, // Optional thresholds for this resource
-        float initialFlat = 1f, 
+        float initialFlat = 0f, 
         float initialMod1 = 1f, 
         float initialMod2 = 1f, 
         float initialConst = 0f

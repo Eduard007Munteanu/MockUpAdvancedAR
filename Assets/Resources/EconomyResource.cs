@@ -17,7 +17,9 @@ public class EconomyResource : Resource
     protected override void onAmountChange(float delta)
     {
         resources[ResourceType.Agreement].TriggerSpecialAction();
-        
+        resources[ResourceType.Gold].AddProductionModifier(0, delta * 0.5f);
+        resources[ResourceType.Wood].AddProductionModifier(0, delta * 0.5f);
+        resources[ResourceType.Wood].AddProductionModifier(0, delta * -1f);
     }
 
     protected override void onProductionChange(float delta)
