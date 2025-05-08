@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2841989055878038521}
   - component: {fileID: 848684515748800732}
   - component: {fileID: -9190329944086079849}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mob
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,4 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222a93cf124fa5345909dd7f41b74523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMoving: 0
+  buidlingAssignedTo: {fileID: 0}
   speedFactor: 0.008
+  toDestination: {x: 0, y: 0, z: 0}
+  toColliderObj: {fileID: 0}
+  currentTile: {fileID: 0}

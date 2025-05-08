@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5542670483240754852}
   - component: {fileID: 3860633989880493994}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HoverVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 4964449975415668061}
   - component: {fileID: 1040889827483255809}
   - component: {fileID: 7096979560015731727}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlaneMaterial
   m_TagString: Tile
   m_Icon: {fileID: 0}
