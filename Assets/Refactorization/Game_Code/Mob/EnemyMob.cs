@@ -36,6 +36,8 @@ public class EnemyMob : MonoBehaviour{
     private bool hasTarget = false; 
     private Vector3 target;  
 
+    private bool endPointReached = false;
+
 
 
     void Start()
@@ -86,14 +88,23 @@ public class EnemyMob : MonoBehaviour{
 
 
 
+    public void SetMoving(bool setToWhat){
+        isMoving = setToWhat;
+    }
+
+
+
     public void MovementLogic(){
-        if(isMoving && !hasTarget){
+        Debug.Log("At MovementLogic: IsMoving from MovementLogic is " + isMoving);
+        Debug.Log("At MovementLogic: Has target is " + hasTarget);
+        Debug.Log("At MovementLogic: end point reached is " + endPointReached);
+        if(isMoving && !hasTarget && !endPointReached){
             Debug.Log("We are at MovementLogic");
             MoveForward();
             UpdateTileState();
             CheckTileFullAndAction();
             EndBoardReached();
-         } else if (hasTarget && isMoving){
+         } else if (hasTarget && isMoving & !endPointReached){
              MoveToTarget();
              UpdateTileState();
              CheckTileFullAndAction();
@@ -122,6 +133,7 @@ public class EnemyMob : MonoBehaviour{
                 //It's also important to check the tiles while going to the target MainBuild, because there can be mobs / buildings inbetween. 
                 isMoving = false;
                 hasTarget = false;
+                endPointReached = true;
             }
         }
     }
@@ -229,6 +241,16 @@ public class EnemyMob : MonoBehaviour{
 
     }
 
+    private void CheckIfCurrentTileHasBuilding(){
+        if(currentTile.GetBuilding() != null){
+            Debug.Log("We checked if current tile has building, and it had");
+            checkCurrentTileIfMobs = true;
+        } else {
+            checkCurrentTileIfMobs = false;
+        }
+        
+    }
+
 
     public DefaultTile FindClosestTouchingTile()
     {
@@ -272,10 +294,12 @@ public class EnemyMob : MonoBehaviour{
         if(currentTile == null){
             Debug.LogError("Closest touching tile is null");
         }
+        CheckIfCurrentTileHasBuilding();
         if (currentTile != lastTile)
         {
             lastTile = currentTile;
             CheckIfCurrentTileHasDefaultMobs();
+            
         }
     }
 
