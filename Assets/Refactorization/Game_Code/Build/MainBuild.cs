@@ -43,7 +43,7 @@ public class MainBuild : DefaultBuild
         base.Init(Id, tileToUse);
         
         // subscribe to population changes
-        ((PopulationResource) resources[ResourceType.Population]).OnPopulationChanged += spawnNewBorn;
+        ((PopulationResource) resources[ResourceType.Population]).OnBirth += spawnNewBorn;
         Debug.Log($"ResourceEffect count: {resourceEffects.Count}");
         foreach (var effect in resourceEffects)
         {
