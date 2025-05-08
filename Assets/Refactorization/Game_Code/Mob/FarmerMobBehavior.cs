@@ -152,21 +152,21 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
                 mob.toDestination = mob.buidlingAssignedTo.transform.position;
                 // start timer
                 // wait for timer
-                startTimer();
+                //startTimer();
                 didICollectFromItem = true;
 
             }
         }
     }
 
-    private void startTimer() {
-        // Start a timer for 1 seconds
-        float timer = 0f;
-        while (timer < 1f)
-        {
-            timer += Time.deltaTime;
-        }
-    }
+    // private void startTimer() {
+    //     // Start a timer for 1 seconds
+    //     float timer = 0f;
+    //     while (timer < 1f)
+    //     {
+    //         timer += Time.deltaTime;
+    //     }
+    // }
 
 
     

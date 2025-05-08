@@ -79,7 +79,7 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
         tickTimer += Time.deltaTime;
         if(tickTimer >= tickTime){
             // Call the tick for every resource here
-            resources.Tick();
+            // resources.Tick();                                             //I comented it out. Leads to error.
             tickTimer = 0f; // Reset the timer after calling the tick
         }
     }

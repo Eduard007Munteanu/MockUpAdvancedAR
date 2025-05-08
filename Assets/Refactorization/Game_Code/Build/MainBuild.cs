@@ -17,10 +17,14 @@ public class MainBuild : DefaultBuild
 
     private DefaultTile tiles;
 
-    protected override List<ResourceEffect> resourceEffects => new List<ResourceEffect>
-    {
-        new ResourceEffect(ResourceType.Arts, 0f, 1f, 0f, 0f), // modify art production by one per cycle
-    };
+
+
+    //Not working
+
+    // protected override List<ResourceEffect> resourceEffects => new List<ResourceEffect>
+    // {
+    //     new ResourceEffect(ResourceType.Arts, 0f, 1f, 0f, 0f), // modify art production by one per cycle
+    // };
 
     // Start is called before the first frame update
     void Start()
@@ -38,8 +42,9 @@ public class MainBuild : DefaultBuild
     public override void Init(int Id, DefaultTile tile = null){
         // this.Id = Id;
         // this.building_class_main = main_class;
-        base.Init(Id, tile);
         gridOverlay = GridOverlay.Instance;
+        DefaultTile tileToUse = TileFindCalculation();                                  //NOT THAT BEAUTIFULL, BUT SHOULD WORK. 
+        base.Init(Id, tileToUse);
         // debug resourceeffect length
 
         Debug.Log($"ResourceEffect count: {resourceEffects.Count}");

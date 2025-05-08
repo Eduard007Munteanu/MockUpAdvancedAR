@@ -89,8 +89,16 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
             }
         }
 
-        mobs = theMobs;
-        enemyMobs = updateEnemyMobs;
+        // mobs = theMobs;
+        // enemyMobs = updateEnemyMobs;
+
+        mobs.Clear();
+        foreach (var updateMob in updateMobs.Values) {
+            mobs.AddRange(updateMob);
+        }
+
+        enemyMobs.Clear();
+        enemyMobs.AddRange(updateEnemyMobs);
 
     }
 
@@ -105,11 +113,11 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
 
 
-    void AddBuilding(DefaultBuild building){
+    public void AddBuilding(DefaultBuild building){
         buildingOnTile = building;
     }
 
-    DefaultBuild getBuilding(){
+    public DefaultBuild GetBuilding(){
         return buildingOnTile;
     }
 
