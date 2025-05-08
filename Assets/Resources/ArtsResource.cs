@@ -19,7 +19,7 @@ public class ArtsResource : Resource
         int cycleTicks = 1
         ) : base(ResourceType.Arts, initialAmount, minAmount, maxAmount, cycleTicks)
     {
-        randomProduction = true;
+        // randomProduction = true;
     }
     protected override void onAmountChange(float delta)
     {

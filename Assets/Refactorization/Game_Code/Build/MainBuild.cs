@@ -17,8 +17,6 @@ public class MainBuild : DefaultBuild
 
     private DefaultTile tiles;
 
-    private ArtsResource artsResource;
-
     protected override List<ResourceEffect> resourceEffects => new List<ResourceEffect>
     {
         new ResourceEffect(ResourceType.Arts, 0f, 1f, 0f, 0f), // modify art production by one per cycle
@@ -45,7 +43,7 @@ public class MainBuild : DefaultBuild
         base.Init(Id, tileToUse);
         
         // subscribe to population changes
-        ((PopulationResource) resources[ResourceType.Population]).OnPopulationChanged += spawnNewBorn;
+        ((PopulationResource) resources[ResourceType.Population]).OnBirth += spawnNewBorn;
         Debug.Log($"ResourceEffect count: {resourceEffects.Count}");
         foreach (var effect in resourceEffects)
         {
