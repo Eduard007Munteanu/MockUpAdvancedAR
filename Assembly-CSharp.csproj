@@ -92,6 +92,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Build\Build.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Tile\DefaultTile.cs" />
     <Compile Include="Assets\Resources\EconomyDesireResource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Game_Interactions\TheRayCaster.cs" />
     <Compile Include="Assets\Resources\HappinessResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Stone.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\PanelManager.cs" />
@@ -104,13 +105,13 @@
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\CardsInHand.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\Card.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\FarmBuild.cs" />
-    <Compile Include="Assets\Refactorization\Game_Code\Tile\TheRayCaster.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\MainBuildingPanel.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\DefaultCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\BuildManager.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Explosion.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\MilitaryBuild.cs" />
     <Compile Include="Assets\Resources\MightResource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Game_Interactions\TouchingSystem.cs" />
     <Compile Include="Assets\Resources\ResourcesDatabase.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\Panel.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\PlaneGridCreation\GridOverlay.cs" />
