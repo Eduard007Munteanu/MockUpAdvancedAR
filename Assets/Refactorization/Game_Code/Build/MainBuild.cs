@@ -17,8 +17,6 @@ public class MainBuild : DefaultBuild
 
     private DefaultTile tiles;
 
-    private ArtsResource artsResource;
-
     protected override List<ResourceEffect> resourceEffects => new List<ResourceEffect>
     {
         new ResourceEffect(ResourceType.Arts, 0f, 1f, 0f, 0f), // modify art production by one per cycle

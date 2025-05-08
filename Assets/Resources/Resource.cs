@@ -198,7 +198,7 @@ public abstract class Resource
     // Called internally when factors change.
     private void RecalculateProduction()
     {
-        Debug.Log($"ResourceBase RecalculateProduction for {Type}. Current production: {Production}");
+        // Debug.Log($"ResourceBase RecalculateProduction for {Type}. Current production: {Production}");
         
         // Core production formula
         float prevProduction = Production; // Store previous production for comparison
@@ -212,7 +212,7 @@ public abstract class Resource
     // When the timer reaches zero, it triggers the Produce() method and resets.
     public virtual void Tick()
     {
-        Debug.Log($"Tick for {Type}. Current production: {Production}");
+        Debug.Log($"Tick for {Type}. amount: {CurrentAmount}. production: {Production}.");
         
         if (productionCycleTicks == 0) return;
         ticksUntilNextCycle--;
@@ -230,7 +230,7 @@ public abstract class Resource
     {
         // THIS IS DIRTY BUT I DO IT FOR ART
         var prod = randomProduction ? (float) (int) UnityEngine.Random.Range(0, Production) : Production; // Randomize production if needed
-        Debug.Log($"ResourceBase Produce for {Type}. Current production: {prod}");
+        // Debug.Log($"ResourceBase Produce for {Type}. Current production: {prod}");
         if (Production == 0) return;
         AddAmount(prod);
     }
