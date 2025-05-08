@@ -68,7 +68,4 @@ public class AgreementResource : Resource
 
         return agreement;
     }
-
-    // To handle changes in the political axes 
-    // Listen to their actions
 }

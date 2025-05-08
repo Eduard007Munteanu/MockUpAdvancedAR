@@ -1,9 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PopulationResource : Resource
 {
+    public event Action<float> OnPopulationChanged;
+    
     private float birthRateMod = 0.01f;
+    private float ration = 1f;
 
     public PopulationResource(
         float initialAmount = 5f, // Population might start small
@@ -11,7 +15,7 @@ public class PopulationResource : Resource
         float maxAmount = 1000f, // Population can grow large
         int cycleTicks = 10,
         List<float> initialThresholds = null, // Optional thresholds for this resource
-        float initialFlat = 0.01f, 
+        float initialFlat = 1f, 
         float initialMod1 = 1f, 
         float initialMod2 = 1f, 
         float initialConst = 0f
@@ -23,12 +27,16 @@ public class PopulationResource : Resource
     protected override void onAmountChange(float delta)
     {
         if (delta > 0f) { // pop born/added
-
+            
         } else { // pop died/removed
-
+            
         }
 
-        // adjust production
+        AddProductionModifier(calculateBirthRateDelta(delta)); // adjust production based on birth rate
+        resources[ResourceType.Happiness].AddAmount(delta * 1f); // adjust happiness
+        resources[ResourceType.Food].AddProductionConstant(-delta * ration);
+
+        OnPopulationChanged?.Invoke(delta);
     }
 
     protected override void onProductionChange(float delta)

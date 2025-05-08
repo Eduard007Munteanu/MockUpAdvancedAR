@@ -14,8 +14,6 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
 
     [SerializeField] public float speedFactor = 0.008f; // I don't want now to add get + set methods 
 
-    
-
     public  Vector3 toDestination; // I don't want now to add get + set methods
 
     public  GameObject toColliderObj; // I don't want now to add get + set methods
@@ -25,12 +23,15 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
 
     public DefaultTile currentTile = null;  // I don't want now to add get + set methods
 
-
+    private ResourceDatabase resources; // Singleton instance of ResourceDatabase
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        while (resources == null){
+            Debug.Log("Waiting for ResourceDatabase to be initialized...");
+            resources = ResourceDatabase.Instance;
+        }
     }
 
     // Update is called once per frame
@@ -89,52 +90,43 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
         }
     }
 
-
-
     public float GetMobHeight()
     {
         return gameObject.GetComponent<Renderer>().bounds.size.y;
     }
 
-
-
-
     public void SetBehaviorBasedOnBuilding(DefaultBuild building)   //Need a factory code for this, otherwise a little annoying.
-{                                                                   //Will factory be implemented? Likely not!
-    string type = null;
-    if(building != null){
-        type = building.GetBuildingClass();
-    } 
-    
-    
+    {                                                                   //Will factory be implemented? Likely not!
+        string type = null;
+        if(building != null){
+            type = building.GetBuildingClass();
+        } 
+        
+        switch (type)
+        {
+            case "farming":
+                SetMobBehavior(new FarmerMobBehavior());
+                break;
 
-    switch (type)
-    {
-        case "farming":
-            SetMobBehavior(new FarmerMobBehavior());
-            break;
+            case "military":
+                SetMobBehavior(new FarmerMobBehavior());
+                break;
 
-        case "military":
-            SetMobBehavior(new FarmerMobBehavior());
-            break;
+            case "sleep":
+                SetMobBehavior(new FarmerMobBehavior());
+                break;
 
-        case "sleep":
-            SetMobBehavior(new FarmerMobBehavior());
-            break;
+            case null:
+                SetMobBehavior(new JustGoBehavior());
+                break;
 
-        case null:
-            SetMobBehavior(new JustGoBehavior());
-            break;
-
-        default:
-            Debug.LogWarning("Unknown building type: " + type);
-            break;
+            default:
+                Debug.LogWarning("Unknown building type: " + type);
+                break;
+        }
     }
 
-
-    
-
-
-}
-
+    void OnDestroy() {
+        resources[ResourceType.Population].AddAmount(-1f); // Decrease population when mob is destroyed
+    }
 }

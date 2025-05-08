@@ -8,38 +8,63 @@ using UnityEngine;
 public class ResourceDatabase : MonoBehaviour
 {
     // Singleton instance
-    public static ResourceDatabase Instance { get; private set; }
+    // public static ResourceDatabase Instance { get; private set; } // Remove this auto-property
+    // In ResourceDatabase.cs
+private static ResourceDatabase _instance;
+public static ResourceDatabase Instance
+{
+    get
+    {
+        if (_instance == null)
+        {
+            // This might happen if accessed from an Awake() of another script
+            // that runs before ResourceDatabase's Awake().
+            // Setting execution order is the best fix.
+            Debug.LogError("ResourceDatabase instance is null. Ensure ResourceDatabase.cs execution order is set earlier.");
+        }
+        return _instance;
+    }
+    private set { _instance = value; }
+}
 
-    private Dictionary<ResourceType, Resource> resources;
-
-    // Awake is called when the script instance is being loaded.
     void Awake()
     {
-        // Check if an instance already exists
-        if (Instance == null)
+        Debug.Log("ResourceDatabase Awake called.");
+        if (_instance == null)
         {
-            // If not, set this instance as the singleton
-            Instance = this;
-
-            // Optionally, make this object persist across scene loads
-            // DontDestroyOnLoad(gameObject); // Uncomment this line if you need the ResourceDatabase to persist
-
-            // Initialize the resources here
+            Debug.Log("ResourceDatabase instance being created.");
+            _instance = this; // Set _instance directly
+            DontDestroyOnLoad(gameObject); // Optional: if you need it to persist across scenes
             InitializeResources();
+            Debug.Log("ResourceDatabase initialized with resources AFTER InitializeResources call.");
         }
-        else if (Instance != this)
+        else if (_instance != this)
         {
-            // If an instance already exists and it's not this one, destroy this one.
-            // This prevents duplicate instances.
             Debug.LogWarning("Another instance of ResourceDatabase already exists. Destroying this new one.");
             Destroy(gameObject);
         }
     }
 
-    // Moved resource initialization to its own method for clarity
+    // It's good practice to clean up the static instance if the GameObject is destroyed
+    void OnDestroy()
+    {
+        // Similarly, it's safer to check against the backing field here.
+        // if (Instance == this) // Original line
+        if (_instance == this) // Change to check the backing field
+        {
+            // Instance = null; // This uses the property's setter, which is fine. Or use _instance = null;
+            _instance = null;
+        }
+    }
+
+    private Dictionary<ResourceType, Resource> resources;
+
+    // In ResourceDatabase.cs
+
     private void InitializeResources()
     {
-        // init resources
+        Debug.Log("InitializeResources in ResourceDatabase: Phase 1 - Construction.");
+        // Phase 1: Construct all resource objects
         ArtsResource arts = new ArtsResource();
         FoodResource food = new FoodResource();
         GoldResource gold = new GoldResource();
@@ -51,17 +76,16 @@ public class ResourceDatabase : MonoBehaviour
         SocietalResource societal = new SocietalResource();
         EconomyResource economy = new EconomyResource();
         CivilDesireResource civilDesire = new CivilDesireResource();
-        // SocietalDesireResource societalDesire = new SocietalDesireResource();
         EconomyDesireResource economyDesire = new EconomyDesireResource();
         HappinessResource happiness = new HappinessResource();
         WorkPowerResource workPower = new WorkPowerResource();
         AgreementResource agreement = new AgreementResource();
 
-
-        // use their type defined in their class to add them.
-        // add them to the dictionary
+        // Phase 2: Populate the dictionary
+        Debug.Log("InitializeResources in ResourceDatabase: Phase 2 - Populating Dictionary.");
         resources = new Dictionary<ResourceType, Resource>
         {
+            { agreement.Type, agreement },
             { arts.Type, arts },
             { food.Type, food },
             { gold.Type, gold },
@@ -73,14 +97,19 @@ public class ResourceDatabase : MonoBehaviour
             { societal.Type, societal },
             { economy.Type, economy },
             { civilDesire.Type, civilDesire },
-        //    { societalDesire.Type, societalDesire },
             { economyDesire.Type, economyDesire },
             { happiness.Type, happiness },
             { workPower.Type, workPower },
-            { agreement.Type, agreement }
         };
 
-        Debug.Log("ResourceDatabase initialized with resources.");
+        Debug.Log("ResourceDatabase initialized with resources. Phase 3 - Post Initialization.");
+        // Phase 3: Allow resources to perform post-initialization logic
+        foreach (var resourcePair in resources)
+        {
+            resourcePair.Value.PostInitialize(); // Call a new method
+        }
+
+        Debug.Log("ResourceDatabase fully initialized after PostInitialize calls.");
     }
 
     public Resource this[ResourceType type]
@@ -113,14 +142,5 @@ public class ResourceDatabase : MonoBehaviour
         }
 
         Debug.Log("All resources have been ticked.");
-    }
-
-    // It's good practice to clean up the static instance if the GameObject is destroyed
-    void OnDestroy()
-    {
-        if (Instance == this)
-        {
-            Instance = null;
-        }
     }
 }
