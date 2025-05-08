@@ -7,8 +7,8 @@ using UnityEngine;
 public class EnemyMightResource : Resource
 {
     public EnemyMightResource(
-        float initialAmount = 1f,
-        float minAmount = 0f,
+        float initialAmount = 10f,
+        float minAmount = 10f,
         float maxAmount = 1000f,
         int cycleTicks = 1
         ) : base(ResourceType.EnemyMight, initialAmount, minAmount, maxAmount, cycleTicks)
