@@ -111,6 +111,8 @@ public class ResourceDatabase : MonoBehaviour
         {
             resource.Tick();
         }
+
+        Debug.Log("All resources have been ticked.");
     }
 
     // It's good practice to clean up the static instance if the GameObject is destroyed
