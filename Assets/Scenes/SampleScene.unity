@@ -14202,6 +14202,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506010cf47aa3c6458215201349a32e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!54 &1247272465
 Rigidbody:
   m_ObjectHideFlags: 0

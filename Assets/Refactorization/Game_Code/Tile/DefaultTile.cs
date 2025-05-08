@@ -292,6 +292,11 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     }
 
 
+    public bool CheckIfMobOnTile(DefaultMob mob){
+        return mobs.Contains(mob);
+    }
+
+
 
 
 

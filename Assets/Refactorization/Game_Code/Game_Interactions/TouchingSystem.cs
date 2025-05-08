@@ -31,7 +31,7 @@ public class TouchingSystem : MonoBehaviour{
 
         Debug.Log("Touched: " + go.name);
 
-        if (currentlyTouching == null || go != currentlyTouching) {
+        if (currentlyTouching == null || (go != currentlyTouching)) {
             currentlyTouching = go;
             Checker(go);
         }
@@ -55,12 +55,16 @@ public class TouchingSystem : MonoBehaviour{
         DefaultBuild build = gameObject.GetComponent<DefaultBuild>();
 
 
+    
 
 
         if(mob != null && selectedMob == null){
             ActionGivenDefaultMob(mob);
         } 
         else if(selectedMob != null && tile != null){
+            // if (!tile.CheckIfMobOnTile(selectedMob)){
+            //     ActionMoveMobToTile(tile);
+            // }
             ActionMoveMobToTile(tile);
         }
         else if(selectedMob != null && build != null){
