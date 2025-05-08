@@ -59,7 +59,7 @@
     <UnityVersion>2022.3.57f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Users\garlicxd\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\garlic\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -67,8 +67,8 @@
     <Compile Include="Assets\Resources\EconomyResource.cs" />
     <Compile Include="Assets\Resources\ArtsResource.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Spawner.cs" />
-    <Compile Include="Assets\Resources\SocietalResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\JustGoBehavior.cs" />
+    <Compile Include="Assets\Resources\SocietalResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\FarmerMobBehavior.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\ItemDatabase.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\MilitaryCard.cs" />
