@@ -230,6 +230,7 @@ public abstract class Resource
     {
         // THIS IS DIRTY BUT I DO IT FOR ART
         var prod = randomProduction ? (float) (int) UnityEngine.Random.Range(0, Production) : Production; // Randomize production if needed
+        Debug.Log($"ResourceBase Produce for {Type}. Current production: {prod}");
         if (Production == 0) return;
         AddAmount(prod);
     }

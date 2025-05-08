@@ -59,9 +59,15 @@
     <UnityVersion>2022.3.57f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< HEAD
+    <Analyzer Include="C:\Users\garlic\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
+    <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
+=======
     <Analyzer Include="C:\Users\Eduard\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="E:\UnityEditor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="E:\UnityEditor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
+>>>>>>> 770560911e2ecf1b93904ccdfb5d8ad4665c352f
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Resources\EconomyResource.cs" />
@@ -202,7 +208,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ClothModule">
+<<<<<<< HEAD
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClothModule.dll</HintPath>
+=======
       <HintPath>E:\UnityEditor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClothModule.dll</HintPath>
+>>>>>>> 770560911e2ecf1b93904ccdfb5d8ad4665c352f
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ContentLoadModule">
@@ -414,7 +424,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VideoModule">
+<<<<<<< HEAD
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.VideoModule.dll</HintPath>
+=======
       <HintPath>E:\UnityEditor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.VideoModule.dll</HintPath>
+>>>>>>> 770560911e2ecf1b93904ccdfb5d8ad4665c352f
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.WindModule">

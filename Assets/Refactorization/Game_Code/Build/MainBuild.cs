@@ -135,6 +135,7 @@ public class MainBuild : DefaultBuild
 
     // Listen to population changes and spawn mobs
     private void spawnNewBorn(float delta) {
+        Debug.Log($"Population changed: {delta}");
         for (int i = 0; i < (int)delta; i++)
         {
             CreateMob();
