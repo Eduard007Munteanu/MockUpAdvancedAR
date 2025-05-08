@@ -93,8 +93,10 @@ public class EnemyMob : MonoBehaviour{
             UpdateTileState();
             CheckTileFullAndAction();
             EndBoardReached();
-         } else if (target != null){
+         } else if (hasTarget && isMoving){
              MoveToTarget();
+             UpdateTileState();
+             CheckTileFullAndAction();
          }   
         
     }
@@ -119,6 +121,7 @@ public class EnemyMob : MonoBehaviour{
                 //Position should also be modified, applying the attack to the MainMob
                 //It's also important to check the tiles while going to the target MainBuild, because there can be mobs / buildings inbetween. 
                 isMoving = false;
+                hasTarget = false;
             }
         }
     }
@@ -127,11 +130,13 @@ public class EnemyMob : MonoBehaviour{
     public void CheckTileFullAndAction(){
         isMoving = false;
         if(checkCurrentTileIfMobs){
+            Debug.Log($"Combat triggered on tile {currentTile.name} with {currentTile.GetAmountOfMobs()} mobs.");
             bool canEnemyBePlaced = currentTile.CanEnemyMobsBeArranged(this); 
             if(canEnemyBePlaced){
                 currentTile.ArrangeEnemyMobs(this);
                 return;
             } else{ 
+                Debug.Log("We call TellOurCreatorToNotCreateMoreOfUs");
                 TellOurCreatorToNotCreateMoreOfUs();
                 return;
             }
@@ -262,6 +267,7 @@ public class EnemyMob : MonoBehaviour{
     }
 
     void UpdateTileState() {
+        Debug.Log("Combat triggered we UpdateTileState");
         currentTile = FindClosestTouchingTile();
         if(currentTile == null){
             Debug.LogError("Closest touching tile is null");
