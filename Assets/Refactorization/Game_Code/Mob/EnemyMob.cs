@@ -187,10 +187,22 @@ public class EnemyMob : MonoBehaviour{
         for(int i=0; i < cachMemoryPathTiles.Count; i++){
             DefaultTile checkThisTile = cachMemoryPathTiles[i];
             DefaultBuild checkBuild = checkThisTile.GetBuilding();
-            if(checkBuild.GetBuildingClass() == "Main"){
+            if (checkBuild == null) {
+                //Debug.LogError("CheckBuild is actually null");
+                continue; 
+            }
+
+            string buildClass = checkBuild.GetBuildingClass();
+            if (buildClass == null) {
+                continue;
+            }
+
+            if (buildClass == "Main") {
+                Debug.Log("We found the main building");
                 hasTarget = true;
                 target = checkBuild.transform.position;
             }
+            
         }
 
         isMoving = true;

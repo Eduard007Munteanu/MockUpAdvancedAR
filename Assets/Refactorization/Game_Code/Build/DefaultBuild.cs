@@ -39,6 +39,11 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
     {   
         this.id = Id;
         this.tile = tile;
+        if(tile != null){
+            Debug.Log("For building " + GetBuildingClass() + "tile is " + tile.name );
+            this.tile.AddBuilding(this);
+        }
+        
     }
 
 

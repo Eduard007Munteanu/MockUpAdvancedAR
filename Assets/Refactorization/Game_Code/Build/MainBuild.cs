@@ -38,8 +38,9 @@ public class MainBuild : DefaultBuild
     public override void Init(int Id, DefaultTile tile = null){
         // this.Id = Id;
         // this.building_class_main = main_class;
-        base.Init(Id, tile);
         gridOverlay = GridOverlay.Instance;
+        DefaultTile tileToUse = TileFindCalculation();                                  //NOT THAT BEAUTIFULL, BUT SHOULD WORK. 
+        base.Init(Id, tileToUse);
         // debug resourceeffect length
 
         Debug.Log($"ResourceEffect count: {resourceEffects.Count}");
