@@ -93,9 +93,9 @@ public class EnemyMob : MonoBehaviour{
             UpdateTileState();
             CheckTileFullAndAction();
             EndBoardReached();
-         }// else if (target != null){
-        //     MoveToTarget();
-        // }   
+         } else if (target != null){
+             MoveToTarget();
+         }   
         
     }
 
@@ -112,6 +112,7 @@ public class EnemyMob : MonoBehaviour{
 
     public void MoveToTarget(){
         if(isMoving){
+            target.y = transform.position.y;                                     //I guess that this is correct, we know the y position of the mob. 
             Vector3 dir = (target - transform.position).normalized;
             transform.position += dir * speedFactor;
             if(Vector3.Distance(transform.position, target) < 0.1f){
