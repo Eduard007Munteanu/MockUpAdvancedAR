@@ -105,11 +105,11 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
 
 
-    void AddBuilding(DefaultBuild building){
+    public void AddBuilding(DefaultBuild building){
         buildingOnTile = building;
     }
 
-    DefaultBuild getBuilding(){
+    public DefaultBuild GetBuilding(){
         return buildingOnTile;
     }
 

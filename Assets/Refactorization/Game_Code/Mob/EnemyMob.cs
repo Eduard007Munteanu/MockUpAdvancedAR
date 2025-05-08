@@ -33,6 +33,10 @@ public class EnemyMob : MonoBehaviour{
     private EnemyTile myCreator;
 
 
+    private bool hasTarget = false; 
+    private Vector3 target;  
+
+
 
     void Start()
     {
@@ -83,13 +87,15 @@ public class EnemyMob : MonoBehaviour{
 
 
     public void MovementLogic(){
-        if(isMoving){
+        if(isMoving && !hasTarget){
             Debug.Log("We are at MovementLogic");
             MoveForward();
             UpdateTileState();
             CheckTileFullAndAction();
             EndBoardReached();
-        }
+         }// else if (target != null){
+        //     MoveToTarget();
+        // }   
         
     }
 
@@ -101,6 +107,18 @@ public class EnemyMob : MonoBehaviour{
             transform.position += dir * speedFactor;   
         } else {
             Debug.Log("From MoveForward, isMoving is false, we are stationary for now to check the tiles");
+        }
+    }
+
+    public void MoveToTarget(){
+        if(isMoving){
+            Vector3 dir = (target - transform.position).normalized;
+            transform.position += dir * speedFactor;
+            if(Vector3.Distance(transform.position, target) < 0.1f){
+                //Position should also be modified, applying the attack to the MainMob
+                //It's also important to check the tiles while going to the target MainBuild, because there can be mobs / buildings inbetween. 
+                isMoving = false;
+            }
         }
     }
 
@@ -132,8 +150,50 @@ public class EnemyMob : MonoBehaviour{
         if(Vector3.Distance(transform.position, lastTileInMyPath.transform.position) < 0.1f){
             Debug.Log("We reached the end of the boardGame, boys!");
             transform.position = new Vector3(lastTileInMyPath.transform.position.x, transform.position.y, lastTileInMyPath.transform.position.z);
-            isMoving = false; 
+            //isMoving = false; 
+            InitiallyTargetMainBuilding();
+            
+
         }
+    }
+
+
+    private void InitiallyTargetMainBuilding(){
+        //cachMemoryPathTiles
+
+        int rowLength = GridOverlay.Instance.rows;
+        int columnLength = GridOverlay.Instance.columns;
+
+
+        cachMemoryPathTiles.Clear();
+
+        for(int i=0; i < rowLength; i++){
+            var coordinates = GridOverlay.Instance.FindCoordinatesWithTile(currentTile);
+            int columnCoordinate = -1;
+            if (coordinates.HasValue)
+            {
+                columnCoordinate = coordinates.Value.Item2;
+            }
+            else
+            {
+                Debug.LogError("Coordinates for the current tile are null.");
+            }
+
+            DefaultTile tile = GridOverlay.Instance.FindTileWithCoordinates(i, columnCoordinate);
+            cachMemoryPathTiles.Add(tile);
+        }
+
+        
+        for(int i=0; i < cachMemoryPathTiles.Count; i++){
+            DefaultTile checkThisTile = cachMemoryPathTiles[i];
+            DefaultBuild checkBuild = checkThisTile.GetBuilding();
+            if(checkBuild.GetBuildingClass() == "Main"){
+                hasTarget = true;
+                target = checkBuild.transform.position;
+            }
+        }
+
+        isMoving = true;
     }
 
 
