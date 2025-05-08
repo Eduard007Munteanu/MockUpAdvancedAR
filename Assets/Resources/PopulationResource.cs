@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class PopulationResource : Resource
 {
-    public event Action<float> OnPopulationChanged;
+    public event Action<float> OnBirth;
     
     private float birthRateMod = 0.001f;
     private float ration = 1f;
 
+    private int startingPopulation = 5; // Initial population amount
+
     public PopulationResource(
-        float initialAmount = 5f, // Population might start small
+        float initialAmount = 0f, // Population might start small
         float minAmount = 0f,
         float maxAmount = 1000f, // Population can grow large
-        int cycleTicks = 10,
+        int cycleTicks = 1,
         List<float> initialThresholds = null, // Optional thresholds for this resource
-        float initialFlat = 0f, 
+        float initialFlat = 1f, 
         float initialMod1 = 1f, 
         float initialMod2 = 1f, 
         float initialConst = 0f
@@ -36,7 +38,13 @@ public class PopulationResource : Resource
         resources[ResourceType.Happiness].AddAmount(delta * 1f); // adjust happiness
         resources[ResourceType.Food].AddProductionConstant(-delta * ration);
 
-        OnPopulationChanged?.Invoke(delta);
+        if (CurrentAmount > (int) CurrentAmount)
+            OnBirth?.Invoke(delta); // a miracle
+            startingPopulation--;
+
+        if (startingPopulation <= 0) {
+            AddProductionModifier(-1f);
+        }
     }
 
     protected override void onProductionChange(float delta)
