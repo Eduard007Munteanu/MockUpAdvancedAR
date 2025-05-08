@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PopulationResource : Resource
@@ -10,6 +12,9 @@ public class PopulationResource : Resource
     private float ration = 1f;
 
     private int startingPopulation = 5; // Initial population amount
+    private bool startingPopulationDone = false;
+    private bool firstCycle = true;
+    private int skipCycles = 5;
 
     public PopulationResource(
         float initialAmount = 0f, // Population might start small
@@ -29,21 +34,25 @@ public class PopulationResource : Resource
     protected override void onAmountChange(float delta)
     {
         if (delta > 0f) { // pop born/added
-            
+            resources[ResourceType.Happiness].AddAmount(delta * 0.5f); // adjust happiness
         } else { // pop died/removed
-            
+            resources[ResourceType.Happiness].AddAmount(delta * 2f); // adjust happiness
         }
 
         AddProductionModifier(calculateBirthRateDelta(delta)); // adjust production based on birth rate
-        resources[ResourceType.Happiness].AddAmount(delta * 1f); // adjust happiness
         resources[ResourceType.Food].AddProductionConstant(-delta * ration);
 
         if (CurrentAmount > (int) CurrentAmount)
             OnBirth?.Invoke(delta); // a miracle
-            startingPopulation--;
 
-        if (startingPopulation <= 0) {
+        if (startingPopulation <= 0 && !startingPopulationDone) {
+            startingPopulationDone = true;
+            Debug.Log("kill yourself");
             AddProductionModifier(-1f);
+            AddAmount(-1f);
+            MinimumAmount = 0f;
+        } else {
+            startingPopulation--;
         }
     }
 
@@ -72,5 +81,13 @@ public class PopulationResource : Resource
 
     private float calculateBirthRateDelta(float delta) {
         return birthRateMod * delta;
+    }
+
+    public void InitialPops() {
+
+        for (int i = 0; i < startingPopulation; i++) {
+            AddAmount(1f); // add 1 pop per cycle
+        }
+        
     }
 }

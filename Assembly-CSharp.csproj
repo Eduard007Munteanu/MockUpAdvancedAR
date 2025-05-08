@@ -59,15 +59,9 @@
     <UnityVersion>2022.3.57f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <Analyzer Include="C:\Users\garlicxd\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\garlicxd\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
-=======
-    <Analyzer Include="C:\Users\Eduard\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
-    <Analyzer Include="E:\UnityEditor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
-    <Analyzer Include="E:\UnityEditor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
->>>>>>> 834d83aeec9fb4d1dcbe7711547738a80e2af51f
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Resources\EconomyResource.cs" />
@@ -210,7 +204,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ClothModule">
-<<<<<<< HEAD
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClothModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -220,9 +213,6 @@
     </Reference>
     <Reference Include="UnityEngine.ClusterRendererModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClusterRendererModule.dll</HintPath>
-=======
-      <HintPath>E:\UnityEditor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClothModule.dll</HintPath>
->>>>>>> 834d83aeec9fb4d1dcbe7711547738a80e2af51f
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ContentLoadModule">
@@ -434,15 +424,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VideoModule">
-<<<<<<< HEAD
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.VideoModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VirtualTexturingModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.VirtualTexturingModule.dll</HintPath>
-=======
-      <HintPath>E:\UnityEditor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.VideoModule.dll</HintPath>
->>>>>>> 834d83aeec9fb4d1dcbe7711547738a80e2af51f
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.WindModule">

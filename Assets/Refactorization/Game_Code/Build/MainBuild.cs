@@ -43,12 +43,14 @@ public class MainBuild : DefaultBuild
         base.Init(Id, tileToUse);
         
         // subscribe to population changes
-        ((PopulationResource) resources[ResourceType.Population]).OnBirth += spawnNewBorn;
+        PopulationResource populationResource = (PopulationResource)resources[ResourceType.Population];
+        populationResource.OnBirth += spawnNewBorn;
         Debug.Log($"ResourceEffect count: {resourceEffects.Count}");
         foreach (var effect in resourceEffects)
         {
             Debug.Log($"ResourceEffect: {effect.Type} - {effect.Amount} - {effect.Flat} - {effect.Mod1} - {effect.Mod2} - {effect.Constant}");
         }
+
     }
 
     public override Vector3 SpawnBuilding(){

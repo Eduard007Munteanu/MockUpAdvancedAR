@@ -45,8 +45,12 @@ public class AgreementResource : Resource
     protected override void onSpecialAction()
     {
         // calculate differences between the last and current agreement amount
-        float deltaAmount = calculateAgreement() - lastAgreementAmount;
-        lastAgreementAmount = CurrentAmount;
+        float lastAgreement = CurrentAmount;
+        CurrentAmount = calculateAgreement();
+        
+        float deltaAmount = CurrentAmount - lastAgreement;
+        resources[ResourceType.Happiness].AddAmount(deltaAmount * 0.5f); // TODO: Update weight
+        Debug.Log($"AgreementResource: Special action triggered. Current agreement: {CurrentAmount}, Delta: {deltaAmount}");
     }
 
     private float calculateAgreement()
