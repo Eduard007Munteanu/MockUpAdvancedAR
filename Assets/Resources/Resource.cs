@@ -3,7 +3,8 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Unity.PlasticSCM.Editor.WebApi;
-using UnityEngine.InputSystem.Controls; // Required for Action delegate
+using UnityEngine.InputSystem.Controls;
+using Unity.VisualScripting; // Required for Action delegate
 
 // Hi Eduard
 // This is a base class for all resources in the game.
@@ -53,6 +54,7 @@ public abstract class Resource
     protected float mod1;
     protected float mod2;
     protected float constant;
+    protected bool randomProduction = false;
 
     // Thresholds probably other class
     protected Thresholds thresholds; // TODO: List of thresholds for this resource
@@ -87,17 +89,13 @@ public abstract class Resource
         Type = type;
         MinimumAmount = minAmount;
         MaximumAmount = maxAmount;
-        CurrentAmount = Mathf.Clamp(initialAmount, MinimumAmount, MaximumAmount); // Ensure initial amount is within bounds
-
-        thresholds = (initialThresholds == null) ? null : new Thresholds(initialThresholds, CurrentAmount); // Initialize thresholds
-
-        flat = initialFlat;
-        mod1 = initialMod1;
-        mod2 = initialMod2;
-        constant = initialConst;
-
         productionCycleTicks = cycleTicks;
         ticksUntilNextCycle = productionCycleTicks; // Start ready for the first cycle or wait full cycle? Let's wait.
+        thresholds = (initialThresholds == null) ? null : new Thresholds(initialThresholds, CurrentAmount); // Initialize thresholds
+
+        AddAmount(Mathf.Clamp(initialAmount, MinimumAmount, MaximumAmount)); // Ensure initial amount is within bounds
+        AddProductionModifier(initialFlat, initialMod1, initialMod2); // Initialize production factors
+        AddProductionConstant(initialConst); // Initialize production constant
 
         resources = ResourceDatabase.Instance; // Get the singleton instance of the resource database
         if (resources == null)
@@ -113,6 +111,8 @@ public abstract class Resource
     // Triggers onAmountChange() for derived class logic and OnAmountChanged event.
     public virtual void AddAmount(float delta, bool applyMods = false)
     {
+        Debug.Log($"ResourceBase AddAmount {delta} to {Type}. Current amount: {CurrentAmount}");
+
         float previousAmount = CurrentAmount;
         delta = applyMods ? delta * Production : delta; // Apply production rate if requested
         float noClampAmount = CurrentAmount + delta; // Calculate new amount without clamping
@@ -157,6 +157,8 @@ public abstract class Resource
     // Recalculates the cached production rate and triggers change notifications.
     public virtual void AddProductionModifier(float flatDelta = 0f, float mod1Delta = 0f, float mod2Delta = 0f)
     {
+        Debug.Log($"ResourceBase AddProductionModifier {flatDelta}, {mod1Delta}, {mod2Delta} to {Type}. Current production: {Production}");
+        
         flat += flatDelta;
         mod1 += mod1Delta;
         mod2 += mod2Delta;
@@ -169,6 +171,8 @@ public abstract class Resource
     // Recalculates the cached production rate and triggers change notifications.
     public virtual void AddProductionConstant(float constDelta)
     {
+        Debug.Log($"ResourceBase AddProductionConstant {constDelta} to {Type}. Current production: {Production}");
+
         constant += constDelta;
         
         RecalculateProduction();
@@ -176,6 +180,8 @@ public abstract class Resource
 
     public virtual void TriggerSpecialAction()
     {
+        Debug.Log($"ResourceBase TriggerSpecialAction for {Type}. Current production: {Production}");
+        
         onSpecialAction(); // Call abstract method for derived class logic (e.g., special events)
     }
 
@@ -183,6 +189,8 @@ public abstract class Resource
     // Called internally when factors change.
     private void RecalculateProduction()
     {
+        Debug.Log($"ResourceBase RecalculateProduction for {Type}. Current production: {Production}");
+        
         // Core production formula
         float prevProduction = Production; // Store previous production for comparison
         Production = (flat * mod1 * mod2) + constant;
@@ -195,6 +203,8 @@ public abstract class Resource
     // When the timer reaches zero, it triggers the Produce() method and resets.
     public virtual void Tick()
     {
+        Debug.Log($"Tick for {Type}. Current production: {Production}");
+        
         if (productionCycleTicks == 0) return;
         ticksUntilNextCycle--;
         if (ticksUntilNextCycle <= 0)
@@ -209,10 +219,10 @@ public abstract class Resource
     // Can be overridden if production logic is more complex (e.g., requires Kingdom state).
     protected virtual void Produce()
     {
-        if (Production != 0)
-        {
-            AddAmount(Production);
-        }
+        // THIS IS DIRTY BUT I DO IT FOR ART
+        var prod = randomProduction ? (int) UnityEngine.Random.Range(0, Production) : Production; // Randomize production if needed
+        if (Production == 0) return;
+        AddAmount(prod);
     }
 
     // Abstract method: Called by AddAmount after CurrentAmount changes.
