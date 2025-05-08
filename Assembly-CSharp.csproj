@@ -85,6 +85,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\BuildingEffect\SchoolBuildingEffect.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Gold.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\LawCard.cs" />
+    <Compile Include="Assets\SurfaceSpawner.cs" />
     <Compile Include="Assets\Resources\SocietalDesireResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\EnemyMob.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\DestructibleObject.cs" />
