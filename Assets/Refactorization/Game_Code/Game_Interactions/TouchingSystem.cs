@@ -4,9 +4,10 @@ using UnityEngine;
 public class TouchingSystem : MonoBehaviour{
 
 
+    [SerializeField] private LayerMask interactableLayer;
+
     private GameObject currentlyTouching; 
 
-    private bool triggerOnSameElement = false; 
 
     private DefaultMob selectedMob; 
 
@@ -21,7 +22,13 @@ public class TouchingSystem : MonoBehaviour{
 
 
      private void OnTriggerEnter(Collider other) {
-        var go = other.gameObject;
+        GameObject go = other.gameObject;
+
+
+        if((interactableLayer.value & (1 << go.layer)) == 0){
+            return;
+        }
+
         Debug.Log("Touched: " + go.name);
 
         if (currentlyTouching == null || go != currentlyTouching) {
@@ -37,7 +44,6 @@ public class TouchingSystem : MonoBehaviour{
     private void OnTriggerExit(Collider other) {
     if (other.gameObject == currentlyTouching) {
         currentlyTouching = null;
-        triggerOnSameElement = false;
     }
     }
 
