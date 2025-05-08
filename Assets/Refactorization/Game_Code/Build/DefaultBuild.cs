@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Newtonsoft.Json.Schema;
 
+// TODO:
+// - Give birth
+
 public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract to begin with  => In case error appears
 {
 
@@ -43,16 +46,25 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
 
     public void AddAssignedMob(DefaultMob mob)
     {
+        Debug.Log("AddAssignedMob");
+
         assignedMobs.Add(mob);
-        //BuildingEffect.Effect();
+
         foreach (var effect in resourceEffects) effect.Apply();
+
+        // debug resource effect length
+        Debug.Log($"ResourceEffect count: {resourceEffects.Count}");
+        foreach (var effect in resourceEffects)
+        {
+            Debug.Log($"ResourceEffect: {effect.Type} - {effect.Amount} - {effect.Flat} - {effect.Mod1} - {effect.Mod2} - {effect.Constant}");
+        }
     }
 
 
     public void RemoveAssignedMob(DefaultMob mob)
     {
         assignedMobs.Remove(mob);
-        //BuildingEffect.NegativeEffect();
+
         foreach (var effect in resourceEffects) effect.Cancel();
     }
 
