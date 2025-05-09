@@ -74,6 +74,7 @@ public class MainBuild : DefaultBuild
     }
 
     public override void CreateMob(){
+
         Vector3[] tileCorners = gridOverlay.GetTileCorners(tiles);
         float tileHeight = tiles.GetTileHeight();
 
@@ -82,7 +83,6 @@ public class MainBuild : DefaultBuild
         Vector3 bottomRight = tileCorners[2];
         Vector3 bottomLeft = tileCorners[3];
 
-
         Debug.Log("TopLeft value is: " + topLeft); //Test
         Debug.Log("TopRight value is: " + topRight); //Test
         Debug.Log("BottomRight value is: " + bottomRight); //Test
@@ -90,7 +90,6 @@ public class MainBuild : DefaultBuild
 
         Vector3 buildingPosition = transform.position;
         float spaceBetweenMobs = Vector3.Distance(topLeft, topRight) / 5; //This is the space between the mobs.
-
 
         Vector3 spawnPosition = Vector3.zero;
         float buildingHeight = GetComponent<Renderer>().bounds.size.y;
@@ -101,7 +100,6 @@ public class MainBuild : DefaultBuild
 
         DefaultMob lastAssignedMobComponent = GetLastAssignedMob(); //Get the last mob spawned in the building.
 
-
         if(lastAssignedMobComponent != null){   
 
             GameObject lastAssignedMob = lastAssignedMobComponent.gameObject;
@@ -111,7 +109,7 @@ public class MainBuild : DefaultBuild
                 spawnPosition = lastAssignedMob.transform.position - Vector3.forward * spaceBetweenMobs;
                 spawnPosition.x = bottomRight.x;
                 if(Vector3.Distance(buildingPosition, spawnPosition) < Vector3.Distance(buildingPosition, threshold)){
-                    return;
+                    // return; // wtf
                 } 
             } 
         } else {
@@ -126,9 +124,13 @@ public class MainBuild : DefaultBuild
 
         GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
 
+        Debug.Log($"a miracle Mob is: {mob}");
+
         if(mob != null){
-            Debug.Log("Mob created successfully!");
+            Debug.Log("a miracle happened Mob created successfully!");
             
+        } else {
+            Debug.Log("a miracle didnt happen because mob is null");
         }
 
         mob.GetComponent<DefaultMob>().AssignToBuilding(this);
@@ -136,6 +138,7 @@ public class MainBuild : DefaultBuild
 
     // Listen to population changes and spawn mobs
     private void spawnNewBorn(float delta) {
-        CreateMob();
+        Debug.Log("a miracle could happen");
+        this.CreateMob();
     }
 }

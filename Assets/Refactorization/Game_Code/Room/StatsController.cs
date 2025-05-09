@@ -17,8 +17,8 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
     [Tooltip("Drag the 'FoodText' GameObject here from the hierarchy.")]
     public TextMeshPro foodText; 
 
-    [Tooltip("Drag the 'AgreementText' GameObject here from the hierarchy.")]
-    public TextMeshPro agreementText; 
+    [Tooltip("Drag the 'HappinessText' GameObject here from the hierarchy.")]
+    public TextMeshPro HappinessText; 
 
     [Tooltip("Drag the 'GoldText' GameObject here from the hierarchy.")]
     public TextMeshPro goldText; 
@@ -34,7 +34,7 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
         }
 
         // Subscribe to resource changes
-        resources[ResourceType.Agreement].OnAmountChanged += UpdateAgreementValue;
+        resources[ResourceType.Happiness].OnAmountChanged += UpdateHappinessValue;
         resources[ResourceType.Arts].OnAmountChanged += UpdateArtsValue;
         resources[ResourceType.Population].OnAmountChanged += UpdatePopsValue;
         resources[ResourceType.Might].OnAmountChanged += UpdateMightValue;
@@ -46,7 +46,7 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
     void Start()
     {
         // Optional: Initialize text fields or check if references are set
-        if (artsText == null || popsText == null || mightText == null || foodText == null || agreementText == null || goldText == null)
+        if (artsText == null || popsText == null || mightText == null || foodText == null || HappinessText == null || goldText == null)
         {
             Debug.LogError("StatsController: One or more TextMeshPro references are not set in the Inspector! Please ensure all 3D TextMeshPro objects are assigned.", this);
         }
@@ -56,7 +56,7 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
             UpdatePopsValue(ResourceType.Population, 0); // Initial value
             UpdateMightValue(ResourceType.Might, 0); // Initial value
             UpdateFoodValue(ResourceType.Food, 0); // Initial value
-            UpdateAgreementValue(ResourceType.Agreement, 0); // Initial value
+            UpdateHappinessValue(ResourceType.Happiness, 0); // Initial value
             UpdateGoldValue(ResourceType.Gold, 0); // Initial value
         }
     }
@@ -130,19 +130,19 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
         }
     }
 
-    public void UpdateAgreementText(string newText)
+    public void UpdateHappinessText(string newText)
     {
-        if (agreementText != null)
+        if (HappinessText != null)
         {
-            agreementText.text = newText;
+            HappinessText.text = newText;
         }
     }
 
-    public void UpdateAgreementValue(ResourceType type, float value)
+    public void UpdateHappinessValue(ResourceType type, float value)
     {
-        if (agreementText != null)
+        if (HappinessText != null)
         {
-            agreementText.text = "Agreement: " + (int) resources[type].CurrentAmount + "/" + resources[type].MaximumAmount;
+            HappinessText.text = "Happiness: " + (int) resources[type].CurrentAmount + "/" + resources[type].MaximumAmount;
         }
     }
 

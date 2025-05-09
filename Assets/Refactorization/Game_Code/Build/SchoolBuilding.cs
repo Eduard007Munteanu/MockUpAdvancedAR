@@ -26,6 +26,7 @@ public class SchoolBuiliding : DefaultBuild
         {
             new ResourceEffect(ResourceType.Arts, 0f, 0f, 0.2f),
             new ResourceEffect(ResourceType.Civil, 1f),
+            new ResourceEffect(ResourceType.Gold, 0, -1f),
         };
     }
 

@@ -29,6 +29,9 @@ public class TouchingSystem : MonoBehaviour{
             return;
         }
 
+        // play sound effect
+        AudioManager.Instance.PlaySoundEffect();
+
         Debug.Log("Touched: " + go.name);
 
         if (currentlyTouching == null || (go != currentlyTouching)) {
