@@ -12,7 +12,7 @@ public class RoundManager : MonoBehaviour
 
     private int roundNumber = 1;
 
-    private int numberOfEnemiesToSpawn = 0;  //Hardcoded
+    private int numberOfEnemiesToSpawn = 1;  //Hardcoded
 
     private float timeToActivateRound = 20f;
 

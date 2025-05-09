@@ -13,8 +13,13 @@ EditorUserSettings:
   m_VCDebugCmd: 0
   m_VCDebugOut: 0
   m_SemanticMergeMode: 2
+<<<<<<< HEAD
+  m_DesiredImportWorkerCount: 3
+  m_StandbyImportWorkerCount: 2
+=======
   m_DesiredImportWorkerCount: 1
   m_StandbyImportWorkerCount: 1
+>>>>>>> b92c17e01cbe88fe52cc71092413dab422ab07ba
   m_IdleImportWorkerShutdownDelay: 60000
   m_VCShowFailedCheckout: 1
   m_VCOverwriteFailedCheckoutAssets: 1
