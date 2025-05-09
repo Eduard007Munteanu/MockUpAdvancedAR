@@ -49,7 +49,7 @@ public class AgreementResource : Resource
         CurrentAmount = calculateAgreement();
         
         float deltaAmount = CurrentAmount - lastAgreement;
-        resources[ResourceType.Happiness].AddAmount(deltaAmount * 0.5f); // TODO: Update weight
+        AddAmount(deltaAmount); // Update the resource amount with the calculated delta
         Debug.Log($"AgreementResource: Special action triggered. Current agreement: {CurrentAmount}, Delta: {deltaAmount}");
     }
 

@@ -48,6 +48,8 @@ public class ArtsResource : Resource
 
         // add to desire of freedom
         resources[ResourceType.Civil_Desire].AddAmount(0.5f); // Example: Arts production increases with civil resource amount
+        
+        Debug.Log($"ArtsResource: Reached max. Current level: {artsLevel}, New max: {MaximumAmount}");
     }
     protected override void onReachedMin(float deficit) {
 

@@ -22,7 +22,7 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
 
     private DefaultTile tile;
 
-    protected virtual List<ResourceEffect> resourceEffects => new List<ResourceEffect>();
+    protected List<ResourceEffect> resourceEffects;
 
     protected ResourceDatabase resources; // Singleton instance of ResourceDatabase
     
