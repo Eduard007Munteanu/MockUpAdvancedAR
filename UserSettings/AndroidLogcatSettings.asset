@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "1WMHHA61EF1505",
     "m_SelectedProcess": {
-        "deviceId": "1WMHHA61EF1505",
-        "name": "com.DefaultCompany.MockUpAdvancedAR",
-        "processId": 10194,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -11,85 +11,37 @@
         {
             "deviceId": "1WMHHA61EF1505",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 25876,
+            "processId": 19894,
             "exited": true
         },
         {
             "deviceId": "1WMHHA61EF1505",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 7075,
+            "processId": 20666,
             "exited": true
         },
         {
             "deviceId": "1WMHHA61EF1505",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 14503,
+            "processId": 21325,
             "exited": true
         },
         {
             "deviceId": "1WMHHA61EF1505",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 16062,
+            "processId": 24190,
             "exited": true
         },
         {
             "deviceId": "1WMHHA61EF1505",
             "name": "com.oculus.shellenv",
-            "processId": 2282,
+            "processId": 2264,
             "exited": false
         },
         {
             "deviceId": "1WMHHA61EF1505",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 16998,
-            "exited": false
-        },
-        {
-            "deviceId": "1WMHHA61EF1505",
-            "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 5113,
-            "exited": false
-        },
-        {
-            "deviceId": "1WMHHA61EF1505",
-            "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 5799,
-            "exited": false
-        },
-        {
-            "deviceId": "1WMHHA61EF1505",
-            "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 6747,
-            "exited": false
-        },
-        {
-            "deviceId": "1WMHHA61EF1505",
-            "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 20649,
-            "exited": false
-        },
-        {
-            "deviceId": "1WMHHA61EF1505",
-            "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 22728,
-            "exited": false
-        },
-        {
-            "deviceId": "1WMHHA61EF1505",
-            "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 5725,
-            "exited": false
-        },
-        {
-            "deviceId": "1WMHHA61EF1505",
-            "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 6662,
-            "exited": false
-        },
-        {
-            "deviceId": "1WMHHA61EF1505",
-            "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 10194,
+            "processId": 25887,
             "exited": false
         }
     ],
