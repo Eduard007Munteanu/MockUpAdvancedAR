@@ -162,7 +162,7 @@ public class LightController : MonoBehaviour
     /// <param name="newSpecificBaseIntensity">The new base intensity for this light.</param>
     public void SetSpecificCandleBaseIntensity(int lightIndex, float newSpecificBaseIntensity)
     {
-        if (lightIndex >= 0 && lightIndex < candleLights.Count && candleLights[lightIndex] != null)
+        if (lightIndex >= 0 && lightIndex < candleLights.Count && candleLights[lightIndex] != null && lightIndex < _lightBaseIntensities.Count)
         {
             _lightBaseIntensities[lightIndex] = Mathf.Max(0f, newSpecificBaseIntensity);
         }

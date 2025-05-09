@@ -47,7 +47,7 @@ public class MainBuild : DefaultBuild
         {
             new ResourceEffect(ResourceType.Arts, 0f, 1f),
         };
-        
+
     }
 
     public override Vector3 SpawnBuilding(){
