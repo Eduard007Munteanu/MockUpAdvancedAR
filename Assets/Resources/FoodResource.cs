@@ -12,10 +12,10 @@ public class FoodResource : Resource
     }
 
     public FoodResource(
-        float initialAmount = 100f,
+        float initialAmount = 500f,
         float minAmount = 0f,
         float maxAmount = 1000f,
-        int cycleTicks = 1
+        int cycleTicks = 5
         ) : base(ResourceType.Food, initialAmount, minAmount, maxAmount, cycleTicks)
     {
         // add thresholds here, follow FoodThresholds order, keep list in ascending order

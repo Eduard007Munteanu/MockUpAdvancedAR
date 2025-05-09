@@ -13,14 +13,11 @@ public class MainBuild : DefaultBuild
 
     protected override string Building_class => "Main";
 
+    PopulationResource populationResource;
+
     //protected override DefaultBuildingEffect BuildingEffect => throw new NotImplementedException();
 
     private DefaultTile tiles;
-
-    protected override List<ResourceEffect> resourceEffects => new List<ResourceEffect>
-    {
-        new ResourceEffect(ResourceType.Arts, 0f, 1f, 0f, 0f), // modify art production by one per cycle
-    };
 
     // Start is called before the first frame update
     void Start()
@@ -43,12 +40,14 @@ public class MainBuild : DefaultBuild
         base.Init(Id, tileToUse);
         
         // subscribe to population changes
-        ((PopulationResource) resources[ResourceType.Population]).OnBirth += spawnNewBorn;
-        Debug.Log($"ResourceEffect count: {resourceEffects.Count}");
-        foreach (var effect in resourceEffects)
+        populationResource = (PopulationResource)resources[ResourceType.Population];
+        populationResource.OnBirth += spawnNewBorn;
+
+        resourceEffects = new List<ResourceEffect>
         {
-            Debug.Log($"ResourceEffect: {effect.Type} - {effect.Amount} - {effect.Flat} - {effect.Mod1} - {effect.Mod2} - {effect.Constant}");
-        }
+            new ResourceEffect(ResourceType.Arts, 0f, 1f),
+        };
+        
     }
 
     public override Vector3 SpawnBuilding(){
@@ -59,6 +58,10 @@ public class MainBuild : DefaultBuild
 
         Vector3 spawnPosition = tilePosition + Vector3.up * ((tileHeight + (buildingHeight / 2f))  / 1f);
         return spawnPosition;
+    }
+
+    public void InitStartingPops(){
+        populationResource.InitialPops();
     }
 
     private DefaultTile TileFindCalculation(){
@@ -133,10 +136,6 @@ public class MainBuild : DefaultBuild
 
     // Listen to population changes and spawn mobs
     private void spawnNewBorn(float delta) {
-        Debug.Log($"Population changed: {delta}");
-        for (int i = 0; i < (int)delta; i++)
-        {
-            CreateMob();
-        }
+        CreateMob();
     }
 }

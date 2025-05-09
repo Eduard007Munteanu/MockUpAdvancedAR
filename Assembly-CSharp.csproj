@@ -59,17 +59,26 @@
     <UnityVersion>2022.3.57f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Analyzer Include="C:\Users\Eduard\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="E:\UnityEditor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="E:\UnityEditor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
+=======
+    <Analyzer Include="C:\Users\garlicxd\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
+    <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
+>>>>>>> 586464841dbe8133fe083a74d46b3447f8008a78
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Resources\EconomyResource.cs" />
     <Compile Include="Assets\Resources\ArtsResource.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Spawner.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\JustGoBehavior.cs" />
+<<<<<<< HEAD
     <Compile Include="Assets\Resources\SocietalResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Room\RoomController.cs" />
+=======
+>>>>>>> 586464841dbe8133fe083a74d46b3447f8008a78
     <Compile Include="Assets\Refactorization\Game_Code\Mob\FarmerMobBehavior.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\ItemDatabase.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\MilitaryCard.cs" />
@@ -103,6 +112,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\SleepCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Round_Manager\RoundManager.cs" />
     <Compile Include="Assets\Resources\EnemyMightResource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Room\LightController.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\MobSpawnButton.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\UpgradePanel.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\CardsInHand.cs" />
@@ -143,11 +153,13 @@
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\DefaultItem.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Tile\EnemyTile.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Helper_Code\ItemBuilding.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Room\StatsController.cs" />
     <Compile Include="Assets\Resources\WorkPowerResource.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\BlackBull\ReadMe.txt" />
     <None Include="Assets\Resources\sample_resource.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
@@ -205,7 +217,19 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ClothModule">
+<<<<<<< HEAD
       <HintPath>E:\UnityEditor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClothModule.dll</HintPath>
+=======
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClothModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClusterInputModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClusterRendererModule.dll</HintPath>
+>>>>>>> 586464841dbe8133fe083a74d46b3447f8008a78
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ContentLoadModule">
@@ -417,7 +441,15 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VideoModule">
+<<<<<<< HEAD
       <HintPath>E:\UnityEditor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.VideoModule.dll</HintPath>
+=======
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.VideoModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.VirtualTexturingModule">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.VirtualTexturingModule.dll</HintPath>
+>>>>>>> 586464841dbe8133fe083a74d46b3447f8008a78
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.WindModule">

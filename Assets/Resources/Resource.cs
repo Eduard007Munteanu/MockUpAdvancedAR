@@ -44,7 +44,7 @@ public abstract class Resource
     // State: Basic properties of the resource
     public ResourceType Type { get; private set; }
     public float CurrentAmount { get; protected set; }
-    public float MinimumAmount { get; protected set; } // Configurable, often 0
+    public float MinimumAmount { get; set; } // Configurable, often 0
     public float MaximumAmount { get; protected set; } // Configurable storage limit/cap
     public float Production { get; protected set; }
 
@@ -73,6 +73,7 @@ public abstract class Resource
     public event Action<ResourceType, float> OnReachedMin; // Parameter is the deficit amount
 
     private float initialAmount, initialFlat, initialMod1, initialMod2, initialConst; // Initial values for the resource
+    private List<float> initialThresholds;
 
     // Constructor: Initializes the resource. Called by concrete implementations.
     protected Resource(
@@ -93,8 +94,8 @@ public abstract class Resource
         MaximumAmount = maxAmount;
         productionCycleTicks = cycleTicks;
         ticksUntilNextCycle = productionCycleTicks; // Start ready for the first cycle or wait full cycle? Let's wait.
-        thresholds = (initialThresholds == null) ? null : new Thresholds(initialThresholds, CurrentAmount); // Initialize thresholds
-
+        
+        this.initialThresholds = initialThresholds; // Store initial thresholds for later use
         this.initialAmount = initialAmount; // Store initial values for later use
         this.initialFlat = initialFlat;
         this.initialMod1 = initialMod1;
@@ -102,7 +103,7 @@ public abstract class Resource
         this.initialConst = initialConst;
     }
 
-    public void PostInitialize() {
+    public virtual void PostInitialize() {
         resources = ResourceDatabase.Instance; // Get the singleton instance of the resource database
         if (resources == null)
         {
@@ -114,6 +115,8 @@ public abstract class Resource
         AddProductionConstant(initialConst); // Initialize production constant
 
         RecalculateProduction(); // Calculate initial production rate
+
+        thresholds = (initialThresholds == null) ? null : new Thresholds(initialThresholds, CurrentAmount); // Initialize thresholds
     }
 
     // Modifies CurrentAmount by delta, clamps between MinimumAmount and MaximumAmount.
@@ -221,6 +224,32 @@ public abstract class Resource
             Produce();
             ticksUntilNextCycle = productionCycleTicks; // Reset timer
         }
+    }
+
+    public virtual void AddMax(float delta) {
+        Debug.Log($"ResourceBase AddMax {delta} to {Type}. Current max: {MaximumAmount}");
+        
+        MaximumAmount += delta;
+        if (CurrentAmount > MaximumAmount) // Clamp current amount if it exceeds new max
+        {
+            CurrentAmount = MaximumAmount;
+            onReachedMax(CurrentAmount - MaximumAmount); // Call abstract method for derived class logic
+            OnReachedMax?.Invoke(Type, CurrentAmount - MaximumAmount); // Invoke event for external listeners (UI etc.)
+        }
+
+    }
+
+    public virtual void AddMin(float delta) {
+        Debug.Log($"ResourceBase AddMin {delta} to {Type}. Current min: {MinimumAmount}");
+        
+        MinimumAmount += delta;
+        if (CurrentAmount < MinimumAmount) // Clamp current amount if it falls below new min
+        {
+            CurrentAmount = MinimumAmount;
+            onReachedMin(CurrentAmount - MinimumAmount); // Call abstract method for derived class logic
+            OnReachedMin?.Invoke(Type, CurrentAmount - MinimumAmount); // Invoke event for external listeners (UI etc.)
+        }
+
     }
 
     // Applies the cached production amount to the CurrentAmount.

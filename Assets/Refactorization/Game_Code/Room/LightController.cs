@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomController : MonoBehaviour
+public class LightController : MonoBehaviour
 {
     [Header("Light References")]
     [Tooltip("Drag the Candle Light GameObjects (or objects with Light components) here.")]
