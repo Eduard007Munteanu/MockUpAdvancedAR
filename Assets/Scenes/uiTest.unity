@@ -17319,7 +17319,7 @@ GameObject:
   - component: {fileID: 1433146168}
   - component: {fileID: 1433146167}
   m_Layer: 0
-  m_Name: AgreementText
+  m_Name: HappinessText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17364,7 +17364,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Agreement:'
+  m_text: 'Happiness:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f925476d8d9fff84ea62d3d07b908b31, type: 2}
   m_sharedMaterial: {fileID: -7999976256158215500, guid: f925476d8d9fff84ea62d3d07b908b31, type: 2}
@@ -19998,7 +19998,7 @@ MonoBehaviour:
   popsText: {fileID: 1645905602}
   mightText: {fileID: 59027072}
   foodText: {fileID: 522417343}
-  agreementText: {fileID: 1433146167}
+  HappinessText: {fileID: 0}
   goldText: {fileID: 2030243723}
 --- !u!1 &1630926691
 GameObject:
