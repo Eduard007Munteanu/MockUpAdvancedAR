@@ -28,8 +28,23 @@ public class BuildManager : MonoBehaviour  //One instance only
 
 
     // Start is called before the first frame update
-    void Start()
+    IEnumerator Start()
     {
+        float timeout = 5f;
+        float timer = 0f;
+
+        while (GridOverlay.Instance == null && timer < timeout)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        if (GridOverlay.Instance == null)
+        {
+            Debug.LogError("GridOverlay.Instance was not found in time.");
+            yield break;
+        }
+
         SpawnMainBuilding();
     }
 
@@ -97,6 +112,12 @@ public class BuildManager : MonoBehaviour  //One instance only
 
         
         int id = 1;
+        // while(GridOverlay.Instance == null){
+            
+        // }
+
+
+
         mainBuildInstance.Init(id); //Here I will add the gridOverlay
         AddBuildingDictionary(mainBuildInstance);
 

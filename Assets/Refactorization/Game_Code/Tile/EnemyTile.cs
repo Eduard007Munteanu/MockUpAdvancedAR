@@ -53,7 +53,7 @@ public class EnemyTile : DefaultTile
         Vector3 spawnedMobPosition = new Vector3(transform.position.x, spawnPositionY  ,transform.position.z);
 
     
-        EnemyMob enemyMob = Instantiate(enemyMobPrefab, spawnedMobPosition, Quaternion.identity);
+        EnemyMob enemyMob = Instantiate(enemyMobPrefab, spawnedMobPosition, enemyMobPrefab.transform.rotation);//Quaternion.identity);
         enemyMob.HeIsMyCreator(this);
         Debug.Log("Yeah, we added the enemyMob brothers!");
 

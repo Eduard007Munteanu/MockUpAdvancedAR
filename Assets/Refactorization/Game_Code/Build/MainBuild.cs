@@ -122,7 +122,7 @@ public class MainBuild : DefaultBuild
         Vector3 finalSpawnPos = new Vector3(spawnPosition.x, spawnPosition.y, spawnPosition.z);    
 
 
-        GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
+        GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, mobPrefab.transform.rotation);//Quaternion.identity);
 
         Debug.Log($"a miracle Mob is: {mob}");
 
