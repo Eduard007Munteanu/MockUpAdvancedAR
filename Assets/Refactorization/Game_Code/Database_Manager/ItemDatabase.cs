@@ -10,7 +10,7 @@ public class ItemDatabase: MonoBehaviour{
 
     private Dictionary<string, int> collectedItemsCount = new Dictionary<string, int>();
 
-    private ResourceDatabase resourceDatabase; // I don't want now to add get + set methods
+    private ResourceDatabase resources; // I don't want now to add get + set methods
 
     //Event trigger => we warn others that the OnCollectedItemsCountDataPacker() method should be called given update made. 
     public event System.Action<DataPacket> OnCollectedItemsUpdated;
@@ -30,15 +30,15 @@ public class ItemDatabase: MonoBehaviour{
             Destroy(gameObject); 
         }
 
-        while (resourceDatabase == null){
+        while (resources == null){
             Debug.Log("Waiting for ResourceDatabase to be initialized...");
-            resourceDatabase = ResourceDatabase.Instance;
+            resources = ResourceDatabase.Instance;
         }
     }
 
     public void UpdateCollectedItemsCount(DefaultItem item, int increaseBy){
 
-        resourceDatabase[item.Type].AddAmount(increaseBy);
+        resources[item.Type].AddAmount(increaseBy);
 
         string itemClass = item.GetItemClass();
         if(!collectedItemsCount.ContainsKey(itemClass)){
@@ -46,6 +46,13 @@ public class ItemDatabase: MonoBehaviour{
         } else if(collectedItemsCount.ContainsKey(itemClass)){
             collectedItemsCount[itemClass] += increaseBy;
         }
+
+        if (item.GetItemClass() == "stoneItem"){
+            resources[ResourceType.Food].AddAmount(increaseBy);
+        } else if (item.GetItemClass() == "goldItem"){
+            resources[ResourceType.Gold].AddAmount(increaseBy);
+        } 
+        
 
 
         OnCollectedItemsUpdated?.Invoke(GetCollectedItemsCountDataPacket());
