@@ -20613,13 +20613,13 @@ MonoBehaviour:
   PrefabsToSpawn:
   - Labels: 8
     Prefabs:
-    - {fileID: 8501216244519784757, guid: ac686bcb9a160184a9b283eb9a76402e, type: 3}
-    PrefabSelection: 0
-    MatchAspectRatio: 0
+    - {fileID: 2885555260205788425, guid: a4c5c98431ceb6f41aa0f2b9f66a477e, type: 3}
+    PrefabSelection: 1
+    MatchAspectRatio: 1
     CalculateFacingDirection: 0
-    Scaling: 2
-    Alignment: 0
-    IgnorePrefabSize: 0
+    Scaling: 3
+    Alignment: 3
+    IgnorePrefabSize: 1
 --- !u!4 &1796994705
 Transform:
   m_ObjectHideFlags: 0
@@ -20630,7 +20630,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.059108287, y: 8.378905, z: 10.250217}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
