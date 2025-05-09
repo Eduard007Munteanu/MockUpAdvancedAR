@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d14e43228043c04db9e374568cb89a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnOnStart: 0
+  SpawnOnStart: 1
   SpawnObject: {fileID: 8820367661625489584, guid: 9cc4a9e1769db214b8e9e99135566da9, type: 3}
   SpawnAmount: 15
   MaxIterations: 1000
@@ -1553,7 +1553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d14e43228043c04db9e374568cb89a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnOnStart: 0
+  SpawnOnStart: 1
   SpawnObject: {fileID: 2379940677685953522, guid: 613f6dbc2bf1e794dbc3a874b23a7702, type: 3}
   SpawnAmount: 10
   MaxIterations: 1000
@@ -1609,7 +1609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d14e43228043c04db9e374568cb89a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnOnStart: 0
+  SpawnOnStart: 1
   SpawnObject: {fileID: 6788078791531767085, guid: baa84e8d6336b5d45970d50903b6cb91, type: 3}
   SpawnAmount: 15
   MaxIterations: 1000
@@ -1665,7 +1665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d14e43228043c04db9e374568cb89a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnOnStart: 0
+  SpawnOnStart: 1
   SpawnObject: {fileID: 6981646018908253507, guid: 998a2f1837789734f91992b92dc4d8ef, type: 3}
   SpawnAmount: 8
   MaxIterations: 1000
@@ -2011,7 +2011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2296141232796561049, guid: cee191920b8eb41b0960b1082a393a3e, type: 3}
       propertyPath: SpawnOnStart
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2296141232796561049, guid: cee191920b8eb41b0960b1082a393a3e, type: 3}
       propertyPath: addColliders
@@ -2354,7 +2354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d14e43228043c04db9e374568cb89a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnOnStart: 0
+  SpawnOnStart: 1
   SpawnObject: {fileID: 5319588885254882874, guid: 3063f005d20d04c429e35868f7ba6392, type: 3}
   SpawnAmount: 8
   MaxIterations: 1000

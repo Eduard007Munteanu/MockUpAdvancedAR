@@ -12218,11 +12218,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151a4a6eb5df76041a1c9de537ce9920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainBuildingPrefab: {fileID: 607526807279342321, guid: 1049fadb42a05ab4fb08706cbce1bf39, type: 3}
+  mainBuildingPrefab: {fileID: 5784807636451413473, guid: 26bd0a738192dc744ac53862bab63729, type: 3}
   defaultBuildOptions:
-  - {fileID: 5710573484966340210, guid: db2da13708176704e80328eb8009e446, type: 3}
-  - {fileID: 7905284800524459574, guid: f7d3f1c353260b6478ee58a7313d8062, type: 3}
-  - {fileID: 4404441414330214680, guid: ed7b29bf3d779c44d8edc291d4e95287, type: 3}
+  - {fileID: -3435617446423642579, guid: 81005f699c1f708439582e65d19c0994, type: 3}
+  - {fileID: 1713690874733338416, guid: 761582869c2b40c44a74a97df743e4a3, type: 3}
+  - {fileID: -8159484846350906577, guid: dd0f81ca1da986941a696608c1460a2c, type: 3}
 --- !u!4 &1092835992
 Transform:
   m_ObjectHideFlags: 0
