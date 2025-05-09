@@ -8,7 +8,11 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+<<<<<<< HEAD
   - enabled: 1
+=======
+  - enabled: 0
+>>>>>>> aebc5e653feec359a9d4c5390f938342a7126f9b
     path: Assets/Samples/Meta MR Utility Kit/74.0.1/Multi Spawn/FindMultiSpawn.unity
     guid: 2c7c1aaff481cd1458b64e16d038f041
   m_configObjects:

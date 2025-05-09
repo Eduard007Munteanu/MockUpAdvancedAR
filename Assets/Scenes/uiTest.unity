@@ -19957,9 +19957,12 @@ Transform:
   - {fileID: 335395900}
   - {fileID: 1349984531}
   - {fileID: 1398330584}
+<<<<<<< HEAD
   - {fileID: 1880566874}
   - {fileID: 1023210160}
   - {fileID: 143164488}
+=======
+>>>>>>> aebc5e653feec359a9d4c5390f938342a7126f9b
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1628664189
