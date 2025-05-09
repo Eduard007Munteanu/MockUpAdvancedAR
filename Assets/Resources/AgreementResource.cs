@@ -50,7 +50,7 @@ public class AgreementResource : Resource
         
         float deltaAmount = CurrentAmount - lastAgreement;
         AddAmount(deltaAmount); // Update the resource amount with the calculated delta
-        Debug.Log($"AgreementResource: Special action triggered. Current agreement: {CurrentAmount}, Delta: {deltaAmount}");
+        Debug.Log($"AgreementResource: Special action triggered. Current agreement: {CurrentAmount}, last: {lastAgreement}, Delta: {deltaAmount}");
     }
 
     private float calculateAgreement()

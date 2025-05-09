@@ -16,7 +16,7 @@ public class ArtsResource : Resource
         float initialAmount = 0f, 
         float minAmount = 0f, 
         float maxAmount = 100f, 
-        int cycleTicks = 1
+        int cycleTicks = 2
         ) : base(ResourceType.Arts, initialAmount, minAmount, maxAmount, cycleTicks)
     {
         // randomProduction = true;
@@ -24,6 +24,7 @@ public class ArtsResource : Resource
     protected override void onAmountChange(float delta)
     {
         Debug.Log($"ArtsResource: Amount changed by {delta}. Current amount: {CurrentAmount}");
+        resources[ResourceType.Happiness].AddAmount(delta * 0.001f); // Example: Arts production increases happiness
     }
 
     protected override void onProductionChange(float delta)

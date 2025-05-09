@@ -16,9 +16,9 @@ public class HappinessResource : Resource
 
     protected override void onAmountChange(float delta)
     {
-        // if happiness modifies resource production then it will create a loop
-        // BUT happiness only modifies production mod so it should be fine
-        resources[ResourceType.Civil_Desire].AddAmount(delta * 0.2f); // Example: Happiness production increases with civil resource amount
+        if (resources == null) return;
+
+        resources[ResourceType.Population].AddProductionModifier(0, 0.01f);
     }
 
     protected override void onProductionChange(float delta)
