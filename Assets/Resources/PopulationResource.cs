@@ -19,40 +19,62 @@ public class PopulationResource : Resource
     public PopulationResource(
         float initialAmount = 0f, // Population might start small
         float minAmount = 0f,
-        float maxAmount = 1000f, // Population can grow large
+        float maxAmount = 10f, // Population can grow large
         int cycleTicks = 1,
         List<float> initialThresholds = null, // Optional thresholds for this resource
-        float initialFlat = 1f, 
+        float initialFlat = 0.05f, 
         float initialMod1 = 1f, 
         float initialMod2 = 1f, 
         float initialConst = 0f
         ) : base(ResourceType.Population, initialAmount, minAmount, maxAmount, cycleTicks, initialThresholds, initialFlat, initialMod1, initialMod2, initialConst) // TODO: Update ResourceType
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
+        
+    }
+
+    public override void PostInitialize()
+    {
+        base.PostInitialize();
+        if (firstCycle) {
+            firstCycle = false;
+            // InitialPops();
+        }
     }
 
     protected override void onAmountChange(float delta)
     {
-        if (delta > 0f) { // pop born/added
-            resources[ResourceType.Happiness].AddAmount(delta * 0.5f); // adjust happiness
-        } else { // pop died/removed
-            resources[ResourceType.Happiness].AddAmount(delta * 2f); // adjust happiness
+
+        float oldAmount = CurrentAmount - delta; // Calculate amount before this change
+        int oldFloor = Mathf.FloorToInt(oldAmount);
+        int newFloor = Mathf.FloorToInt(CurrentAmount);
+
+        // Population Increased across one or more integer thresholds
+        if (newFloor > oldFloor)
+        {
+            int unitsIncreased = newFloor - oldFloor;
+            for (int i = 0; i < unitsIncreased; i++)
+            {
+                Debug.Log($"PopulationResource: a miracle (crossed integer threshold to {oldFloor + i + 1})");
+                OnBirth?.Invoke(1f); // Invoke for each whole unit of population increase
+            }
+            if (unitsIncreased > 0)
+            {
+                resources[ResourceType.Happiness].AddAmount(unitsIncreased * 0.5f); // adjust happiness
+                AddProductionModifier(calculateBirthRateDelta(unitsIncreased)); // adjust production based on birth rate
+                resources[ResourceType.Food].AddProductionConstant(-unitsIncreased * ration); // food consumption increases
+            }
         }
-
-        AddProductionModifier(calculateBirthRateDelta(delta)); // adjust production based on birth rate
-        resources[ResourceType.Food].AddProductionConstant(-delta * ration);
-
-        if (CurrentAmount > (int) CurrentAmount)
-            OnBirth?.Invoke(delta); // a miracle
-
-        if (startingPopulation <= 0 && !startingPopulationDone) {
-            startingPopulationDone = true;
-            Debug.Log("kill yourself");
-            AddProductionModifier(-1f);
-            AddAmount(-1f);
-            MinimumAmount = 0f;
-        } else {
-            startingPopulation--;
+        // Population Decreased across one or more integer thresholds
+        else if (newFloor < oldFloor)
+        {
+            int unitsDecreased = oldFloor - newFloor; // Positive number of integers crossed downwards
+            if (unitsDecreased > 0)
+            {
+                // OnBirth is typically not invoked for decreases
+                resources[ResourceType.Happiness].AddAmount(-unitsDecreased * 2f); // adjust happiness (decrease)
+                AddProductionModifier(calculateBirthRateDelta(-unitsDecreased)); // adjust production based on population loss
+                resources[ResourceType.Food].AddProductionConstant(unitsDecreased * ration); // food consumption decreases (so, add to production constant)
+            }
         }
     }
 
@@ -88,6 +110,8 @@ public class PopulationResource : Resource
         for (int i = 0; i < startingPopulation; i++) {
             AddAmount(1f); // add 1 pop per cycle
         }
+
+        Debug.Log($"PopulationResource: Initial population set to {startingPopulation}.");
         
     }
 }

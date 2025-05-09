@@ -14,14 +14,18 @@ public class ResourceEffect{
     public float Mod1 { get; }
     public float Mod2 { get; }
     public float Constant { get; }
+    public float Min { get; }
+    public float Max { get; }
     ResourceDatabase resources = ResourceDatabase.Instance;
-    public ResourceEffect(ResourceType type, float amount, float flat=0, float mod1=0, float mod2=0, float constant=0) {
+    public ResourceEffect(ResourceType type, float amount, float flat=0, float mod1=0, float mod2=0, float constant=0, float min=0, float max=0) {
         this.Type = type;
         this.Amount = amount;
         this.Flat = flat;
         this.Mod1 = mod1;
         this.Mod2 = mod2;
         this.Constant = constant;
+        this.Min = min;
+        this.Max = max;
 
         Debug.Log($"ResourceEffect created: {type}, Amount: {amount}, Flat: {flat}, Mod1: {mod1}, Mod2: {mod2}, Constant: {constant}");
     }
@@ -29,6 +33,8 @@ public class ResourceEffect{
         resources[Type].AddAmount(Amount);
         resources[Type].AddProductionModifier(Flat, Mod1, Mod2);
         resources[Type].AddProductionConstant(Constant);
+        resources[Type].AddMin(Min);
+        resources[Type].AddMax(Max);
 
         Debug.Log($"ResourceEffect applied: {Type}, Amount: {Amount}, Flat: {Flat}, Mod1: {Mod1}, Mod2: {Mod2}, Constant: {Constant}");
     }

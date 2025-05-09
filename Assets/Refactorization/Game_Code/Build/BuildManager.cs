@@ -106,11 +106,7 @@ public class BuildManager : MonoBehaviour  //One instance only
         
         buildingObj.transform.position = spawnPos;
 
-
-        
-        
-
-        
+        mainBuildInstance.InitStartingPops();
     }
 
     private Vector3 SpawnPosition(DefaultTile tile, GameObject objectToBeSpawned){

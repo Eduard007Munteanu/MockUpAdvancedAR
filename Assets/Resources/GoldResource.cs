@@ -10,7 +10,7 @@ public class GoldResource : Resource
     }
 
     public GoldResource(
-        float initialAmount = 100f,
+        float initialAmount = 500f,
         float minAmount = 0f,
         float maxAmount = 1000f, // Gold might have a higher max
         int cycleTicks = 1

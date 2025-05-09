@@ -15,6 +15,15 @@ public class MilitaryBuild : DefaultBuild
         
     }
 
+    public override void Init(int Id, DefaultTile tile) {
+        base.Init(Id, tile);
+        resourceEffects = new List<ResourceEffect>
+        {
+            new ResourceEffect(ResourceType.Might, 5f),
+            new ResourceEffect(ResourceType.Civil, -3f)
+        };
+    }
+
     // Update is called once per frame
     void Update()
     {
