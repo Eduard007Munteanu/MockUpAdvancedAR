@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6410635987236083244}
   - component: {fileID: 428523913811524836}
   m_Layer: 0
-  m_Name: betterTile
+  m_Name: enemyBetterTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e84bf31112d3bb648b8535eaa911100a, type: 2}
+  - {fileID: 2100000, guid: 4edf014ac17da734b9f87b4c20bfb01e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

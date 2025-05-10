@@ -3,6 +3,9 @@ using UnityEngine;
 public class BetterGridOverlay : MonoBehaviour
 {
     public GameObject tilePrefab;
+
+    public GameObject enemyTilePrefab;
+
     public int rows = 6;
     public int columns = 6;
 
@@ -27,8 +30,14 @@ public class BetterGridOverlay : MonoBehaviour
             min.z + d * (z + 0.5f)
             );
 
+
+            GameObject tile;
+            if(z == 0){
+                tile = Instantiate(enemyTilePrefab);
+            } else {
+                tile = Instantiate(tilePrefab);
+            }
             
-            GameObject tile = Instantiate(tilePrefab);
             tile.transform.position   = worldPos;
             tile.transform.localScale = new Vector3(w, h, d);
 

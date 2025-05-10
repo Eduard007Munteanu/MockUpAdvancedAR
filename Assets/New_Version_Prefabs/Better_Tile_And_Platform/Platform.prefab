@@ -119,5 +119,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 50176356873329610, guid: 9f6861a1d477f6f4ebd54cd9660788fd, type: 3}
+  enemyTilePrefab: {fileID: 50176356873329610, guid: 232ebce254865b6478e8405a3c5b0f3f, type: 3}
   rows: 6
   columns: 6
