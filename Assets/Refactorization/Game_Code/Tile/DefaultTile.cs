@@ -156,7 +156,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
     public void ArrangeMobs(DefaultMob mob)
     {
-        Vector3[] tileCorners = GridOverlay.Instance.GetTileCorners(this);
+        Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
         Vector3 topLeft = tileCorners[0];
         Vector3 topRight = tileCorners[1];
         Vector3 bottomRight = tileCorners[2];
@@ -194,7 +194,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
 
     public virtual bool CanMobBeArrangedChecker(DefaultMob mob){                               //Duplication.... To be fixed.
-        Vector3[] tileCorners = GridOverlay.Instance.GetTileCorners(this);
+        Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
         Vector3 topLeft = tileCorners[0];
         Vector3 topRight = tileCorners[1];
         Vector3 bottomLeft = tileCorners[3];
@@ -222,7 +222,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
 
     public void ArrangeEnemyMobs(EnemyMob mob){  //Very similar to ArrangeMobs, maybe refactor that part
-        Vector3[] tileCorners = GridOverlay.Instance.GetTileCorners(this);
+        Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
         Vector3 bottomLeft = tileCorners[3];
         Vector3 bottomRight = tileCorners[2];
         Vector3 topRight = tileCorners[1];
@@ -257,7 +257,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     }
 
     public bool CanEnemyMobsBeArranged(EnemyMob mob){  //Very similar to ArrangeMobs, maybe refactor that part
-        Vector3[] tileCorners = GridOverlay.Instance.GetTileCorners(this);
+        Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
         Vector3 bottomLeft = tileCorners[3];
         Vector3 bottomRight = tileCorners[2];
         Vector3 topLeft = tileCorners[0];

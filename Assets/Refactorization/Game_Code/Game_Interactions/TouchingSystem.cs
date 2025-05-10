@@ -101,7 +101,7 @@ public class TouchingSystem : MonoBehaviour{
     public void ActionMoveMobToBuilding(DefaultBuild defaultBuildTouched){
         Debug.Log("OnTriggerEnter in ActionMoveMobToBuilding");
         Vector3 buildingPosition = defaultBuildTouched.gameObject.transform.position;  
-        Vector3 targetPosition = new Vector3(buildingPosition.x, vectorYHeightGivenTile(GridOverlay.Instance.GetTiles()[0].GetComponent<DefaultTile>(), selectedMob), buildingPosition.z);
+        Vector3 targetPosition = new Vector3(buildingPosition.x, vectorYHeightGivenTile(BetterGridOverlay.Instance.GetTiles()[0].GetComponent<DefaultTile>(), selectedMob), buildingPosition.z);
         selectedMob.RemoveFromBuilding();
         selectedMob.AssignToBuilding(defaultBuildTouched);
         selectedMob.SetBehaviorBasedOnBuilding(defaultBuildTouched);

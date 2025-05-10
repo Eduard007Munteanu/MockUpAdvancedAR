@@ -48,8 +48,8 @@ public class EnemyMob : MonoBehaviour{
 
 
       
-        int rowLength = GridOverlay.Instance.rows;
-        int columnLength = GridOverlay.Instance.columns;
+        int rowLength = BetterGridOverlay.Instance.rows;
+        int columnLength = BetterGridOverlay.Instance.columns;
 
 
 
@@ -57,7 +57,7 @@ public class EnemyMob : MonoBehaviour{
         int tileRow = -1;
 
         for(int i = 0; i < rowLength; i++){
-            DefaultTile tile = GridOverlay.Instance.FindTileWithCoordinates(i, rowLength - 1);
+            DefaultTile tile = BetterGridOverlay.Instance.FindTileWithCoordinates(i, rowLength - 1);
             if(Vector3.Distance(transform.position, tile.transform.position) < currentDistance){
                 currentDistance = Vector3.Distance(transform.position, tile.transform.position);
                 tileRow = i;
@@ -68,7 +68,7 @@ public class EnemyMob : MonoBehaviour{
 
 
         for(int i=0; i < columnLength; i++){
-            DefaultTile tile = GridOverlay.Instance.FindTileWithCoordinates(tileRow, i);
+            DefaultTile tile = BetterGridOverlay.Instance.FindTileWithCoordinates(tileRow, i);
             cachMemoryPathTiles.Add(tile);
         }
 
@@ -179,14 +179,14 @@ public class EnemyMob : MonoBehaviour{
     private void InitiallyTargetMainBuilding(){
         //cachMemoryPathTiles
 
-        int rowLength = GridOverlay.Instance.rows;
-        int columnLength = GridOverlay.Instance.columns;
+        int rowLength = BetterGridOverlay.Instance.rows;
+        int columnLength = BetterGridOverlay.Instance.columns;
 
 
         cachMemoryPathTiles.Clear();
 
         for(int i=0; i < rowLength; i++){
-            var coordinates = GridOverlay.Instance.FindCoordinatesWithTile(currentTile);
+            var coordinates = BetterGridOverlay.Instance.FindCoordinatesWithTile(currentTile);
             int columnCoordinate = -1;
             if (coordinates.HasValue)
             {
@@ -197,7 +197,7 @@ public class EnemyMob : MonoBehaviour{
                 Debug.LogError("Coordinates for the current tile are null.");
             }
 
-            DefaultTile tile = GridOverlay.Instance.FindTileWithCoordinates(i, columnCoordinate);
+            DefaultTile tile = BetterGridOverlay.Instance.FindTileWithCoordinates(i, columnCoordinate);
             cachMemoryPathTiles.Add(tile);
         }
 

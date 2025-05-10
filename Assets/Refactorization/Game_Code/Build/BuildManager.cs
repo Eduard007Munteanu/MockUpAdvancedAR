@@ -133,7 +133,7 @@ public class BuildManager : MonoBehaviour  //One instance only
         }
         Debug.Log("ActualBuild is " + actualBuild.name);
         Vector3 spawnPosition = SpawnPosition(tile, actualBuild.gameObject );
-        GameObject building = Instantiate(actualBuild.gameObject, spawnPosition, Quaternion.identity);
+        GameObject building = Instantiate(actualBuild.gameObject, spawnPosition, actualBuild.transform.rotation);//Quaternion.identity);
         
 
         

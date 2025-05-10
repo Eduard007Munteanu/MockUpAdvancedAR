@@ -88,7 +88,7 @@ public class TheRayCaster : MonoBehaviour
                     else if(building != null){
                         Debug.Log("We selected the selectedMob to the building of type " + building.name);
                         Vector3 buildingPosition = building.gameObject.transform.position;  
-                        Vector3 targetPosition = new Vector3(buildingPosition.x, vectorYHeightGivenTile(GridOverlay.Instance.GetTiles()[0].GetComponent<DefaultTile>(), selectedMob), buildingPosition.z);
+                        Vector3 targetPosition = new Vector3(buildingPosition.x, vectorYHeightGivenTile(BetterGridOverlay.Instance.GetTiles()[0].GetComponent<DefaultTile>(), selectedMob), buildingPosition.z);
                         selectedMob.RemoveFromBuilding();
                         selectedMob.AssignToBuilding(building);
                         selectedMob.SetBehaviorBasedOnBuilding(building);

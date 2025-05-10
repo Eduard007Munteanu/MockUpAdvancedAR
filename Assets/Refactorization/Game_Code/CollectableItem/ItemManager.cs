@@ -12,7 +12,7 @@ public class ItemManager : MonoBehaviour
 
     private bool tilesRendered = false;
 
-    [SerializeField] private GridOverlay gridOverlay;
+    private BetterGridOverlay gridOverlay;
 
 
     [SerializeField] private DefaultItem[] itemsPrefabTypes; 
@@ -40,13 +40,15 @@ public class ItemManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gridOverlay = BetterGridOverlay.Instance;
     }
 
     // Update is called once per frame
     void Update()
     {
         if(tilesRendered){
+            Debug.Log("Tile did render from tileRendered");
+            Debug.Log("Number of tiles from tileRendered : " + gridOverlay.GetTiles().Count);
             for(int i=0; i < mineralPlacesToSpawn; i++){
                 CreateItemsForTile(numberOfMaterialsPerTile); 
                 
@@ -60,6 +62,12 @@ public class ItemManager : MonoBehaviour
 
         DefaultItem specificItemPrefab = itemsPrefabTypes[Random.Range(0, itemsPrefabTypes.Length)];
 
+
+        if(gridOverlay == null){
+            Debug.LogError("GridOverlay is critical, bruh!");
+        } else{
+            Debug.Log("GridOverlay is NOT critical, bruh!");
+        }
 
         DefaultTile randomTile = gridOverlay.GetRandomTile();
         while (itemsData.ContainsKey(randomTile))

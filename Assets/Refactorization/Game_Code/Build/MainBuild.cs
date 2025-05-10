@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class MainBuild : DefaultBuild
 {
-    private GridOverlay gridOverlay;
+    private BetterGridOverlay gridOverlay;
 
     [SerializeField] private DefaultMob mobPrefab;
 
@@ -35,7 +35,7 @@ public class MainBuild : DefaultBuild
     public override void Init(int Id, DefaultTile tile = null){
         // this.Id = Id;
         // this.building_class_main = main_class;
-        gridOverlay = GridOverlay.Instance;
+        gridOverlay = BetterGridOverlay.Instance;
         DefaultTile tileToUse = TileFindCalculation();                                  //NOT THAT BEAUTIFULL, BUT SHOULD WORK. 
         base.Init(Id, tileToUse);
         
@@ -66,8 +66,8 @@ public class MainBuild : DefaultBuild
 
     private DefaultTile TileFindCalculation(){
         (int x, int z) = gridOverlay.GetRowAndColumnsOfPlatform();
-        (int, int) buildingSpawnPosition = (z-1, Mathf.FloorToInt(x/2));
-        DefaultTile tile = gridOverlay.FindTileWithCoordinates(buildingSpawnPosition.Item2, buildingSpawnPosition.Item1);
+        (int, int) buildingSpawnPosition = (x-1, Mathf.FloorToInt(z/2));
+        DefaultTile tile = gridOverlay.FindTileWithCoordinates(buildingSpawnPosition.Item1, buildingSpawnPosition.Item2);
         return tile;
 
 
