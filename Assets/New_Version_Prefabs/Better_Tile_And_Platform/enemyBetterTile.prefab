@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8114035757050174933}
   - component: {fileID: 6410635987236083244}
   - component: {fileID: 428523913811524836}
+  - component: {fileID: 21453736596370478}
+  - component: {fileID: 115639471541607963}
   m_Layer: 0
   m_Name: enemyBetterTile
   m_TagString: Untagged
@@ -106,6 +108,32 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &21453736596370478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50176356873329610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a4929edbc41a54ba16a2f2566dad6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectObject: {fileID: 7637589788682654877}
+--- !u!114 &115639471541607963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50176356873329610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dce1c445526f5b4082e2e82b0991a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyMobPrefab: {fileID: 0}
 --- !u!1 &7637589788682654877
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +161,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.69, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5664650003484980409}
@@ -180,7 +208,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.88529015, g: 1, b: 0.023584902, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
