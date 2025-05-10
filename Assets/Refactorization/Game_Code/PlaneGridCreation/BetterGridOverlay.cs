@@ -11,6 +11,7 @@ public class BetterGridOverlay : MonoBehaviour
         Renderer r = GetComponent<Renderer>();
         Bounds b = r.bounds;
         Vector3 min = b.min;
+        Vector3 max = b.max;  //Added
         Vector3 size = b.size;
 
         float h = tilePrefab.transform.localScale.y;
@@ -22,7 +23,7 @@ public class BetterGridOverlay : MonoBehaviour
         {
             Vector3 worldPos = new Vector3(
             min.x + w * (x + 0.5f),
-            min.y + h * 0.5f,
+            max.y + h * 0.5f,                     //Added
             min.z + d * (z + 0.5f)
             );
 

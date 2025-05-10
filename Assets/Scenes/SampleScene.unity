@@ -3002,19 +3002,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2545789297594193618, guid: a9f7b3053e01ff64d9c26d013358c0cd, type: 3}
       propertyPath: rows
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2545789297594193618, guid: a9f7b3053e01ff64d9c26d013358c0cd, type: 3}
       propertyPath: columns
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2705956767840614387, guid: a9f7b3053e01ff64d9c26d013358c0cd, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2705956767840614387, guid: a9f7b3053e01ff64d9c26d013358c0cd, type: 3}
       propertyPath: m_LocalScale.z
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2705956767840614387, guid: a9f7b3053e01ff64d9c26d013358c0cd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3059,6 +3059,10 @@ PrefabInstance:
     - target: {fileID: 3321429150494508749, guid: a9f7b3053e01ff64d9c26d013358c0cd, type: 3}
       propertyPath: m_Name
       value: Platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321429150494508749, guid: a9f7b3053e01ff64d9c26d013358c0cd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20686,12 +20690,12 @@ MonoBehaviour:
   PrefabsToSpawn:
   - Labels: 8
     Prefabs:
-    - {fileID: 2885555260205788425, guid: a4c5c98431ceb6f41aa0f2b9f66a477e, type: 3}
-    PrefabSelection: 1
-    MatchAspectRatio: 1
+    - {fileID: 3321429150494508749, guid: a9f7b3053e01ff64d9c26d013358c0cd, type: 3}
+    PrefabSelection: 0
+    MatchAspectRatio: 0
     CalculateFacingDirection: 0
-    Scaling: 3
-    Alignment: 3
+    Scaling: 2
+    Alignment: 2
     IgnorePrefabSize: 1
 --- !u!4 &1796994705
 Transform:
