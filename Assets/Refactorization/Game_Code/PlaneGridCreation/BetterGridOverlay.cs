@@ -38,6 +38,7 @@ public class BetterGridOverlay : MonoBehaviour
                 tile = Instantiate(tilePrefab);
             }
             
+            tile.name = $"Tile_{z}_{x}";                               //Such that tile row and columns are correct. 
             tile.transform.position   = worldPos;
             tile.transform.localScale = new Vector3(w, h, d);
 
