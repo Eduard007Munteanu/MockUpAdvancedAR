@@ -40,6 +40,13 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
         resources[ResourceType.Might].OnAmountChanged += UpdateMightValue;
         resources[ResourceType.Food].OnAmountChanged += UpdateFoodValue;
         resources[ResourceType.Gold].OnAmountChanged += UpdateGoldValue;
+
+        UpdateArtsValue(ResourceType.Arts, 0); // Initial value
+        UpdatePopsValue(ResourceType.Population, 0); // Initial value
+        UpdateMightValue(ResourceType.Might, 0); // Initial value
+        UpdateFoodValue(ResourceType.Food, 0); // Initial value
+        UpdateHappinessValue(ResourceType.Happiness, 0); // Initial value
+        UpdateGoldValue(ResourceType.Gold, 0); // Initial value
     }
 
 
@@ -77,7 +84,6 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
     {
         if (artsText != null)
         {
-            Debug.Log($"Arts Value Updated: {value}");
             artsText.text = "Arts: " + (int) resources[type].CurrentAmount + "/" + resources[type].MaximumAmount;
         }
     }
@@ -94,7 +100,7 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
     {
         if (popsText != null)
         {
-            popsText.text = "Population: " + (int) resources[type].CurrentAmount + "/" + resources[type].MaximumAmount;
+            popsText.text = "Population: " + (int) resources[type].CurrentAmount + "/" + (int)resources[type].MaximumAmount;
         }
     }
 
@@ -126,7 +132,7 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
     {
         if (foodText != null)
         {
-            foodText.text = "Food: " + (int) resources[type].CurrentAmount + "/" + resources[type].MaximumAmount;
+            foodText.text = "Food: " + (int) resources[type].CurrentAmount + "/" + (int)resources[type].MaximumAmount;
         }
     }
 
@@ -142,7 +148,7 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
     {
         if (HappinessText != null)
         {
-            HappinessText.text = "Happiness: " + (int) resources[type].CurrentAmount + "/" + resources[type].MaximumAmount;
+            HappinessText.text = "Happiness: " + (int) resources[type].CurrentAmount + "/" + (int)resources[type].MaximumAmount;
         }
     }
 
@@ -158,7 +164,7 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
     {
         if (goldText != null)
         {
-            goldText.text = "Gold: " + (int) resources[type].CurrentAmount + "/" + resources[type].MaximumAmount;
+            goldText.text = "Gold: " + (int) resources[type].CurrentAmount + "/" + (int)resources[type].MaximumAmount;
         }
     }
 }
