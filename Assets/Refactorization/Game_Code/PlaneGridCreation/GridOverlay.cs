@@ -55,9 +55,9 @@ public class GridOverlay : MonoBehaviour
 
         // Skaleringsfaktor så mesh dækker tileWidth x tileDepth
         Vector3 adjustedTileScale = new Vector3(
-            tileWidth / meshSize.x  * 2,
+            tileWidth / meshSize.x ,
             1f,
-            tileDepth / meshSize.z * 3
+            tileDepth / meshSize.z 
         );
 
         // Find bund-venstre hjørne på toppen af platformen
