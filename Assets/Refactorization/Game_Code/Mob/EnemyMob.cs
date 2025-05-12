@@ -34,7 +34,9 @@ public class EnemyMob : MonoBehaviour{
 
 
     private bool hasTarget = false; 
-    private Vector3 target;  
+    //private Vector3 target;  
+
+    private DefaultTile targetTile;
 
     private bool endPointReached = false;
 
@@ -128,6 +130,7 @@ public class EnemyMob : MonoBehaviour{
 
     public void MoveToTarget(){
         if(isMoving){
+            Vector3 target = targetTile.gameObject.transform.position;
             target.y = transform.position.y;                                     //I guess that this is correct, we know the y position of the mob. 
             Vector3 dir = (target - transform.position).normalized;
             transform.position += dir * speedFactor;
@@ -137,6 +140,9 @@ public class EnemyMob : MonoBehaviour{
                 isMoving = false;
                 hasTarget = false;
                 endPointReached = true;
+
+                Debug.Log("We reached the distance, stop!");
+                targetTile.ArrangeEnemyMobs(this);
             }
         }
     }
@@ -232,7 +238,7 @@ public class EnemyMob : MonoBehaviour{
             if (buildClass == "Main") {
                 Debug.Log("We found the main building");
                 hasTarget = true;
-                target = checkBuild.transform.position;
+                targetTile = checkBuild.GetTile();//checkBuild.transform.position;
             }
             
         }
