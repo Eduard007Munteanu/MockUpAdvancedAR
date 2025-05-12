@@ -50,15 +50,28 @@ public class MainBuild : DefaultBuild
 
     }
 
-    public override Vector3 SpawnBuilding(){
-        tiles = TileFindCalculation();
-        float tileHeight = tiles.GetTileHeight();
-        float buildingHeight = GetComponent<Renderer>().bounds.size.y;
-        Vector3 tilePosition = tiles.transform.position;  //Given tile is a object
 
-        Vector3 spawnPosition = tilePosition + Vector3.up * ((tileHeight + (buildingHeight / 2f))  / 1f);
-        return spawnPosition;
+    public override Vector3 SpawnBuilding()
+    {
+        tiles = TileFindCalculation(); 
+
+        Renderer tileRenderer = tiles.GetComponent<Renderer>();
+        Renderer buildingRenderer = GetComponent<Renderer>();
+
+        float tileTopY = tileRenderer.bounds.max.y;
+
+        
+        float objectBottomOffset = buildingRenderer.bounds.min.y - transform.position.y;
+
+        
+        float spawnY = tileTopY - objectBottomOffset;
+
+        
+        Vector3 tileCenter = tileRenderer.bounds.center;
+
+        return new Vector3(tileCenter.x, spawnY, tileCenter.z);
     }
+
 
     public void InitStartingPops(){
         populationResource.InitialPops();
@@ -92,7 +105,8 @@ public class MainBuild : DefaultBuild
         float spaceBetweenMobs = Vector3.Distance(topLeft, topRight) / 5; //This is the space between the mobs.
 
         Vector3 spawnPosition = Vector3.zero;
-        float buildingHeight = GetComponent<Renderer>().bounds.size.y;
+
+        //float buildingHeight = GetComponent<Renderer>().bounds.size.y;
         float mobHeight = mobPrefab.gameObject.GetComponent<Renderer>().bounds.size.y;
 
 
@@ -109,12 +123,22 @@ public class MainBuild : DefaultBuild
                 spawnPosition = lastAssignedMob.transform.position - Vector3.forward * spaceBetweenMobs;
                 spawnPosition.x = bottomRight.x;
                 if(Vector3.Distance(buildingPosition, spawnPosition) < Vector3.Distance(buildingPosition, threshold)){
-                    // return; // wtf
+                    return; 
                 } 
             } 
         } else {
-            spawnPosition = bottomRight; //+ Vector3.up * ((tileHeight + (buildingHeight / 2f))  / 1f);  //Potentially correct
-            spawnPosition.y = bottomRight.y + (tileHeight + (mobHeight / 2));
+            spawnPosition = bottomRight; 
+            
+            Renderer bottomRightTileRenderer = tiles.GetComponent<Renderer>();
+            Renderer mobRenderer = mobPrefab.GetComponent<Renderer>();
+
+            float tileTopY = bottomRightTileRenderer.bounds.max.y;
+
+            float objectBottomOffset = mobRenderer.bounds.min.y - mobPrefab.transform.position.y;
+
+            float spawnY = tileTopY - objectBottomOffset;
+
+            spawnPosition.y = spawnY;
         }
 
         

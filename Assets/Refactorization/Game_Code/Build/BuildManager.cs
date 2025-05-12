@@ -110,13 +110,18 @@ public class BuildManager : MonoBehaviour  //One instance only
     }
 
     private Vector3 SpawnPosition(DefaultTile tile, GameObject objectToBeSpawned){
-        Vector3 tilePosition = tile.gameObject.transform.position;   //Attach to GameObject, then allright. 
-        float tileHeight = tile.GetTileHeight();
-        float objectToBeSpawnedHeight = objectToBeSpawned.GetComponent<Renderer>().bounds.size.y;
 
-        Vector3 spawnPosition = tilePosition + Vector3.up * ((tileHeight + (objectToBeSpawnedHeight / 2f))  / 1f);
+        Renderer tileRenderer = tile.GetComponent<Renderer>();
+        Renderer objectRenderer = objectToBeSpawned.GetComponent<Renderer>();
 
-        return spawnPosition;
+        float tileTopY = tileRenderer.bounds.max.y;
+        float objectBottomOffset = objectRenderer.bounds.min.y - objectToBeSpawned.transform.position.y;
+        float spawnY = tileTopY - objectBottomOffset;
+
+        
+        Vector3 tileCenter = tileRenderer.transform.position;
+
+        return new Vector3(tileCenter.x, spawnY, tileCenter.z);
     }
 
     private void SpawnBuildingOnTile(DefaultTile tile, BuildCard card){
