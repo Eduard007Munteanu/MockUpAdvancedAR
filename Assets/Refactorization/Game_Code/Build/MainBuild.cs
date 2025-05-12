@@ -67,9 +67,41 @@ public class MainBuild : DefaultBuild
         float spawnY = tileTopY - objectBottomOffset;
 
         
-        Vector3 tileCenter = tileRenderer.bounds.center;
+        Vector3[] corners = BetterGridOverlay.Instance.GetTileCorners(tiles);
+        Vector3 topLeft = corners[0];
+        Vector3 topRight = corners[1];
 
-        return new Vector3(tileCenter.x, spawnY, tileCenter.z);
+        
+        // Vector3 halfBellow =  topLeft - ((topLeft - topRight) / 2);//(topRight - topLeft) / 2;
+
+        // float buildingbackZ = buildingRenderer.bounds.min.z;
+        // float buildingfrontZ = buildingRenderer.bounds.max.z;
+        // float desiredBackZ = halfBellow.z;
+
+        // float deltaZ = desiredBackZ + ((buildingbackZ - buildingfrontZ) / 2);
+
+         
+
+        // float actualZ =  deltaZ;
+
+        
+        float tileBackZ = tileRenderer.bounds.min.z;
+        float tileFrontZ = tileRenderer.bounds.max.z;
+
+        float objectDepthZ = buildingRenderer.bounds.size.z;
+
+        
+        float halfTileZ = (tileFrontZ - tileBackZ) / 2f;
+        float spawnZ = tileFrontZ - (objectDepthZ / 2f); 
+        
+        float spawnX = tileRenderer.bounds.center.x;
+
+
+        //Vector3 tileCenter = tileRenderer.bounds.center;
+
+
+
+        return new Vector3(spawnX, spawnY, spawnZ);
     }
 
 

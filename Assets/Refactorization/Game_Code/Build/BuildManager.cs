@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour  //One instance only
@@ -118,10 +119,24 @@ public class BuildManager : MonoBehaviour  //One instance only
         float objectBottomOffset = objectRenderer.bounds.min.y - objectToBeSpawned.transform.position.y;
         float spawnY = tileTopY - objectBottomOffset;
 
-        
-        Vector3 tileCenter = tileRenderer.transform.position;
 
-        return new Vector3(tileCenter.x, spawnY, tileCenter.z);
+        float tileBackZ = tileRenderer.bounds.min.z;
+        float tileFrontZ = tileRenderer.bounds.max.z;
+
+        float objectDepthZ = objectRenderer.bounds.size.z;
+
+        
+        
+        float spawnZ = tileFrontZ - (objectDepthZ / 2f); 
+        
+        float spawnX = tileRenderer.bounds.center.x;
+
+
+        //Vector3 tileCenter = tileRenderer.bounds.center;
+
+
+
+        return new Vector3(spawnX, spawnY, spawnZ);
     }
 
     private void SpawnBuildingOnTile(DefaultTile tile, BuildCard card){
