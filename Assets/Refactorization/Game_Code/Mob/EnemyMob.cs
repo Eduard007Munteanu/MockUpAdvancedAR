@@ -42,7 +42,7 @@ public class EnemyMob : MonoBehaviour{
 
     void Start()
     {
-        allTiles = FindObjectsOfType<DefaultTile>(); 
+        //allTiles = FindObjectsOfType<DefaultTile>(); 
         cachMemoryPathTiles = new List<DefaultTile>();
         
 
@@ -54,27 +54,30 @@ public class EnemyMob : MonoBehaviour{
 
 
         float currentDistance = float.MaxValue;
-        int tileRow = -1;
+        int tileColumn = -1;
 
-        for(int i = 0; i < rowLength; i++){
-            DefaultTile tile = BetterGridOverlay.Instance.FindTileWithCoordinates(i, rowLength - 1);
+        for(int i = 0; i < columnLength; i++){
+            DefaultTile tile = BetterGridOverlay.Instance.FindTileWithCoordinates(rowLength - 1, i);
             if(Vector3.Distance(transform.position, tile.transform.position) < currentDistance){
                 currentDistance = Vector3.Distance(transform.position, tile.transform.position);
-                tileRow = i;
+                tileColumn = i;
                 lastTileInMyPath = tile;
             } 
         }
 
 
 
-        for(int i=0; i < columnLength; i++){
-            DefaultTile tile = BetterGridOverlay.Instance.FindTileWithCoordinates(tileRow, i);
+        for(int i=0; i < rowLength; i++){
+            DefaultTile tile = BetterGridOverlay.Instance.FindTileWithCoordinates(i, tileColumn);
             cachMemoryPathTiles.Add(tile);
         }
 
 
-        Debug.Log("LastTileInMyPath is " + lastTileInMyPath.name);
-        Debug.Log("CachMemoryPathTiles is " + cachMemoryPathTiles);
+        Debug.Log("LastTileInMyPath at ENEMYMOB is " + lastTileInMyPath.name);
+        //Debug.Log("CachMemoryPathTiles at ENEMYMOB is " + cachMemoryPathTiles);
+        foreach(DefaultTile enemyMOB in cachMemoryPathTiles){
+            Debug.Log("CachMemoryPathTiles at ENEMYMOB is " + enemyMOB);
+        }
 
 
         isMoving = true; //Just for now.

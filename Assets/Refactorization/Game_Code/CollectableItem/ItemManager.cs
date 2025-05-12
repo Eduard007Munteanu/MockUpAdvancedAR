@@ -96,15 +96,10 @@ public class ItemManager : MonoBehaviour
             i++;
         }
 
-
-
-
-
-
     }
 
 
-     private float ProjectHeights(DefaultTile randomTile, DefaultItem itemPrefab){
+    private float ProjectHeights(DefaultTile randomTile, DefaultItem itemPrefab){
         // float tileHeight = randomTile.GetTileHeight();
         // float itemHeight = itemPrefab.GetComponent<Renderer>().bounds.size.y;
         // float fixedHeight = randomTile.transform.position.y + ((tileHeight + (itemHeight / 2f)) / 1f);
