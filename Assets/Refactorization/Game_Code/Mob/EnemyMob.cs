@@ -181,6 +181,7 @@ public class EnemyMob : MonoBehaviour{
 
 
     private void InitiallyTargetMainBuilding(){
+        Debug.Log("We are at the method InitiallyTargetMainBuilding");
         //cachMemoryPathTiles
 
         int rowLength = BetterGridOverlay.Instance.rows;
@@ -189,20 +190,29 @@ public class EnemyMob : MonoBehaviour{
 
         cachMemoryPathTiles.Clear();
 
-        for(int i=0; i < rowLength; i++){
-            var coordinates = BetterGridOverlay.Instance.FindCoordinatesWithTile(currentTile);
-            int columnCoordinate = -1;
-            if (coordinates.HasValue)
-            {
-                columnCoordinate = coordinates.Value.Item2;
-            }
-            else
-            {
-                Debug.LogError("Coordinates for the current tile are null.");
-            }
 
-            DefaultTile tile = BetterGridOverlay.Instance.FindTileWithCoordinates(i, columnCoordinate);
+        var coordinates = BetterGridOverlay.Instance.FindCoordinatesWithTile(lastTileInMyPath);
+        int x = -1;
+        if (coordinates.HasValue)
+        {
+            x = coordinates.Value.Item1;
+        }
+        else
+        {
+            Debug.LogError("Coordinates for the last tile in my path are null.");
+        }
+
+        for(int i=0; i < columnLength; i++){
+            DefaultTile tile = BetterGridOverlay.Instance.FindTileWithCoordinates(x,  i );
             cachMemoryPathTiles.Add(tile);
+        }
+
+
+
+        //Debug.Log("CachMemoryPathTiles at InitiallyTargetMainBuilding is " + cachMemoryPathTiles);
+
+        foreach(DefaultTile tile in cachMemoryPathTiles){
+            Debug.Log("CachMemoryPathTiles at InitiallyTargetMainBuilding is " + tile);
         }
 
         
