@@ -48,9 +48,23 @@ public class EnemyTile : DefaultTile
 
 
     public void SpawnEnemyMobAtSomePointInTime(){
-        float mobHeight = enemyMobPrefab.gameObject.GetComponent<Renderer>().bounds.size.y;  //move to start, but carefull about overriding. 
-        float spawnPositionY = transform.position.y + (GetTileHeight() + (mobHeight / 2)); 
-        Vector3 spawnedMobPosition = new Vector3(transform.position.x, spawnPositionY  ,transform.position.z);
+        //float mobHeight = enemyMobPrefab.gameObject.GetComponent<Renderer>().bounds.size.y;  //move to start, but carefull about overriding. 
+        //float spawnPositionY = transform.position.y + (GetTileHeight() + (mobHeight / 2)); 
+        //Vector3 spawnedMobPosition = new Vector3(transform.position.x, spawnPositionY  ,transform.position.z);
+
+        Renderer tileRenderer = GetComponent<Renderer>();
+        Renderer mobRenderer = enemyMobPrefab.GetComponent<Renderer>();
+
+        float tileTopY = tileRenderer.bounds.max.y;
+
+        float bottomOffset = mobRenderer.bounds.min.y - enemyMobPrefab.transform.position.y;
+
+        float spawnY = tileTopY - bottomOffset;
+
+        Vector3 spawnedMobPosition = new Vector3(transform.position.x, spawnY, transform.position.z);
+
+
+
 
     
         EnemyMob enemyMob = Instantiate(enemyMobPrefab, spawnedMobPosition, Quaternion.identity);

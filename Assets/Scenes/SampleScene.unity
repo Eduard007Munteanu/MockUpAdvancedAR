@@ -12327,7 +12327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc158a19d4f0c640bad327809aacdac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridOverlay: {fileID: 2545789297594193618, guid: a9f7b3053e01ff64d9c26d013358c0cd, type: 3}
   itemsPrefabTypes:
   - {fileID: 26106160839137917, guid: 130437ff75e8fd940937a4cb2e2e196e, type: 3}
   - {fileID: 1906971717574370499, guid: 8db1c2257b33b62419b876278612e137, type: 3}
@@ -24436,9 +24435,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3101334644521883295, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
+      propertyPath: rows
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3101334644521883295, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
+      propertyPath: columns
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3101334644521883295, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
       propertyPath: itemManager
       value: 
       objectReference: {fileID: 1092835987}
+    - target: {fileID: 3302035566366111678, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3302035566366111678, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5543173170310422914, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
       propertyPath: m_Name
       value: Game_Holder

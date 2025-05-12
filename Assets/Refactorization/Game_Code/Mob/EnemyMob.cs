@@ -18,7 +18,7 @@ public class EnemyMob : MonoBehaviour{
 
     [SerializeField] public float speedFactor = 0.008f;
 
-    private DefaultTile[] allTiles; 
+    //private DefaultTile[] allTiles;     Probably not usefull
 
     private DefaultTile lastTile;
 
@@ -168,6 +168,7 @@ public class EnemyMob : MonoBehaviour{
 
 
     private void EndBoardReached(){
+        Debug.Log("Distance between current enemy mob and lastTileInMyPath is of " + Vector3.Distance(transform.position, lastTileInMyPath.transform.position));
         if(Vector3.Distance(transform.position, lastTileInMyPath.transform.position) < 0.1f){
             Debug.Log("We reached the end of the boardGame, boys!");
             transform.position = new Vector3(lastTileInMyPath.transform.position.x, transform.position.y, lastTileInMyPath.transform.position.z);
@@ -263,7 +264,7 @@ public class EnemyMob : MonoBehaviour{
         Vector3 myPosition = transform.position;
         Bounds myBounds = GetComponent<Collider>().bounds;
 
-        foreach (DefaultTile tile in allTiles)
+        foreach (DefaultTile tile in cachMemoryPathTiles)//allTiles)
         {
             if (tile == null) continue;
 
