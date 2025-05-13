@@ -30,11 +30,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ca5439634f4de34dae8c25f2e507bac, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ca5439634f4de34dae8c25f2e507bac, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ca5439634f4de34dae8c25f2e507bac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -46,7 +46,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ca5439634f4de34dae8c25f2e507bac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8ca5439634f4de34dae8c25f2e507bac, type: 3}
       propertyPath: m_Name
@@ -77,10 +77,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d74601db9936ba4f8e0cdf7d48125c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 2
-  gravity: 9.81
-  damping: 0.02
-  initialAngleDeg: 10
-  initialVelocity: 0
-  impulseStrength: {x: 1, y: 3}
-  impulseInterval: {x: 5, y: 15}
+  pivotOffsetPercent: 0.1
+  initialKickStrength: 50
+  maxRandomKick: 30
+  swingDamping: 1
+  swingSpeed: 3
+  minImpulseInterval: 3
+  maxImpulseInterval: 7
