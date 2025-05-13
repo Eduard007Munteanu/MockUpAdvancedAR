@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using Meta.XR.MRUtilityKit.SceneDecorator;
 using Oculus.Interaction.Samples;
 using Unity.VisualScripting;
@@ -19,6 +20,8 @@ public class MainBuild : DefaultBuild
     //protected override DefaultBuildingEffect BuildingEffect => throw new NotImplementedException();
 
     private DefaultTile tiles;
+
+    private List<DefaultMob> buffer = new List<DefaultMob>();
 
     // Start is called before the first frame update
     void Start()
@@ -139,7 +142,14 @@ public class MainBuild : DefaultBuild
 
             Vector3 finalSpawnPos = new Vector3(0f, spawnPosition.y, 0f);
 
+            // GameObject mob;
+            // if (buffer.Count > 0){
+            //     mob = buffer[0].gameObject;
+            //     buffer.Remove(mob.GetComponent<DefaultMob>());
 
+            // } else{
+            //     mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
+            // }
             GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
 
             
@@ -165,6 +175,46 @@ public class MainBuild : DefaultBuild
             mob.GetComponent<DefaultMob>().AssignToBuilding(this);
         } else {
             //Eduard logic.
+
+
+            GameObject mob = Instantiate(mobPrefab.gameObject, Vector3.zero, Quaternion.identity);
+
+            Renderer mobRenderer = mob.GetComponent<Renderer>();
+
+            float scaleFactor = tiles.ScalingTheObjects(mobRenderer, 5);
+
+            mob.transform.localScale *= scaleFactor;
+
+            Debug.Log("Tiles name is " + tiles);
+
+
+
+            
+
+
+            Renderer bottomRightTileRenderer = tiles.GetComponent<Renderer>();
+            float tileTopY = bottomRightTileRenderer.bounds.max.y;
+
+            float objectBottomOffset = mobRenderer.bounds.min.y - mobPrefab.transform.position.y;
+            float spawnY = tileTopY - objectBottomOffset;
+            
+
+            
+            Vector3 spawnPosition = transform.position;
+            spawnPosition.y = spawnY;
+
+            mob.transform.position = spawnPosition;
+
+
+            buffer.Add(mob.GetComponent<DefaultMob>());
+
+            
+
+            
+
+            
+
+
 
 
             //GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
