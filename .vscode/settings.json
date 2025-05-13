@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "mockmock.sln"
+    "dotnet.defaultSolution": "aar-attila.sln"
 }
