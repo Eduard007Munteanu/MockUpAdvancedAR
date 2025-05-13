@@ -30,7 +30,7 @@ public class TouchingSystem : MonoBehaviour{
         }
 
         // play sound effect
-        AudioManager.Instance.PlaySoundEffect();
+        //AudioManager.Instance.PlaySoundEffect();                       TODO:
 
         Debug.Log("Touched: " + go.name);
 

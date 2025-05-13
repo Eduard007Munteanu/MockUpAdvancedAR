@@ -18,7 +18,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
     private float timer = 0f;
 
-    private float activator = 5f; 
+    private float activator = 1000f; 
 
 
     
@@ -338,66 +338,162 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     }
 
 
-    public void ArrangeEnemyMobs(EnemyMob mob){  //Very similar to ArrangeMobs, maybe refactor that part
+    public void ArrangeEnemyMobs(EnemyMob enemy){
+        enemyMobs.Add(enemy); // Always add the mob first
+
         Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
         Vector3 bottomLeft = tileCorners[3];
         Vector3 bottomRight = tileCorners[2];
-        Vector3 topRight = tileCorners[1];
-        Vector3 topLeft = tileCorners[0];
 
-        int maxCols = 5;
-
-        Vector3 xDir = (bottomRight - bottomLeft).normalized;  // Move right
-        Vector3 zDir = (topLeft - bottomLeft).normalized;      // Move forward (upward visually)
-
+        Vector3 xDir = (bottomRight - bottomLeft).normalized;
         float tileWidth = Vector3.Distance(bottomLeft, bottomRight);
-        float tileHeight = Vector3.Distance(bottomLeft, topLeft);
-        float colSpacing = tileWidth / maxCols;
 
-        int mobIndex = enemyMobs.Count;
-        int col = mobIndex % maxCols;
-        int row = mobIndex / maxCols;
+        // Measure total required width
+        float totalWidth = 0f;
+        List<float> mobWidths = new();
 
-        float rowHeight = tileHeight / 3f;
-
-        if (row * colSpacing > rowHeight)
+        foreach (var m in enemyMobs)
         {
-            Debug.LogWarning("No more vertical space to place mobs!");
+            float width = m.GetComponent<Renderer>().bounds.size.x;
+            mobWidths.Add(width);
+            totalWidth += width;
         }
 
-        Vector3 spawnPos = bottomLeft + (xDir * colSpacing * col) + (zDir * colSpacing * row);
-        spawnPos.y = mob.transform.position.y;
+        if (totalWidth > tileWidth)
+        {
+            Debug.LogWarning($"Not enough space to place {mobs.Count} mobs. Required: {totalWidth}, Available: {tileWidth}");
+            enemyMobs.Remove(enemy); // Roll back
+            return;
+        }
 
-        mob.transform.position = spawnPos;
-        mob.currentTile = this;
-        enemyMobs.Add(mob);
+
+
+        Vector3 tileCenter = (bottomLeft + bottomRight) * 0.5f;
+        Vector3 groupStart = tileCenter - xDir * (totalWidth / 2f);
+
+        // Place all mobs side by side starting from topLeft
+        Vector3 cursor = groupStart;//topLeft;
+        Debug.Log("No building on tile");
+        
+        
+
+        for (int i = 0; i < mobs.Count; i++)
+        {
+            float width = mobWidths[i];
+            Vector3 offset = xDir * (width / 2f);
+            Vector3 spawnPos = cursor + offset;
+            spawnPos.y = enemyMobs[i].transform.position.y;
+
+            enemyMobs[i].transform.position = spawnPos;
+            enemyMobs[i].currentTile = this;
+
+            // Advance the cursor by full width
+            cursor += xDir * width;
+        }
     }
 
-    public bool CanEnemyMobsBeArranged(EnemyMob mob){  //Very similar to ArrangeMobs, maybe refactor that part
+    public virtual bool CanEnemyMobsBeArrangedChecker(){                               
+        List<EnemyMob> theMobs = new List<EnemyMob>(enemyMobs);
+
+        if(theMobs.Count == 0){  //You can arrange if no mob on tile. 
+            return true;
+        }
+
+        EnemyMob mob = theMobs[0];
+
+        theMobs.Add(mob); 
+
         Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
         Vector3 bottomLeft = tileCorners[3];
         Vector3 bottomRight = tileCorners[2];
-        Vector3 topLeft = tileCorners[0];
 
-        int maxCols = 5;
-
+        Vector3 xDir = (bottomRight - bottomLeft).normalized;
         float tileWidth = Vector3.Distance(bottomLeft, bottomRight);
-        float tileHeight = Vector3.Distance(bottomLeft, topLeft);
-        float colSpacing = tileWidth / maxCols;
 
-        int mobIndex = enemyMobs.Count;
-        int row = mobIndex / maxCols;
+       
+        float totalWidth = 0f;
+        List<float> mobWidths = new();
 
-        float rowHeight = tileHeight / 3f;
-
-        if (row * colSpacing > rowHeight)
+        foreach (var m in theMobs)
         {
-            Debug.LogWarning("No more vertical space to place mobs!");
+            float width = m.GetComponent<Renderer>().bounds.size.x;
+            mobWidths.Add(width);
+            totalWidth += width;
+        }
+
+        if (totalWidth > tileWidth)
+        {
+            Debug.LogWarning($"Not enough space to place {theMobs.Count} mobs. Required: {totalWidth}, Available: {tileWidth}");
+            //theMobs.Remove(mob); 
             return false;
         }
-
+        //theMobs.Remove(mob);
         return true;
     }
+
+
+
+
+    // public void ArrangeEnemyMobs(EnemyMob mob){  //Very similar to ArrangeMobs, maybe refactor that part
+    //     Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
+    //     Vector3 bottomLeft = tileCorners[3];
+    //     Vector3 bottomRight = tileCorners[2];
+    //     Vector3 topRight = tileCorners[1];
+    //     Vector3 topLeft = tileCorners[0];
+
+    //     int maxCols = 5;
+
+    //     Vector3 xDir = (bottomRight - bottomLeft).normalized;  // Move right
+    //     Vector3 zDir = (topLeft - bottomLeft).normalized;      // Move forward (upward visually)
+
+    //     float tileWidth = Vector3.Distance(bottomLeft, bottomRight);
+    //     float tileHeight = Vector3.Distance(bottomLeft, topLeft);
+    //     float colSpacing = tileWidth / maxCols;
+
+    //     int mobIndex = enemyMobs.Count;
+    //     int col = mobIndex % maxCols;
+    //     int row = mobIndex / maxCols;
+
+    //     float rowHeight = tileHeight / 3f;
+
+    //     if (row * colSpacing > rowHeight)
+    //     {
+    //         Debug.LogWarning("No more vertical space to place mobs!");
+    //     }
+
+    //     Vector3 spawnPos = bottomLeft + (xDir * colSpacing * col) + (zDir * colSpacing * row);
+    //     spawnPos.y = mob.transform.position.y;
+
+    //     mob.transform.position = spawnPos;
+    //     mob.currentTile = this;
+    //     enemyMobs.Add(mob);
+    // }
+
+    // public bool CanEnemyMobsBeArranged(EnemyMob mob){  //Very similar to ArrangeMobs, maybe refactor that part
+    //     Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
+    //     Vector3 bottomLeft = tileCorners[3];
+    //     Vector3 bottomRight = tileCorners[2];
+    //     Vector3 topLeft = tileCorners[0];
+
+    //     int maxCols = 5;
+
+    //     float tileWidth = Vector3.Distance(bottomLeft, bottomRight);
+    //     float tileHeight = Vector3.Distance(bottomLeft, topLeft);
+    //     float colSpacing = tileWidth / maxCols;
+
+    //     int mobIndex = enemyMobs.Count;
+    //     int row = mobIndex / maxCols;
+
+    //     float rowHeight = tileHeight / 3f;
+
+    //     if (row * colSpacing > rowHeight)
+    //     {
+    //         Debug.LogWarning("No more vertical space to place mobs!");
+    //         return false;
+    //     }
+
+    //     return true;
+    // }
 
 
 
