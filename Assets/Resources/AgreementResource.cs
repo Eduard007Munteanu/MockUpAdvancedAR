@@ -22,6 +22,7 @@ public class AgreementResource : Resource
 
     protected override void onAmountChange(float delta)
     {
+        Debug.Log($"AgreementResource: Amount changed by {delta}. Current amount: {CurrentAmount}");
         resources[ResourceType.Happiness].AddAmount(delta*0.2f);
     }
 
