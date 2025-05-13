@@ -109,20 +109,12 @@ public class BuildManager : MonoBehaviour  //One instance only
         
         
 
-        
-        //buildingObj.transform.position = Vector3.zero;
+        DefaultTile tile = mainBuildInstance.GetTile();
 
+        Renderer theBuildingRenderer = buildingObj.GetComponent<Renderer>();
+        float scaleFactor = tile.ScalingTheObjects(theBuildingRenderer, 2);
 
-        // Renderer buildRenderer = mainBuildInstance.GetComponent<Renderer>();
-        // Vector3 currentSize = buildRenderer.bounds.size;
-
-        // DefaultTile tile = mainBuildInstance.GetTile();
-
-        // (float surfaceWidth, _) = tile.SurfaceArea();
-        // float desiredWidth = surfaceWidth / 10;                                   // Hardcoded
-        // float scaleFactor = desiredWidth / currentSize.x;
-
-        // mainBuildInstance.transform.localScale *= scaleFactor;
+        buildingObj.transform.localScale *= scaleFactor;
 
 
 
@@ -174,13 +166,20 @@ public class BuildManager : MonoBehaviour  //One instance only
             }
         }
         Debug.Log("ActualBuild is " + actualBuild.name);
-        Vector3 spawnPosition = SpawnPosition(tile, actualBuild.gameObject );
-        GameObject building = Instantiate(actualBuild.gameObject, spawnPosition, actualBuild.transform.rotation);//Quaternion.identity);
+        //Vector3 spawnPosition = SpawnPosition(tile, actualBuild.gameObject );
+        GameObject building = Instantiate(actualBuild.gameObject, Vector3.zero /* spawnPosition */, actualBuild.transform.rotation);//Quaternion.identity);
         
 
         
+    
+        Renderer theBuildingRenderer = building.GetComponent<Renderer>();
+        float scaleFactor = tile.ScalingTheObjects(theBuildingRenderer, 2);
+
+        building.transform.localScale *= scaleFactor;
 
 
+        Vector3 spawnPosition = SpawnPosition(tile, building);
+        building.transform.position = spawnPosition;
 
         
         int buildingCount = GetBuildingCount(building.GetComponent<DefaultBuild>());

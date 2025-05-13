@@ -89,7 +89,7 @@ public class TouchingSystem : MonoBehaviour{
         selectedMob.RemoveFromBuilding();
         //selectedMob.AssignToBuilding(); // Here we will have the military building assignment. 
 
-        bool canTheMobBeAdded = defaultTileTouched.CanMobBeArrangedChecker(selectedMob);
+        bool canTheMobBeAdded = defaultTileTouched.CanMobBeArrangedChecker();//defaultTileTouched.CanMobBeArrangedChecker(selectedMob);
         if(canTheMobBeAdded){
             selectedMob.SetBehaviorBasedOnBuilding(null);
             selectedMob.InitMove(targetPosition, defaultTileTouched.gameObject);

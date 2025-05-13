@@ -83,9 +83,8 @@ public class TheRayCaster : MonoBehaviour
                         selectedMob.RemoveFromBuilding();
                         //selectedMob.AssignToBuilding(); // Here we will have the military building assignment. 
 
-                        bool canTheMobBeAdded = tile.CanMobBeArrangedChecker(selectedMob);
-                        if (canTheMobBeAdded)
-                        {
+                        bool canTheMobBeAdded = tile.CanMobBeArrangedChecker();//tile.CanMobBeArrangedChecker(selectedMob);
+                        if(canTheMobBeAdded){
                             selectedMob.SetBehaviorBasedOnBuilding(null);
                             selectedMob.InitMove(targetPosition, hitObj);
                         }
