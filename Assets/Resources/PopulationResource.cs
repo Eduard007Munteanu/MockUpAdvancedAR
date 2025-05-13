@@ -83,20 +83,6 @@ public class PopulationResource : Resource
 
     }
 
-    protected override void onThresholdCrossed(int i, ThresholdCross dir)
-    {
-        switch ( i ) {
-            case 0:
-                if (dir == ThresholdCross.FromDown && !achievementUnlocked)
-                {
-                    CubePaintings.Instance.AddPainting(0);
-                    resources[ResourceType.Score].AddAmount(1000f);
-                    achievementUnlocked = true;
-                }
-                break;
-        }
-    }
-
     protected override void onReachedMax(float excess) {
 
     }

@@ -18,11 +18,6 @@ public class GoldResource : Resource
         ) : base(ResourceType.Gold, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
-        
-        thresholds = new Thresholds(new List<float> {
-            0.00001f,
-            1000f
-        }, initialAmount);
     }
 
     protected override void onAmountChange(float delta)
@@ -41,42 +36,13 @@ public class GoldResource : Resource
 
     }
 
-    protected override void onThresholdCrossed(int i, ThresholdCross dir)
-    {
-        // starving handled in reachedmin
-        switch ((GoldThresholds) i ) {
-
-            case GoldThresholds.Low:
-                if (dir == ThresholdCross.FromUp)
-                {
-                    // Handle starving condition, take away from happiness
-                    resources[ResourceType.Economy].AddAmount(8f);
-                }
-                else
-                {
-                    // Handle recovery from starving condition, so add back some happiness
-                    resources[ResourceType.Economy].AddAmount(-10f);
-                }
-                break;
-            case GoldThresholds.Achievement:
-                if (dir == ThresholdCross.FromDown && !achievementUnlocked)
-                {
-                    CubePaintings.Instance.AddPainting(1);
-                    resources[ResourceType.Score].AddAmount(1000f);
-                    achievementUnlocked = true;
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
     protected override void onReachedMax(float excess) {
-
+        resources[ResourceType.Economy].AddAmount(excess * 0.1f);
     }
 
     protected override void onReachedMin(float deficit) {
-
+        resources[ResourceType.Happiness].AddAmount(deficit * - 0.1f);
+        resources[ResourceType.Economy].AddAmount(deficit * - 0.1f);
     }
 
     protected override void onSpecialAction()

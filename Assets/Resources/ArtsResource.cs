@@ -10,6 +10,7 @@ public class ArtsResource : Resource
     private float artsLevelScaling = 1.2f;
 
     public event Action<int> OnLevelUp; // Parameter is the deficit amount
+    private CardsDeck cardsDeck; // Reference to the CardsDeck instance
     
     // Constructor: Sets up the Arts resource with specific initial values.
     public ArtsResource(
@@ -19,10 +20,10 @@ public class ArtsResource : Resource
         int cycleTicks = 2
         ) : base(ResourceType.Arts, initialAmount, minAmount, maxAmount, cycleTicks)
     {
-        // randomProduction = true;
-        thresholds = new Thresholds(new List<float> {
-            20f
-        }, initialAmount);
+        while (cardsDeck == null) // Wait until the CardsDeck instance is available
+        {
+            cardsDeck = CardsDeck.Instance;
+        }
     }
     protected override void onAmountChange(float delta)
     {
@@ -42,24 +43,6 @@ public class ArtsResource : Resource
 
     }
 
-    protected override void onThresholdCrossed(int i, ThresholdCross dir)
-    {
-        Debug.Log($"ArtsResource: Threshold crossed. Index: {i}, Direction: {dir}");
-        // no functionality. art progression is done through checking against min max
-        switch ( i ) {
-            case 0:
-                if (dir == ThresholdCross.FromDown && !achievementUnlocked)
-                {
-                    CubePaintings.Instance.AddPainting(5);
-                    resources[ResourceType.Score].AddAmount(1000f);
-                    achievementUnlocked = true;
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
     protected override void onReachedMax(float excess) {
         // set amount to 0
         // up the max value
@@ -69,6 +52,7 @@ public class ArtsResource : Resource
         // onReachedMax already invoked with excess
         // still invoke with current level through an other action
         OnLevelUp?.Invoke(artsLevel);
+        cardsDeck.DrawNextCard();
 
         // add to desire of freedom
         resources[ResourceType.Civil_Desire].AddAmount(0.5f); // Example: Arts production increases with civil resource amount
@@ -76,7 +60,7 @@ public class ArtsResource : Resource
         Debug.Log($"ArtsResource: Reached max. Current level: {artsLevel}, New max: {MaximumAmount}");
     }
     protected override void onReachedMin(float deficit) {
-
+        
     }
 
     protected override void onSpecialAction()

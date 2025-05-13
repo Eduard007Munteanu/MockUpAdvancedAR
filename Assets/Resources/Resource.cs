@@ -119,7 +119,7 @@ public abstract class Resource
 
         RecalculateProduction(); // Calculate initial production rate
 
-        thresholds = (initialThresholds == null) ? null : new Thresholds(initialThresholds, CurrentAmount); // Initialize thresholds
+        // thresholds = (initialThresholds == null) ? null : new Thresholds(initialThresholds, CurrentAmount); // Initialize thresholds
     }
 
     // Modifies CurrentAmount by delta, clamps between MinimumAmount and MaximumAmount.
@@ -136,18 +136,6 @@ public abstract class Resource
         // Only trigger if the amount actually changed
         if (CurrentAmount != previousAmount)
         {
-            if (thresholds != null)
-            {
-                var threshDict = thresholds.CheckThresholdsCrossed(CurrentAmount);
-                if (threshDict != null) // if any thresholds crossed
-                {
-                    foreach (var thresh in threshDict)
-                    {
-                        onThresholdCrossed(thresh.Key, thresh.Value);
-                        // OnThresholdCrossed?.Invoke(Type, thresh.Value); // Notify external listeners (UI etc.)
-                    }
-                }
-            }
 
             onAmountChange(delta); // Call abstract method for derived class logic (thresholds etc.)
             OnAmountChanged?.Invoke(Type, CurrentAmount); // Invoke event for external listeners (UI etc.)
@@ -281,7 +269,6 @@ public abstract class Resource
     // (e.g., updating UI elements displaying the production rate).
     protected abstract void onProductionChange(float delta);
     // called on the derived class when the threshold is crossed
-    protected abstract void onThresholdCrossed(int i, ThresholdCross dir);
     protected abstract void onReachedMax(float excess);
     protected abstract void onReachedMin(float deficit);
     protected abstract void onSpecialAction();

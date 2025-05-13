@@ -14,9 +14,11 @@ public class CardsType
     public string typeName;
 }
 
-
 public class CardsDeck : MonoBehaviour
 {
+
+    // TODO: set to false
+    private bool alwayscard = true; // For testing purposes, always true.
 
     public static CardsDeck Instance {get; private set;}
 
@@ -24,7 +26,7 @@ public class CardsDeck : MonoBehaviour
     public List<CardsType> cardTypes;
     private Queue<(GameObject, string)> cardQueue;
 
-    public int numberOfCardsToDraw = 5;
+    public int numberOfCardsToDraw = 3;
 
 
 
@@ -49,7 +51,10 @@ public class CardsDeck : MonoBehaviour
     {
         cardsInHand = CardsInHand.Instance;
         ShuffleDeck();
-        DrawNextCard();
+        if (alwayscard)
+        {
+            DrawNextCard();
+        }
     }
 
     void ShuffleDeck()
@@ -86,7 +91,6 @@ public class CardsDeck : MonoBehaviour
 
     public void DrawNextCard()
     {
-
         if (cardQueue.Count > 0)
         {
             
@@ -152,7 +156,7 @@ public class CardsDeck : MonoBehaviour
         
         cardsInHand.LayoutCardsOnPalm();        
 
-        DrawNextCard();
+        if (alwayscard) DrawNextCard();
         
     }
 

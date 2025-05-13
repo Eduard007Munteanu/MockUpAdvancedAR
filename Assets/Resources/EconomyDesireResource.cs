@@ -24,11 +24,6 @@ public class EconomyDesireResource : Resource
 
     }
 
-    protected override void onThresholdCrossed(int i, ThresholdCross dir)
-    {
-
-    }
-
     protected override void onReachedMax(float excess) {
 
     }
