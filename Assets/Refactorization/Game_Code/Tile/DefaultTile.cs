@@ -184,44 +184,100 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     }
 
 
+    // public void ArrangeMobs(DefaultMob mob)
+    // {
+    //     Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
+    //     Vector3 topLeft = tileCorners[0];
+    //     Vector3 topRight = tileCorners[1];
+    //     Vector3 bottomRight = tileCorners[2];
+    //     Vector3 bottomLeft = tileCorners[3];
+
+    //     int maxCols = 5;
+
+        
+    //     Vector3 xDir = (topRight - topLeft).normalized;
+    //     Vector3 zDir = (bottomLeft - topLeft).normalized;
+
+    //     float tileWidth = Vector3.Distance(topLeft, topRight);
+    //     float tileHeight = Vector3.Distance(topLeft, bottomLeft);
+    //     float colSpacing = tileWidth / maxCols;
+
+    //     int mobIndex = mobs.Count;
+    //     int col = mobIndex % maxCols;
+    //     int row = mobIndex / maxCols;
+
+    //     float rowHeight = tileHeight / 3f;   //Let's have some empty space as well. 
+
+        
+    //     if (row * colSpacing > rowHeight)
+    //     {
+    //         Debug.LogWarning("No more vertical space to place mobs!");
+    //     }
+
+
+
+
+    //     Vector3 spawnPos = topLeft + (xDir * colSpacing * col) + (zDir * colSpacing * row);
+    //     spawnPos.y = mob.transform.position.y; 
+
+    //     mob.transform.position = spawnPos;
+    //     mob.currentTile = this;
+    //     mobs.Add(mob);
+    // }
+
+
+
     public void ArrangeMobs(DefaultMob mob)
     {
+        mobs.Add(mob); // Always add the mob first
+
         Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
         Vector3 topLeft = tileCorners[0];
         Vector3 topRight = tileCorners[1];
-        Vector3 bottomRight = tileCorners[2];
-        Vector3 bottomLeft = tileCorners[3];
 
-        int maxCols = 5;
-
-        
         Vector3 xDir = (topRight - topLeft).normalized;
-        Vector3 zDir = (bottomLeft - topLeft).normalized;
-
         float tileWidth = Vector3.Distance(topLeft, topRight);
-        float tileHeight = Vector3.Distance(topLeft, bottomLeft);
-        float colSpacing = tileWidth / maxCols;
 
-        int mobIndex = mobs.Count;
-        int col = mobIndex % maxCols;
-        int row = mobIndex / maxCols;
+        // Measure total required width
+        float totalWidth = 0f;
+        List<float> mobWidths = new();
 
-        float rowHeight = tileHeight / 3f;   //Let's have some empty space as well. 
-
-        
-        if (row * colSpacing > rowHeight)
+        foreach (var m in mobs)
         {
-            Debug.LogWarning("No more vertical space to place mobs!");
+            float width = m.GetComponent<Renderer>().bounds.size.x;
+            mobWidths.Add(width);
+            totalWidth += width;
         }
 
-        Vector3 spawnPos = topLeft + (xDir * colSpacing * col) + (zDir * colSpacing * row);
-        spawnPos.y = mob.transform.position.y; 
+        if (totalWidth > tileWidth)
+        {
+            Debug.LogWarning($"Not enough space to place {mobs.Count} mobs. Required: {totalWidth}, Available: {tileWidth}");
+            mobs.Remove(mob); // Roll back
+            return;
+        }
 
-        mob.transform.position = spawnPos;
-        mob.currentTile = this;
-        mobs.Add(mob);
+
+
+        Vector3 tileCenter = (topLeft + topRight) * 0.5f;
+        Vector3 groupStart = tileCenter - xDir * (totalWidth / 2f);
+
+        // Place all mobs side by side starting from topLeft
+        Vector3 cursor = groupStart;//topLeft;
+
+        for (int i = 0; i < mobs.Count; i++)
+        {
+            float width = mobWidths[i];
+            Vector3 offset = xDir * (width / 2f);
+            Vector3 spawnPos = cursor + offset;
+            spawnPos.y = mobs[i].transform.position.y;
+
+            mobs[i].transform.position = spawnPos;
+            mobs[i].currentTile = this;
+
+            // Advance the cursor by full width
+            cursor += xDir * width;
+        }
     }
-
 
     public virtual bool CanMobBeArrangedChecker(DefaultMob mob){                               //Duplication.... To be fixed.
         Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
