@@ -1,11 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class CubePaintings : MonoBehaviour
 {
-    [SerializeField] private GameObject painting1;
-    [SerializeField] private GameObject painting2;
-    [SerializeField] private GameObject painting3;
-    [SerializeField] private GameObject painting4;
+    [Tooltip("List of paintings to place on the cube face")]
+    [SerializeField] private List<GameObject> paintings;
 
     [Tooltip("The face of the cube to place paintings on (0-5: right, left, up, down, forward, back)")]
     [SerializeField] private int targetFace = 5;
@@ -16,19 +15,15 @@ public class CubePaintings : MonoBehaviour
     [Tooltip("Space between paintings")]
     [SerializeField] private float spacing = 0.05f;
 
-    private GameObject[] paintingPrefabs;
-    private Vector2[] gridPositions = new Vector2[4] {
-        new Vector2(-1,  1), // top-left
-        new Vector2( 1,  1), // top-right
-        new Vector2(-1, -1), // bottom-left
-        new Vector2( 1, -1)  // bottom-right
-    };
-
     private void Start()
     {
-        paintingPrefabs = new GameObject[] { painting1, painting2, painting3, painting4 };
+        if (paintings == null || paintings.Count == 0)
+        {
+            Debug.LogWarning("No paintings assigned.");
+            return;
+        }
 
-        for (int i = 0; i < paintingPrefabs.Length; i++)
+        for (int i = 0; i < paintings.Count; i++)
         {
             AddPainting(i);
         }
@@ -36,18 +31,8 @@ public class CubePaintings : MonoBehaviour
 
     private void AddPainting(int index)
     {
-        if (paintingPrefabs.Length != 4)
-        {
-            Debug.LogError("Exactly 4 paintings are required.");
-            return;
-        }
-
-        GameObject prefab = paintingPrefabs[index];
-        if (prefab == null)
-        {
-            Debug.LogWarning($"Painting prefab at index {index} is null.");
-            return;
-        }
+        GameObject prefab = paintings[index];
+        if (prefab == null) return;
 
         Renderer cubeRenderer = GetComponent<Renderer>();
         if (cubeRenderer == null)
@@ -62,33 +47,43 @@ public class CubePaintings : MonoBehaviour
         Vector3 faceRight = Vector3.Cross(faceUp, -faceNormal).normalized;
         float distanceToFace = GetDistanceToFace(cubeSize, targetFace);
 
+        int totalPaintings = paintings.Count;
+        int rows = 2;
+        int cols = Mathf.CeilToInt((float)totalPaintings / rows);
+        int row = index / cols;
+        int col = index % cols;
+
+        float availableWidth = cubeSize.x * 0.8f;
+        float availableHeight = cubeSize.y * 0.8f;
+
+        float paintingWidth = (availableWidth - spacing * (cols - 1)) / cols;
+        float paintingHeight = (availableHeight - spacing * (rows - 1)) / rows;
+
         GameObject painting = Instantiate(prefab);
         Renderer paintingRenderer = painting.GetComponent<Renderer>();
         if (paintingRenderer == null)
         {
-            Debug.LogError($"Painting at index {index} must have a Renderer component.");
+            Debug.LogError($"Painting at index {index} must have a Renderer.");
             Destroy(painting);
             return;
         }
 
-        Vector3 paintingSize = paintingRenderer.bounds.size;
-        float availableWidth = cubeSize.x * 0.8f;
-        float availableHeight = cubeSize.y * 0.8f;
-        float paintingWidth = (availableWidth - spacing) / 2f;
-        float paintingHeight = (availableHeight - spacing) / 2f;
+        Vector3 originalSize = paintingRenderer.bounds.size;
         float scaleFactor = Mathf.Min(
-            paintingWidth / paintingSize.x,
-            paintingHeight / paintingSize.y
+            paintingWidth / originalSize.x,
+            paintingHeight / originalSize.y
         );
-
         painting.transform.localScale *= scaleFactor;
-        paintingSize = painting.GetComponent<Renderer>().bounds.size;
 
-        Vector2 gridPos = gridPositions[index];
+        Vector3 scaledSize = painting.GetComponent<Renderer>().bounds.size;
+
+        float xOffset = -((cols - 1) * (paintingWidth + spacing)) / 2f + col * (paintingWidth + spacing);
+        float yOffset = ((rows - 1) * (paintingHeight + spacing)) / 2f - row * (paintingHeight + spacing);
+
         Vector3 position = transform.position
-            + faceNormal * (distanceToFace + paintingOffset + paintingSize.z / 2f)
-            + faceRight * (gridPos.x * (paintingWidth / 2f + spacing / 2f))
-            + faceUp * (gridPos.y * (paintingHeight / 2f + spacing / 2f));
+            + faceNormal * (distanceToFace + paintingOffset + scaledSize.z / 2f)
+            + faceRight * xOffset
+            + faceUp * yOffset;
 
         painting.transform.position = position;
         painting.transform.parent = transform;
