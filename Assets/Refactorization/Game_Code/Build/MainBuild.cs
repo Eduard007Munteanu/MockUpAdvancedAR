@@ -33,7 +33,13 @@ public class MainBuild : DefaultBuild
     // Update is called once per frame
     void Update()
     {
-        
+        if (buffer.Count > 0 && tiles.CanMobBeArrangedChecker())
+        {
+            DefaultMob theMob = buffer[0];
+            buffer.RemoveAt(0);
+            tiles.ArrangeMobs(theMob);
+            theMob.AssignToBuilding(this);
+        }
     }
 
     public override void Init(int Id, DefaultTile tile = null){
@@ -195,7 +201,7 @@ public class MainBuild : DefaultBuild
             Renderer bottomRightTileRenderer = tiles.GetComponent<Renderer>();
             float tileTopY = bottomRightTileRenderer.bounds.max.y;
 
-            float objectBottomOffset = mobRenderer.bounds.min.y - mobPrefab.transform.position.y;
+            float objectBottomOffset = mobRenderer.bounds.min.y - mob.transform.position.y;
             float spawnY = tileTopY - objectBottomOffset;
             
 
