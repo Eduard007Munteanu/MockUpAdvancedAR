@@ -56,12 +56,12 @@ public class AgreementResource : Resource
     private float calculateAgreement()
     {
         float civil = resources[ResourceType.Civil].CurrentAmount;
-
         float economy = resources[ResourceType.Economy].CurrentAmount;
         float civilDesire = resources[ResourceType.Civil_Desire].CurrentAmount;
         float economyDesire = resources[ResourceType.Economy_Desire].CurrentAmount;
-        // float societal = resources[ResourceType.Societal].CurrentAmount;
+        float societal = resources[ResourceType.Societal].CurrentAmount;
         // float societalDesire = resources[ResourceType.Societal_Desire].CurrentAmount;
+        float threshold = societal / 2f;
 
         float civilAgreement = 100f - Mathf.Abs(civil - civilDesire);
         float economyAgreement = 100f - Mathf.Abs(economy - economyDesire);

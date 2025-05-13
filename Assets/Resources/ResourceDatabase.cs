@@ -80,6 +80,7 @@ public static ResourceDatabase Instance
         HappinessResource happiness = new HappinessResource();
         WorkPowerResource workPower = new WorkPowerResource();
         AgreementResource agreement = new AgreementResource();
+        ScoreResource score = new ScoreResource();
 
         // Phase 2: Populate the dictionary
         Debug.Log("InitializeResources in ResourceDatabase: Phase 2 - Populating Dictionary.");
@@ -100,6 +101,7 @@ public static ResourceDatabase Instance
             { economyDesire.Type, economyDesire },
             { happiness.Type, happiness },
             { workPower.Type, workPower },
+            { score.Type, score }
         };
 
         Debug.Log("ResourceDatabase initialized with resources. Phase 3 - Post Initialization.");
