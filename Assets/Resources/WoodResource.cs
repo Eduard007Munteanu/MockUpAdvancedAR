@@ -7,6 +7,7 @@ public class WoodResource : Resource
     private enum WoodThresholds
     {
         Low,
+        Achievement,
     }
 
     public WoodResource(
@@ -18,7 +19,8 @@ public class WoodResource : Resource
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
         thresholds = new Thresholds(new List<float> {
-            0.00001f
+            0.00001f,
+            1000f
         }, initialAmount);
     }
 
@@ -47,6 +49,12 @@ public class WoodResource : Resource
                 {
                     // Handle recovery from starving condition, so add back some happiness
                     resources[ResourceType.Economy].AddAmount(-10f);
+                }
+                break;
+            case WoodThresholds.Achievement:
+                if (dir == ThresholdCross.FromDown)
+                {
+                    // TODO: achievement
                 }
                 break;
             default:

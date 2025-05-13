@@ -8,6 +8,7 @@ public class FoodResource : Resource
     private enum FoodThresholds
     {
         Starving,
+        Achievement,
         // Add more thresholds as needed
     }
 
@@ -20,7 +21,8 @@ public class FoodResource : Resource
     {
         // add thresholds here, follow FoodThresholds order, keep list in ascending order
         thresholds = new Thresholds(new List<float> {
-            0.00001f
+            0.00001f,
+            1000f,
         }, initialAmount);
     }
 
@@ -52,6 +54,13 @@ public class FoodResource : Resource
                     resources[ResourceType.Happiness].AddAmount(8f);
                     resources[ResourceType.Economy].AddAmount(-10f);
                 }
+                break;
+            case FoodThresholds.Achievement:
+                if (dir == ThresholdCross.FromDown)
+                {
+                    // TODO: Add painting and other passive effects?
+                }
+                
                 break;
             default:
                 break;

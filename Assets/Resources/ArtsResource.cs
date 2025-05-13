@@ -20,6 +20,9 @@ public class ArtsResource : Resource
         ) : base(ResourceType.Arts, initialAmount, minAmount, maxAmount, cycleTicks)
     {
         // randomProduction = true;
+        thresholds = new Thresholds(new List<float> {
+            100f
+        }, initialAmount);
     }
     protected override void onAmountChange(float delta)
     {
@@ -36,6 +39,17 @@ public class ArtsResource : Resource
     protected override void onThresholdCrossed(int i, ThresholdCross dir)
     {
         // no functionality. art progression is done through checking against min max
+        switch (i)
+        {
+            case 0:
+                if (dir == ThresholdCross.FromDown)
+                {
+                    // TODO: Handle achievement condition
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     protected override void onReachedMax(float excess) {

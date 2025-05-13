@@ -7,6 +7,7 @@ public class GoldResource : Resource
     private enum GoldThresholds
     {
         Low,
+        Achievement,
     }
 
     public GoldResource(
@@ -19,7 +20,8 @@ public class GoldResource : Resource
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
         
         thresholds = new Thresholds(new List<float> {
-            0.00001f
+            0.00001f,
+            1000f
         }, initialAmount);
     }
 
@@ -48,6 +50,12 @@ public class GoldResource : Resource
                 {
                     // Handle recovery from starving condition, so add back some happiness
                     resources[ResourceType.Economy].AddAmount(-10f);
+                }
+                break;
+            case GoldThresholds.Achievement:
+                if (dir == ThresholdCross.FromDown)
+                {
+                    // TODO: Handle achievement condition
                 }
                 break;
             default:

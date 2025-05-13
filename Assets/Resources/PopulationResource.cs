@@ -29,7 +29,9 @@ public class PopulationResource : Resource
         ) : base(ResourceType.Population, initialAmount, minAmount, maxAmount, cycleTicks, initialThresholds, initialFlat, initialMod1, initialMod2, initialConst) // TODO: Update ResourceType
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
-        
+        thresholds = new Thresholds(new List<float> {
+            30f
+        }, initialAmount);
     }
 
     protected override void onAmountChange(float delta)
@@ -77,7 +79,17 @@ public class PopulationResource : Resource
 
     protected override void onThresholdCrossed(int i, ThresholdCross dir)
     {
-
+        switch (i)
+        {
+            case 0:
+                if (dir == ThresholdCross.FromDown)
+                {
+                    // TODO: Handle achievement condition
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     protected override void onReachedMax(float excess) {
