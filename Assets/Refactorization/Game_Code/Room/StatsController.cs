@@ -23,6 +23,9 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
     [Tooltip("Drag the 'GoldText' GameObject here from the hierarchy.")]
     public TextMeshPro goldText; 
 
+    [Tooltip("Drag the 'ScoreField' GameObject here from the hierarchy.")]
+    public TextMeshPro scoreText; 
+
     private ResourceDatabase resources; // Removed the initialization in Awake
     void Awake()
     {
@@ -40,6 +43,7 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
         resources[ResourceType.Might].OnAmountChanged += UpdateMightValue;
         resources[ResourceType.Food].OnAmountChanged += UpdateFoodValue;
         resources[ResourceType.Gold].OnAmountChanged += UpdateGoldValue;
+        resources[ResourceType.Score].OnAmountChanged += UpdateScoreValue; // Added for score updates
     }
 
 
@@ -58,6 +62,7 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
             UpdateFoodValue(ResourceType.Food, 0); // Initial value
             UpdateHappinessValue(ResourceType.Happiness, 0); // Initial value
             UpdateGoldValue(ResourceType.Gold, 0); // Initial value
+            UpdateScoreValue(ResourceType.Score, 0); // Initial value
         }
     }
 
@@ -159,6 +164,14 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
         if (goldText != null)
         {
             goldText.text = "Gold: " + (int) resources[type].CurrentAmount + "/" + resources[type].MaximumAmount;
+        }
+    }
+
+    public void UpdateScoreValue(ResourceType type, float value)
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = ((int) resources[type].CurrentAmount).ToString();
         }
     }
 }

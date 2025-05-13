@@ -18,12 +18,14 @@ public class MightResource : Resource
 
     protected override void onAmountChange(float delta)
     {
-        if (CurrentAmount > 50f)
+        if (CurrentAmount > 50f && !achievementUnlocked)
         {
             CubePaintings.Instance.AddPainting(2);
             resources[ResourceType.Score].AddAmount(1000f);
             achievementUnlocked = true;
         }
+
+        resources[ResourceType.Score].AddAmount(delta * 50f);
     }
 
     protected override void onProductionChange(float delta)

@@ -23,7 +23,7 @@ public class GoldResource : Resource
     protected override void onAmountChange(float delta)
     {
         resources[ResourceType.Score].AddAmount(delta * 0.05f);
-        if (CurrentAmount > 1000f)
+        if (CurrentAmount > 1000f && !achievementUnlocked)
         {
             CubePaintings.Instance.AddPainting(1);
             resources[ResourceType.Score].AddAmount(1000f);

@@ -27,7 +27,7 @@ public class ArtsResource : Resource
         resources[ResourceType.Happiness].AddAmount(delta * 0.001f); // Example: Arts production increases happiness
         resources[ResourceType.Score].AddAmount(delta * 0.05f);
         
-        if (CurrentAmount > 50f){ // TODO: change
+        if (CurrentAmount > 50f && !achievementUnlocked){ // TODO: change
             CubePaintings.Instance.AddPainting(5);
             resources[ResourceType.Score].AddAmount(1000f);
             achievementUnlocked = true;

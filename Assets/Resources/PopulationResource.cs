@@ -70,7 +70,7 @@ public class PopulationResource : Resource
                 resources[ResourceType.Food].AddProductionConstant(unitsDecreased * ration); // food consumption decreases (so, add to production constant)
             }
         }
-        if (CurrentAmount > 1000f)
+        if (CurrentAmount > 50f && !achievementUnlocked)
         {
             CubePaintings.Instance.AddPainting(2);
             resources[ResourceType.Score].AddAmount(1000f);
