@@ -32,15 +32,6 @@ public class PopulationResource : Resource
         
     }
 
-    public override void PostInitialize()
-    {
-        base.PostInitialize();
-        if (firstCycle) {
-            firstCycle = false;
-            // InitialPops();
-        }
-    }
-
     protected override void onAmountChange(float delta)
     {
 
@@ -63,6 +54,7 @@ public class PopulationResource : Resource
                 AddProductionModifier(calculateBirthRateDelta(unitsIncreased)); // adjust production based on birth rate
                 resources[ResourceType.Food].AddProductionConstant(-unitsIncreased * ration); // food consumption increases
             }
+            resources[ResourceType.Score].AddAmount(unitsIncreased * 5f);
         }
         // Population Decreased across one or more integer thresholds
         else if (newFloor < oldFloor)

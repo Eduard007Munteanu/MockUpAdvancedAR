@@ -26,7 +26,7 @@ public class FoodResource : Resource
 
     protected override void onAmountChange(float delta)
     {
-
+        resources[ResourceType.Score].AddAmount(delta * 0.05f);
     }
 
     protected override void onProductionChange(float delta)

@@ -26,12 +26,12 @@ public enum ResourceType
     Population,
     Arts, Food, Gold, Wood,
     Civil, Societal, Economy,
-    Civil_Desire, Societal_Desire, Economy_Desire, 
+    Civil_Desire, Societal_Desire, Economy_Desire,
     Agreement,
     Happiness,
     Might, EnemyMight,// Threat, TollRatio, 
     // DrawAmount, DrawsLeft, // ??
-    WorkPower,
+    WorkPower, Score,
 
     // Add other resources/stats as needed
 }
@@ -77,15 +77,15 @@ public abstract class Resource
 
     // Constructor: Initializes the resource. Called by concrete implementations.
     protected Resource(
-        ResourceType type, 
-        float initialAmount, 
-        float minAmount, 
-        float maxAmount, 
+        ResourceType type,
+        float initialAmount,
+        float minAmount,
+        float maxAmount,
         int cycleTicks,
         List<float> initialThresholds = null, // Optional thresholds for this resource
-        float initialFlat = 0f, 
-        float initialMod1 = 1f, 
-        float initialMod2 = 1f, 
+        float initialFlat = 0f,
+        float initialMod1 = 1f,
+        float initialMod2 = 1f,
         float initialConst = 0f
         )
     {
@@ -94,7 +94,7 @@ public abstract class Resource
         MaximumAmount = maxAmount;
         productionCycleTicks = cycleTicks;
         ticksUntilNextCycle = productionCycleTicks; // Start ready for the first cycle or wait full cycle? Let's wait.
-        
+
         this.initialThresholds = initialThresholds; // Store initial thresholds for later use
         this.initialAmount = initialAmount; // Store initial values for later use
         this.initialFlat = initialFlat;
@@ -103,7 +103,8 @@ public abstract class Resource
         this.initialConst = initialConst;
     }
 
-    public virtual void PostInitialize() {
+    public virtual void PostInitialize()
+    {
         resources = ResourceDatabase.Instance; // Get the singleton instance of the resource database
         if (resources == null)
         {
@@ -170,7 +171,7 @@ public abstract class Resource
     public virtual void AddProductionModifier(float flatDelta = 0f, float mod1Delta = 0f, float mod2Delta = 0f)
     {
         Debug.Log($"ResourceBase AddProductionModifier {flatDelta}, {mod1Delta}, {mod2Delta} to {Type}. Current production: {Production}");
-        
+
         flat += flatDelta;
         mod1 += mod1Delta;
         mod2 += mod2Delta;
@@ -186,14 +187,14 @@ public abstract class Resource
         Debug.Log($"ResourceBase AddProductionConstant {constDelta} to {Type}. Current production: {Production}");
 
         constant += constDelta;
-        
+
         RecalculateProduction();
     }
 
     public virtual void TriggerSpecialAction()
     {
         Debug.Log($"ResourceBase TriggerSpecialAction for {Type}. Current production: {Production}");
-        
+
         onSpecialAction(); // Call abstract method for derived class logic (e.g., special events)
     }
 
@@ -202,7 +203,7 @@ public abstract class Resource
     private void RecalculateProduction()
     {
         // Debug.Log($"ResourceBase RecalculateProduction for {Type}. Current production: {Production}");
-        
+
         // Core production formula
         float prevProduction = Production; // Store previous production for comparison
         Production = (flat * mod1 * mod2) + constant;
@@ -216,7 +217,7 @@ public abstract class Resource
     public virtual void Tick()
     {
         Debug.Log($"Tick for {Type}. amount: {CurrentAmount}. production: {Production}.");
-        
+
         if (productionCycleTicks == 0) return;
         ticksUntilNextCycle--;
         if (ticksUntilNextCycle <= 0)
@@ -226,9 +227,10 @@ public abstract class Resource
         }
     }
 
-    public virtual void AddMax(float delta) {
+    public virtual void AddMax(float delta)
+    {
         Debug.Log($"ResourceBase AddMax {delta} to {Type}. Current max: {MaximumAmount}");
-        
+
         MaximumAmount += delta;
         if (CurrentAmount > MaximumAmount) // Clamp current amount if it exceeds new max
         {
@@ -239,9 +241,10 @@ public abstract class Resource
 
     }
 
-    public virtual void AddMin(float delta) {
+    public virtual void AddMin(float delta)
+    {
         Debug.Log($"ResourceBase AddMin {delta} to {Type}. Current min: {MinimumAmount}");
-        
+
         MinimumAmount += delta;
         if (CurrentAmount < MinimumAmount) // Clamp current amount if it falls below new min
         {
@@ -250,6 +253,11 @@ public abstract class Resource
             OnReachedMin?.Invoke(Type, CurrentAmount - MinimumAmount); // Invoke event for external listeners (UI etc.)
         }
 
+    }
+
+    public virtual bool IsEnough(float amount)
+    {
+        return CurrentAmount >= amount;
     }
 
     // Applies the cached production amount to the CurrentAmount.

@@ -47,13 +47,13 @@ public class ItemDatabase: MonoBehaviour{
             collectedItemsCount[itemClass] += increaseBy;
         }
 
-        if (item.GetItemClass() == "stoneItem"){
+        if (item.GetItemClass() == "StoneItem"){
             resources[ResourceType.Food].AddAmount(increaseBy);
-        } else if (item.GetItemClass() == "goldItem"){
+        } else if (item.GetItemClass() == "GoldItem"){
             resources[ResourceType.Gold].AddAmount(increaseBy);
-        } 
-        
-
+        } else if (item.GetItemClass() == "TreeItem") {
+            resources[ResourceType.Wood].AddAmount(increaseBy);
+        }
 
         OnCollectedItemsUpdated?.Invoke(GetCollectedItemsCountDataPacket());
     }
