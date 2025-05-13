@@ -258,11 +258,26 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
 
 
-        Vector3 tileCenter = (topLeft + topRight) * 0.5f;
-        Vector3 groupStart = tileCenter - xDir * (totalWidth / 2f);
+        Vector3 cursor = Vector3.zero; // Initialize cursor with a default value
+        if(buildingOnTile != null){
+            Renderer buildingOnTileRenderer = buildingOnTile.GetComponent<Renderer>();
+            float maxZPositionOfBuilding = buildingOnTileRenderer.bounds.size.z;
+            float mobZ = mob.GetComponent<Renderer>().bounds.size.z;
+            float offsetFromBuilding = maxZPositionOfBuilding / 2f + mobZ;  //HARDCODED
+            Vector3 tileCenter = (topLeft + topRight) * 0.5f;
+            Vector3 groupStart = tileCenter - new Vector3(0, 0, (maxZPositionOfBuilding / 2f + offsetFromBuilding));
+            cursor = groupStart - xDir * (totalWidth / 2f);
+            //float differenceBetweenMinMaxZTile = GetComponent<Renderer>().bounds.max.z - GetComponent<Renderer>().bounds.min.z;
+            
 
-        // Place all mobs side by side starting from topLeft
-        Vector3 cursor = groupStart;//topLeft;
+        } else if(buildingOnTile == null){
+            Vector3 tileCenter = (topLeft + topRight) * 0.5f;
+            Vector3 groupStart = tileCenter - xDir * (totalWidth / 2f);
+
+            // Place all mobs side by side starting from topLeft
+            cursor = groupStart;//topLeft;
+        }
+        
 
         for (int i = 0; i < mobs.Count; i++)
         {
@@ -277,6 +292,8 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
             // Advance the cursor by full width
             cursor += xDir * width;
         }
+
+
     }
 
     public virtual bool CanMobBeArrangedChecker(DefaultMob mob){                               //Duplication.... To be fixed.
