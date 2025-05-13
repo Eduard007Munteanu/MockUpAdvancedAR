@@ -204,16 +204,19 @@ public class TheRayCaster : MonoBehaviour
 
 
 
-    float vectorYHeightGivenTile(DefaultTile tile, DefaultMob mob)
-    {
-        Vector3 tilePosition = tile.gameObject.transform.position;
+     float vectorYHeightGivenTile(DefaultTile tile, DefaultMob mob){  //Incorrect
+        
+        Renderer tileRenderer = tile.GetComponent<Renderer>();
+        Renderer objectRenderer = mob.GetComponent<Renderer>();
 
-        float tileHeight = tile.GetTileHeight();
-        float mobHeight = mob.GetMobHeight();
+        float tileTopY = tileRenderer.bounds.max.y;
+        float objectBottomOffset = objectRenderer.bounds.min.y - mob.transform.position.y;
+        float spawnY = tileTopY - objectBottomOffset;
 
-        float height = tilePosition.y + ((tileHeight + (mobHeight / 2f)) / 1f);
-        return height;
-    }
+
+        //float height = tilePosition.y + ((tileHeight + (mobHeight / 2f))  / 1f);
+        return spawnY;
+     }
 
 
 
