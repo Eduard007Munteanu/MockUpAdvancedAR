@@ -10,7 +10,7 @@ public class LightController : MonoBehaviour
 
     [Header("Master Intensity Control")]
     [Tooltip("Global base intensity for all candles. Flicker will be relative to this.")]
-    [Range(0f, 8f)] // Adjust max range as you see fit for your project
+    [Range(0f, 10f)] // Adjust max range as you see fit for your project
     public float masterBaseIntensity = 1.0f;
     private float _previousMasterBaseIntensity; // For Inspector updates
 
@@ -46,8 +46,6 @@ public class LightController : MonoBehaviour
             resources = ResourceDatabase.Instance;
         }
 
-        resources[ResourceType.Agreement].OnAmountChanged += CalculateBaseIntensity;
-        resources[ResourceType.Happiness].OnAmountChanged += CalculateBaseIntensity;
     }
 
     void CalculateBaseIntensity(ResourceType type, float delta)
@@ -55,11 +53,13 @@ public class LightController : MonoBehaviour
         if (type == ResourceType.Happiness)
         {
             happiness = happiness + delta; // Assuming happiness is a percentage
+            happiness = resources[ResourceType.Happiness].CurrentAmount;
             SetSpecificCandleBaseIntensity(0, happiness/100f);
         }
         else if (type == ResourceType.Agreement)
         {
             agreement = agreement + delta; // Assuming agreement is a percentage
+            agreement = resources[ResourceType.Agreement].CurrentAmount;
             SetSpecificCandleBaseIntensity(1, agreement/100f);
         }
     }
@@ -95,6 +95,14 @@ public class LightController : MonoBehaviour
             // Assign a unique random seed for Perlin noise for each light for variation
             _perlinNoiseSeeds.Add(Random.Range(0f, 1000f));
         }
+
+        happiness = resources[ResourceType.Happiness].CurrentAmount;
+        agreement = resources[ResourceType.Agreement].CurrentAmount;
+
+        Debug.Log($"RoomController: Initial happiness: {happiness}, agreement: {agreement}");
+
+        resources[ResourceType.Agreement].OnAmountChanged += CalculateBaseIntensity;
+        resources[ResourceType.Happiness].OnAmountChanged += CalculateBaseIntensity;
     }
 
     void Update()
@@ -130,6 +138,8 @@ public class LightController : MonoBehaviour
             // The division by flickerSmoothness effectively makes flickerSmoothness act like a duration for the lerp
             currentLight.intensity = Mathf.Lerp(currentLight.intensity, targetFlickerIntensity, Time.deltaTime / flickerSmoothness);
         }
+        
+        CalculateBaseIntensity(ResourceType.Happiness, 0f); // Update the base intensity based on happiness
     }
 
     /// <summary>
