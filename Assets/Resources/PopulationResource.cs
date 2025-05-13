@@ -29,7 +29,9 @@ public class PopulationResource : Resource
         ) : base(ResourceType.Population, initialAmount, minAmount, maxAmount, cycleTicks, initialThresholds, initialFlat, initialMod1, initialMod2, initialConst) // TODO: Update ResourceType
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
-        
+        thresholds = new Thresholds(new List<float> {
+            50f,
+        }, initialAmount);
     }
 
     protected override void onAmountChange(float delta)
@@ -68,6 +70,12 @@ public class PopulationResource : Resource
                 resources[ResourceType.Food].AddProductionConstant(unitsDecreased * ration); // food consumption decreases (so, add to production constant)
             }
         }
+        if (CurrentAmount > 1000f)
+        {
+            CubePaintings.Instance.AddPainting(2);
+            resources[ResourceType.Score].AddAmount(1000f);
+            achievementUnlocked = true;
+        }
     }
 
     protected override void onProductionChange(float delta)
@@ -77,7 +85,16 @@ public class PopulationResource : Resource
 
     protected override void onThresholdCrossed(int i, ThresholdCross dir)
     {
-
+        switch ( i ) {
+            case 0:
+                if (dir == ThresholdCross.FromDown && !achievementUnlocked)
+                {
+                    CubePaintings.Instance.AddPainting(0);
+                    resources[ResourceType.Score].AddAmount(1000f);
+                    achievementUnlocked = true;
+                }
+                break;
+        }
     }
 
     protected override void onReachedMax(float excess) {

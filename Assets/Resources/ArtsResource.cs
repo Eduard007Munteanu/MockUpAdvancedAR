@@ -20,12 +20,21 @@ public class ArtsResource : Resource
         ) : base(ResourceType.Arts, initialAmount, minAmount, maxAmount, cycleTicks)
     {
         // randomProduction = true;
+        thresholds = new Thresholds(new List<float> {
+            20f
+        }, initialAmount);
     }
     protected override void onAmountChange(float delta)
     {
         Debug.Log($"ArtsResource: Amount changed by {delta}. Current amount: {CurrentAmount}");
         resources[ResourceType.Happiness].AddAmount(delta * 0.001f); // Example: Arts production increases happiness
         resources[ResourceType.Score].AddAmount(delta * 0.05f);
+        
+        if (CurrentAmount > 1000f){
+            CubePaintings.Instance.AddPainting(5);
+            resources[ResourceType.Score].AddAmount(1000f);
+            achievementUnlocked = true;
+        }
     }
 
     protected override void onProductionChange(float delta)
@@ -35,7 +44,20 @@ public class ArtsResource : Resource
 
     protected override void onThresholdCrossed(int i, ThresholdCross dir)
     {
+        Debug.Log($"ArtsResource: Threshold crossed. Index: {i}, Direction: {dir}");
         // no functionality. art progression is done through checking against min max
+        switch ( i ) {
+            case 0:
+                if (dir == ThresholdCross.FromDown && !achievementUnlocked)
+                {
+                    CubePaintings.Instance.AddPainting(5);
+                    resources[ResourceType.Score].AddAmount(1000f);
+                    achievementUnlocked = true;
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     protected override void onReachedMax(float excess) {

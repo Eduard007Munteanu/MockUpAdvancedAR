@@ -8,6 +8,7 @@ public class FoodResource : Resource
     private enum FoodThresholds
     {
         Starving,
+        Achievement,
         // Add more thresholds as needed
     }
 
@@ -20,13 +21,21 @@ public class FoodResource : Resource
     {
         // add thresholds here, follow FoodThresholds order, keep list in ascending order
         thresholds = new Thresholds(new List<float> {
-            0.00001f
+            0.00001f,
+            1000f
         }, initialAmount);
     }
 
     protected override void onAmountChange(float delta)
     {
         resources[ResourceType.Score].AddAmount(delta * 0.05f);
+
+        if (CurrentAmount > 1000f)
+        {
+            CubePaintings.Instance.AddPainting(0);
+            resources[ResourceType.Score].AddAmount(1000f);
+            achievementUnlocked = true;
+        }
     }
 
     protected override void onProductionChange(float delta)
@@ -51,6 +60,14 @@ public class FoodResource : Resource
                     // Handle recovery from starving condition, so add back some happiness
                     resources[ResourceType.Happiness].AddAmount(8f);
                     resources[ResourceType.Economy].AddAmount(-10f);
+                }
+                break;
+            case FoodThresholds.Achievement:
+                if (dir == ThresholdCross.FromDown && !achievementUnlocked)
+                {
+                    CubePaintings.Instance.AddPainting(2);
+                    resources[ResourceType.Score].AddAmount(1000f);
+                    achievementUnlocked = true;
                 }
                 break;
             default:

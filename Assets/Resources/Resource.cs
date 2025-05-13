@@ -75,6 +75,8 @@ public abstract class Resource
     private float initialAmount, initialFlat, initialMod1, initialMod2, initialConst; // Initial values for the resource
     private List<float> initialThresholds;
 
+    protected bool achievementUnlocked = false; // Flag to track if an achievement has been unlocked
+
     // Constructor: Initializes the resource. Called by concrete implementations.
     protected Resource(
         ResourceType type,

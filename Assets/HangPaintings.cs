@@ -15,6 +15,24 @@ public class CubePaintings : MonoBehaviour
     [Tooltip("Space between paintings")]
     [SerializeField] private float spacing = 0.05f;
 
+    public static CubePaintings Instance {get; private set;}
+
+    void Awake()
+    {
+        Debug.Log("ItemDatabase Awake called!");
+
+        if (Instance == null)
+        {
+            Instance = this; 
+            DontDestroyOnLoad(gameObject); 
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
     private void Start()
     {
         if (paintings == null || paintings.Count == 0)
@@ -22,14 +40,9 @@ public class CubePaintings : MonoBehaviour
             Debug.LogWarning("No paintings assigned.");
             return;
         }
-
-        for (int i = 0; i < paintings.Count; i++)
-        {
-            AddPainting(i);
-        }
     }
 
-    private void AddPainting(int index)
+    public void AddPainting(int index)
     {
         GameObject prefab = paintings[index];
         if (prefab == null) return;

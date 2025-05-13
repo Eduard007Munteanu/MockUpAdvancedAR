@@ -13,12 +13,19 @@ public class MightResource : Resource
         int cycleTicks = 1
         ) : base(ResourceType.Might, initialAmount, minAmount, maxAmount, cycleTicks)
     {
-
+        thresholds = new Thresholds(new List<float> {
+            50f
+        }, initialAmount);
     }
 
     protected override void onAmountChange(float delta)
     {
-
+        if (CurrentAmount > 50f)
+        {
+            CubePaintings.Instance.AddPainting(2);
+            resources[ResourceType.Score].AddAmount(1000f);
+            achievementUnlocked = true;
+        }
     }
 
     protected override void onProductionChange(float delta)
@@ -28,7 +35,18 @@ public class MightResource : Resource
 
     protected override void onThresholdCrossed(int i, ThresholdCross dir)
     {
-
+        switch ( i ) {
+            case 0:
+                if (dir == ThresholdCross.FromDown && !achievementUnlocked)
+                {
+                    CubePaintings.Instance.AddPainting(4);
+                    resources[ResourceType.Score].AddAmount(1000f);
+                    achievementUnlocked = true;
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     protected override void onReachedMax(float excess) {

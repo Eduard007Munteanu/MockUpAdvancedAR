@@ -7,6 +7,7 @@ public class GoldResource : Resource
     private enum GoldThresholds
     {
         Low,
+        Achievement,
     }
 
     public GoldResource(
@@ -19,13 +20,20 @@ public class GoldResource : Resource
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
         
         thresholds = new Thresholds(new List<float> {
-            0.00001f
+            0.00001f,
+            1000f
         }, initialAmount);
     }
 
     protected override void onAmountChange(float delta)
     {
         resources[ResourceType.Score].AddAmount(delta * 0.05f);
+        if (CurrentAmount > 1000f)
+        {
+            CubePaintings.Instance.AddPainting(1);
+            resources[ResourceType.Score].AddAmount(1000f);
+            achievementUnlocked = true;
+        }
     }
 
     protected override void onProductionChange(float delta)
@@ -48,6 +56,14 @@ public class GoldResource : Resource
                 {
                     // Handle recovery from starving condition, so add back some happiness
                     resources[ResourceType.Economy].AddAmount(-10f);
+                }
+                break;
+            case GoldThresholds.Achievement:
+                if (dir == ThresholdCross.FromDown && !achievementUnlocked)
+                {
+                    CubePaintings.Instance.AddPainting(1);
+                    resources[ResourceType.Score].AddAmount(1000f);
+                    achievementUnlocked = true;
                 }
                 break;
             default:

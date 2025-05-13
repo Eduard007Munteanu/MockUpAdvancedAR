@@ -22,7 +22,7 @@ public class AgreementResource : Resource
 
     protected override void onAmountChange(float delta)
     {
-        resources[ResourceType.Happiness].AddAmount(delta*0.5f);
+        resources[ResourceType.Happiness].AddAmount(delta*0.2f);
     }
 
     protected override void onProductionChange(float delta)
