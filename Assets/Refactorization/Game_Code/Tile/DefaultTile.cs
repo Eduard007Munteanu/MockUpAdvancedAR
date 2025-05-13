@@ -267,6 +267,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
             Vector3 tileCenter = (topLeft + topRight) * 0.5f;
             Vector3 groupStart = tileCenter - new Vector3(0, 0, (maxZPositionOfBuilding / 2f + offsetFromBuilding));
             cursor = groupStart - xDir * (totalWidth / 2f);
+            Debug.Log("There is a building on tile");
             //float differenceBetweenMinMaxZTile = GetComponent<Renderer>().bounds.max.z - GetComponent<Renderer>().bounds.min.z;
             
 
@@ -276,6 +277,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
             // Place all mobs side by side starting from topLeft
             cursor = groupStart;//topLeft;
+            Debug.Log("No building on tile");
         }
         
 
@@ -296,30 +298,42 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
     }
 
-    public virtual bool CanMobBeArrangedChecker(DefaultMob mob){                               //Duplication.... To be fixed.
+    public virtual bool CanMobBeArrangedChecker(){                               
+        List<DefaultMob> theMobs = new List<DefaultMob>(mobs);
+
+        if(theMobs.Count == 0){  //You can arrange if no mob on tile. 
+            return true;
+        }
+
+        DefaultMob mob = theMobs[0];
+
+        theMobs.Add(mob); 
+
         Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
         Vector3 topLeft = tileCorners[0];
         Vector3 topRight = tileCorners[1];
-        Vector3 bottomLeft = tileCorners[3];
 
-        int maxCols = 5;
-
-
+        Vector3 xDir = (topRight - topLeft).normalized;
         float tileWidth = Vector3.Distance(topLeft, topRight);
-        float tileHeight = Vector3.Distance(topLeft, bottomLeft);
-        float colSpacing = tileWidth / maxCols;
 
-        int mobIndex = mobs.Count;
-        int row = mobIndex / maxCols;
+       
+        float totalWidth = 0f;
+        List<float> mobWidths = new();
 
-        float rowHeight = tileHeight / 3f;   //Let's have some empty space as well. 
-
-
-        if (row * colSpacing > rowHeight)
+        foreach (var m in theMobs)
         {
-            Debug.LogWarning("No more vertical space to place mobs!");
+            float width = m.GetComponent<Renderer>().bounds.size.x;
+            mobWidths.Add(width);
+            totalWidth += width;
+        }
+
+        if (totalWidth > tileWidth)
+        {
+            Debug.LogWarning($"Not enough space to place {theMobs.Count} mobs. Required: {totalWidth}, Available: {tileWidth}");
+            //theMobs.Remove(mob); 
             return false;
         }
+        //theMobs.Remove(mob);
         return true;
     }
 

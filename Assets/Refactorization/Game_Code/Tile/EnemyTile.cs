@@ -86,7 +86,7 @@ public class EnemyTile : DefaultTile
 
 
 
-    public override bool CanMobBeArrangedChecker(DefaultMob mob){ 
+    public override bool CanMobBeArrangedChecker(){ 
         return false;
     }
 

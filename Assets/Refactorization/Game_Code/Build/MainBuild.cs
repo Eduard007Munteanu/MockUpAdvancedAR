@@ -121,47 +121,11 @@ public class MainBuild : DefaultBuild
 
     public override void CreateMob(){
 
-        Vector3[] tileCorners = gridOverlay.GetTileCorners(tiles);
-        float tileHeight = tiles.GetTileHeight();
-
-        Vector3 topLeft = tileCorners[0];
-        Vector3 topRight = tileCorners[1];
-        Vector3 bottomRight = tileCorners[2];
-        Vector3 bottomLeft = tileCorners[3];
-
-        Debug.Log("TopLeft value is: " + topLeft); //Test
-        Debug.Log("TopRight value is: " + topRight); //Test
-        Debug.Log("BottomRight value is: " + bottomRight); //Test
-        Debug.Log("BottomLeft value is: " + bottomLeft); //Test
-
-        Vector3 buildingPosition = transform.position;
-        float spaceBetweenMobs = Vector3.Distance(topLeft, topRight) / 5; //This is the space between the mobs.
-
-        Vector3 spawnPosition = Vector3.zero;
-
-        //float buildingHeight = GetComponent<Renderer>().bounds.size.y;
-        float mobHeight = mobPrefab.gameObject.GetComponent<Renderer>().bounds.size.y;
-
-
-        Vector3 threshold = new Vector3(buildingPosition.x, buildingPosition.y, buildingPosition.z + 0.2f); //This is the threshold for the mob to spawn.
-
-        DefaultMob lastAssignedMobComponent = GetLastAssignedMob(); //Get the last mob spawned in the building.
-
-        if(lastAssignedMobComponent != null){   
-
-            GameObject lastAssignedMob = lastAssignedMobComponent.gameObject;
-
-            spawnPosition = lastAssignedMob.transform.position - Vector3.right * spaceBetweenMobs;
-            if(Vector3.Distance(bottomRight, bottomLeft) < Vector3.Distance(bottomRight, spawnPosition)){
-                spawnPosition = lastAssignedMob.transform.position - Vector3.forward * spaceBetweenMobs;
-                spawnPosition.x = bottomRight.x;
-                if(Vector3.Distance(buildingPosition, spawnPosition) < Vector3.Distance(buildingPosition, threshold)){
-                    return; 
-                } 
-            } 
-        } else {
-            spawnPosition = bottomRight; 
+        if(tiles.CanMobBeArrangedChecker()){
+            Vector3[] tileCorners = gridOverlay.GetTileCorners(tiles);
+            Vector3 bottomRight = tileCorners[2];
             
+            Vector3 spawnPosition = bottomRight;
             Renderer bottomRightTileRenderer = tiles.GetComponent<Renderer>();
             Renderer mobRenderer = mobPrefab.GetComponent<Renderer>();
 
@@ -172,36 +136,53 @@ public class MainBuild : DefaultBuild
             float spawnY = tileTopY - objectBottomOffset;
 
             spawnPosition.y = spawnY;
-        }
 
-        
-        
-        Vector3 finalSpawnPos = new Vector3(spawnPosition.x, spawnPosition.y, spawnPosition.z);    
+            Vector3 finalSpawnPos = new Vector3(0f, spawnPosition.y, 0f);
 
 
-        GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
+            GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
 
-        
-        Renderer theMobRenderer = mob.GetComponent<Renderer>();
-        float scaleFactor = tiles.ScalingTheObjects(theMobRenderer, 5);
-
-        mob.transform.localScale *= scaleFactor;
-
-
-
-
-
-
-        Debug.Log($"a miracle Mob is: {mob}");
-
-        if(mob != null){
-            Debug.Log("a miracle happened Mob created successfully!");
             
+            Renderer theMobRenderer = mob.GetComponent<Renderer>();
+            float scaleFactor = tiles.ScalingTheObjects(theMobRenderer, 5);
+
+            mob.transform.localScale *= scaleFactor;
+
+            Debug.Log("Tiles name is " + tiles);
+
+
+            tiles.ArrangeMobs(mob.GetComponent<DefaultMob>());
+
+            Debug.Log($"a miracle Mob is: {mob}");
+
+            if(mob != null){
+                Debug.Log("a miracle happened Mob created successfully!");
+                
+            } else {
+                Debug.Log("a miracle didnt happen because mob is null");
+            }
+
+            mob.GetComponent<DefaultMob>().AssignToBuilding(this);
         } else {
-            Debug.Log("a miracle didnt happen because mob is null");
+            //Eduard logic.
+
+
+            //GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
+
+            //transform.position
+
         }
 
-        mob.GetComponent<DefaultMob>().AssignToBuilding(this);
+        
+
+        
+
+
+
+
+
+
+        
     }
 
     // Listen to population changes and spawn mobs
