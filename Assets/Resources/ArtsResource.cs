@@ -25,6 +25,7 @@ public class ArtsResource : Resource
     {
         Debug.Log($"ArtsResource: Amount changed by {delta}. Current amount: {CurrentAmount}");
         resources[ResourceType.Happiness].AddAmount(delta * 0.001f); // Example: Arts production increases happiness
+        resources[ResourceType.Score].AddAmount(delta * 0.05f);
     }
 
     protected override void onProductionChange(float delta)
