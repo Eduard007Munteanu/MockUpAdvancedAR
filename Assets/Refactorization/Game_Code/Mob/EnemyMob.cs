@@ -16,7 +16,7 @@ public class EnemyMob : MonoBehaviour{
 
     
 
-    [SerializeField] public float speedFactor = 0.008f;
+    [SerializeField] public float speedFactor = 0.0008f;
 
     //private DefaultTile[] allTiles;     Probably not usefull
 
@@ -152,7 +152,7 @@ public class EnemyMob : MonoBehaviour{
         isMoving = false;
         if(checkCurrentTileIfMobs){
             Debug.Log($"Combat triggered on tile {currentTile.name} with {currentTile.GetAmountOfMobs()} mobs.");
-            bool canEnemyBePlaced = currentTile.CanEnemyMobsBeArranged(this); 
+            bool canEnemyBePlaced = currentTile.CanEnemyMobsBeArrangedChecker(); 
             if(canEnemyBePlaced){
                 currentTile.ArrangeEnemyMobs(this);
                 return;
