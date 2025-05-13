@@ -121,6 +121,7 @@ public class BuildManager : MonoBehaviour  //One instance only
         Vector3 spawnPos = mainBuildInstance.SpawnBuilding();
         buildingObj.transform.position = spawnPos;
 
+        tile.ArrangeMobs(null);
         mainBuildInstance.InitStartingPops();
     }
 
@@ -189,6 +190,9 @@ public class BuildManager : MonoBehaviour  //One instance only
 
         building.GetComponent<DefaultBuild>().Init(buildingCount, tile); //Maybe more, who knows
         AddBuildingDictionary(building.GetComponent<DefaultBuild>());
+
+
+        tile.ArrangeMobs(null);
     }
 
     public void TrySpawnBuilding(DefaultTile tile, DefaultCard card) {

@@ -229,7 +229,10 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
     public void ArrangeMobs(DefaultMob mob)
     {
-        mobs.Add(mob); // Always add the mob first
+        if(mob != null){
+            mobs.Add(mob); // Always add the mob first
+        }
+        
 
         Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
         Vector3 topLeft = tileCorners[0];
@@ -252,7 +255,9 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
         if (totalWidth > tileWidth)
         {
             Debug.LogWarning($"Not enough space to place {mobs.Count} mobs. Required: {totalWidth}, Available: {tileWidth}");
-            mobs.Remove(mob); // Roll back
+            if(mob != null){
+                mobs.Remove(mob); // Roll back
+            }
             return;
         }
 
@@ -262,7 +267,19 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
         if(buildingOnTile != null){
             Renderer buildingOnTileRenderer = buildingOnTile.GetComponent<Renderer>();
             float maxZPositionOfBuilding = buildingOnTileRenderer.bounds.size.z;
-            float mobZ = mob.GetComponent<Renderer>().bounds.size.z;
+            float mobZ;
+            if(mob == null){
+                if(mobs.Count > 0){
+                    mobZ = mobs[0].GetComponent<Renderer>().bounds.size.z;
+                } else {
+                    mobZ = 0;
+                }
+            } else{
+                mobZ = mob.GetComponent<Renderer>().bounds.size.z;
+            }
+            
+
+
             float offsetFromBuilding = maxZPositionOfBuilding / 2f + mobZ;  //HARDCODED
             Vector3 tileCenter = (topLeft + topRight) * 0.5f;
             Vector3 groupStart = tileCenter - new Vector3(0, 0, (maxZPositionOfBuilding / 2f + offsetFromBuilding));
