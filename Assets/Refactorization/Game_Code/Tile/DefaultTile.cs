@@ -27,7 +27,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     // Start is called before the first frame update
     void Start()
     {
-        
+        SurfaceArea();
     }
 
     // Update is called once per frame
@@ -41,6 +41,21 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
             }
             
         }
+    }
+
+
+
+    public (float, float) SurfaceArea(){
+        Renderer tileRenderer = GetComponent<Renderer>();
+        Vector3 surfaceSize = tileRenderer.bounds.size;
+
+        float surfaceWidth = surfaceSize.x;
+        float surfaceDepth = surfaceSize.z;
+
+
+        Debug.Log("Surfacearea of the tile has surfaceWidth being: " + surfaceWidth + " and surfaceDepth being " + surfaceDepth);
+
+        return (surfaceWidth, surfaceDepth);
     }
 
 

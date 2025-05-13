@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Meta.XR.MRUtilityKit.SceneDecorator;
+using Oculus.Interaction.Samples;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -179,6 +180,16 @@ public class MainBuild : DefaultBuild
 
 
         GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
+
+        
+        // Renderer mobRendere = mob.GetComponent<Renderer>();
+        // Vector3 currentSize = mobRendere.bounds.size;
+
+        // (float surfaceWidth, _) = tiles.SurfaceArea();
+        // float desiredWidth = surfaceWidth / 50;                                   // Hardcoded
+        // float scaleFactor = desiredWidth / currentSize.x;
+
+        // mob.transform.localScale *= scaleFactor;
 
         Debug.Log($"a miracle Mob is: {mob}");
 

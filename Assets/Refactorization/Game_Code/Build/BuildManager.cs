@@ -87,6 +87,10 @@ public class BuildManager : MonoBehaviour  //One instance only
 
     void SpawnMainBuilding(){
         GameObject buildingObj = Instantiate(mainBuildingPrefab);
+
+        
+
+
         MainBuild mainBuildInstance = buildingObj.GetComponent<MainBuild>();
 
         if (mainBuildInstance == null)
@@ -99,12 +103,30 @@ public class BuildManager : MonoBehaviour  //One instance only
         
         int id = 1;
         mainBuildInstance.Init(id); //Here I will add the gridOverlay
+
         AddBuildingDictionary(mainBuildInstance);
 
         
-        Vector3 spawnPos = mainBuildInstance.SpawnBuilding();
+        
 
         
+        //buildingObj.transform.position = Vector3.zero;
+
+
+        // Renderer buildRenderer = mainBuildInstance.GetComponent<Renderer>();
+        // Vector3 currentSize = buildRenderer.bounds.size;
+
+        // DefaultTile tile = mainBuildInstance.GetTile();
+
+        // (float surfaceWidth, _) = tile.SurfaceArea();
+        // float desiredWidth = surfaceWidth / 10;                                   // Hardcoded
+        // float scaleFactor = desiredWidth / currentSize.x;
+
+        // mainBuildInstance.transform.localScale *= scaleFactor;
+
+
+
+        Vector3 spawnPos = mainBuildInstance.SpawnBuilding();
         buildingObj.transform.position = spawnPos;
 
         mainBuildInstance.InitStartingPops();
