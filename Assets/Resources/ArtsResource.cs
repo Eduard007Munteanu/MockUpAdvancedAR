@@ -10,7 +10,6 @@ public class ArtsResource : Resource
     private float artsLevelScaling = 1.2f;
 
     public event Action<int> OnLevelUp; // Parameter is the deficit amount
-    private CardsDeck cardsDeck; // Reference to the CardsDeck instance
     
     // Constructor: Sets up the Arts resource with specific initial values.
     public ArtsResource(
@@ -20,10 +19,7 @@ public class ArtsResource : Resource
         int cycleTicks = 2
         ) : base(ResourceType.Arts, initialAmount, minAmount, maxAmount, cycleTicks)
     {
-        while (cardsDeck == null) // Wait until the CardsDeck instance is available
-        {
-            cardsDeck = CardsDeck.Instance;
-        }
+
     }
     protected override void onAmountChange(float delta)
     {
@@ -31,7 +27,7 @@ public class ArtsResource : Resource
         resources[ResourceType.Happiness].AddAmount(delta * 0.001f); // Example: Arts production increases happiness
         resources[ResourceType.Score].AddAmount(delta * 0.05f);
         
-        if (CurrentAmount > 1000f){
+        if (CurrentAmount > 50f){ // TODO: change
             CubePaintings.Instance.AddPainting(5);
             resources[ResourceType.Score].AddAmount(1000f);
             achievementUnlocked = true;
@@ -52,7 +48,7 @@ public class ArtsResource : Resource
         // onReachedMax already invoked with excess
         // still invoke with current level through an other action
         OnLevelUp?.Invoke(artsLevel);
-        cardsDeck.DrawNextCard();
+        CardsDeck.Instance.DrawNextCard();
 
         // add to desire of freedom
         resources[ResourceType.Civil_Desire].AddAmount(0.5f); // Example: Arts production increases with civil resource amount
