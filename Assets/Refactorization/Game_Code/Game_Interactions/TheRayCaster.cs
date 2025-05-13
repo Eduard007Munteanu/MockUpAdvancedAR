@@ -6,24 +6,24 @@ using UnityEngine;
 
 public class TheRayCaster : MonoBehaviour
 {
-    
+
     [SerializeField] private OVRHand rightHand; //Maybe just GameObject, then specific OVRHand?
 
 
-    
+
 
     private GameObject lastHitTile;
 
     private DefaultMob selectedMob;
 
 
-    private bool wasPinching = false; 
+    private bool wasPinching = false;
 
 
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -33,22 +33,24 @@ public class TheRayCaster : MonoBehaviour
 
     }
 
-    
 
 
 
-    void InitiateRaycast(){
+
+    void InitiateRaycast()
+    {
 
         float rightHandPinchStrength = rightHand.GetFingerPinchStrength(OVRHand.HandFinger.Index);
 
 
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
-        
-        
 
 
-        if(Physics.Raycast(ray, out hit, 100f)){
+
+
+        if (Physics.Raycast(ray, out hit, 100f))
+        {
             GameObject hitObj = hit.collider.gameObject;
 
 
@@ -63,31 +65,35 @@ public class TheRayCaster : MonoBehaviour
             Debug.Log("SelectedMob is " + (selectedMob?.name ?? "null") + " And mob is " + (mobs?.name ?? "null"));
 
 
-            
 
 
 
-            if(selectedMob != null && mobs == null && !wasPinching ){
+
+            if (selectedMob != null && mobs == null && !wasPinching)
+            {
                 Debug.Log("Allright!");
-                if(rightHandPinchStrength > 0.8f){
+                if (rightHandPinchStrength > 0.8f)
+                {
                     Debug.Log("Even better than allright!");
-                    if(tile != null){
+                    if (tile != null)
+                    {
                         Debug.Log("We selected the selectedMob to the tile");
-                        Vector3 tilePosition = tile.gameObject.transform.position;  
+                        Vector3 tilePosition = tile.gameObject.transform.position;
                         Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(tile, selectedMob), tilePosition.z);  //Pivot point in empty object parent of tile instead of vectorYHeightGivenTile
                         selectedMob.RemoveFromBuilding();
                         //selectedMob.AssignToBuilding(); // Here we will have the military building assignment. 
 
-                        bool canTheMobBeAdded = tile.CanMobBeArrangedChecker(selectedMob);
+                        bool canTheMobBeAdded = tile.CanMobBeArrangedChecker();//tile.CanMobBeArrangedChecker(selectedMob);
                         if(canTheMobBeAdded){
                             selectedMob.SetBehaviorBasedOnBuilding(null);
                             selectedMob.InitMove(targetPosition, hitObj);
                         }
                         selectedMob = null;
                     }
-                    else if(building != null){
+                    else if (building != null)
+                    {
                         Debug.Log("We selected the selectedMob to the building of type " + building.name);
-                        Vector3 buildingPosition = building.gameObject.transform.position;  
+                        Vector3 buildingPosition = building.gameObject.transform.position;
                         Vector3 targetPosition = new Vector3(buildingPosition.x, vectorYHeightGivenTile(BetterGridOverlay.Instance.GetTiles()[0].GetComponent<DefaultTile>(), selectedMob), buildingPosition.z);
                         selectedMob.RemoveFromBuilding();
                         selectedMob.AssignToBuilding(building);
@@ -98,11 +104,15 @@ public class TheRayCaster : MonoBehaviour
                 }
             }
 
-            if(tile != null && !wasPinching ){
+            if (tile != null && !wasPinching)
+            {
                 GlowEffectTrigger(hitObj);
-                if(CardsInHand.Instance.GetCardsInHand().Count == 1){
-                    if(rightHandPinchStrength > 0.8f){
-                        if(tile != null){
+                if (CardsInHand.Instance.GetCardsInHand().Count == 1)
+                {
+                    if (rightHandPinchStrength > 0.8f)
+                    {
+                        if (tile != null)
+                        {
                             BuildManager.Instance.TrySpawnBuilding(tile, CardsInHand.Instance.GetCardsInHand()[0]);
                             CardsInHand.Instance.RemoveAllCards();
                         }
@@ -111,34 +121,42 @@ public class TheRayCaster : MonoBehaviour
                 }
             }
 
-            if(card != null && CardsInHand.Instance.IsCardInHand(card) && !wasPinching ){
-                if(rightHandPinchStrength > 0.8f){
+            if (card != null && CardsInHand.Instance.IsCardInHand(card) && !wasPinching)
+            {
+                if (rightHandPinchStrength > 0.8f
+                   && card.TryBuyCard())
+                {
                     CardsInHand.Instance.RemoveAllCardsExpect(card);
                 }
             }
 
-            if(building != null && !wasPinching){    //Only spawn once per pinch modification. 
-                
-                if(rightHandPinchStrength > 0.8f && !wasPinching){
+            if (building != null && !wasPinching)
+            {    //Only spawn once per pinch modification. 
+
+                if (rightHandPinchStrength > 0.8f && !wasPinching)
+                {
                     PanelManager.Instance.SpawnPanelOnLeftHand(building);
                 }
-                 
+
             }
 
-            if(mobButton != null && rightHandPinchStrength > 0.8f && !wasPinching){
+            if (mobButton != null && rightHandPinchStrength > 0.8f && !wasPinching)
+            {
                 mobButton.TriggerMobSpawn();
             }
-            
 
-            if(mobs != null && !wasPinching){
-                if(rightHandPinchStrength > 0.8f){
+
+            if (mobs != null && !wasPinching)
+            {
+                if (rightHandPinchStrength > 0.8f)
+                {
                     selectedMob = mobs;
                     Debug.Log("We look and pinched at a mob, nice :) . selectedMob = mobs  , more concrete selectedMob = " + selectedMob.name);
                     selectedMob.ReactOnClick();
                 }
             }
 
-            
+
         }
         wasPinching = rightHandPinchStrength > 0.8f;
     }
@@ -146,8 +164,10 @@ public class TheRayCaster : MonoBehaviour
 
 
 
-    void GlowEffectTrigger(GameObject hitObj){
-        if(hitObj != lastHitTile){
+    void GlowEffectTrigger(GameObject hitObj)
+    {
+        if (hitObj != lastHitTile)
+        {
             GlowEffectReset();
 
             Renderer rend = hitObj.GetComponent<Renderer>();
@@ -160,11 +180,12 @@ public class TheRayCaster : MonoBehaviour
                 }
             }
 
-            lastHitTile = hitObj; 
+            lastHitTile = hitObj;
         }
     }
 
-    void GlowEffectReset(){
+    void GlowEffectReset()
+    {
         if (lastHitTile != null)
         {
             Renderer rend = lastHitTile.GetComponent<Renderer>();
@@ -181,21 +202,22 @@ public class TheRayCaster : MonoBehaviour
         }
     }
 
-    
 
-     float vectorYHeightGivenTile(DefaultTile tile, DefaultMob mob){
+
+    float vectorYHeightGivenTile(DefaultTile tile, DefaultMob mob)
+    {
         Vector3 tilePosition = tile.gameObject.transform.position;
 
         float tileHeight = tile.GetTileHeight();
         float mobHeight = mob.GetMobHeight();
 
-        float height = tilePosition.y + ((tileHeight + (mobHeight / 2f))  / 1f);
+        float height = tilePosition.y + ((tileHeight + (mobHeight / 2f)) / 1f);
         return height;
-     }
+    }
 
-     
 
-    
+
+
 
 
 

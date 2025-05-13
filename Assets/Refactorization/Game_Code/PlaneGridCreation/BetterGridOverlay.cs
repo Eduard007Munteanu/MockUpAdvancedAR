@@ -84,6 +84,10 @@ public class BetterGridOverlay : MonoBehaviour
 
         Debug.Log("Number of tiles " + tiles.Count);
 
+        Debug.Log($"Well Platform scale: {transform.localScale}");
+        Debug.Log($"Well Platform bounds size: {GetComponent<Renderer>().bounds.size}");
+
+
     }
 
 

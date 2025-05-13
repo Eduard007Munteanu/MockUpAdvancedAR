@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour  //One instance only
@@ -86,6 +87,10 @@ public class BuildManager : MonoBehaviour  //One instance only
 
     void SpawnMainBuilding(){
         GameObject buildingObj = Instantiate(mainBuildingPrefab);
+
+        
+
+
         MainBuild mainBuildInstance = buildingObj.GetComponent<MainBuild>();
 
         if (mainBuildInstance == null)
@@ -98,12 +103,22 @@ public class BuildManager : MonoBehaviour  //One instance only
         
         int id = 1;
         mainBuildInstance.Init(id); //Here I will add the gridOverlay
+
         AddBuildingDictionary(mainBuildInstance);
 
         
-        Vector3 spawnPos = mainBuildInstance.SpawnBuilding();
-
         
+
+        DefaultTile tile = mainBuildInstance.GetTile();
+
+        Renderer theBuildingRenderer = buildingObj.GetComponent<Renderer>();
+        float scaleFactor = tile.ScalingTheObjects(theBuildingRenderer, 2);
+
+        buildingObj.transform.localScale *= scaleFactor;
+
+
+
+        Vector3 spawnPos = mainBuildInstance.SpawnBuilding();
         buildingObj.transform.position = spawnPos;
 
         mainBuildInstance.InitStartingPops();
@@ -118,10 +133,24 @@ public class BuildManager : MonoBehaviour  //One instance only
         float objectBottomOffset = objectRenderer.bounds.min.y - objectToBeSpawned.transform.position.y;
         float spawnY = tileTopY - objectBottomOffset;
 
-        
-        Vector3 tileCenter = tileRenderer.transform.position;
 
-        return new Vector3(tileCenter.x, spawnY, tileCenter.z);
+        float tileBackZ = tileRenderer.bounds.min.z;
+        float tileFrontZ = tileRenderer.bounds.max.z;
+
+        float objectDepthZ = objectRenderer.bounds.size.z;
+
+        
+        
+        float spawnZ = tileFrontZ - (objectDepthZ / 2f); 
+        
+        float spawnX = tileRenderer.bounds.center.x;
+
+
+        //Vector3 tileCenter = tileRenderer.bounds.center;
+
+
+
+        return new Vector3(spawnX, spawnY, spawnZ);
     }
 
     private void SpawnBuildingOnTile(DefaultTile tile, BuildCard card){
@@ -137,13 +166,20 @@ public class BuildManager : MonoBehaviour  //One instance only
             }
         }
         Debug.Log("ActualBuild is " + actualBuild.name);
-        Vector3 spawnPosition = SpawnPosition(tile, actualBuild.gameObject );
-        GameObject building = Instantiate(actualBuild.gameObject, spawnPosition, actualBuild.transform.rotation);//Quaternion.identity);
+        //Vector3 spawnPosition = SpawnPosition(tile, actualBuild.gameObject );
+        GameObject building = Instantiate(actualBuild.gameObject, Vector3.zero /* spawnPosition */, actualBuild.transform.rotation);//Quaternion.identity);
         
 
         
+    
+        Renderer theBuildingRenderer = building.GetComponent<Renderer>();
+        float scaleFactor = tile.ScalingTheObjects(theBuildingRenderer, 2);
+
+        building.transform.localScale *= scaleFactor;
 
 
+        Vector3 spawnPosition = SpawnPosition(tile, building);
+        building.transform.position = spawnPosition;
 
         
         int buildingCount = GetBuildingCount(building.GetComponent<DefaultBuild>());

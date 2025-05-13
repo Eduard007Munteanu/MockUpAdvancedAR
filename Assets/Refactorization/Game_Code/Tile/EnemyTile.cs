@@ -48,6 +48,16 @@ public class EnemyTile : DefaultTile
 
 
     public void SpawnEnemyMobAtSomePointInTime(){
+        EnemyMob enemyMob = Instantiate(enemyMobPrefab, Vector3.zero/* spawnedMobPosition */, Quaternion.identity);
+
+
+        Renderer theMobRenderer = enemyMob.GetComponent<Renderer>();
+        float scaleFactor = ScalingTheObjects(theMobRenderer, 5);
+
+        enemyMob.transform.localScale *= scaleFactor;
+
+
+
         Renderer tileRenderer = GetComponent<Renderer>();
         Renderer mobRenderer = enemyMobPrefab.GetComponent<Renderer>();
 
@@ -58,12 +68,15 @@ public class EnemyTile : DefaultTile
         float spawnY = tileTopY - bottomOffset;
 
         Vector3 spawnedMobPosition = new Vector3(transform.position.x, spawnY, transform.position.z);
-
+        enemyMob.transform.position = spawnedMobPosition;
 
 
 
     
-        EnemyMob enemyMob = Instantiate(enemyMobPrefab, spawnedMobPosition, Quaternion.identity);
+        
+
+
+
         enemyMob.HeIsMyCreator(this);
         Debug.Log("Yeah, we added the enemyMob brothers!");
 
@@ -73,7 +86,7 @@ public class EnemyTile : DefaultTile
 
 
 
-    public override bool CanMobBeArrangedChecker(DefaultMob mob){ 
+    public override bool CanMobBeArrangedChecker(){ 
         return false;
     }
 
