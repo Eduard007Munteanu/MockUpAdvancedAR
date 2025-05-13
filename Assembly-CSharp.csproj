@@ -59,58 +59,46 @@
     <UnityVersion>2022.3.57f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Analyzer Include="C:\Users\garlicxd\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
-=======
-    <Analyzer Include="C:\Users\Eduard\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
-    <Analyzer Include="E:\UnityEditor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
-    <Analyzer Include="E:\UnityEditor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
->>>>>>> origin/temp-board-fix
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Resources\EconomyResource.cs" />
-    <Compile Include="Assets\Resources\ArtsResource.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Spawner.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\JustGoBehavior.cs" />
-    <Compile Include="Assets\Resources\SocietalResource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\CivilDesireResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\FarmerMobBehavior.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\ItemDatabase.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\MilitaryCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\SleepBuild.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\DataPacket.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\NormalBuildingPanel.cs" />
-    <Compile Include="Assets\Resources\AgreementResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\CardsDeck.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\MobDatabase.cs" />
-    <Compile Include="Assets\Resources\FoodResource.cs" />
-    <Compile Include="Assets\Resources\CivilDesireResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\BuildCard.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\ScoreResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Gold.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\EconomyDesireResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\LawCard.cs" />
     <Compile Include="Assets\HangPaintings.cs" />
     <Compile Include="Assets\SurfaceSpawner.cs" />
-    <Compile Include="Assets\Resources\SocietalDesireResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Audio\AudioManager.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\EconomyResource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\Thresholds.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\EnemyMob.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\DestructibleObject.cs" />
-    <Compile Include="Assets\Resources\ScoreResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Tile\Tile.cs" />
-    <Compile Include="Assets\Resources\CivilResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\Build.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Tile\DefaultTile.cs" />
-    <Compile Include="Assets\Resources\EconomyDesireResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Game_Interactions\TheRayCaster.cs" />
-    <Compile Include="Assets\Resources\HappinessResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Stone.cs" />
-    <Compile Include="Assets\Resources\ResourceDatabase.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\WoodResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\PanelManager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\DefaultMob.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\SleepCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Round_Manager\RoundManager.cs" />
-    <Compile Include="Assets\Resources\EnemyMightResource.cs" />
     <Compile Include="Assets\the-paintings\prefabs\PaintingDangler.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\ArtsResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Room\LightController.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\MobSpawnButton.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\UpgradePanel.cs" />
@@ -122,8 +110,8 @@
     <Compile Include="Assets\Refactorization\Game_Code\Build\BuildManager.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Explosion.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\MilitaryBuild.cs" />
-    <Compile Include="Assets\Resources\MightResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Game_Interactions\TouchingSystem.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\ResourceEffect.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\Panel.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\PlaneGridCreation\GridOverlay.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\ItemManager.cs" />
@@ -132,35 +120,41 @@
     <Compile Include="Assets\Refactorization\Game_Code\Fighting\Fighting.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\Mobs.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\DefaultPanel.cs" />
-    <Compile Include="Assets\Resources\ResourceEffect.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\PlaneGridCreation\HoverEffects.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Tree.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\BuildingDatabase.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\FoodResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\FarmCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\DefaultBuild.cs" />
-    <Compile Include="Assets\Resources\GoldResource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\SocietalDesireResource.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Despawn.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Item.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\PlaneGridCreation\BetterGridOverlay.cs" />
-    <Compile Include="Assets\Resources\Resource.cs" />
-    <Compile Include="Assets\Resources\PopulationResource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\Resource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\AgreementResource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\SocietalResource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\ResourceDatabase.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\BuildUpgradeCard.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\MightResource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\GoldResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\IMobBehavior.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\WorkPowerResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\SchoolBuilding.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\MobManager.cs" />
-    <Compile Include="Assets\Resources\WoodResource.cs" />
-    <Compile Include="Assets\Resources\Thresholds.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\DefaultItem.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\PopulationResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Tile\EnemyTile.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Helper_Code\ItemBuilding.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\CivilResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Room\StatsController.cs" />
-    <Compile Include="Assets\Resources\WorkPowerResource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\HappinessResource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\EnemyMightResource.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\BlackBull\ReadMe.txt" />
-    <None Include="Assets\Resources\sample_resource.txt" />
+    <None Include="Assets\Refactorization\Game_Code\Resources\sample_resource.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
@@ -218,7 +212,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ClothModule">
-<<<<<<< HEAD
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClothModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -228,9 +221,6 @@
     </Reference>
     <Reference Include="UnityEngine.ClusterRendererModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClusterRendererModule.dll</HintPath>
-=======
-      <HintPath>E:\UnityEditor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClothModule.dll</HintPath>
->>>>>>> origin/temp-board-fix
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ContentLoadModule">
@@ -442,15 +432,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VideoModule">
-<<<<<<< HEAD
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.VideoModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VirtualTexturingModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.VirtualTexturingModule.dll</HintPath>
-=======
-      <HintPath>E:\UnityEditor\2022.3.57f1\Editor\Data\Managed\UnityEngine\UnityEngine.VideoModule.dll</HintPath>
->>>>>>> origin/temp-board-fix
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.WindModule">
