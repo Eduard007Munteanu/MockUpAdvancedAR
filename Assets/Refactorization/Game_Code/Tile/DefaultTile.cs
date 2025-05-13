@@ -59,6 +59,21 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     }
 
 
+    public float ScalingTheObjects(Renderer objectRenderer, float n_factor){
+        Vector3 currentSize = objectRenderer.bounds.size;
+
+        (float surfaceWidth, float surfaceDepth) = SurfaceArea();
+        // float desiredWidth = surfaceWidth / n_factor;                                   // Hardcoded
+        // float scaleFactor = desiredWidth / currentSize.x;
+
+        float desiredSize = Mathf.Min(surfaceWidth, surfaceDepth) / n_factor;
+        float scaleFactor = desiredSize / Mathf.Max(currentSize.x, currentSize.z);
+
+        return scaleFactor;
+
+    }
+
+
 
 
 

@@ -182,14 +182,15 @@ public class MainBuild : DefaultBuild
         GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
 
         
-        // Renderer mobRendere = mob.GetComponent<Renderer>();
-        // Vector3 currentSize = mobRendere.bounds.size;
+        Renderer theMobRenderer = mob.GetComponent<Renderer>();
+        float scaleFactor = tiles.ScalingTheObjects(theMobRenderer, 5);
 
-        // (float surfaceWidth, _) = tiles.SurfaceArea();
-        // float desiredWidth = surfaceWidth / 50;                                   // Hardcoded
-        // float scaleFactor = desiredWidth / currentSize.x;
+        mob.transform.localScale *= scaleFactor;
 
-        // mob.transform.localScale *= scaleFactor;
+
+
+
+
 
         Debug.Log($"a miracle Mob is: {mob}");
 
