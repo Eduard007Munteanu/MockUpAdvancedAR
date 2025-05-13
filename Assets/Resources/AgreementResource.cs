@@ -46,9 +46,9 @@ public class AgreementResource : Resource
     {
         // calculate differences between the last and current agreement amount
         float lastAgreement = CurrentAmount;
-        CurrentAmount = calculateAgreement();
+        float newCurrentAmount = calculateAgreement();
         
-        float deltaAmount = CurrentAmount - lastAgreement;
+        float deltaAmount = newCurrentAmount - lastAgreement;
         AddAmount(deltaAmount); // Update the resource amount with the calculated delta
         Debug.Log($"AgreementResource: Special action triggered. Current agreement: {CurrentAmount}, last: {lastAgreement}, Delta: {deltaAmount}");
     }
