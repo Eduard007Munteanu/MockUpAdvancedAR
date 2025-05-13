@@ -18,7 +18,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
     private float timer = 0f;
 
-    private float activator = 1000f; 
+    private float activator = 10f; 
 
 
     
@@ -82,66 +82,23 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
     void FightingActivation(){
         Debug.Log("FightingActivation here!");
-        Dictionary<string, List<DefaultMob>> defaultMobsSplitted = new Dictionary<string, List<DefaultMob>> {
-        { "military", new List<DefaultMob>() },
-        { "other", new List<DefaultMob>() }
-        };
-
-        Debug.Log("FightingActivation size of mobs is " + mobs.Count);
-
-        foreach (DefaultMob mob in mobs) {
-            var building = mob.GetBuildingAssignedTo();
-            //Debug.Log("Building is " + building.name);
-            if (building == null){
-                Debug.Log("FightingActivation building is null");
-                defaultMobsSplitted["other"].Add(mob);
-                continue;
-            }
-            string type = building.GetBuildingClass();
-            Debug.Log("FightingActivation Type of the building from FightingActivation is " + type);
-            if (type == "military") {
-                defaultMobsSplitted["military"].Add(mob);
-            } else {
-                defaultMobsSplitted["other"].Add(mob);
-            }
-        }
-
-
-    
-        fighting = new Fighting(enemyMobs, defaultMobsSplitted, GetBuilding());
-        (Dictionary<string, List<DefaultMob>> updateMobs, List<EnemyMob> updateEnemyMobs, DefaultBuild theBuilding) = fighting.SimulateFighting();
+        
+        fighting = new Fighting(enemyMobs, mobs, GetBuilding());
+        (List<DefaultMob> updateMobs, List<EnemyMob> updateEnemyMobs, DefaultBuild theBuilding) = fighting.SimulateFighting();
 
 
         buildingOnTile = theBuilding;
 
 
 
-        List<DefaultMob> theMobs = new List<DefaultMob>();
-        foreach(var updateMob in updateMobs){
-            foreach(var i in updateMob.Value){
-                theMobs.Add(i);
-            }
-        }
-
-        // mobs = theMobs;
-        // enemyMobs = updateEnemyMobs;
-
         mobs.Clear();
-        foreach (var updateMob in updateMobs.Values) {
-            mobs.AddRange(updateMob);
-        }
+        mobs.AddRange(updateMobs);
 
         enemyMobs.Clear();
         enemyMobs.AddRange(updateEnemyMobs);
 
 
-        // if(updateEnemyMobs.Count == 0){
-        //     Debug.Log("UpdateEnemyMobs is empty, no enemy");
-        // } 
 
-        // if(enemyMobs.Count == 0){
-        //     Debug.Log("EnemyMobs is empty, no enemy");
-        // }
 
         Debug.Log("UpdateEnemyMobs count is " + updateEnemyMobs.Count);
         Debug.Log("enemyMobs count is " + enemyMobs.Count);
@@ -184,48 +141,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     }
 
 
-    // public void ArrangeMobs(DefaultMob mob)
-    // {
-    //     Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
-    //     Vector3 topLeft = tileCorners[0];
-    //     Vector3 topRight = tileCorners[1];
-    //     Vector3 bottomRight = tileCorners[2];
-    //     Vector3 bottomLeft = tileCorners[3];
-
-    //     int maxCols = 5;
-
-        
-    //     Vector3 xDir = (topRight - topLeft).normalized;
-    //     Vector3 zDir = (bottomLeft - topLeft).normalized;
-
-    //     float tileWidth = Vector3.Distance(topLeft, topRight);
-    //     float tileHeight = Vector3.Distance(topLeft, bottomLeft);
-    //     float colSpacing = tileWidth / maxCols;
-
-    //     int mobIndex = mobs.Count;
-    //     int col = mobIndex % maxCols;
-    //     int row = mobIndex / maxCols;
-
-    //     float rowHeight = tileHeight / 3f;   //Let's have some empty space as well. 
-
-        
-    //     if (row * colSpacing > rowHeight)
-    //     {
-    //         Debug.LogWarning("No more vertical space to place mobs!");
-    //     }
-
-
-
-
-    //     Vector3 spawnPos = topLeft + (xDir * colSpacing * col) + (zDir * colSpacing * row);
-    //     spawnPos.y = mob.transform.position.y; 
-
-    //     mob.transform.position = spawnPos;
-    //     mob.currentTile = this;
-    //     mobs.Add(mob);
-    // }
-
-
+    
 
     public void ArrangeMobs(DefaultMob mob)
     {
@@ -447,70 +363,6 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
         //theMobs.Remove(mob);
         return true;
     }
-
-
-
-
-    // public void ArrangeEnemyMobs(EnemyMob mob){  //Very similar to ArrangeMobs, maybe refactor that part
-    //     Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
-    //     Vector3 bottomLeft = tileCorners[3];
-    //     Vector3 bottomRight = tileCorners[2];
-    //     Vector3 topRight = tileCorners[1];
-    //     Vector3 topLeft = tileCorners[0];
-
-    //     int maxCols = 5;
-
-    //     Vector3 xDir = (bottomRight - bottomLeft).normalized;  // Move right
-    //     Vector3 zDir = (topLeft - bottomLeft).normalized;      // Move forward (upward visually)
-
-    //     float tileWidth = Vector3.Distance(bottomLeft, bottomRight);
-    //     float tileHeight = Vector3.Distance(bottomLeft, topLeft);
-    //     float colSpacing = tileWidth / maxCols;
-
-    //     int mobIndex = enemyMobs.Count;
-    //     int col = mobIndex % maxCols;
-    //     int row = mobIndex / maxCols;
-
-    //     float rowHeight = tileHeight / 3f;
-
-    //     if (row * colSpacing > rowHeight)
-    //     {
-    //         Debug.LogWarning("No more vertical space to place mobs!");
-    //     }
-
-    //     Vector3 spawnPos = bottomLeft + (xDir * colSpacing * col) + (zDir * colSpacing * row);
-    //     spawnPos.y = mob.transform.position.y;
-
-    //     mob.transform.position = spawnPos;
-    //     mob.currentTile = this;
-    //     enemyMobs.Add(mob);
-    // }
-
-    // public bool CanEnemyMobsBeArranged(EnemyMob mob){  //Very similar to ArrangeMobs, maybe refactor that part
-    //     Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
-    //     Vector3 bottomLeft = tileCorners[3];
-    //     Vector3 bottomRight = tileCorners[2];
-    //     Vector3 topLeft = tileCorners[0];
-
-    //     int maxCols = 5;
-
-    //     float tileWidth = Vector3.Distance(bottomLeft, bottomRight);
-    //     float tileHeight = Vector3.Distance(bottomLeft, topLeft);
-    //     float colSpacing = tileWidth / maxCols;
-
-    //     int mobIndex = enemyMobs.Count;
-    //     int row = mobIndex / maxCols;
-
-    //     float rowHeight = tileHeight / 3f;
-
-    //     if (row * colSpacing > rowHeight)
-    //     {
-    //         Debug.LogWarning("No more vertical space to place mobs!");
-    //         return false;
-    //     }
-
-    //     return true;
-    // }
 
 
 
