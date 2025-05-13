@@ -377,7 +377,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
         
         
 
-        for (int i = 0; i < mobs.Count; i++)
+        for (int i = 0; i < enemyMobs.Count; i++)
         {
             float width = mobWidths[i];
             Vector3 offset = xDir * (width / 2f);
