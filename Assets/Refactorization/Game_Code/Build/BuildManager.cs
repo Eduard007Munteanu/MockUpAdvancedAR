@@ -31,6 +31,16 @@ public class BuildManager : MonoBehaviour  //One instance only
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(WaitAndSpawn());
+    }
+
+
+    private IEnumerator WaitAndSpawn()
+    {
+        // Wait until BetterGridOverlay.Instance is not null
+        yield return new WaitUntil(() => BetterGridOverlay.Instance != null);
+
+        // Now it's safe to proceed
         SpawnMainBuilding();
     }
 

@@ -26,12 +26,26 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
     private ResourceDatabase resources; // Singleton instance of ResourceDatabase
 
     // Start is called before the first frame update
+
+
+    private float mightPower = 10f;
+
+
+
     void Start()
     {
         while (resources == null){
             Debug.Log("Waiting for ResourceDatabase to be initialized...");
             resources = ResourceDatabase.Instance;
         }
+    }
+
+    public float GetMightPower(){
+        return mightPower;
+    }
+
+    public void SetMightPower(float changedMight){
+        mightPower = changedMight;
     }
 
     // Update is called once per frame

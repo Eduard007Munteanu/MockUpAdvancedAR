@@ -14,7 +14,7 @@ public class EnemyMob : MonoBehaviour{
 
     private bool checkCurrentTileIfMobs;
 
-    
+        
 
     [SerializeField] public float speedFactor = 0.0008f;
 
@@ -39,6 +39,10 @@ public class EnemyMob : MonoBehaviour{
     private DefaultTile targetTile;
 
     private bool endPointReached = false;
+
+
+
+    private float mightPower = 20f;
 
 
 
@@ -89,6 +93,14 @@ public class EnemyMob : MonoBehaviour{
     void Update()
     {
         Action();
+    }
+
+    public float GetMightPower(){
+        return mightPower;
+    }
+
+    public void SetMightPower(float changedMight){
+        mightPower = changedMight;
     }
 
 

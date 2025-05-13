@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Meta.Voice.Net.WebSockets;
 using Unity.VisualScripting;
+using Unity.VisualScripting.FullSerializer;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -9,11 +11,11 @@ public class Fighting{
 
 
     List<EnemyMob> enemyMobs;
-    Dictionary<string,List<DefaultMob>> defaultMobs;
+    List<DefaultMob> defaultMobs;
 
     private float militaryMightPower;
     private float othersMightPower;
-    private float enemyMightPower;
+    
 
     //private float buildingMightPower = 500f; //Hardcoded
 
@@ -33,7 +35,7 @@ public class Fighting{
 
 
 
-    public Fighting(List<EnemyMob> currentEnemyMobs, Dictionary<string,List<DefaultMob>> currentDefaultMobs, DefaultBuild building){
+    public Fighting(List<EnemyMob> currentEnemyMobs, List<DefaultMob> currentDefaultMobs, DefaultBuild building){
         enemyMobs = currentEnemyMobs;
         defaultMobs = currentDefaultMobs;
         theBuilding = building;
@@ -43,7 +45,7 @@ public class Fighting{
 
         othersMightPower = militaryMightPower / 5; 
 
-        enemyMightPower = 5 * militaryMightPower;
+        //enemyMightPower = 2 * militaryMightPower;
     }
 
 
@@ -62,22 +64,21 @@ public class Fighting{
 
     void AddDefaultMob(DefaultMob defaultMob){
         DefaultBuild build= defaultMob.GetBuildingAssignedTo();
-        string type = build.GetBuildingClass();
 
-        defaultMobs[type].Add(defaultMob);
+        defaultMobs.Add(defaultMob);
     }
 
     void RemoveDefaultMob(DefaultMob defaultMob){
         DefaultBuild build= defaultMob.GetBuildingAssignedTo();
-        string type = build.GetBuildingClass();
+        
 
 
-        defaultMobs[type].Remove(defaultMob);
+        defaultMobs.Remove(defaultMob);
     }
 
     
 
-    public (Dictionary<string, List<DefaultMob>>, List<EnemyMob>, DefaultBuild) SimulateFighting(){
+    public (List<DefaultMob>, List<EnemyMob>, DefaultBuild) SimulateFighting(){
         CalculateTotalMightPower();
         CalculateMobBattleWinner();
 
@@ -107,18 +108,17 @@ public class Fighting{
 
 
     private void DealDamageToTheBuilding(){
-        Debug.Log("In DealDamageToBuilding, totalEnemyMightPower is " + totalEnemyMightPower);
-        Debug.Log("In DealDamageToBuilding, totalMobMightPower is " + totalMobMightPower);
-        theBuilding.SetHP(theBuilding.GetHP() - totalEnemyMightPower);
-        Debug.Log("In DealDamageToBuilding, remaining health " + theBuilding.GetHP() );
-        if(theBuilding != null && theBuilding.GetHP() <= 0){
-            Debug.Log("In DealDamageToBuilding, the building should now be removed, being null");
-            GameObject.Destroy(theBuilding.gameObject);
-            theBuilding = null;
-            Debug.Log("Is trigger from DealDamageToTheBuilding has been called");
-            InitTrigger();
-
-            Debug.Log("enemyMob list count is of in DealDamageToTheBuilding " + enemyMobs.Count);
+        if (theBuilding != null)
+        {
+            theBuilding.SetHP(theBuilding.GetHP() - totalEnemyMightPower);
+            Debug.Log("In DealDamageToBuilding, remaining health " + theBuilding.GetHP());
+            
+            if (theBuilding.GetHP() <= 0)
+            {
+                GameObject.Destroy(theBuilding.gameObject);
+                theBuilding = null;
+                InitTrigger();
+            }
         }
 
     }
@@ -130,11 +130,11 @@ public class Fighting{
     public void CalculateMobBattleWinner(){
         float result = totalMobMightPower - totalEnemyMightPower;
         if(result <= 0){
-            EnemyWonCalculation();
-            if(theBuilding != null){
+            if(theBuilding != null && enemyMobs.Count == 0){
                 DealDamageToTheBuilding();
             } else {
-                InitTrigger();
+                // InitTrigger();
+                EnemyWonCalculation();
                 Debug.Log("Is trigger from CalculateMobBattleWinner has been called");
             }
         } else if(result > 0){
@@ -147,7 +147,8 @@ public class Fighting{
     void MobsWonCalculation(){
         Debug.Log("We called in Fighting MobsWonCalculation");
         float tempTotalEnemyMightPower = totalEnemyMightPower;
-        
+        totalEnemyMightPower = 0f;
+
 
         foreach (var enemy in enemyMobs) {
             if (enemy != null)
@@ -156,71 +157,81 @@ public class Fighting{
         enemyMobs.Clear();
 
 
-        
-        Dictionary<string, int> defaultMobsLength = new Dictionary<string, int>();
-        foreach(var kvp in defaultMobs){
-            string key = kvp.Key;
-            List<DefaultMob> list = kvp.Value;
-            defaultMobsLength[key] = list.Count;
-        }
-
-        if (defaultMobsLength.ContainsKey("other")) {
-            int count = defaultMobsLength["other"];
-            for (int i = count - 1; i >= 0; i--) {
-                if (tempTotalEnemyMightPower > 0) {
-                    tempTotalEnemyMightPower -= othersMightPower;
-                    GameObject.Destroy(defaultMobs["other"][i].gameObject); // <- destroy first
-                    defaultMobs["other"].RemoveAt(i);
-                }
+        for(int i = 0; i < defaultMobs.Count; i++){
+            float individualMobPower = defaultMobs[i].GetMightPower();
+            float result = tempTotalEnemyMightPower - individualMobPower;
+            
+            if(result > 0){
+                defaultMobs[i].SetMightPower(0);
+                GameObject.Destroy(defaultMobs[i].gameObject);
+                tempTotalEnemyMightPower = result;
+            } else{
+                defaultMobs[i].SetMightPower(Math.Abs(result));
+                tempTotalEnemyMightPower = 0;
             }
         }
 
-        if (defaultMobsLength.ContainsKey("military")) {
-            int count = defaultMobsLength["military"];
-            for (int i = count - 1; i >= 0; i--) {
-                if (tempTotalEnemyMightPower > 0) {
-                    tempTotalEnemyMightPower -= militaryMightPower;
-                    GameObject.Destroy(defaultMobs["military"][i].gameObject); // <- destroy first
-                    defaultMobs["military"].RemoveAt(i);
-                }
-            }
-        }
-
+        defaultMobs.RemoveAll(m => m == null);
         
     }
 
     void EnemyWonCalculation() {
         Debug.Log("We called in Fighting EnemyWonCalculation");
         float tempTotalMobMightPower = totalMobMightPower;
+        totalMobMightPower = 0f;
 
 
-        foreach (var list in defaultMobs.Values) {
-            foreach (var mob in list) {
-                if (mob != null) GameObject.Destroy(mob.gameObject);
+        foreach (var defaultMob in defaultMobs) {
+            if (defaultMob != null)
+                GameObject.Destroy(defaultMob.gameObject);
+        }
+        defaultMobs.Clear();
+
+
+        for(int i = 0; i < enemyMobs.Count; i++){
+            float individualEnemyPower = enemyMobs[i].GetMightPower();
+            float result = tempTotalMobMightPower - individualEnemyPower;
+            if(result > 0){
+                enemyMobs[i].SetMightPower(0);
+                GameObject.Destroy(enemyMobs[i].gameObject);
+                tempTotalMobMightPower = result;
+            } else{
+                enemyMobs[i].SetMightPower(Math.Abs(result));
+                tempTotalMobMightPower = 0;
             }
-            list.Clear();
         }
 
-        Debug.Log("enemyMob list count is of " + enemyMobs.Count);
+        enemyMobs.RemoveAll(m => m == null);
+        
 
-        for (int i = enemyMobs.Count - 1; i >= 0; i--) {
-            if (tempTotalMobMightPower > 0) {
-                Debug.Log("We are actually trying to remove the enemyMob");
-                tempTotalMobMightPower -= enemyMightPower;
-                if (enemyMobs[i] != null){GameObject.Destroy(enemyMobs[i].gameObject);}
-                enemyMobs.RemoveAt(i);
-            }
-        }
+
     }
 
 
 
     void CalculateTotalMightPower(){
-        totalEnemyMightPower =  enemyMightPower * enemyMobs.Count;
+        
+        totalEnemyMightPower =  0;//enemyMightPower * enemyMobs.Count;
+        foreach(EnemyMob enemyMOBOS in enemyMobs ){
+            totalEnemyMightPower += enemyMOBOS.GetMightPower();
+        }
+
+
+
+
+
         Debug.Log("The nice TotalEnemyMightPower is " + totalEnemyMightPower);
-        totalMobMightPower =  (othersMightPower * defaultMobs["other"].Count ) + (militaryMightPower * defaultMobs["military"].Count);
+        
+        //totalMobMightPower =  (othersMightPower * defaultMobs["other"].Count ) + (militaryMightPower * defaultMobs["military"].Count);
+
+        totalMobMightPower = 0;
+        foreach(DefaultMob MOBOS in defaultMobs){
+            totalMobMightPower += MOBOS.GetMightPower();
+        }
+
+
         Debug.Log("The nice TotalMobMightPower is " + totalMobMightPower);
-        Debug.Log("The nice defaultMobs['other'] is " + defaultMobs["other"] + " and it's count of " + defaultMobs["other"].Count +  "defaultMobs['military'] is " + defaultMobs["military"] + " and it's count of " + defaultMobs["military"].Count);
+        //Debug.Log("The nice defaultMobs['other'] is " + defaultMobs["other"] + " and it's count of " + defaultMobs["other"].Count +  "defaultMobs['military'] is " + defaultMobs["military"] + " and it's count of " + defaultMobs["military"].Count);
     }
 
    
