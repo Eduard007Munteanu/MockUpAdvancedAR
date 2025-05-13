@@ -1572,11 +1572,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a00470c8f4957f14687710e16009fabf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 6741967199189696747, guid: 3929d8185c27a9943a100a92cb12a9f9, type: 3}
-  enemyTilePrefab: {fileID: 6741967199189696747, guid: 21e8276643515664b8c6076f4730beff, type: 3}
-  rows: 7
-  columns: 7
-  itemManager: {fileID: 1092835987}
 --- !u!1 &111864129
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,7 +2122,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 3a0facbe1ae7f184bbf1a7c16f983723, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 1031c9002d579574fa07d3a927068dd9, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -11772,7 +11767,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e10b6bd726747ec4c96c84f5ce1be570, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.282
   m_Pitch: 1
   Loop: 0
@@ -23280,8 +23275,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d1df45a3aa89fb34e80cd65bd26490d8, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 1e4cb8cae91f9eb46bc04b9c8a62eacf, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
