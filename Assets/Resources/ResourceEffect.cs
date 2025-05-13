@@ -7,7 +7,8 @@
 // using System.Diagnostics;
 using UnityEngine;
 
-public class ResourceEffect{
+public class ResourceEffect
+{
     public ResourceType Type { get; }
     public float Amount { get; }
     public float Flat { get; }
@@ -16,8 +17,9 @@ public class ResourceEffect{
     public float Constant { get; }
     public float Min { get; }
     public float Max { get; }
-    ResourceDatabase resources = ResourceDatabase.Instance;
-    public ResourceEffect(ResourceType type, float amount, float flat=0, float mod1=0, float mod2=0, float constant=0, float min=0, float max=0) {
+    ResourceDatabase resources;
+    public ResourceEffect(ResourceType type, float amount, float flat = 0, float mod1 = 0, float mod2 = 0, float constant = 0, float min = 0, float max = 0)
+    {
         this.Type = type;
         this.Amount = amount;
         this.Flat = flat;
@@ -28,8 +30,14 @@ public class ResourceEffect{
         this.Max = max;
 
         Debug.Log($"ResourceEffect created: {type}, Amount: {amount}, Flat: {flat}, Mod1: {mod1}, Mod2: {mod2}, Constant: {constant}");
+
+        while (resources == null)
+        {
+            resources = ResourceDatabase.Instance;
+        }
     }
-    public void Apply() {
+    public void Apply()
+    {
         resources[Type].AddAmount(Amount);
         resources[Type].AddProductionModifier(Flat, Mod1, Mod2);
         resources[Type].AddProductionConstant(Constant);
@@ -38,11 +46,17 @@ public class ResourceEffect{
 
         Debug.Log($"ResourceEffect applied: {Type}, Amount: {Amount}, Flat: {Flat}, Mod1: {Mod1}, Mod2: {Mod2}, Constant: {Constant}");
     }
-    public void Cancel() {
+    public void Cancel()
+    {
         resources[Type].AddAmount(-Amount);
         resources[Type].AddProductionModifier(-Flat, -Mod1, -Mod2);
         resources[Type].AddProductionConstant(-Constant);
 
         Debug.Log($"ResourceEffect cancelled: {Type}, Amount: {-Amount}, Flat: {-Flat}, Mod1: {-Mod1}, Mod2: {-Mod2}, Constant: {-Constant}");
+    }
+
+    public bool IsEnough() 
+    {
+        return resources[Type].IsEnough(Amount);
     }
 }

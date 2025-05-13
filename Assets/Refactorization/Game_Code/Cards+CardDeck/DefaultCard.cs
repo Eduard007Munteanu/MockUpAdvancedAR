@@ -9,8 +9,9 @@ public abstract class DefaultCard : MonoBehaviour, Cards{
     private bool isCardGrabbable = false;
     private bool isAlreadyGrabbed = false; 
 
-    [SerializeField] private Dictionary<DefaultItem, int> defineCost;  
+    [SerializeField] private Dictionary<DefaultItem, int> defineCost;
 
+    protected List<ResourceEffect> resourceEffects;
 
     void Start(){
 
@@ -20,27 +21,15 @@ public abstract class DefaultCard : MonoBehaviour, Cards{
         SendToCardInHands();
     }
 
-
-    public void Init(bool cardGrabbable, CardsDeck uniqueCardDeck){
+    public virtual void Init(bool cardGrabbable, CardsDeck uniqueCardDeck){
         isCardGrabbable = cardGrabbable;
         cardDeck = uniqueCardDeck;
     }
-
-
-
 
     public string GetCardClass()
     {
         return CardClass;
     }
-
-
-
-
-    // public int GetCardID()   Probably not needed. 
-    // {
-        
-    // }
 
     public Dictionary<DefaultItem, int> GetCost()
     {
@@ -52,21 +41,34 @@ public abstract class DefaultCard : MonoBehaviour, Cards{
         if(!isCardGrabbable || cardDeck == null || isAlreadyGrabbed) return;
         float grabDistance = cardDeck.getGrabDistance();
         float dist = Vector3.Distance(transform.position, cardDeck.gameObject.transform.position);
-            if (dist > grabDistance)
+        if (dist > grabDistance)
+        {
+            Debug.Log("Card taken from the deck!");
+            isAlreadyGrabbed = true;
+            cardDeck?.OnCardGrabDistanceReached(this);
+        }
+    }
+
+    public bool TryBuyCard()
+    {
+        if (resourceEffects == null || resourceEffects.Count == 0)
+        {
+            Debug.Log("No resource effects to apply.");
+            return true;
+        }
+        
+        // check if resource has enough amount
+        foreach (var effect in resourceEffects)
+        {
+            if (!effect.IsEnough())
             {
-                
-                Debug.Log("Card taken from the deck!");
-                isAlreadyGrabbed = true;
-
-
-
-                
-
-
-                cardDeck?.OnCardGrabDistanceReached(this);
-
-                
-
+                Debug.Log("Not enough resources to apply effect.");
+                return false;
             }
+        }
+        
+        foreach (var effect in resourceEffects) effect.Apply();
+
+        return true;
     }
 }

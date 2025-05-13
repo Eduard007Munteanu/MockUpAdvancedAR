@@ -122,6 +122,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Fighting\Fighting.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\Mobs.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\DefaultPanel.cs" />
+    <Compile Include="Assets\Resources\ResourceEffect.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\PlaneGridCreation\HoverEffects.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Tree.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Database_Manager\BuildingDatabase.cs" />
@@ -129,7 +130,6 @@
     <Compile Include="Assets\Refactorization\Game_Code\Build\DefaultBuild.cs" />
     <Compile Include="Assets\Resources\GoldResource.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Despawn.cs" />
-    <Compile Include="Assets\Refactorization\Game_Code\BuildingEffect\ResourceEffect.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Item.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\PlaneGridCreation\BetterGridOverlay.cs" />
     <Compile Include="Assets\Resources\Resource.cs" />

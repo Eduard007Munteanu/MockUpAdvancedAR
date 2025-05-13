@@ -6,4 +6,12 @@ public class FarmCard : BuildCard
 {
 
    protected override string CardClass => "farming";
+
+   public override void Init(bool cardGrabbable, CardsDeck uniqueCardDeck) {
+        base.Init(cardGrabbable, uniqueCardDeck);
+        resourceEffects = new List<ResourceEffect>
+        {
+            new ResourceEffect(ResourceType.Gold, -50f),
+        };
+    }
 }
