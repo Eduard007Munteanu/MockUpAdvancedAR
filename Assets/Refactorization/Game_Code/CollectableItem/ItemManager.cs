@@ -88,7 +88,7 @@ public class ItemManager : MonoBehaviour
         int i = 0;
         foreach (Vector3 position in usedPositions)
         {
-            DefaultItem itemObject = Instantiate(specificItemPrefab, position, Quaternion.identity);
+            DefaultItem itemObject = Instantiate(specificItemPrefab, position, specificItemPrefab.transform.rotation);//Quaternion.identity);
             itemObject.Init(i);
             itemObject.name = $"Material_{i}";
 
