@@ -9,7 +9,7 @@ public class ArtsResource : Resource
     private int artsLevel = 0; // level of arts, used for checking thresholds
     private float artsLevelScaling = 1.2f;
 
-    public event Action<int> OnLevelUp; // Parameter is the deficit amount
+    public event Action<int> OnLevelUp; // Parameter is the current level
     
     // Constructor: Sets up the Arts resource with specific initial values.
     public ArtsResource(
@@ -24,12 +24,22 @@ public class ArtsResource : Resource
     protected override void onAmountChange(float delta)
     {
         Debug.Log($"ArtsResource: Amount changed by {delta}. Current amount: {CurrentAmount}");
-        resources[ResourceType.Happiness].AddAmount(delta * 0.001f); // Example: Arts production increases happiness
-        resources[ResourceType.Score].AddAmount(delta * 0.05f);
+        if (resources != null) // Ensure resources is initialized
+        {
+            resources[ResourceType.Happiness].AddAmount(delta * 0.001f); // Example: Arts production increases happiness
+            resources[ResourceType.Score].AddAmount(delta * 0.05f);
+        }
         
         if (CurrentAmount > 1000f && !achievementUnlocked){
-            CubePaintings.Instance.AddPainting(5);
-            resources[ResourceType.Score].AddAmount(1000f);
+            // Assuming CubePaintings.Instance is valid and accessible
+            if (CubePaintings.Instance != null)
+            {
+                CubePaintings.Instance.AddPainting(5);
+            }
+            if (resources != null)
+            {
+                resources[ResourceType.Score].AddAmount(1000f);
+            }
             achievementUnlocked = true;
         }
     }
@@ -40,18 +50,35 @@ public class ArtsResource : Resource
     }
 
     protected override void onReachedMax(float excess) {
-        // set amount to 0
-        // up the max value
-        CurrentAmount = excess;
+        // set amount to 0, then add excess to start the new level count
+        CurrentAmount = 0f;
+        AddAmount(excess); // This will also trigger onAmountChange if needed
+
         MaximumAmount *= artsLevelScaling;
         artsLevel++;
-        // onReachedMax already invoked with excess
-        // still invoke with current level through an other action
-        OnLevelUp?.Invoke(artsLevel);
-        CardsDeck.Instance.AddDraw();
+        
+        // base.onReachedMax(excess); // Call the base class's OnReachedMax event invocation
+        OnLevelUp?.Invoke(artsLevel); // Invoke the specific level up event for Arts
 
-        // add to desire of freedom
-        resources[ResourceType.Civil_Desire].AddAmount(0.5f); // Example: Arts production increases with civil resource amount
+        // Display Notification
+        if (NotificationManager.Instance != null)
+        {
+            NotificationManager.Instance.ShowNotification("Arts Advancement", $"Level {artsLevel} Reached!\n<size=70%>(Draw a card)</size>");
+        }
+        else
+        {
+            Debug.LogWarning("NotificationManager instance not found. Cannot show 'Arts Advancement' notification.");
+        }
+
+        if (CardsDeck.Instance != null)
+        {
+            CardsDeck.Instance.AddDraw();
+        }
+        
+        if (resources != null) // Ensure resources is initialized
+        {
+            resources[ResourceType.Civil_Desire].AddAmount(0.5f); // Example: Arts production increases with civil resource amount
+        }
         
         Debug.Log($"ArtsResource: Reached max. Current level: {artsLevel}, New max: {MaximumAmount}");
     }
