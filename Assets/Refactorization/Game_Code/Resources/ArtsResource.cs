@@ -48,7 +48,7 @@ public class ArtsResource : Resource
         // onReachedMax already invoked with excess
         // still invoke with current level through an other action
         OnLevelUp?.Invoke(artsLevel);
-        CardsDeck.Instance.DrawNextCard();
+        CardsDeck.Instance.AddDraw();
 
         // add to desire of freedom
         resources[ResourceType.Civil_Desire].AddAmount(0.5f); // Example: Arts production increases with civil resource amount
