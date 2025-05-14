@@ -16,7 +16,7 @@ public class EnemyMob : MonoBehaviour{
 
         
 
-    [SerializeField] public float speedFactor = 0.0008f;
+    [SerializeField] public float speedFactor = 0.003f;
 
     //private DefaultTile[] allTiles;     Probably not usefull
 
