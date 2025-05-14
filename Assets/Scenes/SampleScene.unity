@@ -12330,7 +12330,7 @@ MonoBehaviour:
   itemsPrefabTypes:
   - {fileID: 26106160839137917, guid: 130437ff75e8fd940937a4cb2e2e196e, type: 3}
   - {fileID: 1906971717574370499, guid: 8db1c2257b33b62419b876278612e137, type: 3}
-  - {fileID: -4457457327482701860, guid: 98640ba432b299c4b8b714be61f768a5, type: 3}
+  - {fileID: 7568325474891418392, guid: 545147d1018e7294a8bfd49f9031059d, type: 3}
   mineralPlacesToSpawn: 5
   numberOfMaterialsPerTile: 5
 --- !u!114 &1092835991

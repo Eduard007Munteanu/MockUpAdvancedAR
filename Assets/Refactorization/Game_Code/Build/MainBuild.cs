@@ -146,6 +146,9 @@ public class MainBuild : DefaultBuild
 
             spawnPosition.y = spawnY;
 
+            spawnPosition.y = spawnY;
+            spawnPosition += new Vector3(0f, 0.01f, 0f);        // Hardcoded! 
+
             Vector3 finalSpawnPos = new Vector3(0f, spawnPosition.y, 0f);
 
             // GameObject mob;
@@ -156,7 +159,7 @@ public class MainBuild : DefaultBuild
             // } else{
             //     mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
             // }
-            GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
+            GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, mobPrefab.transform.rotation);//Quaternion.identity);
 
             
             Renderer theMobRenderer = mob.GetComponent<Renderer>();
@@ -183,7 +186,7 @@ public class MainBuild : DefaultBuild
             //Eduard logic.
 
 
-            GameObject mob = Instantiate(mobPrefab.gameObject, Vector3.zero, Quaternion.identity);
+            GameObject mob = Instantiate(mobPrefab.gameObject, Vector3.zero, mobPrefab.transform.rotation);//Quaternion.identity);
 
             Renderer mobRenderer = mob.GetComponent<Renderer>();
 
@@ -208,6 +211,7 @@ public class MainBuild : DefaultBuild
             
             Vector3 spawnPosition = transform.position;
             spawnPosition.y = spawnY;
+            // spawnPosition += new Vector3(0f, 0.01f, 0f);        // Hardcoded! 
 
             mob.transform.position = spawnPosition;
 
