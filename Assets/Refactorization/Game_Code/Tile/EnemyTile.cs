@@ -48,7 +48,7 @@ public class EnemyTile : DefaultTile
 
 
     public void SpawnEnemyMobAtSomePointInTime(){
-        EnemyMob enemyMob = Instantiate(enemyMobPrefab, Vector3.zero/* spawnedMobPosition */, Quaternion.identity);
+        EnemyMob enemyMob = Instantiate(enemyMobPrefab, Vector3.zero/* spawnedMobPosition */, enemyMobPrefab.transform.rotation);//Quaternion.identity);
 
 
         Renderer theMobRenderer = enemyMob.GetComponent<Renderer>();
@@ -69,11 +69,6 @@ public class EnemyTile : DefaultTile
 
         Vector3 spawnedMobPosition = new Vector3(transform.position.x, spawnY, transform.position.z);
         enemyMob.transform.position = spawnedMobPosition;
-
-
-
-    
-        
 
 
 

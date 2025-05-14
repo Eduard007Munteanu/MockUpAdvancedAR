@@ -251,6 +251,21 @@ public class EnemyMob : MonoBehaviour{
                 Debug.Log("We found the main building");
                 hasTarget = true;
                 targetTile = checkBuild.GetTile();//checkBuild.transform.position;
+
+                // Rotate towards the center of the target tile
+                Vector3 targetPosition = targetTile.GetComponent<Renderer>().bounds.center;
+                Vector3 enemyPosition = transform.position;
+
+                Vector3 direction = (targetPosition - enemyPosition).normalized;
+
+                // Optional: lock y-axis rotation only
+                direction.y = 90f;
+
+                if (direction != Vector3.zero)
+                {
+                    Quaternion lookRotation = Quaternion.LookRotation(direction);
+                    transform.rotation = lookRotation;
+                }
             }
             
         }
