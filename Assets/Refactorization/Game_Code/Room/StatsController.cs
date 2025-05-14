@@ -39,7 +39,7 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
         // Subscribe to resource changes
         resources[ResourceType.Happiness].OnAmountChanged += UpdateHappinessValue;
         resources[ResourceType.Arts].OnAmountChanged += UpdateArtsValue;
-        resources[ResourceType.Population].OnAmountChanged += UpdatePopsValue;
+        resources[ResourceType.Wood].OnAmountChanged += UpdatePopsValue;
         resources[ResourceType.Might].OnAmountChanged += UpdateMightValue;
         resources[ResourceType.Food].OnAmountChanged += UpdateFoodValue;
         resources[ResourceType.Gold].OnAmountChanged += UpdateGoldValue;
@@ -57,7 +57,7 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
         else
         {
             UpdateArtsValue(ResourceType.Arts, 0); // Initial value
-            UpdatePopsValue(ResourceType.Population, 0); // Initial value
+            UpdatePopsValue(ResourceType.Wood, 0); // Initial value
             UpdateMightValue(ResourceType.Might, 0); // Initial value
             UpdateFoodValue(ResourceType.Food, 0); // Initial value
             UpdateHappinessValue(ResourceType.Happiness, 0); // Initial value
@@ -99,7 +99,7 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
     {
         if (popsText != null)
         {
-            popsText.text = "Population: " + (int) resources[type].CurrentAmount + "/" + resources[type].MaximumAmount;
+            popsText.text = "Wood: " + (int) resources[type].CurrentAmount;
         }
     }
 
