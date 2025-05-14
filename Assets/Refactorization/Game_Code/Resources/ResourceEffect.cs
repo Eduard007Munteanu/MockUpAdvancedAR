@@ -6,6 +6,7 @@
 
 // using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class ResourceEffect
 {
@@ -17,8 +18,10 @@ public class ResourceEffect
     public float Constant { get; }
     public float Min { get; }
     public float Max { get; }
+
+    public bool Check { get; } // Not used in the original code, but included for completeness
     ResourceDatabase resources;
-    public ResourceEffect(ResourceType type, float amount, float flat = 0, float mod1 = 0, float mod2 = 0, float constant = 0, float min = 0, float max = 0)
+    public ResourceEffect(ResourceType type, float amount, float flat = 0, float mod1 = 0, float mod2 = 0, float constant = 0, float min = 0, float max = 0, bool check = true)
     {
         this.Type = type;
         this.Amount = amount;
@@ -28,6 +31,7 @@ public class ResourceEffect
         this.Constant = constant;
         this.Min = min;
         this.Max = max;
+        this.Check = check;
 
         Debug.Log($"ResourceEffect created: {type}, Amount: {amount}, Flat: {flat}, Mod1: {mod1}, Mod2: {mod2}, Constant: {constant}");
 
@@ -57,6 +61,9 @@ public class ResourceEffect
 
     public bool IsEnough() 
     {
-        return resources[Type].IsEnough(Amount);
+        if (Check)
+            return resources[Type].IsEnough(Amount);
+        
+        return true;
     }
 }
