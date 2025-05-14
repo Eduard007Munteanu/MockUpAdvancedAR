@@ -60,7 +60,6 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Refactorization\Game_Code\Resources\EnemyMightResource.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Spawner.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\JustGoBehavior.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Resources\CivilDesireResource.cs" />
@@ -146,6 +145,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Resources\CivilResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Room\StatsController.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Resources\HappinessResource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\EnemyMightResource.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

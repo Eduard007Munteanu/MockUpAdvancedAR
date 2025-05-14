@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a363d6b939592cd4dbe429f282daffc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToSpawn: {fileID: 1660543821129137170, guid: 07818ced11a1c6043be16b072dfca143, type: 3}
+  prefabToSpawn: {fileID: 5543173170310422914, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
   localPositionOffset: {x: 0, y: 0, z: 0}
   localRotationOffset: {x: 0, y: 0, z: 0}
   spawnLocalScale: {x: 1, y: 1, z: 1}

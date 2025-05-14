@@ -1,26 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Spawns a prefab so its bottom surface aligns with the top surface of this object,
-/// accounting for arbitrary scaling, child renderers, and mixed-reality anchors.
-/// </summary>
 public class SpawnObjectOnSurface : MonoBehaviour
 {
-    [Tooltip("The prefab to spawn (with children)")]
     [SerializeField] private GameObject prefabToSpawn;
-
-    [Tooltip("Optional local position offset after aligning bottom-top")]
     [SerializeField] private Vector3 localPositionOffset = Vector3.zero;
-
-    [Tooltip("Optional local rotation offset")]
     [SerializeField] private Vector3 localRotationOffset = Vector3.zero;
-
-    [Tooltip("Optional local scale for spawned object")]
     [SerializeField] private Vector3 spawnLocalScale = Vector3.one;
-
-    [Tooltip("Automatically spawn on Start?")]
     [SerializeField] private bool spawnOnStart = true;
 
     private GameObject spawnedInstance;
@@ -31,9 +17,6 @@ public class SpawnObjectOnSurface : MonoBehaviour
             SpawnPrefab();
     }
 
-    /// <summary>
-    /// Spawns the prefab and aligns its bottom to this object's top.
-    /// </summary>
     public GameObject SpawnPrefab()
     {
         if (prefabToSpawn == null)
@@ -42,23 +25,18 @@ public class SpawnObjectOnSurface : MonoBehaviour
             return null;
         }
 
-        // Calculate surface bounds
+        // Calculate surface top (using surface's bounds)
         Bounds surfaceBounds = CalculateBounds(gameObject);
         float topY = surfaceBounds.max.y;
 
-        // Instantiate temporary prefab to calculate bounds
-        GameObject tempInstance = Instantiate(prefabToSpawn);
-        tempInstance.SetActive(false); // Deactivate to prevent component logic
-        Bounds prefabBounds = CalculateBounds(tempInstance);
-        Destroy(tempInstance);
+        // Use pivot point (assumed to be at the bottom of the prefab)
+        Vector3 spawnPosition = new Vector3(
+            surfaceBounds.center.x,
+            topY,
+            surfaceBounds.center.z
+        );
 
-        float prefabMinY = prefabBounds.min.y;
-
-        // Determine spawn position
-        Vector3 spawnPosition = surfaceBounds.center;
-        spawnPosition.y = topY - prefabMinY;
-
-        // Apply local offset in world space
+        // Apply offset in world space
         spawnPosition += transform.TransformVector(localPositionOffset);
 
         // Instantiate and configure
@@ -66,40 +44,89 @@ public class SpawnObjectOnSurface : MonoBehaviour
             prefabToSpawn,
             spawnPosition,
             transform.rotation * Quaternion.Euler(localRotationOffset),
-            null);
+            null
+        );
 
         spawnedInstance.transform.localScale = spawnLocalScale;
 
         return spawnedInstance;
     }
 
-    /// <summary>
-    /// Calculates the world-space bounds of all Renderers under a root GameObject.
-    /// </summary>
     private Bounds CalculateBounds(GameObject root)
     {
-        Renderer[] rends = root.GetComponentsInChildren<Renderer>(includeInactive: false);
-        if (rends.Length == 0)
-            return new Bounds(root.transform.position, Vector3.zero);
+        Renderer[] rends = root.GetComponentsInChildren<Renderer>();
+        if (rends.Length == 0) return new Bounds(root.transform.position, Vector3.zero);
 
         Bounds bounds = rends[0].bounds;
-        foreach (Renderer rend in rends)
-            bounds.Encapsulate(rend.bounds);
-
+        foreach (Renderer rend in rends) bounds.Encapsulate(rend.bounds);
         return bounds;
     }
 
-    public void DestroySpawned()
+    private Bounds GetPrefabBounds(GameObject prefab)
     {
-        if (spawnedInstance != null)
+        Bounds combinedBounds = new Bounds();
+        bool firstBound = true;
+
+        // Analyze prefab structure without instantiation
+        foreach (Renderer renderer in prefab.GetComponentsInChildren<Renderer>(true))
         {
-            Destroy(spawnedInstance);
-            spawnedInstance = null;
+            // Calculate world bounds relative to prefab root
+            MeshFilter meshFilter = renderer.GetComponent<MeshFilter>();
+            if (meshFilter == null || meshFilter.sharedMesh == null) continue;
+
+            // Get local bounds and transform them
+            Bounds localBounds = meshFilter.sharedMesh.bounds;
+            Matrix4x4 matrix = GetTransformMatrix(renderer.transform, prefab.transform);
+            localBounds = TransformBounds(localBounds, matrix);
+
+            if (firstBound)
+            {
+                combinedBounds = localBounds;
+                firstBound = false;
+            }
+            else
+            {
+                combinedBounds.Encapsulate(localBounds);
+            }
         }
+
+        return combinedBounds;
     }
 
-    public GameObject GetSpawned()
+    private Matrix4x4 GetTransformMatrix(Transform child, Transform root)
     {
-        return spawnedInstance;
+        Matrix4x4 matrix = Matrix4x4.identity;
+        Transform current = child;
+
+        while (current != null && current != root)
+        {
+            matrix = Matrix4x4.TRS(
+                current.localPosition,
+                current.localRotation,
+                current.localScale
+            ) * matrix;
+
+            current = current.parent;
+        }
+
+        return matrix;
     }
+
+    private Bounds TransformBounds(Bounds bounds, Matrix4x4 matrix)
+    {
+        Vector3 center = matrix.MultiplyPoint(bounds.center);
+        Vector3 extents = bounds.extents;
+
+        Vector3 axisX = matrix.MultiplyVector(Vector3.right * extents.x);
+        Vector3 axisY = matrix.MultiplyVector(Vector3.up * extents.y);
+        Vector3 axisZ = matrix.MultiplyVector(Vector3.forward * extents.z);
+
+        float maxX = Mathf.Abs(axisX.x) + Mathf.Abs(axisY.x) + Mathf.Abs(axisZ.x);
+        float maxY = Mathf.Abs(axisX.y) + Mathf.Abs(axisY.y) + Mathf.Abs(axisZ.y);
+        float maxZ = Mathf.Abs(axisX.z) + Mathf.Abs(axisY.z) + Mathf.Abs(axisZ.z);
+
+        return new Bounds(center, new Vector3(maxX * 2, maxY * 2, maxZ * 2));
+    }
+
+    // Keep existing DestroySpawned and GetSpawned methods
 }
