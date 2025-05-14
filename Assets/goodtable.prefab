@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: f8766c17-aaf8-4b55-9431-de8deea83842
-  instanceId: 93cbfb3f-4757-4b1c-a01a-76a42387c9b7
+  instanceId: b5b40884-5b87-49c8-8ab4-d0984936f7ce
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: f8338144-8280-4ff6-9455-ae2bb9c20fe8
@@ -165,16 +165,16 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8390259372886706977}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3988435575579524636}
   - {fileID: 8966559203887789619}
   - {fileID: 3765898493333692185}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &9142593163968335382
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: f8766c17-aaf8-4b55-9431-de8deea83842
-  instanceId: 3c952006-7657-4e23-8db9-7279da033fc7
+  instanceId: d4c916d0-9560-4516-b513-85d4d0faf3c6
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: f8338144-8280-4ff6-9455-ae2bb9c20fe8
@@ -666,7 +666,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7503936958821787417, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.6166999
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7503936958821787417, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
       propertyPath: m_LocalScale.y
@@ -674,7 +674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7503936958821787417, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.6087999
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7503936958821787417, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
       propertyPath: m_LocalPosition.x
