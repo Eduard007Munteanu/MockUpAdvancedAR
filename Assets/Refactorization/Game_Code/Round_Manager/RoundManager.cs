@@ -11,9 +11,9 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
     private int roundNumber = 1;
 
-    private int numberOfEnemiesToSpawn = 1;  //Hardcoded
+    private int numberOfEnemiesToSpawn = 4;  //Hardcoded
 
-    private float timeToActivateRound = 30f; 
+    private float timeToActivateRound = 40f; 
 
     private float timer = 0f; 
 
@@ -96,8 +96,8 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
             }
 
 
-            //EnemyTile randomTile = enemyTiles[Random.Range(0, enemyTiles.Count)];
-            EnemyTile randomTile = enemyTiles[0];
+            EnemyTile randomTile = enemyTiles[Random.Range(0, enemyTiles.Count)];
+            // EnemyTile randomTile = enemyTiles[0];
             Debug.Log("Spawning from: " + randomTile.name);
             randomTile.SetCreateMobs(true);
 
@@ -116,7 +116,7 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
         if (timerIncreaser) {
         // We just ended a spawn round, reset timer-related stuff
-        numberOfEnemiesToSpawn = 1;
+        numberOfEnemiesToSpawn = 4;
         timeToWait = 1f;
     }
     }
