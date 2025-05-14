@@ -55,7 +55,11 @@
     <UnityVersion>2022.3.57f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+=======
+    <Analyzer Include="C:\Users\garlicxd\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
+>>>>>>> 023e82b277ad2cd8cb2615c3ca6d52e23809b08a
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -88,6 +92,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Build\Build.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Tile\DefaultTile.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Game_Interactions\TheRayCaster.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Room\NotificationManager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Stone.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Resources\WoodResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\PanelManager.cs" />
@@ -102,6 +107,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\CardsInHand.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\Card.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\FarmBuild.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Room\NotificationItem.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\MainBuildingPanel.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\DefaultCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\BuildManager.cs" />

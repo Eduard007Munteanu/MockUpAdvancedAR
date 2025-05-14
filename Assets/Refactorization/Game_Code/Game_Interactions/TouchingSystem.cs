@@ -90,7 +90,10 @@ public class TouchingSystem : MonoBehaviour{
     public void ActionMoveMobToTile(DefaultTile defaultTileTouched){
         Debug.Log("OnTriggerEnter in ActionMoveMobToTile");
         Vector3 tilePosition = defaultTileTouched.gameObject.transform.position;  
-        Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(defaultTileTouched, selectedMob), tilePosition.z);  //Pivot point in empty object parent of tile instead of vectorYHeightGivenTile
+        //Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(defaultTileTouched, selectedMob), tilePosition.z);  //Pivot point in empty object parent of tile instead of vectorYHeightGivenTile
+        // Vector3 targetPosition = new Vector3(tilePosition.x, 0, tilePosition.z);  //Pivot point in empty object parent of tile instead of vectorYHeightGivenTile
+        Vector3 targetPosition = new Vector3(tilePosition.x, selectedMob.transform.position.y, tilePosition.z);  // Use selectedMob's current Y
+
         selectedMob.RemoveFromBuilding();
         //selectedMob.AssignToBuilding(); // Here we will have the military building assignment. 
 

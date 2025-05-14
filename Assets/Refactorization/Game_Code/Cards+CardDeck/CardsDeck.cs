@@ -28,7 +28,10 @@ public class CardsDeck : MonoBehaviour
 
 
 
-    private CardsInHand cardsInHand; 
+    private CardsInHand cardsInHand;
+
+    private int drawbuffer = 0;
+    private bool cardPresent = false;
 
     [SerializeField] float grabDistance;
 
@@ -86,6 +89,24 @@ public class CardsDeck : MonoBehaviour
         //Testing code
     }
 
+    public void AddDraw () {
+        drawbuffer += 1;
+        DrawIfAvailable();
+    }
+
+    public void DrawIfAvailable () {
+        if (drawbuffer <= 0) {
+            Debug.Log("No cards available to draw.");
+            return;
+        }
+        if (cardPresent) {
+            Debug.Log("Card already present, cannot draw another.");
+            return;
+        }
+
+        DrawNextCard(); // Draw the next card from the queue
+    }
+
 
     public void DrawNextCard()
     {
@@ -107,6 +128,8 @@ public class CardsDeck : MonoBehaviour
 
             
             card.Init(true, this);
+
+            cardPresent = true;
         }
     }
 
@@ -144,8 +167,6 @@ public class CardsDeck : MonoBehaviour
                 card.Init(false, this);
                 cardsInHand.AddCardToHand(spawnedCard.GetComponent<DefaultCard>());
 
-                
-
             }
         }
 
@@ -155,6 +176,10 @@ public class CardsDeck : MonoBehaviour
         cardsInHand.LayoutCardsOnPalm();        
 
         if (alwayscard) DrawNextCard();
+
+        drawbuffer -= 1;
+        cardPresent = false;
+        DrawIfAvailable();
         
     }
 

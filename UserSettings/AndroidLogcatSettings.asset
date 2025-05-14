@@ -1,9 +1,15 @@
 {
     "m_SelectedDeviceId": "1WMHHB6D7M2233",
     "m_SelectedProcess": {
+<<<<<<< HEAD
         "deviceId": "1WMHHB6D7M2233",
         "name": "com.DefaultCompany.MockUpAdvancedAR",
         "processId": 8092,
+=======
+        "deviceId": "1WMHHA61EF1505",
+        "name": "com.DefaultCompany.MockUpAdvancedAR",
+        "processId": 31013,
+>>>>>>> 023e82b277ad2cd8cb2615c3ca6d52e23809b08a
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -45,6 +51,7 @@
             "exited": false
         },
         {
+<<<<<<< HEAD
             "deviceId": "1WMHHB6D7M2233",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
             "processId": 17481,
@@ -66,6 +73,59 @@
             "deviceId": "1WMHHB6D7M2233",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
             "processId": 8092,
+=======
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 24467,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 25496,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 26904,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 27467,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 28016,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 28646,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 29619,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 30091,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 31013,
+>>>>>>> 023e82b277ad2cd8cb2615c3ca6d52e23809b08a
             "exited": false
         }
     ],

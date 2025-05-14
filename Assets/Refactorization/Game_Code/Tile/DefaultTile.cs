@@ -44,8 +44,6 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
         }
     }
 
-
-
     public (float, float) SurfaceArea(){
         Renderer tileRenderer = GetComponent<Renderer>();
         Vector3 surfaceSize = tileRenderer.bounds.size;
