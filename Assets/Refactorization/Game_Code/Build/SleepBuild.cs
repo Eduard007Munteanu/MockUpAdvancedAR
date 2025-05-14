@@ -25,8 +25,8 @@ public class SleepBuild : DefaultBuild
         base.Init(Id, tile);
         resourceEffects = new List<ResourceEffect>
         {
-            new ResourceEffect(ResourceType.Population, 0f, 0f, 0f, 0f, 0f, 0f, 5f),
-            new ResourceEffect(ResourceType.Happiness, 1f),
+            // new ResourceEffect(ResourceType.Population, 0f, 0f, 0f, 0f, 0f, 0f, 5f),
+            new ResourceEffect(ResourceType.Happiness, 2f),
         };
     }
     

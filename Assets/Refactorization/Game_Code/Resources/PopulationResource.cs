@@ -78,6 +78,11 @@ public class PopulationResource : Resource
         }
     }
 
+    public override bool IsEnough(float amount)
+    {
+        return true;
+    }
+
     protected override void onProductionChange(float delta)
     {
 

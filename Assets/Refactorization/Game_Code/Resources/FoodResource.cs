@@ -16,7 +16,7 @@ public class FoodResource : Resource
         float initialAmount = 500f,
         float minAmount = 0f,
         float maxAmount = 1000f,
-        int cycleTicks = 5
+        int cycleTicks = 3
         ) : base(ResourceType.Food, initialAmount, minAmount, maxAmount, cycleTicks)
     {
 

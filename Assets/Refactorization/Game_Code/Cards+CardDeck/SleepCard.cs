@@ -11,7 +11,8 @@ public class SleepCard : BuildCard
         base.Init(cardGrabbable, uniqueCardDeck);
         resourceEffects = new List<ResourceEffect>
         {
-            new ResourceEffect(ResourceType.Gold, -50f),
+            new ResourceEffect(ResourceType.Wood, -75f),
+            new ResourceEffect(ResourceType.Population, 0f, 0f, 0f, 0f, 0f, 0f, 5f, false),
         };
     }
 
