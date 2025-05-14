@@ -11,7 +11,7 @@ public class WoodResource : Resource
     }
 
     public WoodResource(
-        float initialAmount = 100f,
+        float initialAmount = 500f,
         float minAmount = 0f,
         float maxAmount = 1000f, // Wood might have a higher max
         int cycleTicks = 1
