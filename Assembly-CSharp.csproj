@@ -59,12 +59,11 @@
     <UnityVersion>2022.3.57f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Users\garlic\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\garlicxd\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.57f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Refactorization\Game_Code\Resources\EnemyMightResource.cs" />
     <Compile Include="Assets\Diabolical Games\Destructible Objects\Scripts\Spawner.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Mob\JustGoBehavior.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Resources\CivilDesireResource.cs" />
@@ -92,6 +91,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Build\Build.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Tile\DefaultTile.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Game_Interactions\TheRayCaster.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Room\NotificationManager.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Stone.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Resources\WoodResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\PanelManager.cs" />
@@ -106,6 +106,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\CardsInHand.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\Card.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\FarmBuild.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Room\NotificationItem.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Panel\MainBuildingPanel.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\DefaultCard.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Build\BuildManager.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Resources\CivilResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Room\StatsController.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Resources\HappinessResource.cs" />
+    <Compile Include="Assets\Refactorization\Game_Code\Resources\EnemyMightResource.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
