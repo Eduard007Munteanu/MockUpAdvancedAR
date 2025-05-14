@@ -13,7 +13,7 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
     private int numberOfEnemiesToSpawn = 4;  //Hardcoded
 
-    private float timeToActivateRound = 40f; 
+    private float timeToActivateRound = 3f; 
 
     private float timer = 0f; 
 
