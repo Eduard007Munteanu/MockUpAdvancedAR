@@ -15,7 +15,7 @@ public class WoodResource : Resource
         float minAmount = 0f,
         float maxAmount = 1000f, // Wood might have a higher max
         int cycleTicks = 1
-        ) : base(ResourceType.Wood, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
+        ) : base(ResourceType.Wood, initialAmount, minAmount, maxAmount, cycleTicks)
     {
 
     }

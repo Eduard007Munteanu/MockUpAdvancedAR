@@ -15,7 +15,7 @@ public class GoldResource : Resource
         float minAmount = 0f,
         float maxAmount = 1000f, // Gold might have a higher max
         int cycleTicks = 1
-        ) : base(ResourceType.Gold, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
+        ) : base(ResourceType.Gold, initialAmount, minAmount, maxAmount, cycleTicks)
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
     }

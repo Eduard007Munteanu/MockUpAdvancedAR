@@ -26,7 +26,7 @@ public class PopulationResource : Resource
         float initialMod1 = 1f, 
         float initialMod2 = 1f, 
         float initialConst = 0f
-        ) : base(ResourceType.Population, initialAmount, minAmount, maxAmount, cycleTicks, initialThresholds, initialFlat, initialMod1, initialMod2, initialConst) // TODO: Update ResourceType
+        ) : base(ResourceType.Population, initialAmount, minAmount, maxAmount, cycleTicks, initialThresholds, initialFlat, initialMod1, initialMod2, initialConst)
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
         thresholds = new Thresholds(new List<float> {
