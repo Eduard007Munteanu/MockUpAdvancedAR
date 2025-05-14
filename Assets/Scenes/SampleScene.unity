@@ -20700,7 +20700,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1796994704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20718,13 +20718,13 @@ MonoBehaviour:
   PrefabsToSpawn:
   - Labels: 8
     Prefabs:
-    - {fileID: 3321429150494508749, guid: a9f7b3053e01ff64d9c26d013358c0cd, type: 3}
+    - {fileID: 5543173170310422914, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
     PrefabSelection: 0
     MatchAspectRatio: 0
     CalculateFacingDirection: 0
-    Scaling: 2
-    Alignment: 2
-    IgnorePrefabSize: 1
+    Scaling: 3
+    Alignment: 3
+    IgnorePrefabSize: 0
 --- !u!4 &1796994705
 Transform:
   m_ObjectHideFlags: 0
@@ -20735,7 +20735,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.059108287, y: 8.378905, z: 10.250217}
-  m_LocalScale: {x: 2, y: 1, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
