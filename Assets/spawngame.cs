@@ -42,31 +42,32 @@ public class SpawnObjectOnSurface : MonoBehaviour
             return null;
         }
 
-        // Compute this object's top Y in world space using all child Renderers
+        // Calculate surface bounds
         Bounds surfaceBounds = CalculateBounds(gameObject);
         float topY = surfaceBounds.max.y;
 
-        // Compute prefab's local bottom offset (min Y) and total height
-        Bounds prefabBounds = CalculateBounds(prefabToSpawn);
-        float prefabMinY = prefabBounds.min.y;
-        float prefabHeight = prefabBounds.size.y;
+        // Instantiate temporary prefab to calculate bounds
+        GameObject tempInstance = Instantiate(prefabToSpawn);
+        tempInstance.SetActive(false); // Deactivate to prevent component logic
+        Bounds prefabBounds = CalculateBounds(tempInstance);
+        Destroy(tempInstance);
 
-        // Determine spawn position: world XZ at this object's center,
-        // Y so that prefab's bottom (at prefabMinY) sits at topY
+        float prefabMinY = prefabBounds.min.y;
+
+        // Determine spawn position
         Vector3 spawnPosition = surfaceBounds.center;
         spawnPosition.y = topY - prefabMinY;
 
-        // Apply any local offset in this object's space
+        // Apply local offset in world space
         spawnPosition += transform.TransformVector(localPositionOffset);
 
-        // Instantiate
+        // Instantiate and configure
         spawnedInstance = Instantiate(
             prefabToSpawn,
             spawnPosition,
             transform.rotation * Quaternion.Euler(localRotationOffset),
             null);
 
-        // Set scale
         spawnedInstance.transform.localScale = spawnLocalScale;
 
         return spawnedInstance;
@@ -79,22 +80,15 @@ public class SpawnObjectOnSurface : MonoBehaviour
     {
         Renderer[] rends = root.GetComponentsInChildren<Renderer>(includeInactive: false);
         if (rends.Length == 0)
-        {
-            // No renderers: use object's transform position as a point
             return new Bounds(root.transform.position, Vector3.zero);
-        }
 
         Bounds bounds = rends[0].bounds;
-        for (int i = 1; i < rends.Length; i++)
-        {
-            bounds.Encapsulate(rends[i].bounds);
-        }
+        foreach (Renderer rend in rends)
+            bounds.Encapsulate(rend.bounds);
+
         return bounds;
     }
 
-    /// <summary>
-    /// Destroys the spawned instance, if any.
-    /// </summary>
     public void DestroySpawned()
     {
         if (spawnedInstance != null)
@@ -104,9 +98,6 @@ public class SpawnObjectOnSurface : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Returns the current spawned instance.
-    /// </summary>
     public GameObject GetSpawned()
     {
         return spawnedInstance;
