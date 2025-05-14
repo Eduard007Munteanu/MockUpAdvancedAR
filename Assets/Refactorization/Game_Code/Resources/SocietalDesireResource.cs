@@ -9,7 +9,7 @@ public class SocietalDesireResource : Resource
         float minAmount = 0f,
         float maxAmount = 100f,
         int cycleTicks = 1
-        ) : base(ResourceType.Societal_Desire, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
+        ) : base(ResourceType.Societal_Desire, initialAmount, minAmount, maxAmount, cycleTicks)
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
     }

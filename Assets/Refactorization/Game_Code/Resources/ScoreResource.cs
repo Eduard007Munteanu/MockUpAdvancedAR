@@ -9,7 +9,7 @@ public class ScoreResource : Resource
         float minAmount = 0f,
         float maxAmount = 100000f, // Gold might have a higher max
         int cycleTicks = 0
-        ) : base(ResourceType.Score, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
+        ) : base(ResourceType.Score, initialAmount, minAmount, maxAmount, cycleTicks)
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
     }

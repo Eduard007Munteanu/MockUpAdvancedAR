@@ -9,7 +9,7 @@ public class WorkPowerResource : Resource
         float minAmount = 0f,
         float maxAmount = 1000f,
         int cycleTicks = 1
-        ) : base(ResourceType.WorkPower, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
+        ) : base(ResourceType.WorkPower, initialAmount, minAmount, maxAmount, cycleTicks)
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
     }

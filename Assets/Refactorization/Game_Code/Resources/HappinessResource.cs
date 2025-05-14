@@ -9,7 +9,7 @@ public class HappinessResource : Resource
         float minAmount = 0f,
         float maxAmount = 100f, // Happiness often capped at 100
         int cycleTicks = 1
-        ) : base(ResourceType.Happiness, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
+        ) : base(ResourceType.Happiness, initialAmount, minAmount, maxAmount, cycleTicks)
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
     }

@@ -9,7 +9,7 @@ public class CivilResource : Resource
         float minAmount = 0f,
         float maxAmount = 100f,
         int cycleTicks = 1
-        ) : base(ResourceType.Civil, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
+        ) : base(ResourceType.Civil, initialAmount, minAmount, maxAmount, cycleTicks)
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
     }

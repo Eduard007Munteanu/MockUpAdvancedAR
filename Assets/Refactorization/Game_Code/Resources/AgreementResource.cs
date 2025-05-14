@@ -14,7 +14,7 @@ public class AgreementResource : Resource
         float minAmount = 0f,
         float maxAmount = 100f,
         int cycleTicks = 1
-        ) : base(ResourceType.Agreement, initialAmount, minAmount, maxAmount, cycleTicks) // TODO: Update ResourceType
+        ) : base(ResourceType.Agreement, initialAmount, minAmount, maxAmount, cycleTicks)
     {
         // thresholds = new Thresholds(new List<float> { /* ...threshold values... */ }, initialAmount);
         // calculate initial agreement
@@ -63,7 +63,7 @@ public class AgreementResource : Resource
         float economyAgreement = 100f - Mathf.Abs(economy - economyDesire);
 
         // value between 0 and 100f
-        float agreement = 0.5f * civilAgreement + 0.5f * economyAgreement; // TODO: Update weights
+        float agreement = 0.5f * civilAgreement + 0.5f * economyAgreement;
 
         return agreement;
     }

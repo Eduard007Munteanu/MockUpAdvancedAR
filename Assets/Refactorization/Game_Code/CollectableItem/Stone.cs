@@ -6,7 +6,7 @@ public class Stone : DefaultItem
 {
 
     protected override string ItemClass => "StoneItem"; 
-    public override ResourceType Type => ResourceType.Food; // TODO: Update ResourceType
+    public override ResourceType Type => ResourceType.Food;
 
     // Start is called before the first frame update
     void Start()

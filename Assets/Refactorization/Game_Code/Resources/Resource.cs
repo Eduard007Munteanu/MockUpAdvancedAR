@@ -57,7 +57,7 @@ public abstract class Resource
     // protected bool randomProduction = false;
 
     // Thresholds probably other class
-    protected Thresholds thresholds; // TODO: List of thresholds for this resource
+    protected Thresholds thresholds;
 
     // Production Timing
     private int productionCycleTicks; // ticks between production attempts
@@ -139,7 +139,6 @@ public abstract class Resource
 
             onAmountChange(delta); // Call abstract method for derived class logic (thresholds etc.)
             OnAmountChanged?.Invoke(Type, CurrentAmount); // Invoke event for external listeners (UI etc.)
-            // TODO: Not sure to notify them here or in the subclasses
         }
 
         if (noClampAmount >= MaximumAmount) // Check if we exceeded the max amount

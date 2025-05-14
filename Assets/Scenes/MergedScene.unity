@@ -321,15 +321,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5272584480705106158, guid: aac019507b2c5f14293ebd4567a0cfcd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.24170431
+      value: 0.129
       objectReference: {fileID: 0}
     - target: {fileID: 5272584480705106158, guid: aac019507b2c5f14293ebd4567a0cfcd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.33333334
+      value: 0.0661
       objectReference: {fileID: 0}
     - target: {fileID: 5272584480705106158, guid: aac019507b2c5f14293ebd4567a0cfcd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.1231904
+      value: -0.269
       objectReference: {fileID: 0}
     - target: {fileID: 5272584480705106158, guid: aac019507b2c5f14293ebd4567a0cfcd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1357,15 +1357,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3331214949697653312, guid: b7d6713bd56f55e49908447e7e7d4187, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.21271509
+      value: -0.169
       objectReference: {fileID: 0}
     - target: {fileID: 3331214949697653312, guid: b7d6713bd56f55e49908447e7e7d4187, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25
+      value: 0.066
       objectReference: {fileID: 0}
     - target: {fileID: 3331214949697653312, guid: b7d6713bd56f55e49908447e7e7d4187, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.17042892
+      value: -0.322
       objectReference: {fileID: 0}
     - target: {fileID: 3331214949697653312, guid: b7d6713bd56f55e49908447e7e7d4187, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14129,6 +14129,7 @@ GameObject:
   - component: {fileID: 1067714245}
   - component: {fileID: 1067714244}
   - component: {fileID: 1067714243}
+  - component: {fileID: 1067714246}
   m_Layer: 0
   m_Name: Room
   m_TagString: Untagged
@@ -14203,6 +14204,21 @@ Transform:
   - {fileID: 571234852}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1067714246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067714242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92c71ed58d994ec4199122b010ecf422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ambientAudioSource: {fileID: 607486184}
+  thematicAudioSource: {fileID: 712135198}
+  soundEffectAudioSource: {fileID: 132744127}
 --- !u!1 &1073699660
 GameObject:
   m_ObjectHideFlags: 0

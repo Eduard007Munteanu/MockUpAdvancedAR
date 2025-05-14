@@ -16,8 +16,6 @@ public class CardsType
 
 public class CardsDeck : MonoBehaviour
 {
-
-    // TODO: set to false
     private bool alwayscard = false; // For testing purposes, always true.
 
     public static CardsDeck Instance {get; private set;}
