@@ -1,6 +1,11 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
+// it triggers selection multiple times. pickup -> assign too many times 
+// colliding with the same tile which the mob stands on ignore same with tile and house when assigning destination
+// it only recognizes tiles and mobs and buildings
+// area of the finger is small or big enough for ease of use
+
 public class TouchingSystem : MonoBehaviour{
 
 
