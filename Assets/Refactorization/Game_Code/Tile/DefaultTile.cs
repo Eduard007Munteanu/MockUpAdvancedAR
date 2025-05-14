@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
 
 public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about the power level of the mobs and the enemy
 {
@@ -18,7 +19,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
     private float timer = 0f;
 
-    private float activator = 10f; 
+    private float activator = 3f; 
 
 
     
@@ -81,15 +82,17 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
 
     void FightingActivation(){
-        Debug.Log("FightingActivation here!");
+        Debug.Log("AT FIGHTING > FightingActivation here!");
         
         fighting = new Fighting(enemyMobs, mobs, GetBuilding());
+        
         (List<DefaultMob> updateMobs, List<EnemyMob> updateEnemyMobs, DefaultBuild theBuilding) = fighting.SimulateFighting();
 
+        Debug.Log("AT FIGHTING CHECKING refs: mobs == updateMobs? " + (mobs == updateMobs));
 
         buildingOnTile = theBuilding;
 
-
+        Debug.Log("AT FIGHTING > FightingActivation after init");
 
         mobs.Clear();
         mobs.AddRange(updateMobs);
@@ -98,10 +101,19 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
         enemyMobs.AddRange(updateEnemyMobs);
 
 
+        Debug.Log("AT FIGHTING > Enemy powers: " +
+            string.Join(", ", enemyMobs.Select(m => m.GetMightPower())));
+        
+        Debug.Log("AT FIGHTING > Default powers: " +
+            string.Join(", ", mobs.Select(m => m.GetMightPower())));
 
 
-        Debug.Log("UpdateEnemyMobs count is " + updateEnemyMobs.Count);
-        Debug.Log("enemyMobs count is " + enemyMobs.Count);
+
+        // Debug.Log("UpdateMobs count is " + updateMobs.Count);
+        // Debug.Log("Mobs count is " + mobs.Count);
+
+        // Debug.Log("UpdateEnemyMobs count is " + updateEnemyMobs.Count);
+        // Debug.Log("enemyMobs count is " + enemyMobs.Count);
 
 
         fighting.TriggerMoveToAllEnemy(enemyMobs);
@@ -271,59 +283,103 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     }
 
 
-    public void ArrangeEnemyMobs(EnemyMob enemy){
-        enemyMobs.Add(enemy); // Always add the mob first
+    // public void ArrangeEnemyMobs(EnemyMob enemy){
+    //     enemyMobs.Add(enemy); // Always add the mob first
 
-        Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
-        Vector3 bottomLeft = tileCorners[3];
-        Vector3 bottomRight = tileCorners[2];
+    //     Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
+    //     Vector3 bottomLeft = tileCorners[3];
+    //     Vector3 bottomRight = tileCorners[2];
 
-        Vector3 xDir = (bottomRight - bottomLeft).normalized;
-        float tileWidth = Vector3.Distance(bottomLeft, bottomRight);
+    //     Vector3 xDir = (bottomRight - bottomLeft).normalized;
+    //     float tileWidth = Vector3.Distance(bottomLeft, bottomRight);
 
-        // Measure total required width
-        float totalWidth = 0f;
-        List<float> mobWidths = new();
+    //     // Measure total required width
+    //     float totalWidth = 0f;
+    //     List<float> mobWidths = new();
 
-        foreach (var m in enemyMobs)
+    //     foreach (var m in enemyMobs)
+    //     {
+    //         float width = m.GetComponent<Renderer>().bounds.size.x;
+    //         mobWidths.Add(width);
+    //         totalWidth += width;
+    //     }
+
+    //     if (totalWidth > tileWidth)
+    //     {
+    //         Debug.LogWarning($"Not enough space to place {mobs.Count} mobs. Required: {totalWidth}, Available: {tileWidth}");
+    //         enemyMobs.Remove(enemy); // Roll back
+    //         return;
+    //     }
+
+
+
+    //     Vector3 tileCenter = (bottomLeft + bottomRight) * 0.5f;
+    //     Vector3 groupStart = tileCenter - xDir * (totalWidth / 2f);
+
+    //     // Place all mobs side by side starting from topLeft
+    //     Vector3 cursor = groupStart;//topLeft;
+    //     Debug.Log("No building on tile");
+        
+        
+
+    //     for (int i = 0; i < enemyMobs.Count; i++)
+    //     {
+    //         float width = mobWidths[i];
+    //         Vector3 offset = xDir * (width / 2f);
+    //         Vector3 spawnPos = cursor + offset;
+    //         spawnPos.y = enemyMobs[i].transform.position.y;
+
+    //         enemyMobs[i].transform.position = spawnPos;
+    //         enemyMobs[i].currentTile = this;
+
+    //         // Advance the cursor by full width
+    //         cursor += xDir * width;
+    //     }
+    // }
+
+
+    public void ArrangeEnemyMobs(EnemyMob newEnemy)
+    {
+        // 1) Try to add
+        enemyMobs.Add(newEnemy);
+
+        // 2) Compute tile slice
+        Vector3[] c = BetterGridOverlay.Instance.GetTileCorners(this);
+        Vector3 left  = c[3];               // bottomLeft
+        Vector3 right = c[2];               // bottomRight
+        Vector3 xDir  = (right - left).normalized;
+        float   tileW = Vector3.Distance(left, right);
+
+        // 3) Measure total enemy width
+        float totalW = 0f;
+        foreach (var em in enemyMobs)
+            totalW += em.GetComponent<Renderer>().bounds.size.x;
+
+        // 4) Bail out if no room
+        if (totalW > tileW)
         {
-            float width = m.GetComponent<Renderer>().bounds.size.x;
-            mobWidths.Add(width);
-            totalWidth += width;
-        }
-
-        if (totalWidth > tileWidth)
-        {
-            Debug.LogWarning($"Not enough space to place {mobs.Count} mobs. Required: {totalWidth}, Available: {tileWidth}");
-            enemyMobs.Remove(enemy); // Roll back
+            Debug.LogWarning($"Not enough space for {enemyMobs.Count} enemies. Need {totalW:F2}, have {tileW:F2}");
+            enemyMobs.Remove(newEnemy);
             return;
         }
 
+        // 5) Center the group on the tile’s X axis
+        Vector3 center = (left + right) * 0.5f;
+        Vector3 start  = center - xDir * (totalW / 2f);
 
-
-        Vector3 tileCenter = (bottomLeft + bottomRight) * 0.5f;
-        Vector3 groupStart = tileCenter - xDir * (totalWidth / 2f);
-
-        // Place all mobs side by side starting from topLeft
-        Vector3 cursor = groupStart;//topLeft;
-        Debug.Log("No building on tile");
-        
-        
-
-        for (int i = 0; i < enemyMobs.Count; i++)
+        // 6) Pack them side by side
+        Vector3 cursor = start;
+        foreach (var em in enemyMobs)
         {
-            float width = mobWidths[i];
-            Vector3 offset = xDir * (width / 2f);
-            Vector3 spawnPos = cursor + offset;
-            spawnPos.y = enemyMobs[i].transform.position.y;
-
-            enemyMobs[i].transform.position = spawnPos;
-            enemyMobs[i].currentTile = this;
-
-            // Advance the cursor by full width
-            cursor += xDir * width;
+            float w = em.GetComponent<Renderer>().bounds.size.x;
+            Vector3 pos = cursor + xDir * (w / 2f);
+            pos.y = em.transform.position.y;
+            em.transform.position = pos;
+            em.currentTile = this;
+            cursor += xDir * w;
         }
     }
+
 
     public virtual bool CanEnemyMobsBeArrangedChecker(){                               
         List<EnemyMob> theMobs = new List<EnemyMob>(enemyMobs);
