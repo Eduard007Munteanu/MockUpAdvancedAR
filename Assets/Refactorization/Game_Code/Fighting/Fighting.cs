@@ -185,7 +185,7 @@ public class Fighting{
             float individualMobPower = defaultMobs[i].GetMightPower();
             float result = tempTotalEnemyMightPower - individualMobPower;
             
-            if(result > 0){
+            if(result >= 0){
                 defaultMobs[i].SetMightPower(0);
                 GameObject.Destroy(defaultMobs[i].gameObject);
                 tempTotalEnemyMightPower = result;
@@ -248,7 +248,7 @@ public class Fighting{
 
             float result = tempTotalMobMightPower - enemyPower;
 
-            if (result > 0)
+            if (result >= 0)
             {
                 enemyMobs[i].SetMightPower(0);
                 GameObject.Destroy(enemyMobs[i].gameObject);
