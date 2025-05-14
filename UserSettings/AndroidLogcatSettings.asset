@@ -1,15 +1,9 @@
 {
-    "m_SelectedDeviceId": "1WMHHB6D7M2233",
+    "m_SelectedDeviceId": "1WMHHA61EF1505",
     "m_SelectedProcess": {
-<<<<<<< HEAD
         "deviceId": "",
         "name": "",
         "processId": 0,
-=======
-        "deviceId": "1WMHHB6D7M2233",
-        "name": "com.DefaultCompany.MockUpAdvancedAR",
-        "processId": 19636,
->>>>>>> c8ec85f5f849808d6a7b22abfaaecc50a6b62b5c
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -49,21 +43,6 @@
             "name": "com.DefaultCompany.MockUpAdvancedAR",
             "processId": 25887,
             "exited": false
-<<<<<<< HEAD
-=======
-        },
-        {
-            "deviceId": "1WMHHB6D7M2233",
-            "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 17481,
-            "exited": false
-        },
-        {
-            "deviceId": "1WMHHB6D7M2233",
-            "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 19636,
-            "exited": false
->>>>>>> c8ec85f5f849808d6a7b22abfaaecc50a6b62b5c
         }
     ],
     "m_Tags": {
