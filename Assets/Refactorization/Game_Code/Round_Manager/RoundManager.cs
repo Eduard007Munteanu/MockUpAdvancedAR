@@ -65,6 +65,9 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
             roundNumber += 1;
             Debug.Log("We are exactly at SpawnMobs");
             resources[ResourceType.EnemyMight].AddAmount(1f); // increase enemy might each round
+            if (roundNumber == 7) {
+                resources[ResourceType.EnemyMight].AddAmount(90f); // increase enemy might each round
+            }
             SpawnMobs();
         }
     }

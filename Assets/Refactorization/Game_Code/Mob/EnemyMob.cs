@@ -42,9 +42,18 @@ public class EnemyMob : MonoBehaviour{
 
 
 
-    private float mightPower = 20f;
+    private float mightPower;
 
+    private ResourceDatabase resources;
 
+    private void Awake()
+    {
+        while (resources == null)
+        {
+            Debug.Log("Waiting for ResourceDatabase to be initialized...");
+            resources = ResourceDatabase.Instance;
+        }
+    }
 
     void Start()
     {
@@ -85,6 +94,7 @@ public class EnemyMob : MonoBehaviour{
             Debug.Log("CachMemoryPathTiles at ENEMYMOB is " + enemyMOB);
         }
 
+        mightPower = resources[ResourceType.Might].CurrentAmount;
 
         isMoving = true; //Just for now.
     }
