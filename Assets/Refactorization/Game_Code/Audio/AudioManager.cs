@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class AudioManager : MonoBehaviour
             return _instance;
         }
     }
+
+    private Coroutine themeFadeCoroutine;
 
     void Awake()
     {
@@ -56,13 +59,46 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayTheme(AudioClip themeClip)
+    public void PlayTheme(float fadeDuration = 1.0f)
     {
-        if (thematicAudioSource == null) { Debug.LogError("Thematic AudioSource is missing!"); return; }
-        if (themeClip == null) { Debug.LogWarning("PlayTheme called with a null AudioClip."); return; }
+        if (thematicAudioSource == null || thematicAudioSource.clip == null)
+        {
+            Debug.LogError("Thematic AudioSource or its clip is missing!");
+            return;
+        }
 
-        thematicAudioSource.clip = themeClip;
+        // If already fading, stop previous fade
+        if (themeFadeCoroutine != null)
+            StopCoroutine(themeFadeCoroutine);
+
+        themeFadeCoroutine = StartCoroutine(RestartThemeWithFade(fadeDuration));
+    }
+
+    private IEnumerator RestartThemeWithFade(float fadeDuration)
+    {
+        // Fade out if playing
+        if (thematicAudioSource.isPlaying)
+            yield return StartCoroutine(FadeAudioSource(thematicAudioSource, 0f, fadeDuration / 2f));
+
+        thematicAudioSource.Stop();
+        thematicAudioSource.volume = 0f;
         thematicAudioSource.Play();
+
+        // Fade in
+        yield return StartCoroutine(FadeAudioSource(thematicAudioSource, 1f, fadeDuration / 2f));
+    }
+
+    private IEnumerator FadeAudioSource(AudioSource source, float targetVolume, float duration)
+    {
+        float startVolume = source.volume;
+        float time = 0f;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            source.volume = Mathf.Lerp(startVolume, targetVolume, time / duration);
+            yield return null;
+        }
+        source.volume = targetVolume;
     }
 
     public void StopTheme()

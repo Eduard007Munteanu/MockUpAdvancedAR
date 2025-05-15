@@ -26,19 +26,31 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
     private ResourceDatabase resources;
 
+    private AudioManager audioManager;
+    private bool boss = false;
+
 
     void Awake()
     {
-        if (Instance != null && Instance != this) {
+        if (Instance != null && Instance != this)
+        {
             Debug.LogWarning("More than one BuildManager detected. Destroying duplicate.");
             Destroy(gameObject);
-        } else {
+        }
+        else
+        {
             Instance = this;
         }
 
-        while (resources == null){
+        while (resources == null)
+        {
             Debug.Log("Waiting for ResourceDatabase to be initialized...");
             resources = ResourceDatabase.Instance;
+        }
+        while (audioManager == null)
+        {
+            Debug.Log("Waiting for AudioManager to be initialized...");
+            audioManager = AudioManager.Instance;
         }
     }
 
@@ -64,11 +76,6 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
         } else{ // new round
             roundNumber += 1;
             Debug.Log("We are exactly at SpawnMobs");
-            resources[ResourceType.EnemyMight].AddAmount(1f); // increase enemy might each round
-            if (roundNumber == 7) {
-                resources[ResourceType.EnemyMight].AddAmount(90f); // increase enemy might each round
-            }
-            SpawnMobs();
         }
     }
 
@@ -108,8 +115,20 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
             Debug.Log("NumberOfEnemiesToSpawn" + numberOfEnemiesToSpawn);
             timeToWait = Random.Range(0,5);
         }
-        if(numberOfEnemiesToSpawn == 0){
+        if (numberOfEnemiesToSpawn == 0)
+        {
             timer = 0f;
+
+            resources[ResourceType.EnemyMight].AddAmount(1f); // increase enemy might each round
+            if (roundNumber >= 300 && !boss)
+            {
+                resources[ResourceType.EnemyMight].AddAmount(90f); // increase enemy might each round
+                boss = true;
+            }
+            audioManager.PlayTheme();
+            NotificationManager.Instance.ShowNotification("Round " + roundNumber, "Brace yourself..");
+            SpawnMobs();
+
             SwitchRoundToSpawnState();
         }   
     }
