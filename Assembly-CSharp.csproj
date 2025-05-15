@@ -79,6 +79,7 @@
     <Compile Include="Assets\Refactorization\Game_Code\Resources\ScoreResource.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\CollectableItem\Gold.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Resources\EconomyDesireResource.cs" />
+    <Compile Include="Assets\spawngame.cs" />
     <Compile Include="Assets\Refactorization\Game_Code\Cards+CardDeck\LawCard.cs" />
     <Compile Include="Assets\HangPaintings.cs" />
     <Compile Include="Assets\SurfaceSpawner.cs" />

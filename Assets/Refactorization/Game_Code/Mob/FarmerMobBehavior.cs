@@ -69,7 +69,7 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
     private DefaultItem FindClosestItem(string itemName)
     {
         DefaultItem targetItem = Object.FindObjectsOfType<MonoBehaviour>().OfType<DefaultItem>()
-                .Where(m => m.GetItemClass() == itemName)
+                // .Where(m => m.GetItemClass() == itemName)
                 .OrderBy(m => Vector3.Distance(mob.transform.position, m.gameObject.transform.position))
                 .FirstOrDefault();
 
@@ -95,24 +95,32 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
     }
 
 
-    private void LoopMove(){
+    private void LoopMove()
+    {
         DefaultBuild building = mob.toColliderObj.GetComponent<DefaultBuild>();
         Item item = mob.toColliderObj.GetComponent<Item>();
 
-        if(building != null){
+        if (building != null)
+        {
 
-            if(didICollectFromItem && counter > 0){
+            // Debug.Log("OUOUXD building is not null");
+
+            if (didICollectFromItem && counter > 0)
+            {
                 counter -= Time.deltaTime;
-                return; 
-            } else if(counter <= 0){
-                didICollectFromItem  = false;
+                return;
+            }
+            else if (counter <= 0)
+            {
+                didICollectFromItem = false;
                 counter = 5;
             }
 
             Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
             mob.transform.position += dir * mob.speedFactor;
 
-            if(Vector3.Distance(mob.transform.position, mob.toDestination) < 0.1f){
+            if (Vector3.Distance(mob.transform.position, mob.toDestination) < 0.1f)
+            {
                 string closestItemName = ItemBuilding.Instance.GetItemName(building.GetBuildingClass());
                 closestItem = FindClosestItem(closestItemName);
                 if (closestItem == null)
@@ -122,7 +130,8 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
                 }
                 mob.toColliderObj = closestItem.gameObject;
                 mob.toDestination = closestItem.transform.position;
-                if(didICollectFromItem){
+                if (didICollectFromItem)
+                {
 
                     //Null checking debug code:
 
@@ -130,7 +139,8 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
                     {
                         Debug.LogError("ItemDatabase.Instance is null! Make sure it's initialized in the scene.");   //Yeah, it's null.....
                     }
-                    else{
+                    else
+                    {
                         Debug.Log("ItemDatabase not null, different problem!");
                     }
 
@@ -143,11 +153,13 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
             }
         }
 
-        else if(item != null){
+        else if (item != null)
+        {
             Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
             mob.transform.position += dir * mob.speedFactor;
 
-            if(Vector3.Distance(mob.transform.position, mob.toDestination) < 0.1f){
+            if (Vector3.Distance(mob.transform.position, mob.toDestination) < 0.1f)
+            {
                 mob.toColliderObj = mob.buidlingAssignedTo.gameObject;
                 mob.toDestination = mob.buidlingAssignedTo.transform.position;
                 // start timer
@@ -157,6 +169,11 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
 
             }
         }
+        else
+        {
+            Debug.Log("OUOUXD building is null");
+        }
+        
     }
 
     // private void startTimer() {
