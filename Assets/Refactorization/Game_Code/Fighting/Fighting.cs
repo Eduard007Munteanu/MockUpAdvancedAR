@@ -30,24 +30,33 @@ public class Fighting{
     private float totalMobMightPower = 0;
 
     private bool isTriggered = false;
-
     
+    private ResourceDatabase resources;
 
 
 
-    public Fighting(List<EnemyMob> currentEnemyMobs, List<DefaultMob> currentDefaultMobs, DefaultBuild building){
+
+
+    public Fighting(List<EnemyMob> currentEnemyMobs, List<DefaultMob> currentDefaultMobs, DefaultBuild building)
+    {
         enemyMobs = currentEnemyMobs;
         defaultMobs = currentDefaultMobs;
         theBuilding = building;
 
-        
+
         Debug.Log("AT FIGHTING > Enemy powers: " +
             string.Join(", ", enemyMobs.Select(m => m.GetMightPower())));
-        
+
         Debug.Log("AT FIGHTING > Default powers: " +
             string.Join(", ", defaultMobs.Select(m => m.GetMightPower())));
-       
-        
+            
+        while (resources == null)
+        {
+            Debug.Log("Waiting for ResourceDatabase to be initialized...");
+            resources = ResourceDatabase.Instance;
+        }
+
+
     }
 
 
@@ -205,6 +214,12 @@ public class Fighting{
 
         enemyMobs.RemoveAll(m => m.GetMightPower() == 0);
         defaultMobs.RemoveAll(m => m.GetMightPower() == 0);
+
+        foreach (var mob in defaultMobs)
+        {
+            if (mob != null)
+                mob.ResetMightPower();
+        }
 
 
         Debug.Log("AT FIGHTING > EnemyMobs Count is " + enemyMobs.Count);

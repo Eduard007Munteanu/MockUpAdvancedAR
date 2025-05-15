@@ -135,7 +135,7 @@ public class TheRayCaster : MonoBehaviour
 
                 if (rightHandPinchStrength > 0.8f && !wasPinching)
                 {
-                    PanelManager.Instance.SpawnPanelOnLeftHand(building);
+                    // PanelManager.Instance.SpawnPanelOnLeftHand(building);
                 }
 
             }

@@ -11,7 +11,7 @@ public class MilitaryCard : BuildCard
         base.Init(cardGrabbable, uniqueCardDeck);
         resourceEffects = new List<ResourceEffect>
         {
-            new ResourceEffect(ResourceType.Wood, -100f),
+            new ResourceEffect(ResourceType.Gold, -50f),
         };
     }
     

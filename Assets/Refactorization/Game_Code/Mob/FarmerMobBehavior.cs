@@ -112,27 +112,21 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
             }
             else if (counter <= 0)
             {
-                didICollectFromItem = false;
+                didICollectFromItem = true;
                 counter = 5;
             }
 
             Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
             mob.transform.position += dir * mob.speedFactor;
 
-            if (Vector3.Distance(mob.transform.position, mob.toDestination) < 0.1f)
+            Debug.Log($"OUOUXD passed first ${mob.transform.position} to {mob.toDestination}");
+
+            if (Vector3.Distance(mob.transform.position, mob.toDestination) <= 0.1f)
             {
-                string closestItemName = ItemBuilding.Instance.GetItemName(building.GetBuildingClass());
-                closestItem = FindClosestItem(closestItemName);
-                if (closestItem == null)
-                {
-                    mob.isMoving = false;
-                    return;
-                }
-                mob.toColliderObj = closestItem.gameObject;
-                mob.toDestination = closestItem.transform.position;
+
                 if (didICollectFromItem)
                 {
-
+                    Debug.Log("OUOUXD enter did i collect");
                     //Null checking debug code:
 
                     if (ItemDatabase.Instance == null)
@@ -150,6 +144,20 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
                     ItemDatabase.Instance.UpdateCollectedItemsCount(closestItem, 1); //Hardcoded the value you get by collecting a material
                     didICollectFromItem = false;
                 }
+
+                Debug.Log("OUOUXD passed second");
+                string closestItemName = ItemBuilding.Instance.GetItemName(building.GetBuildingClass());
+                closestItem = FindClosestItem(closestItemName);
+                if (closestItem == null)
+                {
+                    mob.isMoving = false;
+                    return;
+                }
+                mob.toColliderObj = closestItem.gameObject;
+                mob.toDestination = closestItem.transform.position;
+
+                Debug.Log("OUOUXD passed closestItem");
+                
             }
         }
 
@@ -165,13 +173,14 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
                 // start timer
                 // wait for timer
                 //startTimer();
+                Debug.Log("OUOUXD collected item: " + item.GetItemClass());
                 didICollectFromItem = true;
 
             }
         }
         else
         {
-            Debug.Log("OUOUXD building is null");
+            // Debug.Log("OUOUXD building is null");
         }
         
     }
