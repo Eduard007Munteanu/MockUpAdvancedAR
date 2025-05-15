@@ -81,9 +81,9 @@ MonoBehaviour:
   spawnOnStart: 1
   localPositionOffset: {x: 0, y: 0, z: 0}
   localRotationOffset: {x: 0, y: 0, z: 0}
-  spawnLocalScale: {x: 1, y: 1, z: 1}
+  spawnLocalScale: {x: 1, y: 0.5, z: 1}
   scaleToFitWidth: 1
   scaleToFitLength: 1
-  sizeMargin: 0.1
-  maintainHeight: 0
+  sizeMargin: 0.2
+  maintainHeight: 1
   alwaysRecalculateBounds: 0
