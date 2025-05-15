@@ -25,10 +25,9 @@ public class ItemBuilding: MonoBehaviour{
 
 
     void InitializeItemBuilding(){
-        itemBuildingDictionary.Add("farming", "GoldItem");
-        itemBuildingDictionary.Add("military", "TreeItem");
-        itemBuildingDictionary.Add("sleep", "StoneItem");
-        
+        // itemBuildingDictionary.Add("farming", "GoldItem");
+        // itemBuildingDictionary.Add("military", "TreeItem");
+        // itemBuildingDictionary.Add("sleep", "StoneItem");
     }
 
     public string GetItemName(string buildingName){

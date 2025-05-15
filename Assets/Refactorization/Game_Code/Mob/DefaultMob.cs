@@ -12,7 +12,7 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
 
     public DefaultBuild buidlingAssignedTo; // I don't want now to add get + set methods
 
-    [SerializeField] public float speedFactor = 0.008f; // I don't want now to add get + set methods 
+    [SerializeField] public float speedFactor = 0.002f; // I don't want now to add get + set methods 
 
     public  Vector3 toDestination; // I don't want now to add get + set methods
 
@@ -28,16 +28,18 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
     // Start is called before the first frame update
 
 
-    private float mightPower = 10f;
+    private float mightPower;
 
 
 
     void Start()
     {
-        while (resources == null){
+        while (resources == null)
+        {
             Debug.Log("Waiting for ResourceDatabase to be initialized...");
             resources = ResourceDatabase.Instance;
         }
+        ResetMightPower();
     }
 
     public float GetMightPower(){
@@ -46,6 +48,10 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
 
     public void SetMightPower(float changedMight){
         mightPower = changedMight;
+    }
+
+    public void ResetMightPower(){
+        mightPower = resources[ResourceType.Might].CurrentAmount;
     }
 
     // Update is called once per frame
