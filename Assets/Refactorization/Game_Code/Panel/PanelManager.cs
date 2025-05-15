@@ -96,7 +96,7 @@ public class PanelManager : MonoBehaviour
     public void ActivatePanel(GameObject panel){
         if (panel != null)
         {
-            panel.SetActive(true); // Activate the panel
+            // panel.SetActive(true); // Activate the panel
         }
     }
 

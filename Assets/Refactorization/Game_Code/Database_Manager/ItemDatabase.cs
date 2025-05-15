@@ -46,12 +46,16 @@ public class ItemDatabase: MonoBehaviour{
         } else if(collectedItemsCount.ContainsKey(itemClass)){
             collectedItemsCount[itemClass] += increaseBy;
         }
+        Debug.Log($"OUOUXD {itemClass} collected");
 
-        if (item.GetItemClass() == "StoneItem"){
+        if (itemClass == "StoneItem"){
+            Debug.Log("OUOUXD FoodItem collected");
             resources[ResourceType.Food].AddAmount(increaseBy);
-        } else if (item.GetItemClass() == "GoldItem"){
+        } else if (itemClass == "GoldItem"){
+            Debug.Log("OUOUXD GoldItem collected");
             resources[ResourceType.Gold].AddAmount(increaseBy);
-        } else if (item.GetItemClass() == "TreeItem") {
+        } else if (itemClass == "TreeItem") {
+            Debug.Log("OUOUXD TreeItem collected");
             resources[ResourceType.Wood].AddAmount(increaseBy);
         }
 
