@@ -10,26 +10,38 @@
     "m_KnownProcessesForSerialization": [
         {
             "deviceId": "1WMHHA61EF1505",
+            "name": "com.oculus.os.clearactivity",
+            "processId": 25032,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.oculus.metacam:Metacam",
+            "processId": 4616,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 31943,
+            "processId": 14250,
             "exited": true
         },
         {
             "deviceId": "1WMHHA61EF1505",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 2775,
+            "processId": 16075,
             "exited": true
         },
         {
             "deviceId": "1WMHHA61EF1505",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 4342,
+            "processId": 17856,
             "exited": true
         },
         {
             "deviceId": "1WMHHA61EF1505",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 7124,
+            "processId": 21205,
             "exited": true
         }
     ],
@@ -87,7 +99,7 @@
         "AutoCapture": true
     },
     "m_FilterOptions": {
-        "m_Filter": "spaw",
+        "m_Filter": "",
         "m_UseRegularExpressions": false,
         "m_MatchCase": false
     },

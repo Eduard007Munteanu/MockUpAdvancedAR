@@ -15,11 +15,13 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
     private DefaultMob mob;
 
     private float counter = 1f;
+    private bool stay = false;
 
     
 
-    public void Init(DefaultMob mob)
+    public void Init(DefaultMob mob, bool stay = false)
     {
+        this.stay = stay;
         this.mob = mob;
     }
 

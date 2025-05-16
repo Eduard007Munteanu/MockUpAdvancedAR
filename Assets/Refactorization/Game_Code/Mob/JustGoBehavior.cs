@@ -14,7 +14,7 @@ public class JustGoBehavior : IMobBehavior
         }
     }
 
-    public void Init(DefaultMob mob)
+    public void Init(DefaultMob mob, bool stay = false)
     {
         this.mob = mob;
     }
@@ -22,7 +22,7 @@ public class JustGoBehavior : IMobBehavior
     public void InitMove(Vector3 destination, GameObject colliderObj)
     {
         mob.isMoving = true;
-        mob.toDestination = destination;
+        mob.toDestination = new Vector3(destination.x, mob.transform.position.y, destination.z);
         mob.toColliderObj = colliderObj;
     }
 

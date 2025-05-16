@@ -24,6 +24,7 @@ public class FarmBuild : DefaultBuild
         resourceEffects = new List<ResourceEffect>
         {
             new ResourceEffect(ResourceType.Economy, 1f),
+            new ResourceEffect(ResourceType.Food, 0f, 2f),
         };
     }
     

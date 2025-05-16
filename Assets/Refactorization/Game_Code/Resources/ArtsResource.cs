@@ -13,10 +13,10 @@ public class ArtsResource : Resource
     
     // Constructor: Sets up the Arts resource with specific initial values.
     public ArtsResource(
-        float initialAmount = 0f, 
+        float initialAmount = 5f, 
         float minAmount = 0f, 
         float maxAmount = 100f, 
-        int cycleTicks = 2
+        int cycleTicks = 1
         ) : base(ResourceType.Arts, initialAmount, minAmount, maxAmount, cycleTicks)
     {
 
@@ -29,8 +29,9 @@ public class ArtsResource : Resource
             resources[ResourceType.Happiness].AddAmount(delta * 0.001f); // Example: Arts production increases happiness
             resources[ResourceType.Score].AddAmount(delta * 0.05f);
         }
-        
-        if (CurrentAmount > 1000f && !achievementUnlocked){
+
+        if (CurrentAmount > 200f && !achievementUnlocked)
+        {
             // Assuming CubePaintings.Instance is valid and accessible
             if (CubePaintings.Instance != null)
             {
@@ -41,6 +42,12 @@ public class ArtsResource : Resource
                 resources[ResourceType.Score].AddAmount(1000f);
             }
             achievementUnlocked = true;
+        }
+
+        if (flat < 5f)
+        {
+            flat = 5f; // Ensure flat production is at least 5
+            // Debug.Log($"ArtsResource: Flat production set to minimum of 5.");
         }
     }
 
