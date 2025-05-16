@@ -20,8 +20,12 @@ public class ItemManager : MonoBehaviour
 
     private Dictionary<DefaultTile, List<DefaultItem>> itemsData = new Dictionary<DefaultTile, List<DefaultItem>>(); 
 
-    [SerializeField ] private int mineralPlacesToSpawn =  5;
+    // [SerializeField ] private int mineralPlacesToSpawn =  5;
     [SerializeField] private int numberOfMaterialsPerTile = 5;
+
+    [SerializeField] private int FoodTiles = 3;
+    [SerializeField] private int GoldTiles = 1;
+    [SerializeField] private int WoodTiles = 1;
 
 
     
@@ -49,19 +53,24 @@ public class ItemManager : MonoBehaviour
         if(tilesRendered){
             Debug.Log("Tile did render from tileRendered");
             Debug.Log("Number of tiles from tileRendered : " + gridOverlay.GetTiles().Count);
-            for(int i=0; i < mineralPlacesToSpawn; i++){
-                CreateItemsForTile(numberOfMaterialsPerTile); 
-                
-            }   
+            // for(int i=0; i < mineralPlacesToSpawn; i++){
+            //     CreateItemsForTile(numberOfMaterialsPerTile); 
+
+            // }  
+            for(int i=0; i < FoodTiles; i++){
+                CreateItemsForTile(numberOfMaterialsPerTile, itemsPrefabTypes[0]); 
+            }
+            for(int i=0; i < GoldTiles; i++){
+                CreateItemsForTile(numberOfMaterialsPerTile, itemsPrefabTypes[1]); 
+            }
+            for(int i=0; i < WoodTiles; i++){
+                CreateItemsForTile(numberOfMaterialsPerTile, itemsPrefabTypes[2]); 
+            }
             tilesRendered = false;     
         }
     }
 
-    public void CreateItemsForTile(int numberOfItems){
-
-
-        DefaultItem specificItemPrefab = itemsPrefabTypes[Random.Range(0, itemsPrefabTypes.Length)];
-
+    public void CreateItemsForTile(int numberOfItems, DefaultItem specificItemPrefab){
 
         if(gridOverlay == null){
             Debug.LogError("GridOverlay is critical, bruh!");

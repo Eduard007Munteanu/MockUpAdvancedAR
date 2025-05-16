@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Meta.XR.MRUtilityKit.SceneDecorator;
+using Oculus.Interaction;
 using UnityEditor.Rendering.BuiltIn.ShaderGraph;
 using UnityEngine;
 
@@ -74,7 +75,7 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
             currentTile = null;
         }
 
-        currentBehavior?.InitMove(destination, colliderObj);
+        currentBehavior?.InitMove(new Vector3(destination.x, gameObject.transform.position.y, destination.z), colliderObj);
     }
 
 
@@ -134,6 +135,10 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
 
             case "sleep":
                 SetMobBehavior(new FarmerMobBehavior());
+                break;
+
+            case "Main":
+                // SetMobBehavior(new FarmerMobBehavior());
                 break;
 
             case null:

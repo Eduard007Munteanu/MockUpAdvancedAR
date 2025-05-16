@@ -1355,7 +1355,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5272584480705106158, guid: aac019507b2c5f14293ebd4567a0cfcd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.006000057
+      value: 0.0060001016
       objectReference: {fileID: 0}
     - target: {fileID: 5272584480705106158, guid: aac019507b2c5f14293ebd4567a0cfcd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5053,11 +5053,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsPrefabTypes:
-  - {fileID: 26106160839137917, guid: 130437ff75e8fd940937a4cb2e2e196e, type: 3}
   - {fileID: 1906971717574370499, guid: 8db1c2257b33b62419b876278612e137, type: 3}
+  - {fileID: 26106160839137917, guid: 130437ff75e8fd940937a4cb2e2e196e, type: 3}
   - {fileID: 7568325474891418392, guid: 545147d1018e7294a8bfd49f9031059d, type: 3}
-  mineralPlacesToSpawn: 5
   numberOfMaterialsPerTile: 5
+  FoodTiles: 3
+  GoldTiles: 1
+  WoodTiles: 1
 --- !u!114 &380474431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7782,7 +7784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3331214949697653312, guid: b7d6713bd56f55e49908447e7e7d4187, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0059999675
+      value: 0.006000012
       objectReference: {fileID: 0}
     - target: {fileID: 3331214949697653312, guid: b7d6713bd56f55e49908447e7e7d4187, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9804,7 +9806,7 @@ Transform:
   m_GameObject: {fileID: 762022005}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0.646}
+  m_LocalPosition: {x: 0, y: 0, z: 0.788}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13861,8 +13863,8 @@ Transform:
   m_GameObject: {fileID: 1077193223}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.725, z: 0}
-  m_LocalScale: {x: 1.74, y: 3.7410002, z: 2.6100001}
+  m_LocalPosition: {x: 0, y: -2.7250001, z: 0}
+  m_LocalScale: {x: 1.7400001, y: 3.7410002, z: 2.6100001}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1575510862}
@@ -17643,7 +17645,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7503936958821787417, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.033
+      value: -0.033000022
       objectReference: {fileID: 0}
     - target: {fileID: 7503936958821787417, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20670,14 +20672,14 @@ Transform:
   m_GameObject: {fileID: 1575510861}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.147, z: 0}
-  m_LocalScale: {x: 0.16666667, y: 0.16666667, z: 0.16666667}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0.221, z: 0}
+  m_LocalScale: {x: 0.14, y: 0.14, z: 0.14}
+  m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1077193226}
-  - {fileID: 92197225}
-  - {fileID: 600734243}
   - {fileID: 1269237724}
+  - {fileID: 600734243}
+  - {fileID: 92197225}
+  - {fileID: 1077193226}
   m_Father: {fileID: 276549462}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1575733600
@@ -25154,13 +25156,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 18393e68e9884f248be3c2eeafe5c692, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.675
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 84
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -25198,7 +25200,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.325
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -25228,7 +25230,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 1.1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
