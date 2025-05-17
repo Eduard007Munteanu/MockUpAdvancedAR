@@ -14,11 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bd14cd7d8e14ccd4f89d498c34da5f72, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bd14cd7d8e14ccd4f89d498c34da5f72, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bd14cd7d8e14ccd4f89d498c34da5f72, type: 3}
       propertyPath: m_LocalPosition.x
@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bd14cd7d8e14ccd4f89d498c34da5f72, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f1dcc80b24c6ec546af513b2b21f2032, type: 2}
     - target: {fileID: 919132149155446097, guid: bd14cd7d8e14ccd4f89d498c34da5f72, type: 3}
       propertyPath: m_Name
       value: tree 1
@@ -99,7 +103,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.19445136, y: 0.21735808, z: 0.12526208}
+  m_Size: {x: 0.19445136, y: 0.2, z: 0.12526208}
   m_Center: {x: 0.01178658, y: 0.0017730069, z: 0.05242082}
 --- !u!114 &7568325474891418392
 MonoBehaviour:
