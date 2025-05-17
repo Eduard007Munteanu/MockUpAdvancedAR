@@ -174,8 +174,8 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
         
 
         Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
-        Vector3 topLeft = tileCorners[0];
-        Vector3 topRight = tileCorners[1];
+        Vector3 topLeft = tileCorners[2];
+        Vector3 topRight = tileCorners[3];
 
         Vector3 xDir = (topRight - topLeft).normalized;
         float tileWidth = Vector3.Distance(topLeft, topRight);
@@ -243,6 +243,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
             Vector3 offset = xDir * (width / 2f);
             Vector3 spawnPos = cursor + offset;
             spawnPos.y = mobs[i].transform.position.y;
+            spawnPos.z = cursor.z;
 
             mobs[i].transform.position = spawnPos;
             mobs[i].currentTile = this;
@@ -356,8 +357,8 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
         // 2) Compute tile slice
         Vector3[] c = BetterGridOverlay.Instance.GetTileCorners(this);
-        Vector3 left  = c[3];               // bottomLeft
-        Vector3 right = c[2];               // bottomRight
+        Vector3 left  = c[1];               // bottomLeft
+        Vector3 right = c[0];               // bottomRight
         Vector3 xDir  = (right - left).normalized;
         float   tileW = Vector3.Distance(left, right);
 
