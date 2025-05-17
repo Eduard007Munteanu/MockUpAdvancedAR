@@ -89,6 +89,11 @@ public class ItemManager : MonoBehaviour
         foreach (Vector3 position in usedPositions)
         {
             DefaultItem itemObject = Instantiate(specificItemPrefab, position, specificItemPrefab.transform.rotation);//Quaternion.identity);
+
+            itemObject.transform.position = position;
+            itemObject.transform.SetParent(randomTile.transform.parent, true); // keep world position
+
+
             itemObject.Init(i);
             itemObject.name = $"Material_{i}";
 

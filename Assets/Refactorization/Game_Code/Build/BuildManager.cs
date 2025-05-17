@@ -97,6 +97,7 @@ public class BuildManager : MonoBehaviour  //One instance only
 
     void SpawnMainBuilding(){
         GameObject buildingObj = Instantiate(mainBuildingPrefab);
+        
 
         
 
@@ -121,7 +122,17 @@ public class BuildManager : MonoBehaviour  //One instance only
 
         DefaultTile tile = mainBuildInstance.GetTile();
 
+        
+
+
+        Debug.Log("BIGBUGFIXING, BuildManager, mainbuilding tile is " + tile);
+
+        Debug.Log("BIGBUGFIXING mainbuilding tile position is " + tile.transform.position);
+
         Renderer theBuildingRenderer = buildingObj.GetComponent<Renderer>();
+
+        
+
         float scaleFactor = tile.ScalingTheObjects(theBuildingRenderer, 2);
 
         buildingObj.transform.localScale *= scaleFactor;
@@ -130,6 +141,11 @@ public class BuildManager : MonoBehaviour  //One instance only
 
         Vector3 spawnPos = mainBuildInstance.SpawnBuilding();
         buildingObj.transform.position = spawnPos;
+
+        buildingObj.transform.SetParent(tile.transform.parent, true); // Or under a shared AR parent
+
+
+        Debug.Log("BIGBUGFIXING mainbuilding spawn position is " + spawnPos);
 
         tile.ArrangeMobs(null);
         mainBuildInstance.InitStartingPops();

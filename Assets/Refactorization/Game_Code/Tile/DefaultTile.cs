@@ -34,13 +34,23 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     // Update is called once per frame
     void Update()
     {
-        if((mobs.Count > 0 && enemyMobs.Count > 0) || (enemyMobs.Count > 0) && buildingOnTile != null ){
+        if (this == BetterGridOverlay.Instance.FindTileWithCoordinates(6, 3)) {
+            Debug.Log("BIGBUGFIXING, Current position of tile is: " + transform.position);    
+        }
+
+        
+        
+
+
+        if ((mobs.Count > 0 && enemyMobs.Count > 0) || (enemyMobs.Count > 0) && buildingOnTile != null)
+        {
             timer += Time.deltaTime;
-            if(timer >= activator){
+            if (timer >= activator)
+            {
                 FightingActivation();
                 timer = 0f;
             }
-            
+
         }
     }
 
@@ -71,6 +81,9 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
         return scaleFactor;
 
     }
+
+
+    
 
 
 

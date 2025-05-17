@@ -63,7 +63,9 @@ public class MainBuild : DefaultBuild
 
     public override Vector3 SpawnBuilding()
     {
-        tiles = TileFindCalculation(); 
+        tiles = TileFindCalculation();
+
+        Debug.Log("BIGBUGFIXING, From SpawnBuilding MainBuild, tiles is " + tiles);
 
         Renderer tileRenderer = tiles.GetComponent<Renderer>();
         Renderer buildingRenderer = GetComponent<Renderer>();
@@ -77,9 +79,9 @@ public class MainBuild : DefaultBuild
         float spawnY = tileTopY - objectBottomOffset;
 
         
-        Vector3[] corners = BetterGridOverlay.Instance.GetTileCorners(tiles);
-        Vector3 topLeft = corners[0];
-        Vector3 topRight = corners[1];
+        // Vector3[] corners = BetterGridOverlay.Instance.GetTileCorners(tiles);
+        // Vector3 topLeft = corners[0];
+        // Vector3 topRight = corners[1];
 
         
         // Vector3 halfBellow =  topLeft - ((topLeft - topRight) / 2);//(topRight - topLeft) / 2;
@@ -161,6 +163,9 @@ public class MainBuild : DefaultBuild
             // }
             GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, mobPrefab.transform.rotation);//Quaternion.identity);
 
+            mob.transform.position = finalSpawnPos;
+            mob.transform.SetParent(tiles.transform.parent, true); // This was missing before
+
             
             Renderer theMobRenderer = mob.GetComponent<Renderer>();
             float scaleFactor = tiles.ScalingTheObjects(theMobRenderer, 5);
@@ -214,6 +219,8 @@ public class MainBuild : DefaultBuild
             // spawnPosition += new Vector3(0f, 0.01f, 0f);        // Hardcoded! 
 
             mob.transform.position = spawnPosition;
+
+            mob.transform.SetParent(tiles.transform.parent, true); // Keep world position, but parent it under same AR anchor
 
 
             buffer.Add(mob.GetComponent<DefaultMob>());
