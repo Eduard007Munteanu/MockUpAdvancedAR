@@ -8,7 +8,7 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
 
     private bool buildingOrTile;  //Not flexible!
 
-    private bool didICollectFromItem;
+    private bool didICollectFromItem = false;
 
     private DefaultItem closestItem; 
 
@@ -96,23 +96,31 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
 
 
     private void LoopMove(){
+        Debug.Log("VERSION CONTROL We are at the loop move " );
         DefaultBuild building = mob.toColliderObj.GetComponent<DefaultBuild>();
         Item item = mob.toColliderObj.GetComponent<Item>();
 
         if(building != null){
+            Debug.Log("VERSION CONTROL Building not null " + building.GetBuildingClass());
 
-            if(didICollectFromItem && counter > 0){
-                counter -= Time.deltaTime;
-                return; 
-            } else if(counter <= 0){
-                didICollectFromItem  = false;
-                counter = 5;
-            }
+            // if (didICollectFromItem && counter > 0)
+            // {
+            //     counter -= Time.deltaTime;
+            //     return;
+            // }
+            // else if (counter <= 0)
+            // {
+            //     didICollectFromItem = false;
+            //     counter = 5;
+            // }
 
             Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
             mob.transform.position += dir * mob.speedFactor;
 
             if(Vector3.Distance(mob.transform.position, mob.toDestination) < 0.1f){
+                Debug.Log("VERSION CONTROL we are very close to the building, distance reached " );
+
+
                 string closestItemName = ItemBuilding.Instance.GetItemName(building.GetBuildingClass());
                 closestItem = FindClosestItem(closestItemName);
                 if (closestItem == null)
@@ -122,7 +130,9 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
                 }
                 mob.toColliderObj = closestItem.gameObject;
                 mob.toDestination = closestItem.transform.position;
-                if(didICollectFromItem){
+                Debug.Log("VERSION CONTROL didICollectFromItem is  " + didICollectFromItem);
+                if (didICollectFromItem)
+                {
 
                     //Null checking debug code:
 
@@ -130,13 +140,15 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
                     {
                         Debug.LogError("ItemDatabase.Instance is null! Make sure it's initialized in the scene.");   //Yeah, it's null.....
                     }
-                    else{
+                    else
+                    {
                         Debug.Log("ItemDatabase not null, different problem!");
                     }
 
 
                     //Null checking debug code:
 
+                    Debug.Log("VERSION CONTROL Closest item: " + closestItem.GetItemClass());
                     ItemDatabase.Instance.UpdateCollectedItemsCount(closestItem, 1); //Hardcoded the value you get by collecting a material
                     didICollectFromItem = false;
                 }
@@ -144,10 +156,12 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
         }
 
         else if(item != null){
+            Debug.Log("VERSION CONTROL Item not null " );
             Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
             mob.transform.position += dir * mob.speedFactor;
 
             if(Vector3.Distance(mob.transform.position, mob.toDestination) < 0.1f){
+                Debug.Log("VERSION CONTROL we are very close to the item, distance reached " );
                 mob.toColliderObj = mob.buidlingAssignedTo.gameObject;
                 mob.toDestination = mob.buidlingAssignedTo.transform.position;
                 // start timer

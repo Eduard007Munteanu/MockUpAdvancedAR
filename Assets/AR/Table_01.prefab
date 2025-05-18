@@ -122,4 +122,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   depthSpacing: 0.5
-  objectFacingDirection: 3
+  objectFacingDirection: 0

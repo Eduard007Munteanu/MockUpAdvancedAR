@@ -38,6 +38,8 @@ public class ItemDatabase: MonoBehaviour{
 
     public void UpdateCollectedItemsCount(DefaultItem item, int increaseBy){
 
+        Debug.Log("VERSION CONTROL item type is " + item.Type);
+
         resources[item.Type].AddAmount(increaseBy);
 
         string itemClass = item.GetItemClass();
