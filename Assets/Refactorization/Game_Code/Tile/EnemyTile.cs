@@ -71,7 +71,7 @@ public class EnemyTile : DefaultTile
         enemyMob.transform.position = spawnedMobPosition;
 
 
-        enemyMob.transform.SetParent(transform.parent, true);
+        //enemyMob.transform.SetParent(transform.parent, true);
 
         enemyMob.HeIsMyCreator(this);
         Debug.Log("Yeah, we added the enemyMob brothers!");

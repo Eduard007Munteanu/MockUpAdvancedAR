@@ -134,7 +134,7 @@ public class EnemyMob : MonoBehaviour{
         if(isMoving){
             Debug.Log("From MoveForward, isMoving is true, so we continue going");
             Vector3 dir = new Vector3(0f,0f,1f);
-            transform.position -= dir * speedFactor;   
+            transform.position += dir * speedFactor;
         } else {
             Debug.Log("From MoveForward, isMoving is false, we are stationary for now to check the tiles");
         }

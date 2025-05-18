@@ -17573,6 +17573,26 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3302035566366111678, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.97456604
+      objectReference: {fileID: 0}
+    - target: {fileID: 3302035566366111678, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3302035566366111678, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.22410065
+      objectReference: {fileID: 0}
+    - target: {fileID: 3302035566366111678, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3302035566366111678, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 25.9
+      objectReference: {fileID: 0}
     - target: {fileID: 5543173170310422914, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
       propertyPath: m_Name
       value: Game_Holder

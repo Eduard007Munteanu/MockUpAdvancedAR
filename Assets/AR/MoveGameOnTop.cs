@@ -139,7 +139,8 @@ public class PlaceObjectsFromLayerOnSelf : MonoBehaviour
             // --- Start: Correct Centering for Scaled and Rotated Object ---
             // Apply rotation *before* getting bounds if rotation affects bounds calculation.
             // The baseRotation is calculated once outside the loop. Apply it here before getting bounds.
-            obj.transform.rotation = baseRotation;
+            //Quarternion oldRotation = 
+            //obj.transform.rotation = baseRotation;
 
             // Get bounds *after* scaling and rotation to find the new center relative to the pivot
             Renderer currentRenderer = obj.GetComponentInChildren<Renderer>();
