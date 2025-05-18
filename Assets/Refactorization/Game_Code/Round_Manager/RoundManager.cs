@@ -11,6 +11,8 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
     private int roundNumber = 1;
 
+    private bool round1Showed = false;
+
     private int numberOfEnemiesToSpawn = 0;  //Hardcoded
 
     private float timeToActivateRound = 15f; 
@@ -46,6 +48,8 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
     void Start()
     {
+        
+
         enemyTiles = new List<EnemyTile>();   
     }
 
@@ -59,10 +63,37 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
     void Update(){
         if(timerIncreaser){
+
+
+            if (roundNumber == 1 && !round1Showed)
+            {
+                if (NotificationManager.Instance != null)
+                {
+                    NotificationManager.Instance.ShowNotification("Round: ", $"We are at Round:  {roundNumber}");
+                    round1Showed = true;
+                }
+                else
+                {
+                    Debug.LogWarning("NotificationManager instance not found. Cannot show 'Arts Advancement' notification.");
+                }    
+            }
+            
+
+
             Debug.Log("We are exactly at UpdateTime");
             UpdateTime();
         } else{ // new round
             roundNumber += 1;
+            if (NotificationManager.Instance != null)
+            {
+                NotificationManager.Instance.ShowNotification("Round: ", $"We are at Round:  {roundNumber}");
+            }
+            else
+            {
+                Debug.LogWarning("NotificationManager instance not found. Cannot show 'Arts Advancement' notification.");
+            }
+            
+            Debug.Log("We are at roundnumber: " + roundNumber);
             Debug.Log("We are exactly at SpawnMobs");
             resources[ResourceType.EnemyMight].AddAmount(1f); // increase enemy might each round
             SpawnMobs();
