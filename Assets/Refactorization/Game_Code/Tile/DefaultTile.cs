@@ -21,6 +21,8 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
     private float activator = 3f; 
 
+    private List<DefaultMob> buffer = new List<DefaultMob>();
+
 
     
 
@@ -36,6 +38,15 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     {
         if (this == BetterGridOverlay.Instance.FindTileWithCoordinates(6, 3)) {
             Debug.Log("BIGBUGFIXING, Current position of tile is: " + transform.position);    
+        }
+
+
+        if (buffer.Count > 0 && CanMobBeArrangedChecker())
+        {
+            DefaultMob theMob = buffer[0];
+            buffer.RemoveAt(0);
+            ArrangeMobs(theMob);
+            // theMob.AssignToBuilding(this);
         }
 
         
@@ -164,14 +175,42 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
     }
 
 
-    
+
+
+    public void ArrangeMobsGivenPressBuild(DefaultMob mob, DefaultBuild building)
+    {
+        if (CanMobBeArrangedChecker())
+        {
+            ArrangeMobs(mob.GetComponent<DefaultMob>());
+
+            mob.GetComponent<DefaultMob>().AssignToBuilding(building);
+            
+        }
+        else
+        {
+
+            mob.transform.position = building.transform.position;
+            
+            buffer.Add(mob.GetComponent<DefaultMob>());
+
+
+
+
+            //GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
+
+            //transform.position
+
+        }
+    }
+
 
     public void ArrangeMobs(DefaultMob mob)
     {
-        if(mob != null){
+        if (mob != null)
+        {
             mobs.Add(mob); // Always add the mob first
         }
-        
+
 
         Vector3[] tileCorners = BetterGridOverlay.Instance.GetTileCorners(this);
         Vector3 topLeft = tileCorners[0];
@@ -194,7 +233,8 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
         if (totalWidth > tileWidth)
         {
             Debug.LogWarning($"Not enough space to place {mobs.Count} mobs. Required: {totalWidth}, Available: {tileWidth}");
-            if(mob != null){
+            if (mob != null)
+            {
                 mobs.Remove(mob); // Roll back
             }
             return;
@@ -203,20 +243,27 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
 
         Vector3 cursor = Vector3.zero; // Initialize cursor with a default value
-        if(buildingOnTile != null){
+        if (buildingOnTile != null)
+        {
             Renderer buildingOnTileRenderer = buildingOnTile.GetComponent<Renderer>();
             float maxZPositionOfBuilding = buildingOnTileRenderer.bounds.size.z;
             float mobZ;
-            if(mob == null){
-                if(mobs.Count > 0){
+            if (mob == null)
+            {
+                if (mobs.Count > 0)
+                {
                     mobZ = mobs[0].GetComponent<Renderer>().bounds.size.z;
-                } else {
+                }
+                else
+                {
                     mobZ = 0;
                 }
-            } else{
+            }
+            else
+            {
                 mobZ = mob.GetComponent<Renderer>().bounds.size.z;
             }
-            
+
 
 
             float offsetFromBuilding = maxZPositionOfBuilding / 2f + mobZ;  //HARDCODED
@@ -225,9 +272,11 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
             cursor = groupStart - xDir * (totalWidth / 2f);
             Debug.Log("There is a building on tile");
             //float differenceBetweenMinMaxZTile = GetComponent<Renderer>().bounds.max.z - GetComponent<Renderer>().bounds.min.z;
-            
 
-        } else if(buildingOnTile == null){
+
+        }
+        else if (buildingOnTile == null)
+        {
             Vector3 tileCenter = (topLeft + topRight) * 0.5f;
             Vector3 groupStart = tileCenter - xDir * (totalWidth / 2f);
 
@@ -235,7 +284,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
             cursor = groupStart;//topLeft;
             Debug.Log("No building on tile");
         }
-        
+
 
         for (int i = 0; i < mobs.Count; i++)
         {

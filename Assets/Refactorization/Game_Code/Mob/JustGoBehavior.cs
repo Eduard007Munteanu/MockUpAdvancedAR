@@ -40,7 +40,20 @@ public class JustGoBehavior : IMobBehavior
             Debug.Log("Reached the closest point on tile to my DefaultMob object");
             mob.isMoving = false;
             // transform.position = toDestination;
-            mob.toColliderObj.GetComponent<DefaultTile>().ArrangeMobs(mob);
+
+            if (mob.toColliderObj.GetComponent<DefaultBuild>() != null)
+            {
+                Debug.Log("DefaultBuild from JustGoBehavior is here");
+                mob.toColliderObj.GetComponent<DefaultBuild>().GetTile().ArrangeMobsGivenPressBuild(mob, mob.toColliderObj.GetComponent<DefaultBuild>());  
+            }
+
+            if (mob.toColliderObj.GetComponent<DefaultTile>() != null)
+            {
+                Debug.Log("DefaultTile from JustGoBehavior is here");
+                mob.toColliderObj.GetComponent<DefaultTile>().ArrangeMobs(mob);    
+            }
+
+            
             
             // I want to set the mob in a  specific order regarding the tile, involving taking into account possible other mobs from the same tile. 
         }
