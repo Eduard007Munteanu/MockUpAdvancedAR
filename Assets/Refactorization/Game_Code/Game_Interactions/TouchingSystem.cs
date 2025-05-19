@@ -103,6 +103,7 @@ public class TouchingSystem : MonoBehaviour{
             selectedMob.InitMove(targetPosition, defaultTileTouched.gameObject);
         }
         selectedMob = null;
+        StartCoroutine(SelectionCooldownCoroutine()); // Start cooldown
     }
 
 
@@ -115,6 +116,7 @@ public class TouchingSystem : MonoBehaviour{
         selectedMob.SetBehaviorBasedOnBuilding(defaultBuildTouched);
         selectedMob.InitMove(targetPosition, defaultBuildTouched.gameObject);
         selectedMob = null;
+        StartCoroutine(SelectionCooldownCoroutine()); // Start cooldown
     }
 
 

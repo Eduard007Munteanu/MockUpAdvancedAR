@@ -89,18 +89,6 @@
         {
             "deviceId": "1WMHHA61EF1505",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 6594,
-            "exited": true
-        },
-        {
-            "deviceId": "1WMHHA61EF1505",
-            "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 8710,
-            "exited": true
-        },
-        {
-            "deviceId": "1WMHHA61EF1505",
-            "name": "com.DefaultCompany.MockUpAdvancedAR",
             "processId": 11752,
             "exited": true
         },
@@ -114,7 +102,13 @@
             "deviceId": "1WMHHA61EF1505",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
             "processId": 8554,
-            "exited": false
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 9832,
+            "exited": true
         }
     ],
     "m_Tags": {
