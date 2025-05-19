@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections; // Added for IEnumerator
 
 // it triggers selection multiple times. pickup -> assign too many times 
 // colliding with the same tile which the mob stands on ignore same with tile and house when assigning destination
@@ -16,6 +17,8 @@ public class TouchingSystem : MonoBehaviour{
 
     private DefaultMob selectedMob; 
 
+    private bool isSelectionCooldownActive = false; // Added for delay management
+
     void Start(){
 
     }
@@ -27,15 +30,16 @@ public class TouchingSystem : MonoBehaviour{
 
 
      private void OnTriggerEnter(Collider other) {
+        if (isSelectionCooldownActive) { // Check if cooldown is active
+            return;
+        }
+
         GameObject go = other.gameObject;
 
 
         if((interactableLayer.value & (1 << go.layer)) == 0){
             return;
         }
-
-        // play sound effect
-        AudioManager.Instance.PlaySoundEffect();
 
         Debug.Log("Touched: " + go.name);
 
@@ -70,9 +74,6 @@ public class TouchingSystem : MonoBehaviour{
             ActionGivenDefaultMob(mob);
         } 
         else if(selectedMob != null && tile != null){
-            // if (!tile.CheckIfMobOnTile(selectedMob)){
-            //     ActionMoveMobToTile(tile);
-            // }
             ActionMoveMobToTile(tile);
         }
         else if(selectedMob != null && build != null){
@@ -84,37 +85,38 @@ public class TouchingSystem : MonoBehaviour{
 
     private void ActionGivenDefaultMob(DefaultMob defaultMobTouched){
         selectedMob = defaultMobTouched;
+        AudioManager.Instance.PlaySoundEffect(); // Audio plays here
+        StartCoroutine(SelectionCooldownCoroutine()); // Start cooldown
     }
 
 
     public void ActionMoveMobToTile(DefaultTile defaultTileTouched){
         Debug.Log("OnTriggerEnter in ActionMoveMobToTile");
         Vector3 tilePosition = defaultTileTouched.gameObject.transform.position;  
-        //Vector3 targetPosition = new Vector3(tilePosition.x, vectorYHeightGivenTile(defaultTileTouched, selectedMob), tilePosition.z);  //Pivot point in empty object parent of tile instead of vectorYHeightGivenTile
-        // Vector3 targetPosition = new Vector3(tilePosition.x, 0, tilePosition.z);  //Pivot point in empty object parent of tile instead of vectorYHeightGivenTile
         Vector3 targetPosition = new Vector3(tilePosition.x, selectedMob.transform.position.y, tilePosition.z);  // Use selectedMob's current Y
 
         selectedMob.RemoveFromBuilding();
-        //selectedMob.AssignToBuilding(); // Here we will have the military building assignment. 
 
-        bool canTheMobBeAdded = defaultTileTouched.CanMobBeArrangedChecker();//defaultTileTouched.CanMobBeArrangedChecker(selectedMob);
+        bool canTheMobBeAdded = defaultTileTouched.CanMobBeArrangedChecker();
         if(canTheMobBeAdded){
             selectedMob.SetBehaviorBasedOnBuilding(null);
             selectedMob.InitMove(targetPosition, defaultTileTouched.gameObject);
         }
         selectedMob = null;
+        StartCoroutine(SelectionCooldownCoroutine()); // Start cooldown
     }
 
 
     public void ActionMoveMobToBuilding(DefaultBuild defaultBuildTouched){
         Debug.Log("OnTriggerEnter in ActionMoveMobToBuilding");
         Vector3 buildingPosition = defaultBuildTouched.gameObject.transform.position;  
-        Vector3 targetPosition = new Vector3(buildingPosition.x, vectorYHeightGivenTile(BetterGridOverlay.Instance.GetTiles()[0].GetComponent<DefaultTile>(), selectedMob), buildingPosition.z);
+        Vector3 targetPosition = new Vector3(buildingPosition.x, selectedMob.gameObject.transform.position.y, buildingPosition.z);
         selectedMob.RemoveFromBuilding();
         selectedMob.AssignToBuilding(defaultBuildTouched);
         selectedMob.SetBehaviorBasedOnBuilding(defaultBuildTouched);
         selectedMob.InitMove(targetPosition, defaultBuildTouched.gameObject);
         selectedMob = null;
+        StartCoroutine(SelectionCooldownCoroutine()); // Start cooldown
     }
 
 
@@ -130,7 +132,12 @@ public class TouchingSystem : MonoBehaviour{
      }
 
 
-    
+    // Added coroutine for selection delay
+    private IEnumerator SelectionCooldownCoroutine() {
+        isSelectionCooldownActive = true;
+        yield return new WaitForSeconds(0.5f);
+        isSelectionCooldownActive = false;
+    }
 
 
 }

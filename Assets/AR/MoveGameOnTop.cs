@@ -17,6 +17,11 @@ public class PlaceObjectsFromLayerOnSelf : MonoBehaviour
 
     [SerializeField] FacingDirection objectFacingDirection = FacingDirection.North;
 
+    private float rotationOffset = 90.0f;
+    private float xOffset = 0.0f;
+    private float zOffset = 0.03f;
+    private float yOffset = - 0.07f;
+
     private void Start()
     {
         StartCoroutine(WaitForTableReadyAndPlace());
@@ -68,7 +73,7 @@ public class PlaceObjectsFromLayerOnSelf : MonoBehaviour
             return;
         }
 
-        Quaternion baseRotation = transform.rotation * GetRotationFromDirection(objectFacingDirection);
+        Quaternion baseRotation = transform.rotation * GetRotationFromDirection(objectFacingDirection) * Quaternion.Euler(0, rotationOffset, 0);
 
         foreach (GameObject obj in objectsToPlace)
         {
@@ -91,11 +96,11 @@ public class PlaceObjectsFromLayerOnSelf : MonoBehaviour
             Vector3 pivotToCenterOffset = groupBounds.center - obj.transform.position;
 
             // 5. Target world position
-            Vector3 targetPos = selfCenter - new Vector3(pivotToCenterOffset.x, 0, pivotToCenterOffset.z);
+            Vector3 targetPos = selfCenter - new Vector3(pivotToCenterOffset.x + xOffset, 0, pivotToCenterOffset.z + zOffset);
 
             // 6. Align bottom to tabletop
             float verticalOffset = selfBounds.max.y - groupBounds.min.y;
-            targetPos.y = obj.transform.position.y + verticalOffset;
+            targetPos.y = obj.transform.position.y + verticalOffset + yOffset;
 
             obj.transform.position = targetPos;
 

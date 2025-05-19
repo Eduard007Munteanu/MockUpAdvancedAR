@@ -12,7 +12,7 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
 
     public DefaultBuild buidlingAssignedTo; // I don't want now to add get + set methods
 
-    [SerializeField] public float speedFactor = 0.008f; // I don't want now to add get + set methods 
+    [SerializeField] public float speedFactor = 0.001f; // I don't want now to add get + set methods 
 
     public  Vector3 toDestination; // I don't want now to add get + set methods
 

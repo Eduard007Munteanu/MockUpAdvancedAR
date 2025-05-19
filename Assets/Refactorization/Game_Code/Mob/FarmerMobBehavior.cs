@@ -69,7 +69,7 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
     private DefaultItem FindClosestItem(string itemName)
     {
         DefaultItem targetItem = Object.FindObjectsOfType<MonoBehaviour>().OfType<DefaultItem>()
-                .Where(m => m.GetItemClass() == itemName)
+                // .Where(m => m.GetItemClass() == itemName)
                 .OrderBy(m => Vector3.Distance(mob.transform.position, m.gameObject.transform.position))
                 .FirstOrDefault();
 

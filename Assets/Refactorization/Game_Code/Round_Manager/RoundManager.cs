@@ -13,9 +13,9 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
     private bool round1Showed = false;
 
-    private int numberOfEnemiesToSpawn = 0;  //Hardcoded
+    private int numberOfEnemiesToSpawn = 1;  //Hardcoded
 
-    private float timeToActivateRound = 15f; 
+    private float timeToActivateRound = 30f; 
 
     private float timer = 0f; 
 
@@ -83,19 +83,11 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
             Debug.Log("We are exactly at UpdateTime");
             UpdateTime();
         } else{ // new round
-            roundNumber += 1;
-            if (NotificationManager.Instance != null)
-            {
-                NotificationManager.Instance.ShowNotification("Round: ", $"We are at Round:  {roundNumber}");
-            }
-            else
-            {
-                Debug.LogWarning("NotificationManager instance not found. Cannot show 'Arts Advancement' notification.");
-            }
+            
             
             Debug.Log("We are at roundnumber: " + roundNumber);
             Debug.Log("We are exactly at SpawnMobs");
-            resources[ResourceType.EnemyMight].AddAmount(1f); // increase enemy might each round
+            
             SpawnMobs();
         }
     }
@@ -119,6 +111,18 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
         
         timeToWait -= Time.deltaTime; 
         if(timeToWait <= 0f){
+
+            roundNumber += 1;
+            resources[ResourceType.EnemyMight].AddAmount(5f); // increase enemy might each round
+            if (NotificationManager.Instance != null)
+            {
+                NotificationManager.Instance.ShowNotification("Round: ", $"We are at Round:  {roundNumber}");
+            }
+            else
+            {
+                Debug.LogWarning("NotificationManager instance not found. Cannot show 'Arts Advancement' notification.");
+            }
+
             Debug.Log("timeToWait reached 0, attempting spawn...");
 
             if(enemyTiles.Count == 0){
@@ -147,8 +151,8 @@ public class RoundManager : MonoBehaviour{ //Here I will need to call the ticks 
 
         if (timerIncreaser) {
         // We just ended a spawn round, reset timer-related stuff
-        numberOfEnemiesToSpawn = 0;
-        timeToWait = 1f;
+        numberOfEnemiesToSpawn = 1;
+        timeToWait = 15f;
     }
     }
 
