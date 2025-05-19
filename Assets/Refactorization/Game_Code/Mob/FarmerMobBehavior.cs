@@ -84,7 +84,7 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
         
 
 
-        if(Vector3.Distance(mob.transform.position, mob.toDestination) < 0.1f){
+        if(Vector3.Distance(mob.transform.position, mob.toDestination) < 0.01f){
             Debug.Log("Reached the closest point on tile to my DefaultMob object");
             mob.isMoving = false;
             // transform.position = toDestination;
@@ -103,21 +103,21 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
         if(building != null){
             Debug.Log("VERSION CONTROL Building not null " + building.GetBuildingClass());
 
-            // if (didICollectFromItem && counter > 0)
-            // {
-            //     counter -= Time.deltaTime;
-            //     return;
-            // }
-            // else if (counter <= 0)
-            // {
-            //     didICollectFromItem = false;
-            //     counter = 5;
-            // }
+            if (didICollectFromItem && counter > 0)
+            {
+                counter -= Time.deltaTime;
+                return;
+            }
+            else if (counter <= 0)
+            {
+                // didICollectFromItem = true;
+                counter = 5;
+            }
 
             Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
             mob.transform.position += dir * mob.speedFactor;
 
-            if(Vector3.Distance(mob.transform.position, mob.toDestination) < 0.1f){
+            if(Vector3.Distance(mob.transform.position, mob.toDestination) < 0.01f){
                 Debug.Log("VERSION CONTROL we are very close to the building, distance reached " );
 
 
@@ -160,7 +160,7 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
             Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
             mob.transform.position += dir * mob.speedFactor;
 
-            if(Vector3.Distance(mob.transform.position, mob.toDestination) < 0.1f){
+            if(Vector3.Distance(mob.transform.position, mob.toDestination) < 0.01f){
                 Debug.Log("VERSION CONTROL we are very close to the item, distance reached " );
                 mob.toColliderObj = mob.buidlingAssignedTo.gameObject;
                 mob.toDestination = mob.buidlingAssignedTo.transform.position;
@@ -168,7 +168,6 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
                 // wait for timer
                 //startTimer();
                 didICollectFromItem = true;
-
             }
         }
     }
