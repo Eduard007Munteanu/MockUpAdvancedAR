@@ -10,16 +10,17 @@ public class ArtsResource : Resource
     private float artsLevelScaling = 1.2f;
 
     public event Action<int> OnLevelUp; // Parameter is the current level
-    
+
     // Constructor: Sets up the Arts resource with specific initial values.
     public ArtsResource(
-        float initialAmount = 0f, 
-        float minAmount = 0f, 
-        float maxAmount = 100f, 
-        int cycleTicks = 2
-        ) : base(ResourceType.Arts, initialAmount, minAmount, maxAmount, cycleTicks)
+        float initialAmount = 0f,
+        float minAmount = 0f,
+        float maxAmount = 100f,
+        int cycleTicks = 2,
+        float flat = 5f
+        ) : base(ResourceType.Arts, initialAmount, minAmount, maxAmount, cycleTicks, null, flat)
     {
-
+        
     }
     protected override void onAmountChange(float delta)
     {
