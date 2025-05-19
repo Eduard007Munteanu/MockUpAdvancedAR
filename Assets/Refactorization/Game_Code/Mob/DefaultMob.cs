@@ -130,6 +130,10 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
                 SetMobBehavior(new JustGoBehavior());
                 break;
 
+            case "Main":
+                SetMobBehavior(new JustGoBehavior());
+                break;
+
             case null:
                 SetMobBehavior(new JustGoBehavior());
                 break;
