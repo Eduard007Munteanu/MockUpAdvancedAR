@@ -55,7 +55,7 @@ public class CardsDeck : MonoBehaviour
         if (alwayscard)
         {
             DrawNextCard();
-        }
+        } else AddDraw();
     }
 
     void ShuffleDeck()
