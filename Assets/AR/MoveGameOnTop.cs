@@ -17,7 +17,7 @@ public class PlaceObjectsFromLayerOnSelf : MonoBehaviour
 
     [SerializeField] FacingDirection objectFacingDirection = FacingDirection.North;
 
-    private float rotationOffset = 90.0f;
+    private float rotationOffset = 0f;
     private float xOffset = 0.0f;
     private float zOffset = 0.03f;
     private float yOffset = - 0.07f;
