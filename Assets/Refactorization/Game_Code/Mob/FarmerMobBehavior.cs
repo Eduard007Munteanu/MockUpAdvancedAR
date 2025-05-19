@@ -103,16 +103,7 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
         if(building != null){
             Debug.Log("VERSION CONTROL Building not null " + building.GetBuildingClass());
 
-            if (didICollectFromItem && counter > 0)
-            {
-                counter -= Time.deltaTime;
-                return;
-            }
-            else if (counter <= 0)
-            {
-                // didICollectFromItem = true;
-                counter = 5;
-            }
+            
 
             Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
             mob.transform.position += dir * mob.speedFactor;
@@ -156,18 +147,38 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
         }
 
         else if(item != null){
+            if (didICollectFromItem && counter > 0)
+            {
+                counter -= Time.deltaTime;
+                return;
+            }
+            else if (counter <= 0)
+            {
+
+                // didICollectFromItem = true;
+                counter = 5;
+                mob.toColliderObj = mob.buidlingAssignedTo.gameObject;
+                mob.toDestination = mob.buidlingAssignedTo.transform.position;
+            }
+            
             Debug.Log("VERSION CONTROL Item not null " );
             Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
             mob.transform.position += dir * mob.speedFactor;
 
-            if(Vector3.Distance(mob.transform.position, mob.toDestination) < 0.01f){
-                Debug.Log("VERSION CONTROL we are very close to the item, distance reached " );
-                mob.toColliderObj = mob.buidlingAssignedTo.gameObject;
-                mob.toDestination = mob.buidlingAssignedTo.transform.position;
+
+            if (Vector3.Distance(mob.transform.position, mob.toDestination) < 0.01f)
+            {
+                Debug.Log("VERSION CONTROL we are very close to the item, distance reached ");
+
                 // start timer
                 // wait for timer
                 //startTimer();
                 didICollectFromItem = true;
+
+
+
+
+
             }
         }
     }
