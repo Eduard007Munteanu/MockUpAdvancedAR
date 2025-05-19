@@ -30,6 +30,8 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
 
     private float mightPower = 10f;
 
+    private float heightY = 0f;
+
 
 
     void Start()
@@ -82,6 +84,31 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
     public DefaultBuild GetBuildingAssignedTo()
     {
         return buidlingAssignedTo;
+    }
+
+
+    private void SetY(float toHeight)
+    {
+        heightY = toHeight;
+    }
+
+    private float getY()
+    {
+        return heightY;
+    }
+
+
+    public bool DidSetY(float toHeight)
+    {
+        if (getY() != 0f)
+        {
+            return true;
+        }
+        else
+        {
+            SetY(toHeight);
+            return false;
+        }
     }
     
     

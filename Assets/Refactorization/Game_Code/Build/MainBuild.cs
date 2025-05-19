@@ -149,6 +149,9 @@ public class MainBuild : DefaultBuild
             spawnPosition.y = spawnY;
 
             spawnPosition.y = spawnY;
+
+            
+
             spawnPosition += new Vector3(0f, 0.01f, 0f);        // Hardcoded! 
 
             Vector3 finalSpawnPos = new Vector3(0f, spawnPosition.y, 0f);
@@ -162,6 +165,9 @@ public class MainBuild : DefaultBuild
             //     mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
             // }
             GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, mobPrefab.transform.rotation);//Quaternion.identity);
+
+            mob.GetComponent<DefaultMob>().DidSetY(mob.GetComponent<DefaultMob>().transform.position.y);
+
 
             mob.transform.position = finalSpawnPos;
             mob.transform.SetParent(tiles.transform.parent, true); // This was missing before
@@ -221,6 +227,8 @@ public class MainBuild : DefaultBuild
             mob.transform.position = spawnPosition;
 
             mob.transform.SetParent(tiles.transform.parent, true); // Keep world position, but parent it under same AR anchor
+
+
 
 
             buffer.Add(mob.GetComponent<DefaultMob>());

@@ -291,9 +291,23 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
             float width = mobWidths[i];
             Vector3 offset = xDir * (width / 2f);
             Vector3 spawnPos = cursor + offset;
-            spawnPos.y = mobs[i].transform.position.y;
+
+
+
+            if (mobs[i].DidSetY(mobs[i].transform.position.y))
+            {
+                spawnPos.y = mobs[i].transform.position.y;    
+            }
+
+
+            
 
             mobs[i].transform.position = spawnPos;
+
+
+
+
+
             mobs[i].currentTile = this;
 
             // Advance the cursor by full width
