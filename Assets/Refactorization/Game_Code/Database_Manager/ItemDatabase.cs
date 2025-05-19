@@ -10,7 +10,7 @@ public class ItemDatabase: MonoBehaviour{
 
     private Dictionary<string, int> collectedItemsCount = new Dictionary<string, int>();
 
-    private ResourceDatabase resourceDatabase = ResourceDatabase.Instance; // I don't want now to add get + set methods
+    private ResourceDatabase resources; // I don't want now to add get + set methods
 
     //Event trigger => we warn others that the OnCollectedItemsCountDataPacker() method should be called given update made. 
     public event System.Action<DataPacket> OnCollectedItemsUpdated;
@@ -20,7 +20,7 @@ public class ItemDatabase: MonoBehaviour{
     {
         Debug.Log("ItemDatabase Awake called!");
 
-        if (Instance == null)  
+        if (Instance == null)
         {
             Instance = this; 
             DontDestroyOnLoad(gameObject); 
@@ -29,11 +29,18 @@ public class ItemDatabase: MonoBehaviour{
         {
             Destroy(gameObject); 
         }
+
+        while (resources == null){
+            Debug.Log("Waiting for ResourceDatabase to be initialized...");
+            resources = ResourceDatabase.Instance;
+        }
     }
 
     public void UpdateCollectedItemsCount(DefaultItem item, int increaseBy){
 
-        resourceDatabase[item.Type].AddAmount(increaseBy);
+        Debug.Log("VERSION CONTROL item type is " + item.Type);
+
+        resources[item.Type].AddAmount(increaseBy);
 
         string itemClass = item.GetItemClass();
         if(!collectedItemsCount.ContainsKey(itemClass)){
@@ -42,6 +49,13 @@ public class ItemDatabase: MonoBehaviour{
             collectedItemsCount[itemClass] += increaseBy;
         }
 
+        if (item.GetItemClass() == "StoneItem"){
+            resources[ResourceType.Food].AddAmount(increaseBy);
+        } else if (item.GetItemClass() == "GoldItem"){
+            resources[ResourceType.Gold].AddAmount(increaseBy);
+        } else if (item.GetItemClass() == "TreeItem") {
+            resources[ResourceType.Wood].AddAmount(increaseBy);
+        }
 
         OnCollectedItemsUpdated?.Invoke(GetCollectedItemsCountDataPacket());
     }

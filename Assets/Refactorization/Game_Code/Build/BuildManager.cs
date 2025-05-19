@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour  //One instance only
@@ -30,6 +31,16 @@ public class BuildManager : MonoBehaviour  //One instance only
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(WaitAndSpawn());
+    }
+
+
+    private IEnumerator WaitAndSpawn()
+    {
+        // Wait until BetterGridOverlay.Instance is not null
+        yield return new WaitUntil(() => BetterGridOverlay.Instance != null);
+
+        // Now it's safe to proceed
         SpawnMainBuilding();
     }
 
@@ -84,8 +95,14 @@ public class BuildManager : MonoBehaviour  //One instance only
 
 
 
-    void SpawnMainBuilding(){
+    void SpawnMainBuilding()
+    {
         GameObject buildingObj = Instantiate(mainBuildingPrefab);
+
+
+
+
+
         MainBuild mainBuildInstance = buildingObj.GetComponent<MainBuild>();
 
         if (mainBuildInstance == null)
@@ -95,32 +112,74 @@ public class BuildManager : MonoBehaviour  //One instance only
         }
 
 
-        
+
         int id = 1;
         mainBuildInstance.Init(id); //Here I will add the gridOverlay
+
         AddBuildingDictionary(mainBuildInstance);
 
-        
-        Vector3 spawnPos = mainBuildInstance.SpawnBuilding();
 
-        
+
+
+        DefaultTile tile = mainBuildInstance.GetTile();
+
+
+
+
+        Debug.Log("BIGBUGFIXING, BuildManager, mainbuilding tile is " + tile);
+
+        Debug.Log("BIGBUGFIXING mainbuilding tile position is " + tile.transform.position);
+
+        Renderer theBuildingRenderer = buildingObj.GetComponent<Renderer>();
+
+
+
+        float scaleFactor = tile.ScalingTheObjects(theBuildingRenderer, 2);
+
+        buildingObj.transform.localScale *= scaleFactor;
+
+
+
+        Vector3 spawnPos = mainBuildInstance.SpawnBuilding();
         buildingObj.transform.position = spawnPos;
 
+        buildingObj.transform.SetParent(tile.transform.parent, true); // Or under a shared AR parent
 
-        
-        
 
-        
+        Debug.Log("BIGBUGFIXING mainbuilding spawn position is " + spawnPos);
+
+
+        mainBuildInstance.InitStartingPops();
+        tile.ArrangeMobs(null);
     }
 
     private Vector3 SpawnPosition(DefaultTile tile, GameObject objectToBeSpawned){
-        Vector3 tilePosition = tile.gameObject.transform.position;   //Attach to GameObject, then allright. 
-        float tileHeight = tile.GetTileHeight();
-        float objectToBeSpawnedHeight = objectToBeSpawned.GetComponent<Renderer>().bounds.size.y;
 
-        Vector3 spawnPosition = tilePosition + Vector3.up * ((tileHeight + (objectToBeSpawnedHeight / 2f))  / 1f);
+        Renderer tileRenderer = tile.GetComponent<Renderer>();
+        Renderer objectRenderer = objectToBeSpawned.GetComponent<Renderer>();
 
-        return spawnPosition;
+        float tileTopY = tileRenderer.bounds.max.y;
+        float objectBottomOffset = objectRenderer.bounds.min.y - objectToBeSpawned.transform.position.y;
+        float spawnY = tileTopY - objectBottomOffset;
+
+
+        float tileBackZ = tileRenderer.bounds.min.z;
+        float tileFrontZ = tileRenderer.bounds.max.z;
+
+        float objectDepthZ = objectRenderer.bounds.size.z;
+
+        
+        
+        float spawnZ = tileFrontZ - (objectDepthZ / 2f); 
+        
+        float spawnX = tileRenderer.bounds.center.x;
+
+
+        //Vector3 tileCenter = tileRenderer.bounds.center;
+
+
+
+        return new Vector3(spawnX, spawnY, spawnZ);
     }
 
     private void SpawnBuildingOnTile(DefaultTile tile, BuildCard card){
@@ -136,13 +195,20 @@ public class BuildManager : MonoBehaviour  //One instance only
             }
         }
         Debug.Log("ActualBuild is " + actualBuild.name);
-        Vector3 spawnPosition = SpawnPosition(tile, actualBuild.gameObject );
-        GameObject building = Instantiate(actualBuild.gameObject, spawnPosition, Quaternion.identity);
+        //Vector3 spawnPosition = SpawnPosition(tile, actualBuild.gameObject );
+        GameObject building = Instantiate(actualBuild.gameObject, Vector3.zero /* spawnPosition */, actualBuild.transform.rotation);//Quaternion.identity);
         
 
         
+    
+        Renderer theBuildingRenderer = building.GetComponent<Renderer>();
+        float scaleFactor = tile.ScalingTheObjects(theBuildingRenderer, 2);
+
+        building.transform.localScale *= scaleFactor;
 
 
+        Vector3 spawnPosition = SpawnPosition(tile, building);
+        building.transform.position = spawnPosition;
 
         
         int buildingCount = GetBuildingCount(building.GetComponent<DefaultBuild>());
@@ -152,6 +218,9 @@ public class BuildManager : MonoBehaviour  //One instance only
 
         building.GetComponent<DefaultBuild>().Init(buildingCount, tile); //Maybe more, who knows
         AddBuildingDictionary(building.GetComponent<DefaultBuild>());
+
+
+        tile.ArrangeMobs(null);
     }
 
     public void TrySpawnBuilding(DefaultTile tile, DefaultCard card) {

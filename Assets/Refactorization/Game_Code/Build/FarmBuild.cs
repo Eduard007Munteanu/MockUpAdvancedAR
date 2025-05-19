@@ -7,11 +7,6 @@ public class FarmBuild : DefaultBuild
 
     protected override string Building_class => "farming";
 
-    protected override List<ResourceEffect> resourceEffects => new List<ResourceEffect>
-    {
-        // new ResourceEffect(ResourceType.Food, 0f, 0f, 0f, 0f),
-    };
-
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +19,13 @@ public class FarmBuild : DefaultBuild
         
     }
 
-
+    public override void Init(int Id, DefaultTile tile) {
+        base.Init(Id, tile);
+        resourceEffects = new List<ResourceEffect>
+        {
+            new ResourceEffect(ResourceType.Economy, 1f),
+        };
+    }
     
 
 

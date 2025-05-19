@@ -48,12 +48,31 @@ public class EnemyTile : DefaultTile
 
 
     public void SpawnEnemyMobAtSomePointInTime(){
-        float mobHeight = enemyMobPrefab.gameObject.GetComponent<Renderer>().bounds.size.y;  //move to start, but carefull about overriding. 
-        float spawnPositionY = transform.position.y + (GetTileHeight() + (mobHeight / 2)); 
-        Vector3 spawnedMobPosition = new Vector3(transform.position.x, spawnPositionY  ,transform.position.z);
+        EnemyMob enemyMob = Instantiate(enemyMobPrefab, Vector3.zero/* spawnedMobPosition */, enemyMobPrefab.transform.rotation);//Quaternion.identity);
 
-    
-        EnemyMob enemyMob = Instantiate(enemyMobPrefab, spawnedMobPosition, Quaternion.identity);
+
+        Renderer theMobRenderer = enemyMob.GetComponent<Renderer>();
+        float scaleFactor = ScalingTheObjects(theMobRenderer, 5);
+
+        enemyMob.transform.localScale *= scaleFactor;
+
+
+
+        Renderer tileRenderer = GetComponent<Renderer>();
+        Renderer mobRenderer = enemyMobPrefab.GetComponent<Renderer>();
+
+        float tileTopY = tileRenderer.bounds.max.y;
+
+        float bottomOffset = mobRenderer.bounds.min.y - enemyMobPrefab.transform.position.y;
+
+        float spawnY = tileTopY - bottomOffset;
+
+        Vector3 spawnedMobPosition = new Vector3(transform.position.x, spawnY, transform.position.z);
+        enemyMob.transform.position = spawnedMobPosition;
+
+
+        //enemyMob.transform.SetParent(transform.parent, true);
+
         enemyMob.HeIsMyCreator(this);
         Debug.Log("Yeah, we added the enemyMob brothers!");
 
@@ -63,7 +82,7 @@ public class EnemyTile : DefaultTile
 
 
 
-    public override bool CanMobBeArrangedChecker(DefaultMob mob){ 
+    public override bool CanMobBeArrangedChecker(){ 
         return false;
     }
 

@@ -14,9 +14,9 @@ public class CardsType
     public string typeName;
 }
 
-
 public class CardsDeck : MonoBehaviour
 {
+    private bool alwayscard = false; // For testing purposes, always true.
 
     public static CardsDeck Instance {get; private set;}
 
@@ -24,11 +24,14 @@ public class CardsDeck : MonoBehaviour
     public List<CardsType> cardTypes;
     private Queue<(GameObject, string)> cardQueue;
 
-    public int numberOfCardsToDraw = 5;
+    public int numberOfCardsToDraw = 3;
 
 
 
-    private CardsInHand cardsInHand; 
+    private CardsInHand cardsInHand;
+
+    private int drawbuffer = 0;
+    private bool cardPresent = false;
 
     [SerializeField] float grabDistance;
 
@@ -49,7 +52,10 @@ public class CardsDeck : MonoBehaviour
     {
         cardsInHand = CardsInHand.Instance;
         ShuffleDeck();
-        DrawNextCard();
+        if (alwayscard)
+        {
+            DrawNextCard();
+        } else AddDraw();
     }
 
     void ShuffleDeck()
@@ -83,10 +89,27 @@ public class CardsDeck : MonoBehaviour
         //Testing code
     }
 
+    public void AddDraw () {
+        drawbuffer += 1;
+        DrawIfAvailable();
+    }
+
+    public void DrawIfAvailable () {
+        if (drawbuffer <= 0) {
+            Debug.Log("No cards available to draw.");
+            return;
+        }
+        if (cardPresent) {
+            Debug.Log("Card already present, cannot draw another.");
+            return;
+        }
+
+        DrawNextCard(); // Draw the next card from the queue
+    }
+
 
     public void DrawNextCard()
     {
-
         if (cardQueue.Count > 0)
         {
             
@@ -105,6 +128,8 @@ public class CardsDeck : MonoBehaviour
 
             
             card.Init(true, this);
+
+            cardPresent = true;
         }
     }
 
@@ -142,8 +167,6 @@ public class CardsDeck : MonoBehaviour
                 card.Init(false, this);
                 cardsInHand.AddCardToHand(spawnedCard.GetComponent<DefaultCard>());
 
-                
-
             }
         }
 
@@ -152,7 +175,11 @@ public class CardsDeck : MonoBehaviour
         
         cardsInHand.LayoutCardsOnPalm();        
 
-        DrawNextCard();
+        if (alwayscard) DrawNextCard();
+
+        drawbuffer -= 1;
+        cardPresent = false;
+        DrawIfAvailable();
         
     }
 

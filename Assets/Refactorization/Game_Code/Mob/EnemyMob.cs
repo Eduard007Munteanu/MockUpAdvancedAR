@@ -14,11 +14,11 @@ public class EnemyMob : MonoBehaviour{
 
     private bool checkCurrentTileIfMobs;
 
-    
+        
 
-    [SerializeField] public float speedFactor = 0.008f;
+    [SerializeField] public float speedFactor = 0.0001f;
 
-    private DefaultTile[] allTiles; 
+    //private DefaultTile[] allTiles;     Probably not usefull
 
     private DefaultTile lastTile;
 
@@ -34,45 +34,58 @@ public class EnemyMob : MonoBehaviour{
 
 
     private bool hasTarget = false; 
-    private Vector3 target;  
+    //private Vector3 target;  
+
+    private DefaultTile targetTile;
+
+    private bool endPointReached = false;
+    private float mightPower;
+
+    private ResourceDatabase resources;
 
 
 
     void Start()
     {
-        allTiles = FindObjectsOfType<DefaultTile>(); 
+        while (resources == null)
+        {
+            Debug.Log("Waiting for ResourceDatabase to be initialized...");
+            resources = ResourceDatabase.Instance;
+        }
+
+        //allTiles = FindObjectsOfType<DefaultTile>(); 
         cachMemoryPathTiles = new List<DefaultTile>();
-        
-
-
       
-        int rowLength = GridOverlay.Instance.rows;
-        int columnLength = GridOverlay.Instance.columns;
+        int rowLength = BetterGridOverlay.Instance.rows;
+        int columnLength = BetterGridOverlay.Instance.columns;
 
-
+        mightPower = resources[ResourceType.EnemyMight].CurrentAmount;
 
         float currentDistance = float.MaxValue;
-        int tileRow = -1;
+        int tileColumn = -1;
 
-        for(int i = 0; i < rowLength; i++){
-            DefaultTile tile = GridOverlay.Instance.FindTileWithCoordinates(i, rowLength - 1);
+        for(int i = 0; i < columnLength; i++){
+            DefaultTile tile = BetterGridOverlay.Instance.FindTileWithCoordinates(rowLength - 1, i);
             if(Vector3.Distance(transform.position, tile.transform.position) < currentDistance){
                 currentDistance = Vector3.Distance(transform.position, tile.transform.position);
-                tileRow = i;
+                tileColumn = i;
                 lastTileInMyPath = tile;
             } 
         }
 
 
 
-        for(int i=0; i < columnLength; i++){
-            DefaultTile tile = GridOverlay.Instance.FindTileWithCoordinates(tileRow, i);
+        for(int i=0; i < rowLength; i++){
+            DefaultTile tile = BetterGridOverlay.Instance.FindTileWithCoordinates(i, tileColumn);
             cachMemoryPathTiles.Add(tile);
         }
 
 
-        Debug.Log("LastTileInMyPath is " + lastTileInMyPath.name);
-        Debug.Log("CachMemoryPathTiles is " + cachMemoryPathTiles);
+        Debug.Log("LastTileInMyPath at ENEMYMOB is " + lastTileInMyPath.name);
+        //Debug.Log("CachMemoryPathTiles at ENEMYMOB is " + cachMemoryPathTiles);
+        foreach(DefaultTile enemyMOB in cachMemoryPathTiles){
+            Debug.Log("CachMemoryPathTiles at ENEMYMOB is " + enemyMOB);
+        }
 
 
         isMoving = true; //Just for now.
@@ -84,16 +97,33 @@ public class EnemyMob : MonoBehaviour{
         Action();
     }
 
+    public float GetMightPower(){
+        return mightPower;
+    }
+
+    public void SetMightPower(float changedMight){
+        mightPower = changedMight;
+    }
+
+
+
+    public void SetMoving(bool setToWhat){
+        isMoving = setToWhat;
+    }
+
 
 
     public void MovementLogic(){
-        if(isMoving && !hasTarget){
+        Debug.Log("At MovementLogic: IsMoving from MovementLogic is " + isMoving);
+        Debug.Log("At MovementLogic: Has target is " + hasTarget);
+        Debug.Log("At MovementLogic: end point reached is " + endPointReached);
+        if(isMoving && !hasTarget && !endPointReached){
             Debug.Log("We are at MovementLogic");
             MoveForward();
             UpdateTileState();
             CheckTileFullAndAction();
             EndBoardReached();
-         } else if (hasTarget && isMoving){
+         } else if (hasTarget && isMoving & !endPointReached){
              MoveToTarget();
              UpdateTileState();
              CheckTileFullAndAction();
@@ -106,7 +136,7 @@ public class EnemyMob : MonoBehaviour{
         if(isMoving){
             Debug.Log("From MoveForward, isMoving is true, so we continue going");
             Vector3 dir = new Vector3(0f,0f,1f);
-            transform.position += dir * speedFactor;   
+            transform.position += dir * speedFactor;
         } else {
             Debug.Log("From MoveForward, isMoving is false, we are stationary for now to check the tiles");
         }
@@ -114,6 +144,7 @@ public class EnemyMob : MonoBehaviour{
 
     public void MoveToTarget(){
         if(isMoving){
+            Vector3 target = targetTile.gameObject.transform.position;
             target.y = transform.position.y;                                     //I guess that this is correct, we know the y position of the mob. 
             Vector3 dir = (target - transform.position).normalized;
             transform.position += dir * speedFactor;
@@ -122,6 +153,10 @@ public class EnemyMob : MonoBehaviour{
                 //It's also important to check the tiles while going to the target MainBuild, because there can be mobs / buildings inbetween. 
                 isMoving = false;
                 hasTarget = false;
+                endPointReached = true;
+
+                Debug.Log("We reached the distance, stop!");
+                targetTile.ArrangeEnemyMobs(this);
             }
         }
     }
@@ -131,7 +166,7 @@ public class EnemyMob : MonoBehaviour{
         isMoving = false;
         if(checkCurrentTileIfMobs){
             Debug.Log($"Combat triggered on tile {currentTile.name} with {currentTile.GetAmountOfMobs()} mobs.");
-            bool canEnemyBePlaced = currentTile.CanEnemyMobsBeArranged(this); 
+            bool canEnemyBePlaced = currentTile.CanEnemyMobsBeArrangedChecker(); 
             if(canEnemyBePlaced){
                 currentTile.ArrangeEnemyMobs(this);
                 return;
@@ -153,6 +188,7 @@ public class EnemyMob : MonoBehaviour{
 
 
     private void EndBoardReached(){
+        Debug.Log("Distance between current enemy mob and lastTileInMyPath is of " + Vector3.Distance(transform.position, lastTileInMyPath.transform.position));
         if(Vector3.Distance(transform.position, lastTileInMyPath.transform.position) < 0.1f){
             Debug.Log("We reached the end of the boardGame, boys!");
             transform.position = new Vector3(lastTileInMyPath.transform.position.x, transform.position.y, lastTileInMyPath.transform.position.z);
@@ -165,28 +201,38 @@ public class EnemyMob : MonoBehaviour{
 
 
     private void InitiallyTargetMainBuilding(){
+        Debug.Log("We are at the method InitiallyTargetMainBuilding");
         //cachMemoryPathTiles
 
-        int rowLength = GridOverlay.Instance.rows;
-        int columnLength = GridOverlay.Instance.columns;
+        int rowLength = BetterGridOverlay.Instance.rows;
+        int columnLength = BetterGridOverlay.Instance.columns;
 
 
         cachMemoryPathTiles.Clear();
 
-        for(int i=0; i < rowLength; i++){
-            var coordinates = GridOverlay.Instance.FindCoordinatesWithTile(currentTile);
-            int columnCoordinate = -1;
-            if (coordinates.HasValue)
-            {
-                columnCoordinate = coordinates.Value.Item2;
-            }
-            else
-            {
-                Debug.LogError("Coordinates for the current tile are null.");
-            }
 
-            DefaultTile tile = GridOverlay.Instance.FindTileWithCoordinates(i, columnCoordinate);
+        var coordinates = BetterGridOverlay.Instance.FindCoordinatesWithTile(lastTileInMyPath);
+        int x = -1;
+        if (coordinates.HasValue)
+        {
+            x = coordinates.Value.Item1;
+        }
+        else
+        {
+            Debug.LogError("Coordinates for the last tile in my path are null.");
+        }
+
+        for(int i=0; i < columnLength; i++){
+            DefaultTile tile = BetterGridOverlay.Instance.FindTileWithCoordinates(x,  i );
             cachMemoryPathTiles.Add(tile);
+        }
+
+
+
+        //Debug.Log("CachMemoryPathTiles at InitiallyTargetMainBuilding is " + cachMemoryPathTiles);
+
+        foreach(DefaultTile tile in cachMemoryPathTiles){
+            Debug.Log("CachMemoryPathTiles at InitiallyTargetMainBuilding is " + tile);
         }
 
         
@@ -206,7 +252,22 @@ public class EnemyMob : MonoBehaviour{
             if (buildClass == "Main") {
                 Debug.Log("We found the main building");
                 hasTarget = true;
-                target = checkBuild.transform.position;
+                targetTile = checkBuild.GetTile();//checkBuild.transform.position;
+
+                // Rotate towards the center of the target tile
+                Vector3 targetPosition = targetTile.GetComponent<Renderer>().bounds.center;
+                Vector3 enemyPosition = transform.position;
+
+                Vector3 direction = (targetPosition - enemyPosition).normalized;
+
+                // Optional: lock y-axis rotation only
+                direction.y = 90f;
+
+                if (direction != Vector3.zero)
+                {
+                    Quaternion lookRotation = Quaternion.LookRotation(direction);
+                    transform.rotation = lookRotation;
+                }
             }
             
         }
@@ -229,6 +290,16 @@ public class EnemyMob : MonoBehaviour{
 
     }
 
+    private void CheckIfCurrentTileHasBuilding(){
+        if(currentTile.GetBuilding() != null){
+            Debug.Log("We checked if current tile has building, and it had");
+            checkCurrentTileIfMobs = true;
+        } else {
+            checkCurrentTileIfMobs = false;
+        }
+        
+    }
+
 
     public DefaultTile FindClosestTouchingTile()
     {
@@ -238,7 +309,7 @@ public class EnemyMob : MonoBehaviour{
         Vector3 myPosition = transform.position;
         Bounds myBounds = GetComponent<Collider>().bounds;
 
-        foreach (DefaultTile tile in allTiles)
+        foreach (DefaultTile tile in cachMemoryPathTiles)//allTiles)
         {
             if (tile == null) continue;
 
@@ -272,10 +343,12 @@ public class EnemyMob : MonoBehaviour{
         if(currentTile == null){
             Debug.LogError("Closest touching tile is null");
         }
+        CheckIfCurrentTileHasBuilding();
         if (currentTile != lastTile)
         {
             lastTile = currentTile;
             CheckIfCurrentTileHasDefaultMobs();
+            
         }
     }
 

@@ -12,7 +12,7 @@ public class ItemManager : MonoBehaviour
 
     private bool tilesRendered = false;
 
-    [SerializeField] private GridOverlay gridOverlay;
+    private BetterGridOverlay gridOverlay;
 
 
     [SerializeField] private DefaultItem[] itemsPrefabTypes; 
@@ -40,26 +40,35 @@ public class ItemManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gridOverlay = BetterGridOverlay.Instance;
     }
 
     // Update is called once per frame
     void Update()
     {
         if(tilesRendered){
-            for(int i=0; i < mineralPlacesToSpawn; i++){
-                CreateItemsForTile(numberOfMaterialsPerTile); 
-                
+            Debug.Log("Tile did render from tileRendered");
+            Debug.Log("Number of tiles from tileRendered : " + gridOverlay.GetTiles().Count);
+
+            for (int i = 0; i < mineralPlacesToSpawn; i++)
+            {
+                CreateItemsForTile(numberOfMaterialsPerTile, itemsPrefabTypes[i % itemsPrefabTypes.Length]);
             }   
             tilesRendered = false;     
         }
     }
 
-    public void CreateItemsForTile(int numberOfItems){
+    public void CreateItemsForTile(int numberOfItems, DefaultItem defItem = null){
 
 
-        DefaultItem specificItemPrefab = itemsPrefabTypes[Random.Range(0, itemsPrefabTypes.Length)];
+        DefaultItem specificItemPrefab = defItem ? itemsPrefabTypes[Random.Range(0, itemsPrefabTypes.Length)] : null;
 
+
+        if(gridOverlay == null){
+            Debug.LogError("GridOverlay is critical, bruh!");
+        } else{
+            Debug.Log("GridOverlay is NOT critical, bruh!");
+        }
 
         DefaultTile randomTile = gridOverlay.GetRandomTile();
         while (itemsData.ContainsKey(randomTile))
@@ -80,7 +89,12 @@ public class ItemManager : MonoBehaviour
         int i = 0;
         foreach (Vector3 position in usedPositions)
         {
-            DefaultItem itemObject = Instantiate(specificItemPrefab, position, Quaternion.identity);
+            DefaultItem itemObject = Instantiate(specificItemPrefab, position, specificItemPrefab.transform.rotation);//Quaternion.identity);
+
+            itemObject.transform.position = position;
+            itemObject.transform.SetParent(randomTile.transform.parent, true); // keep world position
+
+
             itemObject.Init(i);
             itemObject.name = $"Material_{i}";
 
@@ -88,18 +102,22 @@ public class ItemManager : MonoBehaviour
             i++;
         }
 
-
-
-
-
-
     }
 
 
-     private float ProjectHeights(DefaultTile randomTile, DefaultItem itemPrefab){
-        float tileHeight = randomTile.GetTileHeight();
-        float itemHeight = itemPrefab.GetComponent<Renderer>().bounds.size.y;
-        float fixedHeight = randomTile.transform.position.y + ((tileHeight + (itemHeight / 2f)) / 1f);
+    private float ProjectHeights(DefaultTile randomTile, DefaultItem itemPrefab){
+        // float tileHeight = randomTile.GetTileHeight();
+        // float itemHeight = itemPrefab.GetComponent<Renderer>().bounds.size.y;
+        // float fixedHeight = randomTile.transform.position.y + ((tileHeight + (itemHeight / 2f)) / 1f);
+
+        Renderer randomTileRenderer = randomTile.GetComponent<Renderer>();
+        Renderer itemRenderer = itemPrefab.GetComponent<Renderer>();
+
+        float tileTopY = randomTileRenderer.bounds.max.y;
+
+        float bottomOffset = itemRenderer.bounds.min.y - itemPrefab.transform.position.y;
+
+        float fixedHeight = tileTopY - bottomOffset;
 
         return fixedHeight;
      }

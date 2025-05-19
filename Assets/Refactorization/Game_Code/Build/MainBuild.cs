@@ -1,30 +1,33 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using Meta.XR.MRUtilityKit.SceneDecorator;
+using Oculus.Interaction.Samples;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class MainBuild : DefaultBuild
 {
-    private GridOverlay gridOverlay;
+    private BetterGridOverlay gridOverlay;
 
     [SerializeField] private DefaultMob mobPrefab;
 
     protected override string Building_class => "Main";
 
+    PopulationResource populationResource;
+
     //protected override DefaultBuildingEffect BuildingEffect => throw new NotImplementedException();
 
     private DefaultTile tiles;
 
+    private List<DefaultMob> buffer = new List<DefaultMob>();
 
+    private int initialPops = 5;
 
-    //Not working
+    private bool isIniting ;
 
-    // protected override List<ResourceEffect> resourceEffects => new List<ResourceEffect>
-    // {
-    //     new ResourceEffect(ResourceType.Arts, 0f, 1f, 0f, 0f), // modify art production by one per cycle
-    // };
+    private float initialY;
 
     // Start is called before the first frame update
     void Start()
@@ -36,104 +39,235 @@ public class MainBuild : DefaultBuild
     // Update is called once per frame
     void Update()
     {
-        
+        if (buffer.Count > 0 && tiles.CanMobBeArrangedChecker())
+        {
+            DefaultMob theMob = buffer[0];
+            buffer.RemoveAt(0);
+            tiles.ArrangeMobs(theMob);
+            theMob.AssignToBuilding(this);
+        }
     }
 
     public override void Init(int Id, DefaultTile tile = null){
         // this.Id = Id;
         // this.building_class_main = main_class;
-        gridOverlay = GridOverlay.Instance;
+        gridOverlay = BetterGridOverlay.Instance;
         DefaultTile tileToUse = TileFindCalculation();                                  //NOT THAT BEAUTIFULL, BUT SHOULD WORK. 
         base.Init(Id, tileToUse);
-        // debug resourceeffect length
+        
+        // subscribe to population changes
+        populationResource = (PopulationResource)resources[ResourceType.Population];
+        populationResource.OnBirth += spawnNewBorn;
 
-        Debug.Log($"ResourceEffect count: {resourceEffects.Count}");
-        foreach (var effect in resourceEffects)
+        resourceEffects = new List<ResourceEffect>
         {
-            Debug.Log($"ResourceEffect: {effect.Type} - {effect.Amount} - {effect.Flat} - {effect.Mod1} - {effect.Mod2} - {effect.Constant}");
-        }
+            new ResourceEffect(ResourceType.Arts, 0f, 1f),
+        };
+
     }
 
-    public override Vector3 SpawnBuilding(){
+
+    public override Vector3 SpawnBuilding()
+    {
         tiles = TileFindCalculation();
-        float tileHeight = tiles.GetTileHeight();
-        float buildingHeight = GetComponent<Renderer>().bounds.size.y;
-        Vector3 tilePosition = tiles.transform.position;  //Given tile is a object
+
+        Debug.Log("BIGBUGFIXING, From SpawnBuilding MainBuild, tiles is " + tiles);
+
+        Renderer tileRenderer = tiles.GetComponent<Renderer>();
+        Renderer buildingRenderer = GetComponent<Renderer>();
+
+        float tileTopY = tileRenderer.bounds.max.y;
+
+        
+        float objectBottomOffset = buildingRenderer.bounds.min.y - transform.position.y;
+
+        
+        float spawnY = tileTopY - objectBottomOffset;
+
+        
+        // Vector3[] corners = BetterGridOverlay.Instance.GetTileCorners(tiles);
+        // Vector3 topLeft = corners[0];
+        // Vector3 topRight = corners[1];
+
+        
+        // Vector3 halfBellow =  topLeft - ((topLeft - topRight) / 2);//(topRight - topLeft) / 2;
+
+        // float buildingbackZ = buildingRenderer.bounds.min.z;
+        // float buildingfrontZ = buildingRenderer.bounds.max.z;
+        // float desiredBackZ = halfBellow.z;
+
+        // float deltaZ = desiredBackZ + ((buildingbackZ - buildingfrontZ) / 2);
+
+         
+
+        // float actualZ =  deltaZ;
+
+        
+        float tileBackZ = tileRenderer.bounds.min.z;
+        float tileFrontZ = tileRenderer.bounds.max.z;
+
+        float objectDepthZ = buildingRenderer.bounds.size.z;
+
+        
+        float halfTileZ = (tileFrontZ - tileBackZ) / 2f;
+        float spawnZ = tileFrontZ - (objectDepthZ / 2f); 
+        
+        float spawnX = tileRenderer.bounds.center.x;
+
+
+        //Vector3 tileCenter = tileRenderer.bounds.center;
 
 
 
-        Vector3 spawnPosition = tilePosition + Vector3.up * ((tileHeight + (buildingHeight / 2f))  / 1f);
-        return spawnPosition;
+        return new Vector3(spawnX, spawnY, spawnZ);
+    }
+
+
+    public void InitStartingPops()
+    {
+        isIniting = true;
+        populationResource.InitialPops(initialPops);
+        isIniting = false;
     }
 
     private DefaultTile TileFindCalculation(){
         (int x, int z) = gridOverlay.GetRowAndColumnsOfPlatform();
-        (int, int) buildingSpawnPosition = (z-1, Mathf.FloorToInt(x/2));
-        DefaultTile tile = gridOverlay.FindTileWithCoordinates(buildingSpawnPosition.Item2, buildingSpawnPosition.Item1);
+        (int, int) buildingSpawnPosition = (x-1, Mathf.FloorToInt(z/2));
+        DefaultTile tile = gridOverlay.FindTileWithCoordinates(buildingSpawnPosition.Item1, buildingSpawnPosition.Item2);
         return tile;
 
 
     }
 
-    public override void CreateMob(){
-        Vector3[] tileCorners = gridOverlay.GetTileCorners(tiles);
-        float tileHeight = tiles.GetTileHeight();
+    public override void CreateMob(bool initial = false){
 
-        Vector3 topLeft = tileCorners[0];
-        Vector3 topRight = tileCorners[1];
-        Vector3 bottomRight = tileCorners[2];
-        Vector3 bottomLeft = tileCorners[3];
-
-
-        Debug.Log("TopLeft value is: " + topLeft); //Test
-        Debug.Log("TopRight value is: " + topRight); //Test
-        Debug.Log("BottomRight value is: " + bottomRight); //Test
-        Debug.Log("BottomLeft value is: " + bottomLeft); //Test
-
-        Vector3 buildingPosition = transform.position;
-        float spaceBetweenMobs = Vector3.Distance(topLeft, topRight) / 5; //This is the space between the mobs.
-
-
-        Vector3 spawnPosition = Vector3.zero;
-        float buildingHeight = GetComponent<Renderer>().bounds.size.y;
-        float mobHeight = mobPrefab.gameObject.GetComponent<Renderer>().bounds.size.y;
-
-
-        Vector3 threshold = new Vector3(buildingPosition.x, buildingPosition.y, buildingPosition.z + 0.2f); //This is the threshold for the mob to spawn.
-
-        DefaultMob lastAssignedMobComponent = GetLastAssignedMob(); //Get the last mob spawned in the building.
-
-
-        if(lastAssignedMobComponent != null){   
-
-            GameObject lastAssignedMob = lastAssignedMobComponent.gameObject;
-
-            spawnPosition = lastAssignedMob.transform.position - Vector3.right * spaceBetweenMobs;
-            if(Vector3.Distance(bottomRight, bottomLeft) < Vector3.Distance(bottomRight, spawnPosition)){
-                spawnPosition = lastAssignedMob.transform.position - Vector3.forward * spaceBetweenMobs;
-                spawnPosition.x = bottomRight.x;
-                if(Vector3.Distance(buildingPosition, spawnPosition) < Vector3.Distance(buildingPosition, threshold)){
-                    return;
-                } 
-            } 
-        } else {
-            spawnPosition = bottomRight; //+ Vector3.up * ((tileHeight + (buildingHeight / 2f))  / 1f);  //Potentially correct
-            spawnPosition.y = bottomRight.y + (tileHeight + (mobHeight / 2));
-        }
-
-        
-        
-        Vector3 finalSpawnPos = new Vector3(spawnPosition.x, spawnPosition.y, spawnPosition.z);    
-
-
-        GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
-
-        if(mob != null){
-            Debug.Log("Mob created successfully!");
+        if(tiles.CanMobBeArrangedChecker()){
+            Vector3[] tileCorners = gridOverlay.GetTileCorners(tiles);
+            Vector3 bottomRight = tileCorners[2];
             
+            Vector3 spawnPosition = bottomRight;
+            Renderer bottomRightTileRenderer = tiles.GetComponent<Renderer>();
+            Renderer mobRenderer = mobPrefab.GetComponent<Renderer>();
+
+            float tileTopY = bottomRightTileRenderer.bounds.max.y;
+
+            float objectBottomOffset = mobRenderer.bounds.min.y - mobPrefab.transform.position.y;
+
+            float spawnY = tileTopY - objectBottomOffset;
+            
+            spawnPosition.y = spawnY;
+
+            if (isIniting) spawnPosition += new Vector3(0f, 0.011f, 0f);
+
+            Vector3 finalSpawnPos = new Vector3(0f, spawnPosition.y, 0f);
+
+            // GameObject mob;
+            // if (buffer.Count > 0){
+            //     mob = buffer[0].gameObject;
+            //     buffer.Remove(mob.GetComponent<DefaultMob>());
+
+            // } else{
+            //     mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
+            // }
+            GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, mobPrefab.transform.rotation);//Quaternion.identity);
+
+            mob.GetComponent<DefaultMob>().DidSetY(mob.GetComponent<DefaultMob>().transform.position.y);
+
+
+            mob.transform.position = finalSpawnPos;
+            mob.transform.SetParent(tiles.transform.parent, true); // This was missing before
+
+            
+            Renderer theMobRenderer = mob.GetComponent<Renderer>();
+            float scaleFactor = tiles.ScalingTheObjects(theMobRenderer, 5);
+
+            mob.transform.localScale *= scaleFactor;
+
+            Debug.Log("Tiles name is " + tiles);
+
+
+            tiles.ArrangeMobs(mob.GetComponent<DefaultMob>());
+
+            Debug.Log($"a miracle Mob is: {mob}");
+
+            if(mob != null){
+                Debug.Log("a miracle happened Mob created successfully!");
+                
+            } else {
+                Debug.Log("a miracle didnt happen because mob is null");
+            }
+
+            mob.GetComponent<DefaultMob>().AssignToBuilding(this);
+        } else {
+            //Eduard logic.
+
+
+            GameObject mob = Instantiate(mobPrefab.gameObject, Vector3.zero, mobPrefab.transform.rotation);//Quaternion.identity);
+
+            Renderer mobRenderer = mob.GetComponent<Renderer>();
+
+            float scaleFactor = tiles.ScalingTheObjects(mobRenderer, 5);
+
+            mob.transform.localScale *= scaleFactor;
+
+            Debug.Log("Tiles name is " + tiles);
+
+
+
+            
+
+
+            Renderer bottomRightTileRenderer = tiles.GetComponent<Renderer>();
+            float tileTopY = bottomRightTileRenderer.bounds.max.y;
+
+            float objectBottomOffset = mobRenderer.bounds.min.y - mob.transform.position.y;
+            float spawnY = tileTopY - objectBottomOffset;
+            
+
+            
+            Vector3 spawnPosition = transform.position;
+            spawnPosition.y = spawnY;
+            // spawnPosition += new Vector3(0f, 0.01f, 0f);        // Hardcoded! 
+
+            mob.transform.position = spawnPosition;
+
+            mob.transform.SetParent(tiles.transform.parent, true); // Keep world position, but parent it under same AR anchor
+
+
+
+
+            buffer.Add(mob.GetComponent<DefaultMob>());
+
+            
+
+            
+
+            
+
+
+
+
+            //GameObject mob = Instantiate(mobPrefab.gameObject, finalSpawnPos, Quaternion.identity);
+
+            //transform.position
+
         }
 
-        mob.GetComponent<DefaultMob>().AssignToBuilding(this);
+        
 
+        
+
+
+
+
+
+
+        
+    }
+
+    // Listen to population changes and spawn mobs
+    private void spawnNewBorn(float delta) {
+        Debug.Log("a miracle could happen");
+        this.CreateMob();
     }
 }

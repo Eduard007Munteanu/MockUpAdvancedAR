@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Newtonsoft.Json.Schema;
 
-// TODO:
-// - Give birth
-
 public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract to begin with  => In case error appears
 {
 
@@ -18,36 +15,54 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
 
     protected virtual string Building_class => "Default";
 
+    protected virtual float HP { get; set; } = 40;
+
     private DefaultTile tile;
 
-    //protected abstract DefaultBuildingEffect BuildingEffect { get; }
-    protected virtual List<ResourceEffect> resourceEffects => new List<ResourceEffect>();
+    protected List<ResourceEffect> resourceEffects;
+
+    protected ResourceDatabase resources; // Singleton instance of ResourceDatabase
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public virtual void Init(int Id,  DefaultTile tile =null)
-    {   
+
+    public float GetHP()
+    {
+        return HP;
+    }
+
+    public void SetHP(float newHP)
+    {
+        HP = newHP;
+    }
+
+
+    public virtual void Init(int Id, DefaultTile tile = null)
+    {
+        while (resources == null)
+        {
+            Debug.Log("Waiting for ResourceDatabase to be initialized...");
+            resources = ResourceDatabase.Instance;
+        }
+
         this.id = Id;
         this.tile = tile;
-        if(tile != null){
-            Debug.Log("For building " + GetBuildingClass() + "tile is " + tile.name );
+        if (tile != null)
+        {
+            Debug.Log("For building " + GetBuildingClass() + "tile is " + tile.name);
             this.tile.AddBuilding(this);
         }
-        
     }
-
-
-
 
     public void AddAssignedMob(DefaultMob mob)
     {
@@ -73,7 +88,7 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
         foreach (var effect in resourceEffects) effect.Cancel();
     }
 
-    
+
 
     public int GetID()
     {
@@ -103,7 +118,8 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
         }
     }
 
-    public DefaultMob GetSpecificActualMob(DefaultMob mob){
+    public DefaultMob GetSpecificActualMob(DefaultMob mob)
+    {
         int index = assignedMobs.IndexOf(mob);
         if (index >= 0)
         {
@@ -116,10 +132,14 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
         }
     }
 
-    public DefaultMob GetLastAssignedMob(){
-        if(assignedMobs.Count > 0){
+    public DefaultMob GetLastAssignedMob()
+    {
+        if (assignedMobs.Count > 0)
+        {
             return assignedMobs[assignedMobs.Count - 1];
-        }else{
+        }
+        else
+        {
             return null;
         }
     }
@@ -130,7 +150,7 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
         return tile;
     }
 
-    
+
 
     public DefaultPanel GetPanel()
     {
@@ -148,16 +168,13 @@ public abstract class DefaultBuild : MonoBehaviour, Build  // Was not abstract t
     }
 
 
-    public virtual Vector3 SpawnBuilding(){
+    public virtual Vector3 SpawnBuilding()
+    {
         return tile.transform.position;
     }
 
-    public virtual void CreateMob(){
-
+    public virtual void CreateMob(bool initial = false)
+    {
     }
-
-    
-
-
 
 }

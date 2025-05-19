@@ -1,14 +1,29 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\malik\\MockUpAdvancedAR\\",
+  "WorkspaceRootPath": "C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\malik\\MockUpAdvancedAR\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Lit.shader||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Assets\\Refactorization\\Game_Code\\Cards\u002BCardDeck\\CardsDeck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Refactorization\\Game_Code\\Cards\u002BCardDeck\\CardsDeck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Assets\\HangPaintings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\HangPaintings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Library\\PackageCache\\com.meta.xr.simulator@74.0.0\\Editor\\Utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library\\PackageCache\\com.meta.xr.simulator@74.0.0\\Editor\\Utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Assets\\the-paintings\\prefabs\\PaintingDangler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\the-paintings\\prefabs\\PaintingDangler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Lit.shader||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Lit.shader||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39E76A18-66BE-4BC8-AABE-99B462C6711C}|Assembly-CSharp.csproj|C:\\Users\\malik\\MockUpAdvancedAR\\assets\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39E76A18-66BE-4BC8-AABE-99B462C6711C}|Assembly-CSharp.csproj|solutionrelative:assets\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\malik\\MockUpAdvancedAR\\Assets\\Card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,24 +38,74 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Lit.shader",
-              "DocumentMoniker": "C:\\Users\\malik\\MockUpAdvancedAR\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Lit.shader",
-              "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Lit.shader",
-              "ToolTip": "C:\\Users\\malik\\MockUpAdvancedAR\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Lit.shader",
-              "RelativeToolTip": "Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Lit.shader",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
-              "WhenOpened": "2025-04-22T23:11:19.335Z",
+              "Title": "CardsDeck.cs",
+              "DocumentMoniker": "C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Assets\\Refactorization\\Game_Code\\Cards\u002BCardDeck\\CardsDeck.cs",
+              "RelativeDocumentMoniker": "Assets\\Refactorization\\Game_Code\\Cards\u002BCardDeck\\CardsDeck.cs",
+              "ToolTip": "C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Assets\\Refactorization\\Game_Code\\Cards\u002BCardDeck\\CardsDeck.cs",
+              "RelativeToolTip": "Assets\\Refactorization\\Game_Code\\Cards\u002BCardDeck\\CardsDeck.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T07:38:09.694Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Utils.cs",
+              "DocumentMoniker": "C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Library\\PackageCache\\com.meta.xr.simulator@74.0.0\\Editor\\Utils.cs",
+              "RelativeDocumentMoniker": "Library\\PackageCache\\com.meta.xr.simulator@74.0.0\\Editor\\Utils.cs",
+              "ToolTip": "C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Library\\PackageCache\\com.meta.xr.simulator@74.0.0\\Editor\\Utils.cs",
+              "RelativeToolTip": "Library\\PackageCache\\com.meta.xr.simulator@74.0.0\\Editor\\Utils.cs",
+              "ViewState": "AgIAAJIAAAAAAAAAAIBJwKkAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T18:15:40.343Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PaintingDangler.cs",
+              "DocumentMoniker": "C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Assets\\the-paintings\\prefabs\\PaintingDangler.cs",
+              "RelativeDocumentMoniker": "Assets\\the-paintings\\prefabs\\PaintingDangler.cs",
+              "ToolTip": "C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Assets\\the-paintings\\prefabs\\PaintingDangler.cs",
+              "RelativeToolTip": "Assets\\the-paintings\\prefabs\\PaintingDangler.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAYwD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T12:58:21.602Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "HangPaintings.cs",
+              "DocumentMoniker": "C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Assets\\HangPaintings.cs",
+              "RelativeDocumentMoniker": "Assets\\HangPaintings.cs",
+              "ToolTip": "C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Assets\\HangPaintings.cs",
+              "RelativeToolTip": "Assets\\HangPaintings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T20:54:27.281Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Lit.shader",
+              "DocumentMoniker": "C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Lit.shader",
+              "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Lit.shader",
+              "ToolTip": "C:\\Users\\malik\\Desktop\\game stuff\\MockUpAdvancedAR\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Lit.shader",
+              "RelativeToolTip": "Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Lit.shader",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
+              "WhenOpened": "2025-04-22T23:11:19.335Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "Card.cs",
               "DocumentMoniker": "C:\\Users\\malik\\MockUpAdvancedAR\\Assets\\Card.cs",
-              "RelativeDocumentMoniker": "Assets\\Card.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\MockUpAdvancedAR\\Assets\\Card.cs",
               "ToolTip": "C:\\Users\\malik\\MockUpAdvancedAR\\Assets\\Card.cs",
-              "RelativeToolTip": "Assets\\Card.cs",
+              "RelativeToolTip": "..\\..\\..\\MockUpAdvancedAR\\Assets\\Card.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-22T18:29:51.007Z"

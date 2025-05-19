@@ -1,164 +1,154 @@
-using System.Collections.Generic;
-using UnityEngine;
+// using System.Collections.Generic;
+// using UnityEngine;
 
-public class GridOverlay : MonoBehaviour
-{
+// public class GridOverlay : MonoBehaviour
+// {
+//     public static GridOverlay Instance { get; private set; }
 
-    public static GridOverlay Instance {get; private set;}
+//     public GameObject tilePrefab;
+//     public GameObject enemyTilePrefab;
 
+//     public int rows = 2;
+//     public int columns = 2;
 
-    public GameObject tilePrefab;
+//     private List<GameObject> tiles = new List<GameObject>();
 
-    public GameObject enemyTilePrefab;
+//     [SerializeField] private GameObject itemManager;
 
-    public int rows = 2;
-    public int columns = 2;
+//     void Awake()
+//     {
+//         if (Instance != null && Instance != this)
+//         {
+//             Debug.LogWarning("More than one GridOverlay detected. Destroying duplicate.");
+//             Destroy(gameObject);
+//         }
+//         else
+//         {
+//             Instance = this;
+//         }
+//     }
 
-    private List<GameObject> tiles = new List<GameObject>();
+//     void Start()
+//     {
+//         // Hent renderer på parent-objektet
+//         var parentRenderer = transform.parent.GetComponent<Renderer>();
+//         if (parentRenderer == null)
+//         {
+//             Debug.LogError("Renderer missing on parent.");
+//             return;
+//         }
+//         Vector3 platformSize = parentRenderer.bounds.size;
+//         float topY = parentRenderer.bounds.max.y + 0.01f;
 
-    [SerializeField] private GameObject itemManager;
+//         // Hent rå mesh-størrelse fra prefab (mesh units)
+//         var meshFilter = tilePrefab.GetComponent<MeshFilter>();
+//         if (meshFilter == null)
+//         {
+//             Debug.LogError("MeshFilter missing on tilePrefab.");
+//             return;
+//         }
+//         Vector3 meshSize = meshFilter.sharedMesh.bounds.size;
 
+//         // Beregn ønsket størrelse per tile
+//         float tileWidth = platformSize.x / columns;
+//         float tileDepth = platformSize.z / rows;
 
-    void Awake()
-    {
-        if (Instance != null && Instance != this) {
-            Debug.LogWarning("More than one BuildManager detected. Destroying duplicate.");
-            Destroy(gameObject);
-        } else {
-            Instance = this;
-        }
-    }
+//         // Skaleringsfaktor så mesh dækker tileWidth x tileDepth
+//         Vector3 adjustedTileScale = new Vector3(
+//             tileWidth / meshSize.x ,
+//             1f,
+//             tileDepth / meshSize.z 
+//         );
 
-    void Start()
-    {
-        Renderer cubusRenderer = transform.parent.GetComponent<Renderer>();
-        Renderer tileRenderer = tilePrefab.GetComponent<Renderer>();
+//         // Find bund-venstre hjørne på toppen af platformen
+//         Vector3 min = parentRenderer.bounds.min;
+//         Vector3 origin = new Vector3(min.x, topY, min.z);
 
-        if (cubusRenderer == null || tileRenderer == null)
-        {
-            Debug.LogError("Renderer missing on Cubus or tilePrefab.");
-            return;
-        }
+//         // Instantiate tiles
+//         for (int x = 0; x < columns; x++)
+//         {
+//             for (int z = 0; z < rows; z++)
+//             {
+//                 Vector3 spawnPos = origin + new Vector3(
+//                     tileWidth * x + tileWidth * 0.5f,
+//                     0f,
+//                     tileDepth * z + tileDepth * 0.5f
+//                 );
 
-        Vector3 cubusSize = cubusRenderer.bounds.size;
-        Vector3 tileSize = tileRenderer.bounds.size;
+//                 GameObject prefab = (z == 0) ? enemyTilePrefab : tilePrefab;
+//                 var go = Instantiate(prefab, spawnPos, Quaternion.identity, transform);
+//                 go.name = $"Tile_{x}_{z}";
+//                 go.transform.localScale = adjustedTileScale;
+//                 tiles.Add(go);
+//             }
+//         }
 
-        Vector3 adjustedTileScale = new Vector3(
-            (cubusSize.x / columns) / tileSize.x,
-            1,
-            (cubusSize.z / rows) / tileSize.z
-        );
+//         // Notify itemManager
+//         if (itemManager != null)
+//             itemManager.GetComponent<ItemManager>().TilesRendered();
+//     }
 
-        // Correct global top surface height
-        float globalTopSurfaceY = cubusRenderer.bounds.max.y + 0.01f;
+//     public Vector3[] GetTileCorners(DefaultTile tile)
+//     {
+//         var rend = tile.GetComponent<Renderer>();
+//         if (rend == null)
+//         {
+//             Debug.LogError("Renderer missing on tile.");
+//             return new Vector3[0];
+//         }
 
-        // Global bottom-left corner (world coordinates)
-        Vector3 globalBottomLeft = new Vector3(
-            cubusRenderer.bounds.center.x - cubusSize.x / 2 + cubusSize.x / columns / 2,
-            globalTopSurfaceY,
-            cubusRenderer.bounds.center.z - cubusSize.z / 2 + cubusSize.z / rows / 2
-        );
+//         Vector3 center = rend.bounds.center;
+//         Vector3 ext = rend.bounds.extents;
+//         return new Vector3[]
+//         {
+//             center + new Vector3(-ext.x, 0, ext.z),
+//             center + new Vector3(ext.x, 0, ext.z),
+//             center + new Vector3(ext.x, 0, -ext.z),
+//             center + new Vector3(-ext.x, 0, -ext.z)
+//         };
+//     }
 
-        for (int x = 0; x < columns; x++)
-        {
-            for (int z = 0; z < rows; z++)
-            {
-                Vector3 globalOffset = new Vector3(
-                    x * (cubusSize.x / columns),
-                    0,
-                    z * (cubusSize.z / rows)
-                );
+//     public List<GameObject> GetTiles() => tiles;
 
-                Vector3 globalSpawnPos = globalBottomLeft + globalOffset;
+//     public (int, int) GetRowAndColumnsOfPlatform() => (rows, columns);
 
-                // Convert the global position into the local position of the grid GameObject
-                Vector3 localSpawnPos = transform.InverseTransformPoint(globalSpawnPos);
+//     public DefaultTile FindTileWithCoordinates(int x, int z)
+//     {
+//         string targetName = $"Tile_{x}_{z}";
+//         foreach (var tile in tiles)
+//         {
+//             if (tile != null && tile.name == targetName)
+//                 return tile.GetComponent<DefaultTile>();
+//         }
+//         Debug.LogError($"No such tile found: {targetName}");
+//         return null;
+//     }
 
+//     public (int, int)? FindCoordinatesWithTile(DefaultTile tile)
+//     {
+//         if (tile == null)
+//         {
+//             Debug.LogWarning("Tile reference is null.");
+//             return null;
+//         }
 
-                GameObject tile = null;
-                if(z == 0){
-                    tile = Instantiate(enemyTilePrefab, transform);
-                } else {
-                    tile = Instantiate(tilePrefab, transform);
-                }
-                tile.name = $"Tile_{x}_{z}";
-                tile.transform.localPosition = localSpawnPos;
-                tile.transform.localRotation = Quaternion.identity;
-                tile.transform.localScale = adjustedTileScale;
+//         var parts = tile.name.Split('_');
+//         if (parts.Length == 3
+//             && int.TryParse(parts[1], out int x)
+//             && int.TryParse(parts[2], out int z))
+//         {
+//             return (x, z);
+//         }
+//         Debug.LogError($"Tile name format invalid: {tile.name}");
+//         return null;
+//     }
 
-                tiles.Add(tile);
-            }
-        }
+//     public int GetTilesCount() => tiles.Count;
 
-        // materialManager.GetComponent<MaterialManager>().SetTileRenderedOnRunTime(); 
-        itemManager.GetComponent<ItemManager>().TilesRendered();
-
-
-    }
-
-    public Vector3[] GetTileCorners(DefaultTile tile)
-    {
-        Transform tileTransform = tile.transform;
-
-        Vector3 center = tileTransform.position;
-        Vector3 right = tileTransform.right * 0.5f * tileTransform.localScale.x * 10f;
-        Vector3 forward = tileTransform.forward * 0.5f * tileTransform.localScale.z * 10f;
-
-        Vector3 topLeft     = center - right + forward;
-        Vector3 topRight    = center + right + forward;
-        Vector3 bottomLeft  = center - right - forward;
-        Vector3 bottomRight = center + right - forward;
-
-        return new Vector3[] { topLeft /*bottomRight from board perspective  */, topRight /*bottomLeft from board perspective */, /*topLeft from board perspective */ bottomRight, /*topRight from board perspective */ bottomLeft };
-    }
-
-    public List<GameObject> GetTiles()
-    {
-        return tiles;
-    }
-
-    public (int, int ) GetRowAndColumnsOfPlatform(){
-        return (rows, columns);
-    }
-
-    public DefaultTile FindTileWithCoordinates(int x, int z){
-        foreach (GameObject tile in tiles){
-            if(tile == null){
-                Debug.Log("tile found to be null");
-            }
-            if(tile.name == $"Tile_{x}_{z}"){
-                return tile.GetComponent<DefaultTile>();
-            }
-        }
-        Debug.LogError("No such tile found!");
-        return null;
-    }
-
-
-    public (int, int)? FindCoordinatesWithTile(DefaultTile tile){
-        if(tile == null){
-            Debug.Log("Tile found to be null");
-            return null;
-        }
-        
-        
-        string[] parts = tile.name.Split('_');
-        if (parts.Length == 3 && int.TryParse(parts[1], out int x) && int.TryParse(parts[2], out int z)) {
-            return (x,z);
-        }
-        return null;
-    }
-
-
-    public int GetTilesCount(){
-        return tiles.Count;
-    }
-
-
-
-    public DefaultTile GetRandomTile(){
-        int randomIndex = Random.Range(0, GetTilesCount());
-        DefaultTile randomTile = GetTiles()[randomIndex].GetComponent<DefaultTile>();
-        return randomTile;
-    }
-}
+//     public DefaultTile GetRandomTile()
+//     {
+//         if (tiles.Count == 0) return null;
+//         int idx = Random.Range(0, tiles.Count);
+//         return tiles[idx].GetComponent<DefaultTile>();
+//     }
+// }
