@@ -1,9 +1,9 @@
 {
-    "m_SelectedDeviceId": "1WMHHB6D7M2233",
+    "m_SelectedDeviceId": "1WMHHA61EF1505",
     "m_SelectedProcess": {
-        "deviceId": "1WMHHB6D7M2233",
-        "name": "com.DefaultCompany.MockUpAdvancedAR",
-        "processId": 30614,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -85,6 +85,30 @@
             "name": "com.DefaultCompany.MockUpAdvancedAR",
             "processId": 30614,
             "exited": false
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 29287,
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 29981,
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 30938,
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 2190,
+            "exited": true
         }
     ],
     "m_Tags": {
@@ -141,7 +165,7 @@
         "AutoCapture": true
     },
     "m_FilterOptions": {
-        "m_Filter": "",
+        "m_Filter": "Well Platform",
         "m_UseRegularExpressions": false,
         "m_MatchCase": false
     },

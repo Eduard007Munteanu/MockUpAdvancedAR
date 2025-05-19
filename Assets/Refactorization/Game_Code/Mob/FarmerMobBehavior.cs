@@ -16,11 +16,12 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
 
     private float counter = 1f;
 
-    
+    private bool stationary;
 
-    public void Init(DefaultMob mob)
+    public void Init(DefaultMob mob, bool stationary = false)
     {
         this.mob = mob;
+        this.stationary = stationary;
     }
 
 
@@ -122,7 +123,8 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
 
 
                 string closestItemName = ItemBuilding.Instance.GetItemName(building.GetBuildingClass());
-                closestItem = FindClosestItem(closestItemName);
+
+                closestItem = stationary ? null : FindClosestItem(closestItemName);
                 if (closestItem == null)
                 {
                     mob.isMoving = false;

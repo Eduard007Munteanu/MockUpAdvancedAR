@@ -10,8 +10,10 @@ public class TouchingSystem : MonoBehaviour{
 
 
     [SerializeField] private LayerMask interactableLayer;
+    [SerializeField] private float mobSelectionCooldown = 0.5f; // Cooldown in seconds for selecting a mob
 
     private GameObject currentlyTouching; 
+    private float lastMobSelectionTime = -1f; // Time when a mob was last selected
 
 
     private DefaultMob selectedMob; 
@@ -34,8 +36,8 @@ public class TouchingSystem : MonoBehaviour{
             return;
         }
 
-        // play sound effect
-        AudioManager.Instance.PlaySoundEffect();
+        // play sound effect // MODIFIED: Removed from here
+        // AudioManager.Instance.PlaySoundEffect();
 
         Debug.Log("Touched: " + go.name);
 
@@ -67,7 +69,16 @@ public class TouchingSystem : MonoBehaviour{
 
 
         if(mob != null && selectedMob == null){
-            ActionGivenDefaultMob(mob);
+            if (Time.time >= lastMobSelectionTime + mobSelectionCooldown)
+            {
+                ActionGivenDefaultMob(mob);
+                AudioManager.Instance.PlaySoundEffect(); // Play sound on successful mob selection
+                lastMobSelectionTime = Time.time; // Update last selection time
+            }
+            else
+            {
+                Debug.Log("Mob selection on cooldown.");
+            }
         } 
         else if(selectedMob != null && tile != null){
             // if (!tile.CheckIfMobOnTile(selectedMob)){

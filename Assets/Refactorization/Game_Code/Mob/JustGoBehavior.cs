@@ -14,7 +14,7 @@ public class JustGoBehavior : IMobBehavior
         }
     }
 
-    public void Init(DefaultMob mob)
+    public void Init(DefaultMob mob, bool stationary = false)
     {
         this.mob = mob;
     }
