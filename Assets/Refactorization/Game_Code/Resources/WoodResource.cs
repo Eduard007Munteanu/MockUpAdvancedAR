@@ -23,9 +23,9 @@ public class WoodResource : Resource
     protected override void onAmountChange(float delta)
     {
         resources[ResourceType.Score].AddAmount(delta * 0.05f);
-        if (CurrentAmount > 1000f && !achievementUnlocked)
+        if (CurrentAmount > 600f && !achievementUnlocked)
         {
-            CubePaintings.Instance.AddPainting(5);
+            CubePaintings.Instance.AddPainting(3);
             resources[ResourceType.Score].AddAmount(1000f);
             achievementUnlocked = true;
         }

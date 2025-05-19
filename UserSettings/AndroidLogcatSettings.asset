@@ -109,6 +109,12 @@
             "name": "com.DefaultCompany.MockUpAdvancedAR",
             "processId": 12085,
             "exited": true
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 15666,
+            "exited": false
         }
     ],
     "m_Tags": {

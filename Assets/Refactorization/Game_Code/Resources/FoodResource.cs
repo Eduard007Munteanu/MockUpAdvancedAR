@@ -26,9 +26,9 @@ public class FoodResource : Resource
     {
         resources[ResourceType.Score].AddAmount(delta * 0.05f);
 
-        if (CurrentAmount > 1000f && !achievementUnlocked)
+        if (CurrentAmount > 600f && !achievementUnlocked)
         {
-            CubePaintings.Instance.AddPainting(0);
+            CubePaintings.Instance.AddPainting(2);
             resources[ResourceType.Score].AddAmount(1000f);
             achievementUnlocked = true;
         }

@@ -72,7 +72,7 @@ public class PopulationResource : Resource
         }
         if (CurrentAmount > 50f && !achievementUnlocked)
         {
-            CubePaintings.Instance.AddPainting(2);
+            CubePaintings.Instance.AddPainting(0);
             resources[ResourceType.Score].AddAmount(1000f);
             achievementUnlocked = true;
         }
