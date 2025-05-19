@@ -10,27 +10,34 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
 
     private bool didICollectFromItem = false;
 
-    private DefaultItem closestItem; 
+    private DefaultItem closestItem;
 
     private DefaultMob mob;
 
     private float counter = 1f;
 
-    
+    private DefaultTile generalTile = null;
+
+
 
     public void Init(DefaultMob mob)
     {
         this.mob = mob;
+        generalTile = BetterGridOverlay.Instance.GetTiles()[0].GetComponent<DefaultTile>(); 
+        Debug.Log("General tile is " + generalTile.name);
     }
 
 
     public void ActionLoop()
     {
-        if(mob.isMoving){
-            if(buildingOrTile){
+        if (mob.isMoving)
+        {
+            if (buildingOrTile)
+            {
                 LoopMove();
             }
-            else if(!buildingOrTile){
+            else if (!buildingOrTile)
+            {
                 Move();
             }
         }
@@ -77,39 +84,46 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
     }
 
 
-    private void Move(){
+    private void Move()
+    {
         Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
         mob.transform.position += dir * mob.speedFactor;
 
-        
 
 
-        if(Vector3.Distance(mob.transform.position, mob.toDestination) < 0.01f){
+
+        if (Vector3.Distance(mob.transform.position, mob.toDestination) < 0.01f)
+        {
             Debug.Log("Reached the closest point on tile to my DefaultMob object");
             mob.isMoving = false;
             // transform.position = toDestination;
             mob.toColliderObj.GetComponent<DefaultTile>().ArrangeMobs(mob);
-            
+
             // I want to set the mob in a  specific order regarding the tile, involving taking into account possible other mobs from the same tile. 
         }
     }
 
 
-    private void LoopMove(){
-        Debug.Log("VERSION CONTROL We are at the loop move " );
+    private void LoopMove()
+    {
+        Debug.Log("VERSION CONTROL We are at the loop move ");
         DefaultBuild building = mob.toColliderObj.GetComponent<DefaultBuild>();
-        Item item = mob.toColliderObj.GetComponent<Item>();
+        DefaultItem item = mob.toColliderObj.GetComponent<DefaultItem>();
 
-        if(building != null){
+        if (building != null)
+        {
             Debug.Log("VERSION CONTROL Building not null " + building.GetBuildingClass());
 
-            
+
+            //mob.toDestination = new Vector3(mob.toDestination.x, vectorYHeightGivenTile(mob.currentTile, building.gameObject), mob.toDestination.z);
+
 
             Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
             mob.transform.position += dir * mob.speedFactor;
 
-            if(Vector3.Distance(mob.transform.position, mob.toDestination) < 0.01f){
-                Debug.Log("VERSION CONTROL we are very close to the building, distance reached " );
+            if (Vector3.Distance(mob.transform.position, mob.toDestination) < 0.01f)
+            {
+                Debug.Log("VERSION CONTROL we are very close to the building, distance reached ");
 
 
                 string closestItemName = ItemBuilding.Instance.GetItemName(building.GetBuildingClass());
@@ -120,7 +134,15 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
                     return;
                 }
                 mob.toColliderObj = closestItem.gameObject;
+
+
                 mob.toDestination = closestItem.transform.position;
+
+                mob.toDestination = new Vector3(mob.toDestination.x, mob.transform.position.y, mob.toDestination.z);
+
+
+
+
                 Debug.Log("VERSION CONTROL didICollectFromItem is  " + didICollectFromItem);
                 if (didICollectFromItem)
                 {
@@ -146,7 +168,8 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
             }
         }
 
-        else if(item != null){
+        else if (item != null)
+        {
             if (didICollectFromItem && counter > 0)
             {
                 counter -= Time.deltaTime;
@@ -159,9 +182,18 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
                 counter = 5;
                 mob.toColliderObj = mob.buidlingAssignedTo.gameObject;
                 mob.toDestination = mob.buidlingAssignedTo.transform.position;
+
+
+                mob.toDestination = new Vector3(mob.toDestination.x, mob.transform.position.y, mob.toDestination.z);
+
+
             }
-            
-            Debug.Log("VERSION CONTROL Item not null " );
+
+            Debug.Log("VERSION CONTROL Item not null ");
+
+
+            //mob.toDestination = new Vector3(mob.toDestination.x, vectorYHeightGivenTile(mob.currentTile, building.gameObject), mob.toDestination.z);
+
             Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
             mob.transform.position += dir * mob.speedFactor;
 
@@ -183,6 +215,51 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
         }
     }
 
+
+    float vectorYHeightGivenTile(DefaultTile tile, GameObject gameObject)
+    {  //Incorrect
+
+
+        DefaultItem item = gameObject.GetComponent<DefaultItem>();
+        DefaultBuild build = gameObject.GetComponent<DefaultBuild>();
+
+
+        if (item != null)
+        {
+            Renderer tileRenderer = tile.GetComponent<Renderer>();
+            Renderer objectRenderer = item.GetComponent<Renderer>();
+
+            float tileTopY = tileRenderer.bounds.max.y;
+            float objectBottomOffset = objectRenderer.bounds.min.y - item.transform.position.y;
+            float spawnY = tileTopY - objectBottomOffset;
+
+
+            //float height = tilePosition.y + ((tileHeight + (mobHeight / 2f))  / 1f);
+
+            Debug.Log("spawnY is " + spawnY);
+            return spawnY;
+        }
+        else if (build != null)
+        {
+            Renderer tileRenderer = tile.GetComponent<Renderer>();
+            Renderer objectRenderer = build.GetComponent<Renderer>();
+
+            float tileTopY = tileRenderer.bounds.max.y;
+            float objectBottomOffset = objectRenderer.bounds.min.y - build.transform.position.y;
+            float spawnY = tileTopY - objectBottomOffset;
+
+            Debug.Log("spawnY is " + spawnY);
+            return spawnY;
+        }
+
+        Debug.Log("spawnY is " + 0);
+
+        return 0;
+
+    
+
+    }
+
     // private void startTimer() {
     //     // Start a timer for 1 seconds
     //     float timer = 0f;
@@ -193,5 +270,5 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
     // }
 
 
-    
+
 }
