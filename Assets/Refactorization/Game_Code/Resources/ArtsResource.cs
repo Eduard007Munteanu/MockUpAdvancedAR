@@ -30,7 +30,7 @@ public class ArtsResource : Resource
             resources[ResourceType.Score].AddAmount(delta * 0.05f);
         }
         
-        if (CurrentAmount > 1000f && !achievementUnlocked){
+        if (CurrentAmount > 600f && !achievementUnlocked){
             // Assuming CubePaintings.Instance is valid and accessible
             if (CubePaintings.Instance != null)
             {

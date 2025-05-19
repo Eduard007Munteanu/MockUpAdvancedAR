@@ -20,7 +20,7 @@ public class MightResource : Resource
     {
         if (CurrentAmount > 50f && !achievementUnlocked)
         {
-            CubePaintings.Instance.AddPainting(2);
+            CubePaintings.Instance.AddPainting(4);
             resources[ResourceType.Score].AddAmount(1000f);
             achievementUnlocked = true;
         }
