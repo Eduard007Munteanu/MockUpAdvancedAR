@@ -89,12 +89,6 @@
         {
             "deviceId": "1WMHHA61EF1505",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
-            "processId": 2039,
-            "exited": true
-        },
-        {
-            "deviceId": "1WMHHA61EF1505",
-            "name": "com.DefaultCompany.MockUpAdvancedAR",
             "processId": 6594,
             "exited": true
         },
@@ -114,6 +108,12 @@
             "deviceId": "1WMHHA61EF1505",
             "name": "com.DefaultCompany.MockUpAdvancedAR",
             "processId": 6969,
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHHA61EF1505",
+            "name": "com.DefaultCompany.MockUpAdvancedAR",
+            "processId": 8554,
             "exited": false
         }
     ],
@@ -171,7 +171,7 @@
         "AutoCapture": true
     },
     "m_FilterOptions": {
-        "m_Filter": "Well Platform",
+        "m_Filter": "null",
         "m_UseRegularExpressions": false,
         "m_MatchCase": false
     },

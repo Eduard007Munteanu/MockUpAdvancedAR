@@ -83,7 +83,7 @@ public class StatsController : MonoBehaviour // Renamed from ResourceUIDisplayMa
         if (artsText != null)
         {
             Debug.Log($"Arts Value Updated: {value}");
-            artsText.text = "Arts: " + (int) resources[type].CurrentAmount + "/" + resources[type].MaximumAmount;
+            artsText.text = "Arts: " + (int) resources[type].CurrentAmount + "/" + (int) resources[type].MaximumAmount;
         }
     }
 

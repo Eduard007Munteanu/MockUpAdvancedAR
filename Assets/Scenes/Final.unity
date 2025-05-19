@@ -11587,7 +11587,6 @@ MonoBehaviour:
   interactableLayer:
     serializedVersion: 2
     m_Bits: 64
-  mobSelectionCooldown: 0.5
 --- !u!135 &877984428
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -24020,7 +24019,6 @@ MonoBehaviour:
   interactableLayer:
     serializedVersion: 2
     m_Bits: 73
-  mobSelectionCooldown: 0.5
 --- !u!1 &1826483943
 GameObject:
   m_ObjectHideFlags: 0
