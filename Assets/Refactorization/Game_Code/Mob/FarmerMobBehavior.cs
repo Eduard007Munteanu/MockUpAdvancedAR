@@ -115,7 +115,7 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
             Debug.Log("VERSION CONTROL Building not null " + building.GetBuildingClass());
 
 
-            //mob.toDestination = new Vector3(mob.toDestination.x, vectorYHeightGivenTile(mob.currentTile, building.gameObject), mob.toDestination.z);
+            
 
 
             Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
@@ -192,7 +192,7 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
             Debug.Log("VERSION CONTROL Item not null ");
 
 
-            //mob.toDestination = new Vector3(mob.toDestination.x, vectorYHeightGivenTile(mob.currentTile, building.gameObject), mob.toDestination.z);
+            
 
             Vector3 dir = (mob.toDestination - mob.transform.position).normalized;
             mob.transform.position += dir * mob.speedFactor;
@@ -216,49 +216,7 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
     }
 
 
-    float vectorYHeightGivenTile(DefaultTile tile, GameObject gameObject)
-    {  //Incorrect
-
-
-        DefaultItem item = gameObject.GetComponent<DefaultItem>();
-        DefaultBuild build = gameObject.GetComponent<DefaultBuild>();
-
-
-        if (item != null)
-        {
-            Renderer tileRenderer = tile.GetComponent<Renderer>();
-            Renderer objectRenderer = item.GetComponent<Renderer>();
-
-            float tileTopY = tileRenderer.bounds.max.y;
-            float objectBottomOffset = objectRenderer.bounds.min.y - item.transform.position.y;
-            float spawnY = tileTopY - objectBottomOffset;
-
-
-            //float height = tilePosition.y + ((tileHeight + (mobHeight / 2f))  / 1f);
-
-            Debug.Log("spawnY is " + spawnY);
-            return spawnY;
-        }
-        else if (build != null)
-        {
-            Renderer tileRenderer = tile.GetComponent<Renderer>();
-            Renderer objectRenderer = build.GetComponent<Renderer>();
-
-            float tileTopY = tileRenderer.bounds.max.y;
-            float objectBottomOffset = objectRenderer.bounds.min.y - build.transform.position.y;
-            float spawnY = tileTopY - objectBottomOffset;
-
-            Debug.Log("spawnY is " + spawnY);
-            return spawnY;
-        }
-
-        Debug.Log("spawnY is " + 0);
-
-        return 0;
-
     
-
-    }
 
     // private void startTimer() {
     //     // Start a timer for 1 seconds
