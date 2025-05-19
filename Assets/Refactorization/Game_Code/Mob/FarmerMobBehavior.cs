@@ -16,14 +16,10 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
 
     private float counter = 1f;
 
-    private bool stationary;
-
-    public void Init(DefaultMob mob, bool stationary = false)
+    public void Init(DefaultMob mob)
     {
         this.mob = mob;
-        this.stationary = stationary;
     }
-
 
     public void ActionLoop()
     {
@@ -69,8 +65,12 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
 
     private DefaultItem FindClosestItem(string itemName)
     {
+        var mobbuild = mob.GetBuildingAssignedTo().GetBuildingClass();
+        if (mobbuild != "farming") return null;
+
+
         DefaultItem targetItem = Object.FindObjectsOfType<MonoBehaviour>().OfType<DefaultItem>()
-                .Where(m => m.GetItemClass() == itemName)
+                // .Where(m => m.GetItemClass() == itemName)
                 .OrderBy(m => Vector3.Distance(mob.transform.position, m.gameObject.transform.position))
                 .FirstOrDefault();
 
@@ -124,7 +124,7 @@ public class FarmerMobBehavior : IMobBehavior    //Listen to invoker if max capa
 
                 string closestItemName = ItemBuilding.Instance.GetItemName(building.GetBuildingClass());
 
-                closestItem = stationary ? null : FindClosestItem(closestItemName);
+                closestItem = FindClosestItem(closestItemName);
                 if (closestItem == null)
                 {
                     mob.isMoving = false;

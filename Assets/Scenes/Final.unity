@@ -4697,10 +4697,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e10b6bd726747ec4c96c84f5ce1be570, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 0.282
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -11587,6 +11587,7 @@ MonoBehaviour:
   interactableLayer:
     serializedVersion: 2
     m_Bits: 64
+  mobSelectionCooldown: 0.5
 --- !u!135 &877984428
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -17671,7 +17672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8559626250869920803, guid: 5bc03b42dfbe07d4d8728d5b70a1790f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.018
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24019,6 +24020,7 @@ MonoBehaviour:
   interactableLayer:
     serializedVersion: 2
     m_Bits: 73
+  mobSelectionCooldown: 0.5
 --- !u!1 &1826483943
 GameObject:
   m_ObjectHideFlags: 0
@@ -25153,7 +25155,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1031c9002d579574fa07d3a927068dd9, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

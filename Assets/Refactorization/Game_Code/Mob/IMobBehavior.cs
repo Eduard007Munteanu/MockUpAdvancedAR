@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IMobBehavior
 {
-    void Init(DefaultMob mob, bool stationary = false); // Optional if different move patterns
+    void Init(DefaultMob mob); // Optional if different move patterns
     
     void ActionLoop(); //As Tick
 

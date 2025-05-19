@@ -123,11 +123,15 @@ public class DefaultMob : MonoBehaviour, Mobs  //Not abstract now, given no othe
                 break;
 
             case "military":
-                SetMobBehavior(new FarmerMobBehavior());
+                SetMobBehavior(new JustGoBehavior());
                 break;
 
             case "sleep":
-                SetMobBehavior(new FarmerMobBehavior());
+                SetMobBehavior(new JustGoBehavior());
+                break;
+
+            case "Main":
+                SetMobBehavior(new JustGoBehavior());
                 break;
 
             case null:

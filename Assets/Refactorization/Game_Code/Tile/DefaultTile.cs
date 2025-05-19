@@ -166,7 +166,7 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
 
     
 
-    public void ArrangeMobs(DefaultMob mob)
+    public void ArrangeMobs(DefaultMob mob, DefaultBuild justgo = null)
     {
         if(mob != null){
             mobs.Add(mob); // Always add the mob first
@@ -194,8 +194,17 @@ public class DefaultTile : MonoBehaviour//, Tile   //This guy shuold know about 
         if (totalWidth > tileWidth)
         {
             Debug.LogWarning($"Not enough space to place {mobs.Count} mobs. Required: {totalWidth}, Available: {tileWidth}");
-            if(mob != null){
-                mobs.Remove(mob); // Roll back
+
+            if (justgo != null)
+            {
+                mob.transform.position = justgo.transform.position;
+            }
+            else
+            {
+                if (mob != null)
+                {
+                    mobs.Remove(mob); // Roll back
+                }
             }
             return;
         }

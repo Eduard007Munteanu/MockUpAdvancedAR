@@ -53,7 +53,7 @@ public class CardsDeck : MonoBehaviour
         cardsInHand = CardsInHand.Instance;
         ShuffleDeck();
         // if (alwayscard) {DrawNextCard();}
-        DrawNextCard();
+        AddDraw ();
     }
 
     void ShuffleDeck()
